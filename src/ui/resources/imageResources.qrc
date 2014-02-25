@@ -1,0 +1,8 @@
+<RCC>
+    <qresource>
+		<file alias="pentago-quad.png">../media/pentago-quad.png</file>
+		<file alias="arrow.png">../media/arrow.png</file>
+		<file alias="Icon.png">../media/Icon.png</file>
+		<file alias="Icon_PNG.ico">../media/Icon_PNG.ico</file>
+    </qresource>
+</RCC>

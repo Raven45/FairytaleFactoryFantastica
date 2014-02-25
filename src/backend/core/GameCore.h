@@ -1,0 +1,35 @@
+#ifndef GAMECORE_H
+#define GAMECORE_H
+
+#include "GameData.h"
+#include "PentagoExceptions.h"
+#include "MainBoard.h"
+
+
+
+class GameCore {
+
+public:
+    void registerTurnWithBoard( Turn playersMove );
+
+private:
+
+    Board currentBoard;
+
+protected:
+
+    GameData gameData;
+
+    Board copyCurrentBoard();
+    virtual void startNewGame();
+    bool isGameOver() const;
+
+
+};
+
+
+
+
+
+
+#endif // GAMECORE_H

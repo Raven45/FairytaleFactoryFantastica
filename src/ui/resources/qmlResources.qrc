@@ -1,0 +1,16 @@
+<RCC>
+    <qresource>
+        <file alias="Arrow.qml">../qml/Arrow.qml</file>
+		<file alias="LobbyRow.qml">../qml/LobbyRow.qml</file>
+		<file alias="Board.qml">../qml/Board.qml</file>
+		<file alias="BoardHoleButton.qml">../qml/BoardHoleButton.qml</file>
+		<file alias="ChallengePopup.qml">../qml/ChallengePopup.qml</file>
+		<file alias="GameOverMenu.qml">../qml/GameOverMenu.qml</file>
+		<file alias="main.qml">../qml/main.qml</file>
+        <file alias="NetworkLobby.qml">../qml/NetworkLobby.qml</file>
+        <file alias="QmlTimer.qml">../qml/QmlTimer.qml</file>
+        <file alias="Quadrant.qml">../qml/Quadrant.qml</file>
+        <file alias="SentChallengePopup.qml" >../qml/SentChallengePopup.qml</file>
+        <file alias="StartMenu.qml" >../qml/StartMenu.qml</file>
+    </qresource>
+</RCC>

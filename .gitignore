@@ -1,0 +1,7 @@
+bin/Makefile
+*.Release
+*.Debug
+*.exe
+*.o
+bin/build-FairytaleFactoryFantastica-DEV_Qt_5_2_0_32bit_MinGW_4_8_0_32bit-Debug/Makefile
+*.user
