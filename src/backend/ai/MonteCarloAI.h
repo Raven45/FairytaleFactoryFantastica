@@ -75,7 +75,7 @@ private:
 
     inline Turn monteCarlo ( const Board& mainboard ){
         const BitBoard myOriginalBoard = mainboard.getBoardOfPlayer(mainboard.turnColor());
-        const BitBoard myOponnentOriginalBoard = mainboard.getBoardOfOpponent(mainboard.turnColor());
+        const BitBoard myOponnentOriginalBoard = mainboard.getBoardOfPlayer(mainboard.turnColor() == WHITE? BLACK: WHITE);
         BestMove bestmove;
         bestmove.score = 0;
 

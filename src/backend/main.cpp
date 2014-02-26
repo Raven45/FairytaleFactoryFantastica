@@ -1,7 +1,7 @@
 ﻿#include "SmarterPlayer.h"
 #include "PentagoExceptions.h"
 #include "GuiGameController.h"
-#include "SmarterPlayer.h"
+#include "MonteCarloAI.h"
 #include "NetworkInterface.h"
 #include <time.h>
 
@@ -26,7 +26,7 @@
 #include <QQmlComponent>
 #include <QtQml>
 
-typedef SmarterPlayer AIPlayer;
+typedef MonteCarloAI AIPlayer;
 typedef GuiGameController GameController;
 
 int main(int argc, char* argv[])
