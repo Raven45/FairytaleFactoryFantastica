@@ -11,6 +11,8 @@ Image {
     source: "grahm-quad.png"
 
     property int myIndex
+    property int xCenter
+    property int yCenter
 
     function rotate( direction ){
 
@@ -61,6 +63,8 @@ Image {
     }
 
     BoardHoleButton{
+        anchors.leftMargin: 0
+        anchors.topMargin: 0
         anchors.left: parent.left
         anchors.top: parent.top
         pieceIndex: 0

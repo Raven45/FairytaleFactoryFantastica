@@ -12,5 +12,6 @@
         <file alias="Quadrant.qml">../qml/Quadrant.qml</file>
         <file alias="SentChallengePopup.qml" >../qml/SentChallengePopup.qml</file>
         <file alias="StartMenu.qml" >../qml/StartMenu.qml</file>
+		<file alias="ClawPiece.qml" >../qml/ClawPiece.qml</file>
     </qresource>
 </RCC>

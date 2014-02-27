@@ -93,7 +93,7 @@ public:
         connect(&announceTimer, SIGNAL(timeout()), this, SLOT(broadcastAnnounce()));
         //connect(&socketReconnectTimer, SIGNAL(timeout()), this, connectToPlayer())
 
-        myInfo.id = rand() - (unsigned long) this;
+        myInfo.id = rand();
 
         qDebug() << "my id is " << myInfo.id;
 
