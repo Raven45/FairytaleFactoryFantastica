@@ -48,7 +48,7 @@ private:
         }
     }
 
-    inline int playthroughWin(BitBoard current, BitBoard opponent){
+    inline int playthroughWin(BitBoard current, BitBoard opponent, PlayerColor AIColor){
 
         bool player = false;
 
@@ -66,18 +66,22 @@ private:
 
         //heuristic weight for this playthrough
         if (current.didWin()){
-            playthroughscore = 1;
+            playthroughscore = 2;
         }else if (opponent.didWin()){
             playthroughscore = -1;
+        }else{
+            if (AIColor == BLACK){
+                playthroughscore = 1;
+            }
         }
         return playthroughscore;
     }
 
     inline Turn monteCarlo ( const Board& mainboard ){
         const BitBoard myOriginalBoard = mainboard.getBoardOfPlayer(mainboard.turnColor());
-        const BitBoard myOponnentOriginalBoard = mainboard.getBoardOfPlayer(mainboard.turnColor() == WHITE? BLACK: WHITE);
+        const BitBoard myOponnentOriginalBoard = mainboard.getBoardOfOpponent(mainboard.turnColor());
         BestMove bestmove;
-        bestmove.score = 0;
+        bestmove.score = -5 * NUMBER_OF_GAMES_TO_PLAY;
 
         for (int quadrantIndex = 0; quadrantIndex < NUMBER_OF_QUADRANTS; quadrantIndex++){
             for (int pieceIndex = 0; pieceIndex < MAX_PIECES_ON_QUADRANT; pieceIndex++){
@@ -94,7 +98,7 @@ private:
 
                         int score = 0;
                         for (int playthrough = 0; playthrough < NUMBER_OF_GAMES_TO_PLAY; playthrough++){
-                             score += playthroughWin(currentcopy, opponentcopy);
+                             score += playthroughWin(currentcopy, opponentcopy, mainboard.turnColor());
                         }
                         if (score > bestmove.score){
                             bestmove.score = score;
