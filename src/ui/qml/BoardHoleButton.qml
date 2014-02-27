@@ -207,12 +207,12 @@ Rectangle {
                 NumberAnimation {
                     target: tealClawPiece
                     property: "y"
-                    duration: 1000
+                    duration: 500
                 }
                 NumberAnimation {
                     target: tealClawPiece;
                     property: "x"
-                    duration: 1000
+                    duration: 500
                 }
                 ScriptAction{
                     scriptName: "openTealClaw"
@@ -228,12 +228,12 @@ Rectangle {
                 NumberAnimation {
                     target: purpleClawPiece
                     property: "y"
-                    duration: 1000
+                    duration: 500
                 }
                 NumberAnimation {
                     target: purpleClawPiece;
                     property: "x"
-                    duration: 1000
+                    duration: 500
                 }
                 ScriptAction{
                     scriptName: "openPurpleClaw"

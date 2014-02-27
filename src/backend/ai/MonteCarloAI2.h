@@ -1,7 +1,8 @@
-#ifndef MONTECARLOAI_H
-#define MONTECARLOAI_H
+#ifndef MONTECARLOAI2_H
+#define MONTECARLOAI2_H
+
 #include "Player.h"
-using std::map;
+
 
 #define MAX_PIECES_ON_BOARD 36
 #define MAX_PIECES_ON_QUADRANT 9
@@ -12,7 +13,7 @@ using std::map;
 #define NUMBER_OF_GAMES_TO_PLAY 2000
 
 struct BestMove{
-    int score;
+    long double score;
     int quadrantIndex, pieceIndex;
     unsigned char i;
     Direction d;
@@ -21,12 +22,12 @@ struct BestMove{
 class MonteCarloAI : public Player{
 private:
 
-    inline void rotate(unsigned char i, Direction d, BitBoard& current, BitBoard& opponent){
+    inline static void rotateBothPlayers(unsigned char i, Direction d, BitBoard& current, BitBoard& opponent){
         current.rotate(i, d);
         opponent.rotate(i, d);
     }
 
-    bool boardIsFull (BitBoard current, BitBoard opponent){
+    static bool boardIsFull (const BitBoard& current, const BitBoard& opponent){
         bool isFull = false;
 
         if ( ((BoardInt)current | (BoardInt)opponent) == FULL_BOARD )
@@ -34,7 +35,7 @@ private:
         return isFull;
     }
 
-    inline void placemove(bool player, BitBoard& current, BitBoard& opponent){
+    static inline void placeRandomMove(const bool player, BitBoard& current, BitBoard& opponent){
         int quadrantIndex, pieceIndex;
         do{
             quadrantIndex = rand() % 4;
@@ -48,7 +49,7 @@ private:
         }
     }
 
-    inline int playthroughWin(BitBoard current, BitBoard opponent, PlayerColor AIColor){
+    static inline int playthroughWin(BitBoard current, BitBoard opponent, const PlayerColor AIColor){
 
         bool player = false;
 
@@ -77,25 +78,29 @@ private:
         return playthroughscore;
     }
 
-    inline Turn monteCarlo ( const Board& mainboard ){
-        PlayerColor myColor = mainboard.turnColor();
-        const BitBoard myOriginalBoard = mainboard.getBoardOfPlayer(myColor);
-        const BitBoard myOponnentOriginalBoard = mainboard.getBoardOfPlayer(util.opposite(myColor));
+    static inline Turn monteCarlo ( const Board& mainBoard ){
+        const BitBoard myOriginalBoard = mainboard.getBoardOfPlayer(mainboard.turnColor());
+        const BitBoard myOponnentOriginalBoard = mainboard.getBoardOfOpponent(mainboard.turnColor());
         BestMove bestmove;
-        bestmove.score = -5 * NUMBER_OF_GAMES_TO_PLAY;
+        const PlayerColor myColor = mainboard.turnColor();
+        bestmove.score = std::numeric_limits<long double>::min();
 
         for (int quadrantIndex = 0; quadrantIndex < NUMBER_OF_QUADRANTS; ++quadrantIndex){
             for (int pieceIndex = 0; pieceIndex < MAX_PIECES_ON_QUADRANT; ++pieceIndex){
+
                 if (!myOriginalBoard.hasPieceAt(quadrantIndex, pieceIndex) &&
                     !myOponnentOriginalBoard.hasPieceAt(quadrantIndex, pieceIndex)){
 
-                    for (int rotations = 0; rotations < 8; rotations++){
+                    for (int rotations = 0; rotations < 8; ++rotations){
 
                         BitBoard currentcopy = myOriginalBoard;
                         BitBoard opponentcopy = myOponnentOriginalBoard;
 
                         currentcopy.placePiece( quadrantIndex, pieceIndex );
-                        rotate(rotations % 4, rotations > 4? LEFT : RIGHT, currentcopy, opponentcopy );
+
+                        unsigned char quadrantToRotate = rotations % 4;
+                        Direction rotationDirection = rotations > 4? LEFT : RIGHT;
+                        rotate(quadrantToRotate, rotationDirection, currentcopy, opponentcopy );
 
                         int score = 0;
                         for (int playthrough = 0; playthrough < NUMBER_OF_GAMES_TO_PLAY; ++playthrough){
@@ -105,8 +110,8 @@ private:
                             bestmove.score = score;
                             bestmove.quadrantIndex = quadrantIndex;
                             bestmove.pieceIndex = pieceIndex;
-                            bestmove.i = rotations % 4;
-                            bestmove.d = rotations > 4? LEFT : RIGHT;
+                            bestmove.i = quadrantToRotate;
+                            bestmove.d = rotationDirection;
                         }
                     }
                 }
@@ -117,7 +122,7 @@ private:
         bl.pieceIndex = bestmove.pieceIndex;
         bl.quadrantIndex = bestmove.quadrantIndex;
         t.setHole(bl);
-        t.setPieceColor(mainboard.turnColor());
+        t.setPieceColor(myColor);
         t.setQuadrantToRotate(bestmove.i);
         t.setRotationDirection(bestmove.d);
 
@@ -125,9 +130,9 @@ private:
     }
 
 public:
-    inline Turn getMove(const Board& mainboard) override{
-        return monteCarlo(mainboard);
+    inline Turn getMove(const Board& mainBoard) override{
+        return monteCarlo(mainBoard);
     }
 };
 
-#endif // MONTECARLOAI_H
+#endif // MONTECARLOAI2_H

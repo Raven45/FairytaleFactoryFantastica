@@ -88,7 +88,9 @@ HEADERS += \
     backend/ai/lessdumbplayer3.h \
     backend/ai/MonteCarloAI.h \
     backend/ai/randomplayer.h \
-    backend/ai/SmarterPlayer.h
+    backend/ai/SmarterPlayer.h \
+    backend/ai/MonteCarloAI2.h \
+    backend/ai/MonteCarloAI3.h
 
 
 
