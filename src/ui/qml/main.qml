@@ -8,8 +8,8 @@ import QtQuick.Controls.Styles 1.1
 
 Rectangle {
     id: page
-    width: 1190
-    height: 800
+    width: parent.width
+    height: parent.height
     color: "#333333"
 
     signal readyToStartOnePersonPlay()

@@ -44,6 +44,7 @@ int main(int argc, char* argv[])
 
     QQuickView window;
     window.rootContext() -> setContextProperty( "gameController", &gameController );
+    window.setResizeMode(QQuickView::SizeRootObjectToView);
     window.setSource( QUrl("qrc:/main.qml") );
     //window.setIcon(QIcon("qrc:/Icon_PNG.ico"));
 
@@ -53,7 +54,7 @@ int main(int argc, char* argv[])
     NetworkInterface myInterface;
     gameController.setNetworkInterface(&myInterface);
 
-    window.show();
+    window.showFullScreen();
 
     return app.exec();
 }
