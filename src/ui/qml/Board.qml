@@ -7,7 +7,7 @@ Rectangle {
     width: 550
     height: width
     anchors.centerIn: parent
-    color: "#343434"
+    color: "transparent"
 
 
     state: "LOCKED"
@@ -44,7 +44,6 @@ Rectangle {
         }
 
     ]
-
 
     Arrow{
         anchors.left: parent.left

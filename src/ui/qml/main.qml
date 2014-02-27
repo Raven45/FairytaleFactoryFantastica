@@ -8,8 +8,7 @@ import QtQuick.Controls.Styles 1.1
 
 Rectangle {
     id: page
-    width: parent.width
-    height: parent.height
+
     color: "#333333"
 
     signal readyToStartOnePersonPlay()
@@ -171,11 +170,14 @@ Rectangle {
     GameOverMenu {
           id: gameOverMenu
           anchors.centerIn: page
-  }
-    Board{
-        id: pentagoBoard
-        anchors.top: page.top
-        anchors.topMargin: 30
-        anchors.horizontalCenter: parent.horizontalCenter
+    }
+    GameScreen{
+        id: gameScreen
+
+        Board{
+            id: pentagoBoard
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
     }
 }

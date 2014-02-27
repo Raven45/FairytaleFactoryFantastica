@@ -51,6 +51,7 @@ SOURCES       = ../src/backend/core/GameCore.cpp \
 		../src/qtquick2applicationviewer/qtquick2applicationviewer.cpp qrc_qmlResources.cpp \
 		qrc_imageResources.cpp \
 		qrc_audioResources.cpp \
+		qrc_guiButtonsResources.cpp \
 		moc_qtquick2applicationviewer.cpp \
 		moc_Barrager.cpp \
 		moc_NetworkInterface.cpp \
@@ -63,6 +64,7 @@ OBJECTS       = GameCore.o \
 		qrc_qmlResources.o \
 		qrc_imageResources.o \
 		qrc_audioResources.o \
+		qrc_guiButtonsResources.o \
 		moc_qtquick2applicationviewer.o \
 		moc_Barrager.o \
 		moc_NetworkInterface.o \
@@ -183,6 +185,7 @@ DIST          = ../../../Qt5.2.0/5.2.0/clang_64/mkspecs/features/spec_pre.prf \
 		../src/ui/resources/qmlResources.qrc \
 		../src/ui/resources/imageResources.qrc \
 		../src/ui/resources/audioResources.qrc \
+		../src/ui/resources/guiButtonsResources.qrc \
 		../src/FairytaleFactoryFantastica.pro
 QMAKE_TARGET  = FairytaleFactoryFantastica
 DESTDIR       = #avoid trailing-slash linebreak
@@ -344,6 +347,7 @@ Makefile: ../src/FairytaleFactoryFantastica.pro ../../../Qt5.2.0/5.2.0/clang_64/
 		../src/ui/resources/qmlResources.qrc \
 		../src/ui/resources/imageResources.qrc \
 		../src/ui/resources/audioResources.qrc \
+		../src/ui/resources/guiButtonsResources.qrc \
 		/Users/rssll/Qt5.2.0/5.2.0/clang_64/lib/QtQuick.framework/QtQuick.prl \
 		/Users/rssll/Qt5.2.0/5.2.0/clang_64/lib/QtQml.framework/QtQml.prl \
 		/Users/rssll/Qt5.2.0/5.2.0/clang_64/lib/QtNetwork.framework/QtNetwork.prl \
@@ -467,6 +471,7 @@ Makefile: ../src/FairytaleFactoryFantastica.pro ../../../Qt5.2.0/5.2.0/clang_64/
 ../src/ui/resources/qmlResources.qrc:
 ../src/ui/resources/imageResources.qrc:
 ../src/ui/resources/audioResources.qrc:
+../src/ui/resources/guiButtonsResources.qrc:
 /Users/rssll/Qt5.2.0/5.2.0/clang_64/lib/QtQuick.framework/QtQuick.prl:
 /Users/rssll/Qt5.2.0/5.2.0/clang_64/lib/QtQml.framework/QtQml.prl:
 /Users/rssll/Qt5.2.0/5.2.0/clang_64/lib/QtNetwork.framework/QtNetwork.prl:
@@ -493,7 +498,7 @@ FairytaleFactoryFantastica.app/Contents/Info.plist:
 	@sed -e "s,@SHORT_VERSION@,1.0,g" -e "s,@TYPEINFO@,????,g" -e "s,@ICON@,,g" -e "s,@EXECUTABLE@,FairytaleFactoryFantastica,g" -e "s,@TYPEINFO@,????,g" ../../../Qt5.2.0/5.2.0/clang_64/mkspecs/macx-clang/Info.plist.app >FairytaleFactoryFantastica.app/Contents/Info.plist
 dist: 
 	@test -d .tmp/FairytaleFactoryFantastica1.0.0 || mkdir -p .tmp/FairytaleFactoryFantastica1.0.0
-	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/FairytaleFactoryFantastica1.0.0/ && $(COPY_FILE) --parents ../src/ui/resources/qmlResources.qrc ../src/ui/resources/imageResources.qrc ../src/ui/resources/audioResources.qrc .tmp/FairytaleFactoryFantastica1.0.0/ && $(COPY_FILE) --parents ../src/qtquick2applicationviewer/qtquick2applicationviewer.h ../src/backend/networking/Barrager.h ../src/backend/networking/NetworkInterface.h ../src/backend/networking/PentagoNetworkUtil.h ../src/backend/networking/Transaction.h ../src/backend/core/BitBoard.h ../src/backend/core/BitboardUtil.h ../src/backend/core/BoardLocation.h ../src/backend/core/Direction.h ../src/backend/core/GameCore.h ../src/backend/core/GameData.h ../src/backend/core/GuiGameController.h ../src/backend/core/MainBoard.h ../src/backend/core/MusicPlayer.h ../src/backend/core/PentagoExceptions.h ../src/backend/core/Player.h ../src/backend/core/PlayerColor.h ../src/backend/core/Quadrant.h ../src/backend/core/Turn.h ../src/backend/core/WinningAlignment.h ../src/backend/ai/lessdumbplayer2.h ../src/backend/ai/lessdumbplayer3.h ../src/backend/ai/MonteCarloAI.h ../src/backend/ai/randomplayer.h ../src/backend/ai/SmarterPlayer.h .tmp/FairytaleFactoryFantastica1.0.0/ && $(COPY_FILE) --parents ../src/backend/core/GameCore.cpp ../src/backend/core/GuiGameController.cpp ../src/backend/main.cpp ../src/qtquick2applicationviewer/qtquick2applicationviewer.cpp .tmp/FairytaleFactoryFantastica1.0.0/ && (cd `dirname .tmp/FairytaleFactoryFantastica1.0.0` && $(TAR) FairytaleFactoryFantastica1.0.0.tar FairytaleFactoryFantastica1.0.0 && $(COMPRESS) FairytaleFactoryFantastica1.0.0.tar) && $(MOVE) `dirname .tmp/FairytaleFactoryFantastica1.0.0`/FairytaleFactoryFantastica1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/FairytaleFactoryFantastica1.0.0
+	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/FairytaleFactoryFantastica1.0.0/ && $(COPY_FILE) --parents ../src/ui/resources/qmlResources.qrc ../src/ui/resources/imageResources.qrc ../src/ui/resources/audioResources.qrc ../src/ui/resources/guiButtonsResources.qrc .tmp/FairytaleFactoryFantastica1.0.0/ && $(COPY_FILE) --parents ../src/qtquick2applicationviewer/qtquick2applicationviewer.h ../src/backend/networking/Barrager.h ../src/backend/networking/NetworkInterface.h ../src/backend/networking/PentagoNetworkUtil.h ../src/backend/networking/Transaction.h ../src/backend/core/BitBoard.h ../src/backend/core/BitboardUtil.h ../src/backend/core/BoardLocation.h ../src/backend/core/Direction.h ../src/backend/core/GameCore.h ../src/backend/core/GameData.h ../src/backend/core/GuiGameController.h ../src/backend/core/MainBoard.h ../src/backend/core/MusicPlayer.h ../src/backend/core/PentagoExceptions.h ../src/backend/core/Player.h ../src/backend/core/PlayerColor.h ../src/backend/core/Quadrant.h ../src/backend/core/Turn.h ../src/backend/core/WinningAlignment.h ../src/backend/ai/lessdumbplayer2.h ../src/backend/ai/lessdumbplayer3.h ../src/backend/ai/MonteCarloAI.h ../src/backend/ai/randomplayer.h ../src/backend/ai/SmarterPlayer.h .tmp/FairytaleFactoryFantastica1.0.0/ && $(COPY_FILE) --parents ../src/backend/core/GameCore.cpp ../src/backend/core/GuiGameController.cpp ../src/backend/main.cpp ../src/qtquick2applicationviewer/qtquick2applicationviewer.cpp .tmp/FairytaleFactoryFantastica1.0.0/ && (cd `dirname .tmp/FairytaleFactoryFantastica1.0.0` && $(TAR) FairytaleFactoryFantastica1.0.0.tar FairytaleFactoryFantastica1.0.0 && $(COMPRESS) FairytaleFactoryFantastica1.0.0.tar) && $(MOVE) `dirname .tmp/FairytaleFactoryFantastica1.0.0`/FairytaleFactoryFantastica1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/FairytaleFactoryFantastica1.0.0
 
 
 clean:compiler_clean 
@@ -516,39 +521,46 @@ check: first
 
 compiler_objective_c_make_all:
 compiler_objective_c_clean:
-compiler_rcc_make_all: qrc_qmlResources.cpp qrc_imageResources.cpp qrc_audioResources.cpp
+compiler_rcc_make_all: qrc_qmlResources.cpp qrc_imageResources.cpp qrc_audioResources.cpp qrc_guiButtonsResources.cpp
 compiler_rcc_clean:
-	-$(DEL_FILE) qrc_qmlResources.cpp qrc_imageResources.cpp qrc_audioResources.cpp
+	-$(DEL_FILE) qrc_qmlResources.cpp qrc_imageResources.cpp qrc_audioResources.cpp qrc_guiButtonsResources.cpp
 qrc_qmlResources.cpp: ../src/ui/resources/qmlResources.qrc \
-		../src/ui/qml/BoardHoleButton.qml \
-		../src/ui/qml/QmlTimer.qml \
-		../src/ui/qml/Quadrant.qml \
-		../src/ui/qml/LobbyRow.qml \
-		../src/ui/qml/ClawPiece.qml \
-		../src/ui/qml/SentChallengePopup.qml \
-		../src/ui/qml/StartMenu.qml \
 		../src/ui/qml/GameOverMenu.qml \
-		../src/ui/qml/main.qml \
+		../src/ui/qml/ClawPiece.qml \
 		../src/ui/qml/Arrow.qml \
-		../src/ui/qml/ChallengePopup.qml \
+		../src/ui/qml/Quadrant.qml \
+		../src/ui/qml/main.qml \
+		../src/ui/qml/QmlTimer.qml \
+		../src/ui/qml/StartMenu.qml \
+		../src/ui/qml/Board.qml \
+		../src/ui/qml/BoardHoleButton.qml \
 		../src/ui/qml/NetworkLobby.qml \
-		../src/ui/qml/Board.qml
+		../src/ui/qml/LobbyRow.qml \
+		../src/ui/qml/GUIButton.qml \
+		../src/ui/qml/GameScreen.qml \
+		../src/ui/qml/ChallengePopup.qml \
+		../src/ui/qml/SentChallengePopup.qml
 	/Users/rssll/Qt5.2.0/5.2.0/clang_64/bin/rcc -name qmlResources ../src/ui/resources/qmlResources.qrc -o qrc_qmlResources.cpp
 
 qrc_imageResources.cpp: ../src/ui/resources/imageResources.qrc \
-		../src/ui/media/teal-gumdrop.png \
-		../src/ui/media/arrow.png \
-		../src/ui/media/purp-claw-spritesheet.png \
-		../src/ui/media/pentago-quad.png \
+		../src/ui/media/grahm-quad.png \
 		../src/ui/media/steel-platform.png \
+		../src/ui/media/pentago-quad.png \
 		../src/ui/media/teal-claw-spritesheet.png \
 		../src/ui/media/purp-gumdrop.png \
-		../src/ui/media/grahm-quad.png
+		../src/ui/media/arrow.png \
+		../src/ui/media/teal-gumdrop.png \
+		../src/ui/media/purp-claw-spritesheet.png
 	/Users/rssll/Qt5.2.0/5.2.0/clang_64/bin/rcc -name imageResources ../src/ui/resources/imageResources.qrc -o qrc_imageResources.cpp
 
 qrc_audioResources.cpp: ../src/ui/resources/audioResources.qrc \
 		../src/ui/media/music.mp3
 	/Users/rssll/Qt5.2.0/5.2.0/clang_64/bin/rcc -name audioResources ../src/ui/resources/audioResources.qrc -o qrc_audioResources.cpp
+
+qrc_guiButtonsResources.cpp: ../src/ui/resources/guiButtonsResources.qrc \
+		../src/ui/guiButtons/inverse-pause-button.png \
+		../src/ui/guiButtons/pause-button.png
+	/Users/rssll/Qt5.2.0/5.2.0/clang_64/bin/rcc -name guiButtonsResources ../src/ui/resources/guiButtonsResources.qrc -o qrc_guiButtonsResources.cpp
 
 compiler_moc_header_make_all: moc_qtquick2applicationviewer.cpp moc_Barrager.cpp moc_NetworkInterface.cpp moc_GuiGameController.cpp moc_MusicPlayer.cpp
 compiler_moc_header_clean:
@@ -912,6 +924,9 @@ qrc_imageResources.o: qrc_imageResources.cpp
 
 qrc_audioResources.o: qrc_audioResources.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_audioResources.o qrc_audioResources.cpp
+
+qrc_guiButtonsResources.o: qrc_guiButtonsResources.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_guiButtonsResources.o qrc_guiButtonsResources.cpp
 
 moc_qtquick2applicationviewer.o: moc_qtquick2applicationviewer.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_qtquick2applicationviewer.o moc_qtquick2applicationviewer.cpp

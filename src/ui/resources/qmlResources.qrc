@@ -1,5 +1,7 @@
 <RCC>
     <qresource>
+        <file alias="GameScreen.qml">../qml/GameScreen.qml</file>
+        <file alias="GUIButton.qml">../qml/GUIButton.qml</file>
         <file alias="Arrow.qml">../qml/Arrow.qml</file>
 		<file alias="LobbyRow.qml">../qml/LobbyRow.qml</file>
 		<file alias="Board.qml">../qml/Board.qml</file>

@@ -1,0 +1,6 @@
+<RCC>
+    <qresource>
+    <file alias="pause-button.png">../guiButtons/pause-button.png</file>
+    <file alias="inverse-pause-button.png">../guiButtons/inverse-pause-button.png</file>
+    </qresource>
+</RCC>

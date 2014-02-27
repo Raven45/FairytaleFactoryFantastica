@@ -18,7 +18,8 @@ CONFIG += c++11 release #static release link_prl
 RESOURCES += \
     ui/resources/qmlResources.qrc \
     ui/resources/imageResources.qrc \
-	ui/resources/audioResources.qrc
+    ui/resources/audioResources.qrc \
+    ui/resources/guiButtonsResources.qrc
 
 INCLUDEPATH += \
     backend \
@@ -62,7 +63,9 @@ OTHER_FILES += \
     ui/qml/QmlTimer.qml \
     ui/qml/Quadrant.qml \
     ui/qml/SentChallengePopup.qml \
-    ui/qml/StartMenu.qml
+    ui/qml/StartMenu.qml \
+    ui/qml/GUIButton.qml \
+    ui/qml/GameScreen.qml
 
 HEADERS += \
     backend/networking/Barrager.h \
