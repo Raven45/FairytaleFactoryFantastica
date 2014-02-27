@@ -11,7 +11,7 @@
 #define NUMBER_OF_QUADRANTS 4
 #define MAX_DEPTH_LEVEL 3
 
-#define NUMBER_OF_GAMES_TO_PLAY 12000
+#define NUMBER_OF_GAMES_TO_PLAY 11000
 
 struct BestMove{
     signed int weights[19];
@@ -19,7 +19,7 @@ struct BestMove{
     unsigned char i;
     Direction d;
 
-    BestMove():weights({INT_MIN}){
+    BestMove():weights{INT_MIN}{
 
     }
 };
@@ -114,6 +114,25 @@ private:
                        currentcopy.placePiece( quadrantIndex, pieceIndex );
                        currentcopy.rotate(quadrantToRotate, rotationDirection);
                        opponentcopy.rotate(quadrantToRotate, rotationDirection);
+
+                       //if opponent wins, don't even bother evaluating
+                       if( opponentcopy.didWin() ){
+                           break;
+                       }
+
+                       //a quick check for win
+                       if( currentcopy.didWin() ){
+                           Turn t;
+                           BoardLocation bl;
+                           bl.pieceIndex = pieceIndex;
+                           bl.quadrantIndex = quadrantIndex;
+                           t.setHole(bl);
+                           t.setPieceColor(myColor);
+                           t.setQuadrantToRotate(bestmove.i);
+                           t.setRotationDirection(bestmove.d);
+                           return t;
+                       }
+
 
                         signed int winWeights[19] = {0};
                         int drawCount = 0;
