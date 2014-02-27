@@ -10,18 +10,20 @@ Rectangle {
 
     objectName: "BoardHoleButton"
     id: boardHoleButton
-    width: 35
-    height: 35
+    width: 38
+    height: 38
     clip: false
     color: "transparent"
     visible: true
-    radius: 17
+    radius: 19
     z: 14
 
     Image{
         id: backgroundImage
         x: -40
         y: -46
+        width: 100
+        height: 100
         visible: false
         source: "teal-gumdrop.png"
     }

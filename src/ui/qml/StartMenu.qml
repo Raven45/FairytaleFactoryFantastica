@@ -5,8 +5,8 @@ import QtQuick.Controls.Styles 1.1
 Rectangle {
 
     id: startMenu
-    width: 750
-    height: 750
+    width: parent.width
+    height: parent.height
     z: 100
     color: "#00FFFF"
 
@@ -44,8 +44,7 @@ Rectangle {
         id: startOnePlayer
         width: 100
         height: 50
-        anchors.left: parent.left
-        anchors.top: parent.top
+        anchors.centerIn: parent
         text: "One Player"
         onClicked: {
             sendPlayerName( playerNameBox.text );
@@ -60,7 +59,6 @@ Rectangle {
         id: startTwoPlayer
         width: 100
         height: 50
-        anchors.left: parent.left
         anchors.top: startOnePlayer.bottom
         text: "Two Player"
         onClicked: {
@@ -76,7 +74,6 @@ Rectangle {
         id: startNetworkPlay
         width: 100
         height: 50
-        anchors.left: parent.left
         anchors.top: startTwoPlayer.bottom
        text: "Network Play"
         onClicked: {
@@ -94,7 +91,6 @@ Rectangle {
         id: soundControl
         width: 100
         height: 50
-        anchors.left: parent.left
         anchors.top: startNetworkPlay.bottom
         state: "UNPRESSED"
         states: [
@@ -132,7 +128,6 @@ Rectangle {
         id: colorSelection
         width: 100
         height: 50
-        anchors.left: parent.left
         anchors.top: soundControl.bottom
         text: "Color Selection"
         state: "BLACK"
@@ -174,7 +169,6 @@ Rectangle {
         id: exitGame
         width: 100
         height: 50
-        anchors.left: parent.left
         anchors.top: colorSelection.bottom
         text: "Exit Game"
         onClicked: {
