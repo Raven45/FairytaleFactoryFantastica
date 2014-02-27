@@ -10,6 +10,8 @@ Rectangle {
 
     objectName: "BoardHoleButton"
     id: boardHoleButton
+    x: -31
+    y: -36
     width: 38
     height: 38
     clip: false
@@ -20,8 +22,6 @@ Rectangle {
 
     Image{
         id: backgroundImage
-        x: -40
-        y: -46
         width: 100
         height: 100
         visible: false
@@ -153,8 +153,8 @@ Rectangle {
             name: "BLACK"
             PropertyChanges{
                 target: backgroundImage
-                x: -40
-                y: -46
+                x: -31
+                y: -36
                 visible: false
                 source: "purp-gumdrop.png"
 
@@ -178,8 +178,8 @@ Rectangle {
             name: "WHITE"
             PropertyChanges{
                 target: backgroundImage
-                x: -40
-                y: -47
+                x: -31
+                y: -36
                 visible: false
                 source: "teal-gumdrop.png"
             }
