@@ -134,7 +134,7 @@ Rectangle {
 
     Rectangle {
 
-    width: 650
+    width: 410
     height: width
     color: "#343434"
     anchors.centerIn: parent

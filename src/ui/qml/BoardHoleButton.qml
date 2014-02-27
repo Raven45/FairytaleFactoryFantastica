@@ -10,11 +10,11 @@ Rectangle {
 
     objectName: "BoardHoleButton"
     id: boardHoleButton
-    width: 70
-    height: 70
+    width: 35
+    height: 35
     clip: false
     visible: true
-    radius: 35
+    radius: 17
     z: 14
 
     state: "EMPTY" //...property binding didn't work but should have?

@@ -5,10 +5,10 @@ import QtQuick.Controls.Styles 1.1
 Image {
     fillMode: Image.PreserveAspectFit
     objectName: "Quadrant"
-    width: 300
+    width: 200
     height: width
     z: 1
-    source: "pentago-quad.png"
+    source: "grahm-quad.png"
 
     property int myIndex
 
