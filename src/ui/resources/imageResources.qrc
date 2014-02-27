@@ -7,5 +7,6 @@
 		<file alias="teal-claw-spritesheet.png">../media/teal-claw-spritesheet.png</file>
 		<file alias="purp-claw-spritesheet.png">../media/purp-claw-spritesheet.png</file>
 		<file alias="purp-gumdrop.png">../media/purp-gumdrop.png</file>
+    <file alias="steel-platform.png">../media/steel-platform.png</file>
     </qresource>
 </RCC>

@@ -4,9 +4,11 @@ import QtQuick.Controls.Styles 1.1
 
 Rectangle {
     id: pentagoBoard
-    width: 750
+    width: 550
     height: width
+    anchors.centerIn: parent
     color: "#343434"
+
 
     state: "LOCKED"
 
@@ -203,13 +205,21 @@ Rectangle {
     }
 
 
+    Image{
+        id: steel_platform
+        fillMode: Image.PreserveAspectFit
+        width : 420
+        height: width
+        anchors.centerIn: parent
+        source: "steel-platform.png"
+    }
+
     Rectangle {
-
-    width: 410
-    height: width
-    color: "#343434"
-    anchors.centerIn: parent
-
+        id: quads_rec
+        width: 410
+        height: width
+        color: "transparent"
+        anchors.centerIn: pentagoBoard
 
         Quadrant{
             id: quadrant0
@@ -229,7 +239,7 @@ Rectangle {
             anchors.bottom: parent.bottom
             myIndex: 2
         }
-        Quadrant {
+        Quadrant{
             id: quadrant3
             anchors.right: parent.right
             anchors.bottom: parent.bottom
