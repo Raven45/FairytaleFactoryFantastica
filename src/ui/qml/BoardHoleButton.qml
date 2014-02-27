@@ -13,10 +13,18 @@ Rectangle {
     width: 70
     height: 70
     clip: false
+    color: "transparent"
     visible: true
     radius: 35
     z: 14
 
+    Image{
+        id: backgroundImage
+        x: -40
+        y: -46
+        visible: false
+        source: "teal-gumdrop.png"
+    }
     state: "EMPTY" //...property binding didn't work but should have?
 
 
@@ -25,12 +33,11 @@ Rectangle {
         target: page
 
         onPlaceOpponentsPiece: {
-            if( qIndex === quadrantIndex ){
-                if( pIndex === pieceIndex ){
+            if( qIndex === quadrantIndex && pIndex === pieceIndex ){
 
-                    console.log("o2: coloring opponents piece at " + quadrantIndex + ", " + pieceIndex);
-                    state = page.guiPlayerIsWhite? "BLACK" : "WHITE"
-                }
+                console.log("o2: coloring opponents piece at " + quadrantIndex + ", " + pieceIndex);
+                state = page.guiPlayerIsWhite? "BLACK" : "WHITE"
+
             }
         }
 
@@ -54,11 +61,17 @@ Rectangle {
 
             if( quadrantRotated === quadrantIndex ){
                 console.log( "6. rearranging pieceIndex-es of quadrant " + quadrantRotated + " for a " + direction + " rotation, pieceIndex " + pieceIndex);
+
+                //"which piece was I before the rotation?"
+                //correct the pieceIndex because the rotation animation only animates and doesn't change values
                 switch( pieceIndex ){
                 case 0:
                     if( direction == 1 ){
                             pieceIndex = 6;
-                    }else   pieceIndex = 2;
+                    }else   {
+
+                        pieceIndex = 2;
+                    }
                     break;
 
                 case 1:
@@ -109,32 +122,129 @@ Rectangle {
         }
     }
 
+    QmlTimer {
+        id: showPieceTimer
+        duration: 33 *_CLAW_OPEN_DURATION
+        onTriggered: {
+            backgroundImage.visible = true;
+        }
+    }
+
+    Connections{
+        target: page
+        onShowPiece:{
+            if( qIndex == quadrantIndex && pIndex == pieceIndex ){
+                showPieceTimer.startTimer();
+            }
+        }
+    }
+
     states: [
         State {
             name: "EMPTY"
             PropertyChanges{
-                target: boardHoleButton
-                color: "transparent"
+                target: backgroundImage
+                visible: false
             }
         },
         State {
             name: "BLACK"
             PropertyChanges{
-                target: boardHoleButton
-                color: "black"
+                target: backgroundImage
+                x: -40
+                y: -46
+                visible: false
+                source: "purp-gumdrop.png"
+
+            }
+
+            PropertyChanges{
+                target: purpleClawPiece
+                x: getXYOffset( quadrantIndex, pieceIndex ).x
+                y: getXYOffset( quadrantIndex, pieceIndex ).y
+            }
+
+            StateChangeScript {
+                name: "openPurpleClaw"
+                script: {
+                    readyToOpenClaw( quadrantIndex, pieceIndex, "PURPLE" );
+                }
+
             }
         },
         State {
             name: "WHITE"
             PropertyChanges{
-                target: boardHoleButton
-                color: "white"
+                target: backgroundImage
+                x: -40
+                y: -47
+                visible: false
+                source: "teal-gumdrop.png"
+            }
+
+            PropertyChanges{
+                target: tealClawPiece
+                x: getXYOffset( quadrantIndex, pieceIndex ).x
+                y: getXYOffset( quadrantIndex, pieceIndex ).y
+            }
+
+            StateChangeScript {
+                name: "openTealClaw"
+                script: {
+                    readyToOpenClaw( quadrantIndex, pieceIndex, "TEAL" );
+                }
+
             }
         }
     ]
 
+    transitions: [
+        Transition {
+            from: "EMPTY"
+            to: "WHITE"
+
+            SequentialAnimation{
+                NumberAnimation {
+                    target: tealClawPiece
+                    property: "y"
+                    duration: 1000
+                }
+                NumberAnimation {
+                    target: tealClawPiece;
+                    property: "x"
+                    duration: 1000
+                }
+                ScriptAction{
+                    scriptName: "openTealClaw"
+                }
+            }
+        },
+
+        Transition {
+            from: "EMPTY"
+            to: "BLACK"
+
+            SequentialAnimation{
+                NumberAnimation {
+                    target: purpleClawPiece
+                    property: "y"
+                    duration: 1000
+                }
+                NumberAnimation {
+                    target: purpleClawPiece;
+                    property: "x"
+                    duration: 1000
+                }
+                ScriptAction{
+                    scriptName: "openPurpleClaw"
+                }
+            }
+        }
+    ]
+
+
     MouseArea{
-        anchors.fill: parent
+        anchors.fill: boardHoleButton
        onClicked: {
 
            console.log("pieceIndex of click: " + pieceIndex );
@@ -150,7 +260,7 @@ Rectangle {
                    console.log("1. set setGuiTurnHole ");
                    gameController.setGuiTurnHole( quadrantIndex, pieceIndex);
                    page.gameMessage = "Choose a rotation.";
-                   readyForRotation();
+
 
                }
                else{
@@ -159,7 +269,6 @@ Rectangle {
            }else{
                page.gameMessage = "Can't click that right now!"
            }
-
 
        }
     }

@@ -29,6 +29,8 @@ Rectangle {
     signal readyToExitGame()
     signal backToMainMenu()
     signal sendPlayerName(var playerName )
+    signal readyToOpenClaw(int qIndex, int pIndex, var whichClaw )
+    signal showPiece( int qIndex, int pIndex )
 
     //network-related signals
     //TODO: receive challenge response
@@ -42,12 +44,23 @@ Rectangle {
     signal playerEnteredLobby( var arrivingPlayerName, var addressOfArrivingPlayer, int playerId )
     signal playerLeftLobby( int playerId )
 
+
     property alias main: page
     property bool guiPlayerIsWhite: false
     property string gameMessage
     property bool isFirstMoveOfGame: true
     property int _ROTATION_ANIMATION_DURATION: 400
-    property int _OPPONENT_START_ROTATION_DELAY: 600
+    property int _OPPONENT_START_ROTATION_DELAY: 600 + 2000 + 34*10 + 800 + 2 //claw animation time...
+
+    property int _QUADRANT_WIDTH: 300
+    property int _BOARD_HOLE_WIDTH: 80
+    property int _VERTICAL_OUTSIDE: -45
+    property int _VERTICAL_CENTER: 310
+    property int _HORIZONTAL_TOP: -120
+    property int _HORIZONTAL_CENTER: 237
+    property int _CLAW_OPEN_DURATION: 10
+    property int _CLAW_X_HOME: pentagoBoard.width / 2 - 100
+    property int _CLAW_Y_HOME: -210
 
 
     onBackToMainMenu:{

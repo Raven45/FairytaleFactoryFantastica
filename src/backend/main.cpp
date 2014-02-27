@@ -2,6 +2,7 @@
 #include "PentagoExceptions.h"
 #include "GuiGameController.h"
 #include "SmarterPlayer.h"
+#include "MonteCarloAI.h"
 #include "NetworkInterface.h"
 #include <time.h>
 
@@ -26,7 +27,7 @@
 #include <QQmlComponent>
 #include <QtQml>
 
-typedef SmarterPlayer AIPlayer;
+typedef MonteCarloAI AIPlayer;
 typedef GuiGameController GameController;
 
 int main(int argc, char* argv[])
@@ -45,7 +46,6 @@ int main(int argc, char* argv[])
     QQuickView window;
     window.rootContext() -> setContextProperty( "gameController", &gameController );
     window.setSource( QUrl("qrc:/main.qml") );
-    //window.setIcon(QIcon("qrc:/Icon_PNG.ico"));
 
     gameController.setWindow( &window );
 
