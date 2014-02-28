@@ -1,6 +1,7 @@
 #ifndef MONTECARLOAI4_H
 #define MONTECARLOAI4_H
 
+
 #include "Player.h"
 
 
@@ -8,21 +9,13 @@
 #define MAX_PIECES_ON_QUADRANT 9
 #define NUMBER_OF_POSSIBLE_ROTATIONS 8
 #define NUMBER_OF_QUADRANTS 4
+#define MAX_DEPTH_LEVEL 3
 
-#define NUMBER_OF_GAMES_TO_PLAY4 100000
+#include<map>
 
-struct BestMove4{
-    signed int weight;
-    int quadrantIndex, pieceIndex;
-    unsigned char i;
-    Direction d;
+#define NUMBER_OF_GAMES_TO_PLAY3 30000
 
-    BestMove4():weight(INT_MIN){
-
-    }
-};
-
-class MonteCarloAI4 : public Player{
+class MonteCarloAI4 : public Player {
 private:
 
     static inline bool boardIsFull (const BitBoard& current, const BitBoard& opponent){
@@ -46,36 +39,25 @@ private:
     static inline int playThroughWin(BitBoard current, BitBoard opponent ){
 
         bool player = false;
-
+        int level = 0;
+        //play a single game
         do{
-
-            int quadrantIndex, pieceIndex;
-            do{
-                quadrantIndex = rand() % 4;
-                pieceIndex = rand() % 9;
-
-                //OPT: try BitBoard( current | opponent).hasPieceAt( quadrantIndex, pieceIndex )
-            }while(current.hasPieceAt(quadrantIndex, pieceIndex) || opponent.hasPieceAt(quadrantIndex, pieceIndex));
-
-            if (player){
-                current.placePiece( quadrantIndex, pieceIndex );
-            }else{
-                opponent.placePiece( quadrantIndex, pieceIndex );
-            }
+            placeRandomPiece (player, current, opponent);
 
             int quadrantToRotate = rand() % 4;
             Direction rotationDirection = rand() % 2 == 0? LEFT : RIGHT;
             current.rotate(quadrantToRotate, rotationDirection);
             opponent.rotate(quadrantToRotate, rotationDirection);
+
+
+            if( current.didWin() )
+                return 1;
+            if( opponent.didWin() )
+                return -1;
+
             player = !player;
-
-        } while( !current.didWin() && !opponent.didWin() && ( (BoardInt)current | (BoardInt)opponent != (BoardInt)FULL_BOARD) );
-
-        if ( current.didWin() )
-            return 1;
-
-        if ( opponent.didWin() )
-            return -1;
+            ++level;
+        }while( level < 15 && !boardIsFull(current, opponent) );
 
         return 0;
     }
@@ -83,12 +65,18 @@ private:
 
     static inline Turn monteCarlo ( const Board& mainBoard ){
 
+
+
+        signed int bestweight = INT_MIN;
+        int bestquadrantIndex, bestpieceIndex;
+        unsigned char besti;
+        Direction bestd;
+
+        std::map <std::pair<BoardInt,BoardInt>,int> encountered;
+
         const PlayerColor myColor = mainBoard.turnColor();
         const BitBoard myOriginalBoard = mainBoard.getBoardOfPlayer(myColor);
         const BitBoard myOponnentOriginalBoard = mainBoard.getBoardOfPlayer(util.opposite(myColor));
-        BestMove4 bestmove;
-
-        //qDebug() << "bestmove.weights[0]:" << bestmove.weights[0];
 
         for (int quadrantIndex = 0; quadrantIndex < NUMBER_OF_QUADRANTS; ++quadrantIndex){
 
@@ -98,7 +86,8 @@ private:
                 if (!myOriginalBoard.hasPieceAt(quadrantIndex, pieceIndex) && !myOponnentOriginalBoard.hasPieceAt(quadrantIndex, pieceIndex)){
 
 
-                    for ( int rotations = 0; rotations < 8; ++rotations ) {
+
+                    for (int rotations = 0; rotations < 8; ++rotations){
 
                         BitBoard currentcopy = myOriginalBoard;
                         BitBoard opponentcopy = myOponnentOriginalBoard;
@@ -109,41 +98,44 @@ private:
                        currentcopy.rotate(quadrantToRotate, rotationDirection);
                        opponentcopy.rotate(quadrantToRotate, rotationDirection);
 
-                       //if opponent wins, don't even bother evaluating
-                       if( opponentcopy.didWin() ){
-                           break;
+                       if( encountered[ std::make_pair(currentcopy,opponentcopy) ] == 0 ){
+
+                           //if opponent wins, don't even bother evaluating
+                           if( opponentcopy.didWin() ){
+                               break;
+                           }
+
+                           //a quick check for win
+                           if( currentcopy.didWin() ){
+                               Turn t;
+                               BoardLocation bl;
+                               bl.pieceIndex = pieceIndex;
+                               bl.quadrantIndex = quadrantIndex;
+                               t.setHole(bl);
+                               t.setPieceColor(myColor);
+                               t.setQuadrantToRotate(besti);
+                               t.setRotationDirection(bestd);
+                               return t;
+                           }
+
+
+                            signed int winWeight = 0;
+
+                            for (int playthrough = 0; playthrough < NUMBER_OF_GAMES_TO_PLAY3; ++playthrough){
+                                winWeight += playThroughWin( currentcopy, opponentcopy );
+                            }
+
+                            if( winWeight > bestweight ){
+                                bestweight = winWeight;
+                                bestquadrantIndex = quadrantIndex;
+                                bestpieceIndex = pieceIndex;
+                                besti = quadrantToRotate;
+                                bestd = rotationDirection;
+                            }
                        }
-
-                       //a quick check for win
-                       if( currentcopy.didWin() ){
-                           Turn t;
-                           BoardLocation bl;
-                           bl.pieceIndex = pieceIndex;
-                           bl.quadrantIndex = quadrantIndex;
-                           t.setHole(bl);
-                           t.setPieceColor(myColor);
-                           t.setQuadrantToRotate(quadrantToRotate);
-                           t.setRotationDirection(rotationDirection);
-                           return t;
+                       else{
+                           encountered[ std::make_pair(currentcopy,opponentcopy) ] ++;
                        }
-
-
-                        signed int winWeight = 0;
-
-                        for (int playthrough = 0; playthrough < NUMBER_OF_GAMES_TO_PLAY4; ++playthrough){
-
-                            int result = playThroughWin( currentcopy, opponentcopy );
-                            winWeight += result;
-                        }
-
-                        if( winWeight > bestmove.weight){
-                            bestmove.weight = winWeight;
-                            bestmove.quadrantIndex = quadrantIndex;
-                            bestmove.pieceIndex = pieceIndex;
-                            bestmove.i = quadrantToRotate;
-                            bestmove.d = rotationDirection;
-                            //qDebug() << "found best move!";
-                        }
                     }
                 }
             }
@@ -151,13 +143,14 @@ private:
 
 
         Turn t;
+
         BoardLocation bl;
-        bl.pieceIndex = bestmove.pieceIndex;
-        bl.quadrantIndex = bestmove.quadrantIndex;
+        bl.pieceIndex = bestpieceIndex;
+        bl.quadrantIndex = bestquadrantIndex;
         t.setHole(bl);
         t.setPieceColor(myColor);
-        t.setQuadrantToRotate(bestmove.i);
-        t.setRotationDirection(bestmove.d);
+        t.setQuadrantToRotate(besti);
+        t.setRotationDirection(bestd);
 
         return t;
     }
@@ -171,6 +164,7 @@ public:
         return result;
     }
 };
+
 
 
 #endif // MONTECARLOAI4_H

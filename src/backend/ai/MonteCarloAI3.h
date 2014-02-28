@@ -58,29 +58,15 @@ private:
             current.rotate(quadrantToRotate, rotationDirection);
             opponent.rotate(quadrantToRotate, rotationDirection);
             player = !player;
-            if( player ){
-                level++;
-            }
 
-        }while( !current.didWin() && !opponent.didWin() && !boardIsFull(current, opponent) );
+            if( current.didWin() )
+                return 1;
+            if( opponent.didWin() )
+                return -1;
 
+        }while( !boardIsFull(current, opponent) );
 
-        int result;
-
-        //OPT: try returning immediately
-        if ( current.didWin() ){
-
-            result = level;
-
-        }else if ( opponent.didWin() ){
-            result = 0 - level;
-
-        }else {
-            //draw
-            result = 0;
-        }
-
-        return result;
+        return 0;
     }
 
 
