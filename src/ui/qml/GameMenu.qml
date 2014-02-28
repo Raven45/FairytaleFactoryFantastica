@@ -98,5 +98,10 @@ Rectangle {
         anchors.bottomMargin: 15
         anchors.leftMargin: 30
         z: 3
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: backToMainMenu();
+        }
     }
 }

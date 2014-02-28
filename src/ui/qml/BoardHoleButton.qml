@@ -259,7 +259,7 @@ Rectangle {
                        boardHoleButton.state = "BLACK";
                    }
 
-                   console.log("1. set setGuiTurnHole ");
+                   console.log("calling gameController.setGuiTurnHole(...) (from QML) with quadrantIndex = " + quadrantIndex + " and pieceIndex = " + pieceIndex);
                    gameController.setGuiTurnHole( quadrantIndex, pieceIndex);
                    page.gameMessage = "Choose a rotation.";
 

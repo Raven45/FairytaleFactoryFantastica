@@ -158,11 +158,11 @@ public:
     void setHole(BoardLocation bl) {
         if( TURN_DEBUGGING ){
             if ( bl.pieceIndex < 0 || bl.pieceIndex >= 9 ){
-                qDebug() << "Error: tried to set turn with bad.getHole().pieceIndex value";
+                qDebug() << "Error: tried to set turn with bad.getHole().pieceIndex value of " << bl.pieceIndex;
                 assert(false);
             }
             if ( bl.quadrantIndex < 0 || bl.quadrantIndex >= 4 ){
-                qDebug() << "Error: tried to set turn with bad.getHole().quadrantIndex value";
+                qDebug() << "Error: tried to set turn with bad.getHole().quadrantIndex value of " << bl.quadrantIndex;
                 assert(false);
             }
         }

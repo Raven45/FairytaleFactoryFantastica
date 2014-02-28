@@ -27,7 +27,7 @@
 #include <QQmlComponent>
 #include <QtQml>
 
-typedef MonteCarloAI AIPlayer;
+typedef SmarterPlayer AIPlayer;
 typedef GuiGameController GameController;
 
 int main(int argc, char* argv[])

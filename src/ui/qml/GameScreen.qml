@@ -7,6 +7,17 @@ Rectangle {
     anchors.centerIn: parent
     color: "#343434"
     opacity: 1
+    z: 0
+
+    Image {
+        id: gameScreen_background
+        width: parent.width; height: parent.height
+        anchors.centerIn: gameScreen
+        source: "game-background.png"
+        fillMode: Image.PreserveAspectFit
+        z: 0
+        visible: false
+    }
 
     GameMenu {
         id: myGameMenu

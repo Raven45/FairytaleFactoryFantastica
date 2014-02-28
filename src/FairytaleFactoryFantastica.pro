@@ -68,7 +68,8 @@ OTHER_FILES += \
     ui/qml/GUIButton.qml \
     ui/qml/GameScreen.qml \
     ui/qml/ClawPiece.qml \
-    ui/qml/GameMenu.qml
+    ui/qml/GameMenu.qml \
+    ui/qml/Tbar.qml
 
 HEADERS += \
     backend/networking/Barrager.h \
