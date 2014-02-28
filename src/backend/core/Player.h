@@ -7,7 +7,7 @@
 #include <cstdlib>
 #include <string>
 #include <cassert>
-#include <time.h>
+#include <ctime>
 #include "MainBoard.h"
 #include <QDebug>
 

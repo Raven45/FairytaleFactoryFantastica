@@ -26,7 +26,7 @@ class MainBoard {
     BitBoard blackBoard;
 
     PlayerColor movingPlayersColor;
-
+    int pieceCount;
     public:
 
     const BitBoard& getBoardOfPlayer( PlayerColor player ) const {
@@ -56,9 +56,13 @@ class MainBoard {
 
         blackBoard.reset();
         whiteBoard.reset();
-
+        pieceCount = 0;
         //white moves first
         movingPlayersColor = PlayerColor::WHITE;
+    }
+
+    inline int getPieceCount() const {
+        return pieceCount;
     }
 
     PlayerColor pieceAt (BoardLocation bl){
@@ -130,6 +134,7 @@ class MainBoard {
             blackBoard.rotate(t.getQuadrantToRotate(), t.getRotationDirection() );
             whiteBoard.rotate(t.getQuadrantToRotate(), t.getRotationDirection() );
 
+            pieceCount++;
             result = true;
         }
 

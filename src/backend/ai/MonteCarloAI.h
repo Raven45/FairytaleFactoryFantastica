@@ -9,7 +9,7 @@ using std::map;
 #define NUMBER_OF_QUADRANTS 4
 #define MAX_DEPTH_LEVEL 3
 
-#define NUMBER_OF_GAMES_TO_PLAY 2000
+#define NUMBER_OF_GAMES_TO_PLAY 15000
 
 struct BestMove{
     int score;
@@ -21,12 +21,12 @@ struct BestMove{
 class MonteCarloAI : public Player{
 private:
 
-    inline void rotate(unsigned char i, Direction d, BitBoard& current, BitBoard& opponent){
+    inline static void rotate(unsigned char i, Direction d, BitBoard& current, BitBoard& opponent){
         current.rotate(i, d);
         opponent.rotate(i, d);
     }
 
-    bool boardIsFull (BitBoard current, BitBoard opponent){
+    inline static bool boardIsFull (BitBoard current, BitBoard opponent){
         bool isFull = false;
 
         if ( ((BoardInt)current | (BoardInt)opponent) == FULL_BOARD )
@@ -34,7 +34,7 @@ private:
         return isFull;
     }
 
-    inline void placemove(bool player, BitBoard& current, BitBoard& opponent){
+    inline static void placemove(bool player, BitBoard& current, BitBoard& opponent){
         int quadrantIndex, pieceIndex;
         do{
             quadrantIndex = rand() % 4;
@@ -48,7 +48,7 @@ private:
         }
     }
 
-    inline int playthroughWin(BitBoard current, BitBoard opponent){
+    inline static int playthroughWin(BitBoard current, BitBoard opponent, PlayerColor AIColor){
 
         bool player = false;
 
@@ -62,25 +62,27 @@ private:
             player = !player;
         }while( !current.didWin() && !opponent.didWin() && !boardIsFull(current, opponent) );
 
-        int playthroughscore = 0;
-
         //heuristic weight for this playthrough
-        if (current.didWin()){
-            playthroughscore = 1;
-        }else if (opponent.didWin()){
-            playthroughscore = -1;
-        }
-        return playthroughscore;
+        if (current.didWin())
+            return 2;
+        if (opponent.didWin())
+            return -2;
+        if (AIColor == BLACK)
+            return 1;
+
+        return 0;
+
     }
 
-    inline Turn monteCarlo ( const Board& mainboard ){
-        const BitBoard myOriginalBoard = mainboard.getBoardOfPlayer(mainboard.turnColor());
-        const BitBoard myOponnentOriginalBoard = mainboard.getBoardOfPlayer(mainboard.turnColor() == WHITE? BLACK: WHITE);
+    inline static Turn monteCarlo ( const Board& mainboard ){
+        PlayerColor myColor = mainboard.turnColor();
+        const BitBoard myOriginalBoard = mainboard.getBoardOfPlayer(myColor);
+        const BitBoard myOponnentOriginalBoard = mainboard.getBoardOfPlayer(util.opposite(myColor));
         BestMove bestmove;
-        bestmove.score = 0;
+        bestmove.score = -5 * NUMBER_OF_GAMES_TO_PLAY;
 
-        for (int quadrantIndex = 0; quadrantIndex < NUMBER_OF_QUADRANTS; quadrantIndex++){
-            for (int pieceIndex = 0; pieceIndex < MAX_PIECES_ON_QUADRANT; pieceIndex++){
+        for (int quadrantIndex = 0; quadrantIndex < NUMBER_OF_QUADRANTS; ++quadrantIndex){
+            for (int pieceIndex = 0; pieceIndex < MAX_PIECES_ON_QUADRANT; ++pieceIndex){
                 if (!myOriginalBoard.hasPieceAt(quadrantIndex, pieceIndex) &&
                     !myOponnentOriginalBoard.hasPieceAt(quadrantIndex, pieceIndex)){
 
@@ -93,8 +95,8 @@ private:
                         rotate(rotations % 4, rotations > 4? LEFT : RIGHT, currentcopy, opponentcopy );
 
                         int score = 0;
-                        for (int playthrough = 0; playthrough < NUMBER_OF_GAMES_TO_PLAY; playthrough++){
-                             score += playthroughWin(currentcopy, opponentcopy);
+                        for (int playthrough = 0; playthrough < NUMBER_OF_GAMES_TO_PLAY; ++playthrough){
+                             score += playthroughWin(currentcopy, opponentcopy, myColor);
                         }
                         if (score > bestmove.score){
                             bestmove.score = score;
@@ -121,7 +123,11 @@ private:
 
 public:
     inline Turn getMove(const Board& mainboard) override{
-        return monteCarlo(mainboard);
+        std::clock_t start;
+        start = std::clock();
+        Turn result = monteCarlo(mainboard);
+        qDebug() << "Time: " << ((std::clock() - start) / (double)(CLOCKS_PER_SEC)) << " seconds";
+        return result;
     }
 };
 

@@ -8,6 +8,11 @@ QT += multimedia core network concurrent quick
 CONFIG += c++11 release #static release link_prl
 #CONFIG -= qt
 
+QMAKE_CXXFLAGS_RELEASE -= -O
+QMAKE_CXXFLAGS_RELEASE -= -O1
+QMAKE_CXXFLAGS_RELEASE -= -O2
+QMAKE_CXXFLAGS_RELEASE -= -O3
+QMAKE_CXXFLAGS_RELEASE += -Ofast
 
 
 #CONFIG(release, debug|release): LIBS += -L$$PWD/../../QtSDK-x86_64 - static/lib/ -lQt5Core -lQt5Gui -lQt5Quick -lQt5Multimedia -lQt5Network -lQt5Qml
@@ -95,7 +100,10 @@ HEADERS += \
     backend/ai/lessdumbplayer3.h \
     backend/ai/MonteCarloAI.h \
     backend/ai/randomplayer.h \
-    backend/ai/SmarterPlayer.h
+    backend/ai/SmarterPlayer.h \
+    backend/ai/MonteCarloAI2.h \
+    backend/ai/MonteCarloAI3.h \
+    backend/ai/MonteCarloAI4.h
 
 
 
