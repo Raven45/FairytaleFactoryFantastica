@@ -2,5 +2,17 @@
     <qresource>
     <file alias="pause-button.png">../guiButtons/pause-button.png</file>
     <file alias="inverse-pause-button.png">../guiButtons/inverse-pause-button.png</file>
+    <file alias="play-button.png">../guiButtons/play-button.png</file>
+    <file alias="inverse-play-button.png">../guiButtons/inverse-play-button.png</file>
+    <file alias="restart-button.png">../guiButtons/restart-button.png</file>
+    <file alias="inverse-restart-button.png">../guiButtons/inverse-restart-button.png</file>
+    <file alias="sound-button.png">../guiButtons/sound-button.png</file>
+    <file alias="inverse-sound-button.png">../guiButtons/inverse-sound-button.png</file>
+    <file alias="nosound-button.png">../guiButtons/nosound-button.png</file>
+    <file alias="inverse-nosound-button.png">../guiButtons/inverse-nosound-button.png</file>
+    <file alias="help-button.png">../guiButtons/help-button.png</file>
+    <file alias="inverse-help-button.png">../guiButtons/inverse-help-button.png</file>
+    <file alias="back-button.png">../guiButtons/back-button.png</file>
+    <file alias="inverse-back-button.png">../guiButtons/inverse-back-button.png</file>
     </qresource>
 </RCC>

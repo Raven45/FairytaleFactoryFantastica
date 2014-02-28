@@ -32,12 +32,68 @@ Rectangle {
     ]
 
     Transition {
-         from: "*"; to: "*"
+         from: "INVISIBLE"; to: "VISIBLE"
          NumberAnimation {
-             properties: "anchors.leftMargin";
+             properties: "x";
              easing.type: Easing.InOutQuad;
              duration: 10000
          }
     }
 
+    GUIButton {
+        source_string: "play-button.png"
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.topMargin: 15
+        anchors.leftMargin: 30
+        z: 3
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: gameMenu.state = "INVISIBLE"
+        }
+    }
+
+    GUIButton {
+        source_string: "restart-button.png"
+        anchors.top: parent.top
+        anchors.topMargin: (parent.height - 30)/4
+        anchors.left: parent.left
+        anchors.leftMargin: 30
+        z: 3
+    }
+
+    GUIButton {
+        id: soundButton
+        source_string: "sound-button.png"
+        anchors.top: parent.top
+        anchors.topMargin: (parent.height/2) - 30
+        anchors.left: parent.left
+        anchors.leftMargin: 30
+        z: 3
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: (soundButton.source_string === "sound-button.png") ?
+                          soundButton.source_string = "nosound-button.png" : soundButton.source_string = "sound-button.png"
+        }
+    }
+
+    GUIButton {
+        source_string: "help-button.png"
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: ((parent.height - 30)/4) - 30
+        anchors.left: parent.left
+        anchors.leftMargin: 30
+        z: 3
+    }
+
+    GUIButton {
+        source_string: "back-button.png"
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.bottomMargin: 15
+        anchors.leftMargin: 30
+        z: 3
+    }
 }

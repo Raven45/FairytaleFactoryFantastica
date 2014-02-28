@@ -1,6 +1,7 @@
 import QtQuick 2.0
 
 Rectangle {
+    id: gameScreen
     width: parent.width
     height: parent.height
     anchors.centerIn: parent
@@ -14,14 +15,13 @@ Rectangle {
 
     GUIButton {
         source_string: "pause-button.png"
-        anchors.top: parent.top
-        anchors.left: parent.left
+        anchors.top: gameScreen.top
+        anchors.left: gameScreen.left
         anchors.topMargin: 15
         anchors.leftMargin: 30
         z: 1
 
         MouseArea {
-            id: mouseArea
             anchors.fill: parent
             onClicked: myGameMenu.state = "VISIBLE"
         }
