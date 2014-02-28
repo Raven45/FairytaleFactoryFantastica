@@ -147,7 +147,7 @@ public:
     void setQuadrantToRotate(int x) {
         if( TURN_DEBUGGING ){
             if ( (x < 0 || x >= 4 ) && x != DONT_ROTATE_CODE ){
-                qDebug() << "Error: tried to set turn with bad quadrantToRotate value";
+                qDebug() << "Error: tried to set turn with bad quadrantToRotate value of " << x;
                 assert(false);
             }
         }
