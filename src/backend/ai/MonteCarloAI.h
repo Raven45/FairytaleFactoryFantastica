@@ -9,7 +9,7 @@ using std::map;
 #define NUMBER_OF_QUADRANTS 4
 #define MAX_DEPTH_LEVEL 3
 
-#define NUMBER_OF_GAMES_TO_PLAY 2000
+#define NUMBER_OF_GAMES_TO_PLAY 100000
 
 struct BestMove{
     int score;
@@ -21,12 +21,12 @@ struct BestMove{
 class MonteCarloAI : public Player{
 private:
 
-    inline void rotate(unsigned char i, Direction d, BitBoard& current, BitBoard& opponent){
+    inline static void rotate(unsigned char i, Direction d, BitBoard& current, BitBoard& opponent){
         current.rotate(i, d);
         opponent.rotate(i, d);
     }
 
-    bool boardIsFull (BitBoard current, BitBoard opponent){
+    inline static bool boardIsFull (BitBoard current, BitBoard opponent){
         bool isFull = false;
 
         if ( ((BoardInt)current | (BoardInt)opponent) == FULL_BOARD )
@@ -34,7 +34,7 @@ private:
         return isFull;
     }
 
-    inline void placemove(bool player, BitBoard& current, BitBoard& opponent){
+    inline static void placemove(bool player, BitBoard& current, BitBoard& opponent){
         int quadrantIndex, pieceIndex;
         do{
             quadrantIndex = rand() % 4;
@@ -48,7 +48,7 @@ private:
         }
     }
 
-    inline int playthroughWin(BitBoard current, BitBoard opponent, PlayerColor AIColor){
+    inline static int playthroughWin(BitBoard current, BitBoard opponent, PlayerColor AIColor){
 
         bool player = false;
 
@@ -62,22 +62,19 @@ private:
             player = !player;
         }while( !current.didWin() && !opponent.didWin() && !boardIsFull(current, opponent) );
 
-        int playthroughscore = 0;
-
         //heuristic weight for this playthrough
-        if (current.didWin()){
-            playthroughscore = 2;
-        }else if (opponent.didWin()){
-            playthroughscore = -1;
-        }else{
-            if (AIColor == BLACK){
-                playthroughscore = 1;
-            }
-        }
-        return playthroughscore;
+        if (current.didWin())
+            return 2;
+        if (opponent.didWin())
+            return -1;
+        if (AIColor == BLACK)
+            return 1;
+
+        return 0;
+
     }
 
-    inline Turn monteCarlo ( const Board& mainboard ){
+    inline static Turn monteCarlo ( const Board& mainboard ){
         PlayerColor myColor = mainboard.turnColor();
         const BitBoard myOriginalBoard = mainboard.getBoardOfPlayer(myColor);
         const BitBoard myOponnentOriginalBoard = mainboard.getBoardOfPlayer(util.opposite(myColor));
