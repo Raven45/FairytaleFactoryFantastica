@@ -65,7 +65,9 @@ OTHER_FILES += \
     ui/qml/SentChallengePopup.qml \
     ui/qml/StartMenu.qml \
     ui/qml/GUIButton.qml \
-    ui/qml/GameScreen.qml
+    ui/qml/GameScreen.qml \
+    ui/qml/GameMenu.qml \
+    ui/qml/ClawPiece.qml
 
 HEADERS += \
     backend/networking/Barrager.h \

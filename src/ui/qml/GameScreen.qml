@@ -6,11 +6,15 @@ Rectangle {
     anchors.centerIn: parent
     color: "#343434"
 
-    GUIButton{
+    GameMenu {
+        id: myGameMenu
+    }
+
+    GUIButton {
         source_string: "pause-button.png"
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.topMargin: 15
-        anchors.leftMargin: 15
+        anchors.leftMargin: 30
     }
 }

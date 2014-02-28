@@ -525,32 +525,34 @@ compiler_rcc_make_all: qrc_qmlResources.cpp qrc_imageResources.cpp qrc_audioReso
 compiler_rcc_clean:
 	-$(DEL_FILE) qrc_qmlResources.cpp qrc_imageResources.cpp qrc_audioResources.cpp qrc_guiButtonsResources.cpp
 qrc_qmlResources.cpp: ../src/ui/resources/qmlResources.qrc \
-		../src/ui/qml/GameOverMenu.qml \
-		../src/ui/qml/ClawPiece.qml \
-		../src/ui/qml/Arrow.qml \
-		../src/ui/qml/Quadrant.qml \
-		../src/ui/qml/main.qml \
-		../src/ui/qml/QmlTimer.qml \
-		../src/ui/qml/StartMenu.qml \
-		../src/ui/qml/Board.qml \
 		../src/ui/qml/BoardHoleButton.qml \
-		../src/ui/qml/NetworkLobby.qml \
-		../src/ui/qml/LobbyRow.qml \
-		../src/ui/qml/GUIButton.qml \
-		../src/ui/qml/GameScreen.qml \
 		../src/ui/qml/ChallengePopup.qml \
-		../src/ui/qml/SentChallengePopup.qml
+		../src/ui/qml/SentChallengePopup.qml \
+		../src/ui/qml/ClawPiece.qml \
+		../src/ui/qml/GameMenu.qml \
+		../src/ui/qml/Arrow.qml \
+		../src/ui/qml/StartMenu.qml \
+		../src/ui/qml/GameOverMenu.qml \
+		../src/ui/qml/Board.qml \
+		../src/ui/qml/QmlTimer.qml \
+		../src/ui/qml/Quadrant.qml \
+		../src/ui/qml/GUIButton.qml \
+		../src/ui/qml/LobbyRow.qml \
+		../src/ui/qml/NetworkLobby.qml \
+		../src/ui/qml/GameScreen.qml \
+		../src/ui/qml/main.qml
 	/Users/rssll/Qt5.2.0/5.2.0/clang_64/bin/rcc -name qmlResources ../src/ui/resources/qmlResources.qrc -o qrc_qmlResources.cpp
 
 qrc_imageResources.cpp: ../src/ui/resources/imageResources.qrc \
-		../src/ui/media/grahm-quad.png \
-		../src/ui/media/steel-platform.png \
-		../src/ui/media/pentago-quad.png \
-		../src/ui/media/teal-claw-spritesheet.png \
 		../src/ui/media/purp-gumdrop.png \
 		../src/ui/media/arrow.png \
+		../src/ui/media/grahm-quad.png \
 		../src/ui/media/teal-gumdrop.png \
-		../src/ui/media/purp-claw-spritesheet.png
+		../src/ui/media/steel-platform.png \
+		../src/ui/media/purp-claw-spritesheet.png \
+		../src/ui/media/ingame-menu.png \
+		../src/ui/media/pentago-quad.png \
+		../src/ui/media/teal-claw-spritesheet.png
 	/Users/rssll/Qt5.2.0/5.2.0/clang_64/bin/rcc -name imageResources ../src/ui/resources/imageResources.qrc -o qrc_imageResources.cpp
 
 qrc_audioResources.cpp: ../src/ui/resources/audioResources.qrc \
@@ -558,8 +560,8 @@ qrc_audioResources.cpp: ../src/ui/resources/audioResources.qrc \
 	/Users/rssll/Qt5.2.0/5.2.0/clang_64/bin/rcc -name audioResources ../src/ui/resources/audioResources.qrc -o qrc_audioResources.cpp
 
 qrc_guiButtonsResources.cpp: ../src/ui/resources/guiButtonsResources.qrc \
-		../src/ui/guiButtons/inverse-pause-button.png \
-		../src/ui/guiButtons/pause-button.png
+		../src/ui/guiButtons/pause-button.png \
+		../src/ui/guiButtons/inverse-pause-button.png
 	/Users/rssll/Qt5.2.0/5.2.0/clang_64/bin/rcc -name guiButtonsResources ../src/ui/resources/guiButtonsResources.qrc -o qrc_guiButtonsResources.cpp
 
 compiler_moc_header_make_all: moc_qtquick2applicationviewer.cpp moc_Barrager.cpp moc_NetworkInterface.cpp moc_GuiGameController.cpp moc_MusicPlayer.cpp
