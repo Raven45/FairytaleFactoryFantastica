@@ -16,18 +16,15 @@ Rectangle {
     states: [
         State{
             name: "INVISIBLE"
-            PropertyChanges {
-                target: gameMenu
-                anchors.leftMargin: -width + 25
-            }
-
+            PropertyChanges { target: pauseOpacity; visible: false }
+            PropertyChanges { target: pentagoBoard; state: "UNLOCKED" }
+            PropertyChanges { target: gameMenu; anchors.leftMargin: -width + 25 }
         },
         State{
             name: "VISIBLE"
-            PropertyChanges {
-                target: gameMenu
-                anchors.leftMargin: 0
-            }
+            PropertyChanges { target: pauseOpacity; visible: true }
+            PropertyChanges { target: pentagoBoard; state: "LOCKED" }
+            PropertyChanges { target: gameMenu; anchors.leftMargin: 0 }
         }
     ]
 
@@ -74,8 +71,14 @@ Rectangle {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: (soundButton.source_string === "sound-button.png") ?
-                          soundButton.source_string = "nosound-button.png" : soundButton.source_string = "sound-button.png"
+            onClicked: {
+                if (soundButton.source_string === "sound-button.png") {
+                    soundButton.source_string = "nosound-button.png"
+                } else {
+                    soundButton.source_string = "sound-button.png"
+                }
+                changeSoundState();
+            }
         }
     }
 
