@@ -11,15 +11,15 @@
 #define NUMBER_OF_QUADRANTS 4
 #define MAX_DEPTH_LEVEL 3
 
-#define NUMBER_OF_GAMES_TO_PLAY 11000
+#define NUMBER_OF_GAMES_TO_PLAY3 20000
 
-struct BestMove{
+struct BestMove3{
     signed int weights[19];
     int quadrantIndex, pieceIndex;
     unsigned char i;
     Direction d;
 
-    BestMove():weights{INT_MIN}{
+    BestMove3():weights{INT_MIN}{
 
     }
 };
@@ -89,7 +89,7 @@ private:
         const PlayerColor myColor = mainBoard.turnColor();
         const BitBoard myOriginalBoard = mainBoard.getBoardOfPlayer(myColor);
         const BitBoard myOponnentOriginalBoard = mainBoard.getBoardOfPlayer(util.opposite(myColor));
-        BestMove bestmove;
+        BestMove3 bestmove;
 
         bool moveNeverFound = true;
 
@@ -136,7 +136,7 @@ private:
 
                         signed int winWeights[19] = {0};
 
-                        for (int playthrough = 0; playthrough < NUMBER_OF_GAMES_TO_PLAY; ++playthrough){
+                        for (int playthrough = 0; playthrough < NUMBER_OF_GAMES_TO_PLAY3; ++playthrough){
 
                             int result = playThroughWin(currentcopy, opponentcopy );
 

@@ -2,7 +2,7 @@
 #include "PentagoExceptions.h"
 #include "GuiGameController.h"
 #include "SmarterPlayer.h"
-#include "MonteCarloAI3.h"
+#include "MonteCarloAI.h"
 #include "MonteCarloAI4.h"
 #include "NetworkInterface.h"
 #include <time.h>

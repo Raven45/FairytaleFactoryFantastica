@@ -9,7 +9,7 @@ using std::map;
 #define NUMBER_OF_QUADRANTS 4
 #define MAX_DEPTH_LEVEL 3
 
-#define NUMBER_OF_GAMES_TO_PLAY 100000
+#define NUMBER_OF_GAMES_TO_PLAY 15000
 
 struct BestMove{
     int score;
@@ -66,7 +66,7 @@ private:
         if (current.didWin())
             return 2;
         if (opponent.didWin())
-            return -1;
+            return -2;
         if (AIColor == BLACK)
             return 1;
 
@@ -123,7 +123,11 @@ private:
 
 public:
     inline Turn getMove(const Board& mainboard) override{
-        return monteCarlo(mainboard);
+        std::clock_t start;
+        start = std::clock();
+        Turn result = monteCarlo(mainboard);
+        qDebug() << "Time: " << ((std::clock() - start) / (double)(CLOCKS_PER_SEC)) << " seconds";
+        return result;
     }
 };
 
