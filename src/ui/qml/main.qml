@@ -51,12 +51,12 @@ Rectangle {
     property int _ROTATION_ANIMATION_DURATION: 400
     property int _OPPONENT_START_ROTATION_DELAY: 600 + 2000 + 34*10 + 800 + 2 //claw animation time...
 
-    property int _QUADRANT_WIDTH: 300
-    property int _BOARD_HOLE_WIDTH: 80
-    property int _VERTICAL_OUTSIDE: -66
-    property int _VERTICAL_CENTER: 214
-    property int _HORIZONTAL_TOP: -65
-    property int _HORIZONTAL_CENTER: 215
+    property int _QUADRANT_WIDTH: 200
+    property int _BOARD_HOLE_WIDTH: 65
+    property int _VERTICAL_OUTSIDE: 5
+    property int _VERTICAL_CENTER: 215
+    property int _HORIZONTAL_TOP: -50
+    property int _HORIZONTAL_CENTER: 165
     property int _CLAW_OPEN_DURATION: 10
     property int _CLAW_X_HOME: pentagoBoard.width / 2 - 100
     property int _CLAW_Y_HOME: -210
