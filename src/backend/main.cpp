@@ -3,7 +3,7 @@
 #include "GuiGameController.h"
 #include "SmarterPlayer.h"
 #include "MonteCarloAI.h"
-#include "MonteCarloAI4.h"
+#include "MonteCarloAI3.h"
 #include "NetworkInterface.h"
 #include <time.h>
 
@@ -28,7 +28,7 @@
 #include <QQmlComponent>
 #include <QtQml>
 
-typedef MonteCarloAI4 AIPlayer;
+typedef MonteCarloAI3 AIPlayer;
 typedef GuiGameController GameController;
 
 int main(int argc, char* argv[])

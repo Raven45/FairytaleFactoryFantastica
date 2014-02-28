@@ -19,23 +19,14 @@ struct BestMove{
     Direction d;
 };
 
-class MonteCarloAI : public Player{
+class MonteCarloAI2 : public Player{
 private:
 
-    inline static void rotateBothPlayers(unsigned char i, Direction d, BitBoard& current, BitBoard& opponent){
-        current.rotate(i, d);
-        opponent.rotate(i, d);
+    static inline bool boardIsFull (const BitBoard& current, const BitBoard& opponent){
+        return((BoardInt)current | (BoardInt)opponent) == FULL_BOARD;
     }
 
-    static bool boardIsFull (const BitBoard& current, const BitBoard& opponent){
-        bool isFull = false;
-
-        if ( ((BoardInt)current | (BoardInt)opponent) == FULL_BOARD )
-            isFull = true;
-        return isFull;
-    }
-
-    static inline void placeRandomMove(const bool player, BitBoard& current, BitBoard& opponent){
+    static inline void placeRandomPiece(const bool player, BitBoard& current, BitBoard& opponent){
         int quadrantIndex, pieceIndex;
         do{
             quadrantIndex = rand() % 4;
@@ -49,40 +40,61 @@ private:
         }
     }
 
-    static inline int playthroughWin(BitBoard current, BitBoard opponent, const PlayerColor AIColor){
+    static inline long double playThroughWin(BitBoard current, BitBoard opponent, const PlayerColor AIColor){
 
         bool player = false;
-
+        char depth = 1;
         //play a single game
         do{
-            placemove (player, current, opponent);
+            placeRandomPiece (player, current, opponent);
 
-            int quadrantIndex = rand() % 4;
+            int quadrantToRotate = rand() % 4;
             Direction rotationDirection = rand() % 2 == 0? LEFT : RIGHT;
-            rotate (quadrantIndex, rotationDirection , current, opponent);
+            current.rotate(quadrantToRotate, rotationDirection);
+            opponent.rotate(quadrantToRotate, rotationDirection);
             player = !player;
+            ++depth;
+
         }while( !current.didWin() && !opponent.didWin() && !boardIsFull(current, opponent) );
 
-        int playthroughscore = 0;
+        long double playthroughscore;
 
-        //heuristic weight for this playthrough
-        if (current.didWin()){
-            playthroughscore = 2;
-        }else if (opponent.didWin()){
-            playthroughscore = -1;
-        }else{
-            if (AIColor == BLACK){
+        //OPT: try returning immediately
+        if ( current.didWin() ){
+
+            //OPT: try unrolling for each case without pow
+            if( depth < 5 ){
+                long double weight = (1000000000 / pow(36, depth));
+                playthroughscore = weight * weight;
+            }
+            else{
                 playthroughscore = 1;
             }
+
+        }else if ( opponent.didWin() ){
+
+            if( depth < 5 ){
+                long double weight = (1000000000 / pow(36, depth));
+                playthroughscore = weight * weight * -1;
+            }
+            else{
+                playthroughscore = -1;
+            }
+
+        }else if (AIColor == BLACK){
+            playthroughscore = 1;
+        }
+        else{
+            playthroughscore = 0;
         }
         return playthroughscore;
     }
 
     static inline Turn monteCarlo ( const Board& mainBoard ){
-        const BitBoard myOriginalBoard = mainboard.getBoardOfPlayer(mainboard.turnColor());
-        const BitBoard myOponnentOriginalBoard = mainboard.getBoardOfOpponent(mainboard.turnColor());
+        const BitBoard myOriginalBoard = mainBoard.getBoardOfPlayer(mainBoard.turnColor());
+        const BitBoard myOponnentOriginalBoard = mainBoard.getBoardOfOpponent(mainBoard.turnColor());
         BestMove bestmove;
-        const PlayerColor myColor = mainboard.turnColor();
+        const PlayerColor myColor = mainBoard.turnColor();
         bestmove.score = std::numeric_limits<long double>::min();
 
         for (int quadrantIndex = 0; quadrantIndex < NUMBER_OF_QUADRANTS; ++quadrantIndex){
@@ -102,9 +114,9 @@ private:
                         Direction rotationDirection = rotations > 4? LEFT : RIGHT;
                         rotate(quadrantToRotate, rotationDirection, currentcopy, opponentcopy );
 
-                        int score = 0;
+                        long double score = 0;
                         for (int playthrough = 0; playthrough < NUMBER_OF_GAMES_TO_PLAY; ++playthrough){
-                             score += playthroughWin(currentcopy, opponentcopy, myColor);
+                             score += playThroughWin(currentcopy, opponentcopy, myColor);
                         }
                         if (score > bestmove.score){
                             bestmove.score = score;
@@ -130,7 +142,7 @@ private:
     }
 
 public:
-    inline Turn getMove(const Board& mainBoard) override{
+    static inline Turn getMove(const Board& mainBoard) override{
         return monteCarlo(mainBoard);
     }
 };

@@ -11,7 +11,7 @@
 #define NUMBER_OF_QUADRANTS 4
 #define MAX_DEPTH_LEVEL 3
 
-#define NUMBER_OF_GAMES_TO_PLAY3 20000
+#define NUMBER_OF_GAMES_TO_PLAY3 23000
 
 struct BestMove3{
     signed int weights[19];
@@ -57,14 +57,16 @@ private:
             Direction rotationDirection = rand() % 2 == 0? LEFT : RIGHT;
             current.rotate(quadrantToRotate, rotationDirection);
             opponent.rotate(quadrantToRotate, rotationDirection);
-            player = !player;
 
             if( current.didWin() )
-                return 1;
+                return level;
             if( opponent.didWin() )
-                return -1;
+                return - level;
 
-        }while( !boardIsFull(current, opponent) );
+            level += player;
+            player = !player;
+
+        }while( level < 10 && !boardIsFull(current, opponent) );
 
         return 0;
     }
@@ -114,8 +116,8 @@ private:
                            bl.quadrantIndex = quadrantIndex;
                            t.setHole(bl);
                            t.setPieceColor(myColor);
-                           t.setQuadrantToRotate(bestmove.i);
-                           t.setRotationDirection(bestmove.d);
+                           t.setQuadrantToRotate(quadrantToRotate);
+                           t.setRotationDirection(rotationDirection);
                            return t;
                        }
 
@@ -127,10 +129,10 @@ private:
                             int result = playThroughWin(currentcopy, opponentcopy );
 
                             if( result > 0 ){
-                                winWeights[ result - 1 ]++;
+                                ++(winWeights[ result - 1 ]);
                             }
                             else if ( result < 0 ){
-                                winWeights[ std::abs( result ) - 1 ] -= 289;
+                                --(winWeights[ std::abs( result ) - 1 ]);
                             }
 
                         }
@@ -138,7 +140,7 @@ private:
 
                         bool killLoop = false;
 
-                        qDebug() << "for weights at " << quadrantIndex << ", " << pieceIndex << ": " <<
+                        /*qDebug() << "for weights at " << quadrantIndex << ", " << pieceIndex << ": " <<
                                     winWeights[0] << ", " <<
                                     winWeights[1] << ", " <<
                                     winWeights[2] << ", " <<
@@ -149,10 +151,10 @@ private:
                                     winWeights[7] << ", " <<
                                     winWeights[8] << ", " <<
                                     winWeights[9] << ", " <<
-                                    winWeights[10];
+                                    winWeights[10];*/
 
                         //really short loop; can be shorter if we skip to indices according to pieceCount
-                        for( int weightIndex = 0; weightIndex < 19 && !killLoop; ++weightIndex ){
+                        for( int weightIndex = 0; weightIndex < 19; ++weightIndex ){
 
                             //try adding && winWights[weightIndex] != 0
                             if( winWeights[weightIndex] > bestmove.weights[weightIndex] ){
@@ -161,13 +163,13 @@ private:
                                 bestmove.pieceIndex = pieceIndex;
                                 bestmove.i = quadrantToRotate;
                                 bestmove.d = rotationDirection;
-                                qDebug() << "found best move!";
                                 moveNeverFound = false;
-                                killLoop = true;
+                                break;
                             }
-                            else{
-                                killLoop = winWeights[weightIndex] < bestmove.weights[weightIndex];
+                            else if( winWeights[weightIndex] < bestmove.weights[weightIndex] ){
+                                break;
                             }
+
                         }
                     }
                 }
@@ -175,20 +177,24 @@ private:
         }
 
 
-        Turn t;
-
-
         if( moveNeverFound ){
-            //make random move
-            do{
-                bestmove.quadrantIndex = rand() % 4;
-                bestmove.pieceIndex = rand() % 9;
-            }while(myOriginalBoard.hasPieceAt(bestmove.quadrantIndex, bestmove.pieceIndex) || myOponnentOriginalBoard.hasPieceAt(bestmove.quadrantIndex, bestmove.pieceIndex));
 
-            bestmove.i = rand() % 4;
-            bestmove.d = rand() % 2 == 0? LEFT : RIGHT;
-            qDebug() << "hmm, AI making random move!";
+            int quadrantIndex, pieceIndex;
+            do{
+                quadrantIndex = rand() % 4;
+                pieceIndex = rand() % 9;
+            }while( !mainBoard.holeIsEmpty(quadrantIndex, pieceIndex) );
+
+            int quadrantToRotate = rand() % 4;
+            Direction rotationDirection = rand() % 2 == 0? LEFT : RIGHT;
+
+            bestmove.quadrantIndex = quadrantIndex;
+            bestmove.pieceIndex = pieceIndex;
+            bestmove.i = quadrantToRotate;
+            bestmove.d = rotationDirection;
         }
+
+        Turn t;
 
         BoardLocation bl;
         bl.pieceIndex = bestmove.pieceIndex;
@@ -202,8 +208,12 @@ private:
     }
 
 public:
-    inline Turn getMove(const Board& mainBoard) override{
-        return monteCarlo(mainBoard);
+    inline Turn getMove(const Board& mainBoard) override {
+        std::clock_t start;
+        start = std::clock() ;
+        Turn result = monteCarlo( mainBoard );
+        qDebug() << "Time: " << ((std::clock() - start) / (double)(CLOCKS_PER_SEC)) << " seconds";
+        return result;
     }
 };
 
