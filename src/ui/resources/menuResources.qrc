@@ -1,0 +1,5 @@
+<RCC>
+    <qresource>
+    <file alias="ingame-menu.png">../media/ingame-menu.png</file>
+    </qresource>
+</RCC>

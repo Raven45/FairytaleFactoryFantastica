@@ -19,7 +19,8 @@ RESOURCES += \
     ui/resources/qmlResources.qrc \
     ui/resources/imageResources.qrc \
     ui/resources/audioResources.qrc \
-    ui/resources/guiButtonsResources.qrc
+    ui/resources/guiButtonsResources.qrc \
+    ui/resources/menuResources.qrc
 
 INCLUDEPATH += \
     backend \
@@ -66,7 +67,8 @@ OTHER_FILES += \
     ui/qml/StartMenu.qml \
     ui/qml/GUIButton.qml \
     ui/qml/GameScreen.qml \
-    ui/qml/ClawPiece.qml
+    ui/qml/ClawPiece.qml \
+    ui/qml/GameMenu.qml
 
 HEADERS += \
     backend/networking/Barrager.h \

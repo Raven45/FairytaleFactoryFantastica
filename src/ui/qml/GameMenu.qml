@@ -18,7 +18,7 @@ Rectangle {
             name: "INVISIBLE"
             PropertyChanges {
                 target: gameMenu
-                anchors.leftMargin: -width
+                anchors.leftMargin: -width + 25
             }
 
         },
@@ -30,4 +30,14 @@ Rectangle {
             }
         }
     ]
+
+    Transition {
+         from: "*"; to: "*"
+         NumberAnimation {
+             properties: "anchors.leftMargin";
+             easing.type: Easing.InOutQuad;
+             duration: 10000
+         }
+    }
+
 }

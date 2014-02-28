@@ -8,6 +8,8 @@ Rectangle {
 
     GameMenu {
         id: myGameMenu
+        state: "INVISIBLE"
+        z: 2
     }
 
     GUIButton {
@@ -16,5 +18,12 @@ Rectangle {
         anchors.left: parent.left
         anchors.topMargin: 15
         anchors.leftMargin: 30
+        z: 1
+
+        MouseArea {
+            id: mouseArea
+            anchors.fill: parent
+            onClicked: myGameMenu.state = "VISIBLE"
+        }
     }
 }
