@@ -1,6 +1,5 @@
-#ifndef MONTECARLOAI3_H
-#define MONTECARLOAI3_H
-
+#ifndef MONTECARLOAI4_H
+#define MONTECARLOAI4_H
 
 #include "Player.h"
 
@@ -11,20 +10,21 @@
 #define NUMBER_OF_QUADRANTS 4
 #define MAX_DEPTH_LEVEL 3
 
-#define NUMBER_OF_GAMES_TO_PLAY 11000
+#define NUMBER_OF_GAMES_TO_PLAY4 100000
+#define NUMBER_OF_LEVELS_DEEP 3
 
-struct BestMove{
-    signed int weights[19];
+struct BestMove4{
+    signed int weights[3];
     int quadrantIndex, pieceIndex;
     unsigned char i;
     Direction d;
 
-    BestMove():weights{INT_MIN}{
+    BestMove4():weights{INT_MIN}{
 
     }
 };
 
-class MonteCarloAI3 : public Player{
+class MonteCarloAI4 : public Player{
 private:
 
     static inline bool boardIsFull (const BitBoard& current, const BitBoard& opponent){
@@ -45,55 +45,65 @@ private:
         }
     }
 
-    static inline int playThroughWin(BitBoard current, BitBoard opponent ){
+    static inline int playThroughWin(BitBoard current, BitBoard opponent, int myPiecesOnBoard ){
 
         bool player = false;
-        int level = 1;
-        //play a single game
-        do{
+
+
+        while( myPiecesOnBoard < 5 ){
             placeRandomPiece (player, current, opponent);
 
             int quadrantToRotate = rand() % 4;
             Direction rotationDirection = rand() % 2 == 0? LEFT : RIGHT;
             current.rotate(quadrantToRotate, rotationDirection);
             opponent.rotate(quadrantToRotate, rotationDirection);
+
             player = !player;
+
             if( player ){
-                level++;
+                ++myPiecesOnBoard;
             }
-
-        }while( !current.didWin() && !opponent.didWin() && !boardIsFull(current, opponent) );
-
-
-        int result;
-
-        //OPT: try returning immediately
-        if ( current.didWin() ){
-
-            result = level;
-
-        }else if ( opponent.didWin() ){
-            result = 0 - level;
-
-        }else {
-            //draw
-            result = 0;
         }
 
-        return result;
+        int level = 1;
+
+        do{
+
+            placeRandomPiece (player, current, opponent);
+            int quadrantToRotate = rand() % 4;
+            Direction rotationDirection = rand() % 2 == 0? LEFT : RIGHT;
+            current.rotate(quadrantToRotate, rotationDirection);
+            opponent.rotate(quadrantToRotate, rotationDirection);
+            player = !player;
+
+            if( player ){
+                ++level;
+            }
+        }while( level < NUMBER_OF_LEVELS_DEEP + 1 && (!current.didWin() && opponent.didWin() && !boardIsFull(current, opponent)));
+
+        //OPT: try returning immediately
+        if ( current.didWin() )
+            return level;
+
+        if ( opponent.didWin() )
+            return -level;
+
+        return 0;
     }
 
 
     static inline Turn monteCarlo ( const Board& mainBoard ){
 
         const PlayerColor myColor = mainBoard.turnColor();
+        const int numberOfMyPiecesOnBoard = myColor == WHITE?(mainBoard.getPieceCount() + 1)/2 : mainBoard.getPieceCount()/2;
+
         const BitBoard myOriginalBoard = mainBoard.getBoardOfPlayer(myColor);
         const BitBoard myOponnentOriginalBoard = mainBoard.getBoardOfPlayer(util.opposite(myColor));
-        BestMove bestmove;
+        BestMove4 bestmove;
 
         bool moveNeverFound = true;
 
-        qDebug() << "bestmove.weights[0]:" << bestmove.weights[0];
+        //qDebug() << "bestmove.weights[0]:" << bestmove.weights[0];
 
         for (int quadrantIndex = 0; quadrantIndex < NUMBER_OF_QUADRANTS; ++quadrantIndex){
 
@@ -103,8 +113,7 @@ private:
                 if (!myOriginalBoard.hasPieceAt(quadrantIndex, pieceIndex) && !myOponnentOriginalBoard.hasPieceAt(quadrantIndex, pieceIndex)){
 
 
-
-                    for (int rotations = 0; rotations < 8; ++rotations){
+                    for ( int rotations = 0; rotations < 8; ++rotations ) {
 
                         BitBoard currentcopy = myOriginalBoard;
                         BitBoard opponentcopy = myOponnentOriginalBoard;
@@ -134,39 +143,35 @@ private:
                        }
 
 
-                        signed int winWeights[19] = {0};
+                        signed int winWeights[NUMBER_OF_LEVELS_DEEP] = {0};
+                        int drawCount = 0;
 
-                        for (int playthrough = 0; playthrough < NUMBER_OF_GAMES_TO_PLAY; ++playthrough){
+                        for (int playthrough = 0; playthrough < NUMBER_OF_GAMES_TO_PLAY4; ++playthrough){
 
-                            int result = playThroughWin(currentcopy, opponentcopy );
+                            int result = playThroughWin( currentcopy, opponentcopy, numberOfMyPiecesOnBoard );
 
                             if( result > 0 ){
                                 winWeights[ result - 1 ]++;
                             }
                             else if ( result < 0 ){
-                                winWeights[ std::abs( result ) - 1 ] -= 289;
+                                winWeights[ std::abs( result ) - 1 ] -= 288;
+                            }
+                            else{
+                                drawCount++;
                             }
 
                         }
 
-
+                        //really short loop; can be shorter if we skip to indices according to pieceCount
                         bool killLoop = false;
 
-                        qDebug() << "for weights at " << quadrantIndex << ", " << pieceIndex << ": " <<
+                        qDebug() << "weights at " << quadrantIndex << "," << pieceIndex << ":  " <<
                                     winWeights[0] << ", " <<
                                     winWeights[1] << ", " <<
                                     winWeights[2] << ", " <<
-                                    winWeights[3] << ", " <<
-                                    winWeights[4] << ", " <<
-                                    winWeights[5] << ", " <<
-                                    winWeights[6] << ", " <<
-                                    winWeights[7] << ", " <<
-                                    winWeights[8] << ", " <<
-                                    winWeights[9] << ", " <<
-                                    winWeights[10];
+                                    winWeights[3];
 
-                        //really short loop; can be shorter if we skip to indices according to pieceCount
-                        for( int weightIndex = 0; weightIndex < 19 && !killLoop; ++weightIndex ){
+                        for( int weightIndex = 0; weightIndex < NUMBER_OF_LEVELS_DEEP && !killLoop; ++weightIndex ){
 
                             //try adding && winWights[weightIndex] != 0
                             if( winWeights[weightIndex] > bestmove.weights[weightIndex] ){
@@ -222,5 +227,4 @@ public:
 };
 
 
-
-#endif // MONTECARLOAI3_H
+#endif // MONTECARLOAI4_H
