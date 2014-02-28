@@ -8,6 +8,7 @@ Rectangle {
     height: width
     anchors.centerIn: parent
     color: "transparent"
+    border.color: "#363666"
 
 
     state: "LOCKED"
@@ -219,6 +220,7 @@ Rectangle {
         height: width
         color: "transparent"
         anchors.centerIn: pentagoBoard
+        border.color: "#363666"
 
         Quadrant{
             id: quadrant0

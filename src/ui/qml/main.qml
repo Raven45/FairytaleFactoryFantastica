@@ -53,10 +53,10 @@ Rectangle {
 
     property int _QUADRANT_WIDTH: 300
     property int _BOARD_HOLE_WIDTH: 80
-    property int _VERTICAL_OUTSIDE: -45
-    property int _VERTICAL_CENTER: 310
-    property int _HORIZONTAL_TOP: -120
-    property int _HORIZONTAL_CENTER: 237
+    property int _VERTICAL_OUTSIDE: -66
+    property int _VERTICAL_CENTER: 214
+    property int _HORIZONTAL_TOP: -65
+    property int _HORIZONTAL_CENTER: 215
     property int _CLAW_OPEN_DURATION: 10
     property int _CLAW_X_HOME: pentagoBoard.width / 2 - 100
     property int _CLAW_Y_HOME: -210
