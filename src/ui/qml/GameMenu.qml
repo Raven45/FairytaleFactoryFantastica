@@ -101,7 +101,11 @@ Rectangle {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: backToMainMenu();
+
+            onClicked: {
+                startMenu.state = "VISIBLE"
+                backToMainMenu();
+            }
         }
     }
 }

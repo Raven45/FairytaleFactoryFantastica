@@ -4,7 +4,7 @@ import QtQuick.Controls.Styles 1.1
 
 Rectangle {
     id: pentagoBoard
-    width: 550
+    width: 575
     height: width
     anchors.centerIn: parent
     color: "transparent"
@@ -63,6 +63,38 @@ Rectangle {
         myMirror: true
         myQuadrantToRotate: 0
         myRotationDirection: 1
+    }
+
+    Tbar {
+        anchors.top: parent.top
+        anchors.left: parent.left
+
+        pentago_quad: 0
+        tbar_rotate_angle: -45
+    }
+
+    Tbar {
+        anchors.top: parent.top
+        anchors.right: parent.right
+
+        pentago_quad: 1
+        tbar_rotate_angle: 45
+    }
+
+    Tbar {
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+
+        pentago_quad: 2
+        tbar_rotate_angle: -135
+    }
+
+    Tbar {
+        anchors.bottom: parent.bottom
+        anchors.right: parent.right
+
+        pentago_quad: 3
+        tbar_rotate_angle: 135
     }
 
     Arrow{
