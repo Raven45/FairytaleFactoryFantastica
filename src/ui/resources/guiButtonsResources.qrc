@@ -1,5 +1,11 @@
 <RCC>
     <qresource>
+	<file alias="singleplayer-button.png">../guiButtons/singleplayer-button.png</file>
+	<file alias="inverse-singleplayer-button.png">../guiButtons/inverse-singleplayer-button.png</file>
+	<file alias="purp-button.png">../guiButtons/purp-button.png</file>
+	<file alias="inverse-purp-button.png">../guiButtons/inverse-purp-button.png</file>
+	<file alias="teal-button.png">../guiButtons/teal-button.png</file>
+	<file alias="inverse-teal-button.png">../guiButtons/inverse-teal-button.png</file>
 	<file alias="leave-button.png">../guiButtons/leave-button.png</file>
 	<file alias="inverse-leave-button.png">../guiButtons/inverse-leave-button.png</file>
     <file alias="pause-button.png">../guiButtons/pause-button.png</file>

@@ -76,25 +76,13 @@ Rectangle {
     }
 
     Button {
-        id: startTwoPlayer
-        width: 100
-        height: 50
-        anchors.top: startOnePlayer.bottom
-        text: "Two Player"
-        onClicked: {
-            sendPlayerName( playerNameBox.text );
-            startMenu.state = "INVISIBLE"
-            pentagoBoard.state = "UNLOCKED";
-            clearBoard();
-            readyToStartTwoPersonPlay();
-        }
-    }
-
-    Button {
         id: startNetworkPlay
         width: 100
         height: 50
-        anchors.top: startTwoPlayer.bottom
+        anchors.top: parent.top
+        anchors.topMargin: parent.height/2+30
+        anchors.left: parent.left
+        anchors.leftMargin: parent.width/2
        text: "Network Play"
         onClicked: {
             sendPlayerName( playerNameBox.text );
@@ -107,80 +95,49 @@ Rectangle {
         }
     }
 
-    Button {
-        id: soundControl
-        width: 100
-        height: 50
-        anchors.top: startNetworkPlay.bottom
-        state: "UNPRESSED"
-        states: [
-            State{
-                name: "PRESSED"
-                PropertyChanges{
-                    target:  soundControl
-                    text: "Sound: OFF"
-                }
-            },
-             State{
-                 name: "UNPRESSED"
-                 PropertyChanges {
-                     target: soundControl
-                     text: "Sound: ON"
-                 }
-             }
-        ]
-        onClicked: {
-            if(state == "UNPRESSED")
-            {
-                soundControl.state = "PRESSED"
-            }
-            else
-            {
-                soundControl.state = "UNPRESSED"
-            }
-            changeSoundState();
-        }
-    }
+    GUIButton {
 
-    Button {
         property int buttonColor
 
         id: colorSelection
-        width: 100
-        height: 50
-        anchors.top: soundControl.bottom
-        text: "Color Selection"
+        source_string: "purp-button.png"
+        anchors.top: parent.top
+        anchors.topMargin: (parent.height/2) - 30
+        anchors.left: parent.left
+        anchors.leftMargin: 30
+        z: 3
+
         state: "BLACK"
+        buttonColor: 1
+
         states: [
             State{
                 name: "WHITE"
-                PropertyChanges{
-                    buttonColor: 0
-                    target:  colorSelection
-                    text: "Color: WHITE"
-                }
+                PropertyChanges{ target: colorSelection; buttonColor: 0 }
             },
-             State{
-                 name: "BLACK"
-                 PropertyChanges {
-                     buttonColor: 1
-                     target: colorSelection
-                     text: "Color: BLACK"
-                 }
-             }
-        ]
-        onClicked: {
-            if(state == "BLACK")
-            {
-                colorSelection.state = "WHITE"
-                page.guiPlayerIsWhite = true;
-                changeGuiPlayerColor(buttonColor);
+            State{
+                name: "BLACK"
+                PropertyChanges{ target: colorSelection; buttonColor: 1 }
             }
-            else
-            {
-                colorSelection.state = "BLACK"
-                page.guiPlayerIsWhite = false;
-                changeGuiPlayerColor(buttonColor);
+        ]
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                if(colorSelection.state == "BLACK")
+                {
+                    colorSelection.source_string = "teal-button.png"
+                    colorSelection.state = "WHITE"
+                    page.guiPlayerIsWhite = true;
+                    changeGuiPlayerColor(colorSelection.buttonColor);
+                }
+                else
+                {
+                    colorSelection.source_string = "purp-button.png"
+                    colorSelection.state = "BLACK"
+                    page.guiPlayerIsWhite = false;
+                    changeGuiPlayerColor(colorSelection.buttonColor);
+                }
             }
         }
     }
@@ -208,6 +165,7 @@ Rectangle {
     }
 
     GUIButton {
+        id: startMenu_leaveGame
         source_string: "leave-button.png"
         anchors.bottom: parent.bottom
         anchors.left: parent.left
