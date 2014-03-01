@@ -1,5 +1,6 @@
 <RCC>
     <qresource>
+		<file alias="Smoke.qml">../qml/Smoke.qml</file>
 		<file alias="RedRotateButton.qml">../qml/RedRotateButton.qml</file>
 		<file alias="Tbar.qml">../qml/Tbar.qml</file>
         <file alias="GameMenu.qml">../qml/GameMenu.qml</file>

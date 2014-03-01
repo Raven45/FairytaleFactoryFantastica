@@ -75,7 +75,8 @@ OTHER_FILES += \
     ui/qml/ClawPiece.qml \
     ui/qml/GameMenu.qml \
     ui/qml/Tbar.qml \
-    ui/qml/RedRotateButton.qml
+    ui/qml/RedRotateButton.qml \
+    ui/qml/Smoke.qml
 
 HEADERS += \
     backend/networking/Barrager.h \

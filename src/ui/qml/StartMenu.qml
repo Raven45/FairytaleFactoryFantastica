@@ -18,6 +18,18 @@ Rectangle {
         fillMode: Image.PreserveAspectFit
     }
 
+    /* HAMMERS CPU!
+    Smoke {
+        x: 1210
+        y: 210
+    }
+
+    Smoke {
+        x: 1340
+        y: 210
+    }
+    */
+
     states: [
         State{
             name: "VISIBLE"
@@ -173,14 +185,20 @@ Rectangle {
         }
     }
 
-    Button {
-        id: exitGame
-        width: 100
-        height: 50
-        anchors.top: colorSelection.bottom
-        text: "Exit Game"
-        onClicked: {
-            readyToExitGame()
+    GUIButton {
+        source_string: "leave-button.png"
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.bottomMargin: 15
+        anchors.leftMargin: 30
+        z: 3
+
+        MouseArea {
+            anchors.fill: parent
+
+            onClicked: {
+                readyToExitGame()
+            }
         }
     }
 
