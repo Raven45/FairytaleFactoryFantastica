@@ -17,7 +17,8 @@ QMAKE_CXXFLAGS += -fopenmp
 RESOURCES += \
     ui/resources/qmlResources.qrc \
     ui/resources/imageResources.qrc \
-	ui/resources/audioResources.qrc
+	ui/resources/audioResources.qrc \
+    ui/resources/MonkeysSpinningMonkeys.qrc
 
 INCLUDEPATH += \
     backend \

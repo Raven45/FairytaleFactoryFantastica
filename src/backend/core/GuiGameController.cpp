@@ -19,7 +19,7 @@ GuiGameController::GuiGameController( QGuiApplication* mainApp ) {
     //musicPlayer.moveToThread(pMusicThread);
 
     //change this URL path
-    musicPlayer.setMedia(QUrl("qrc:/music.mp3"));
+    musicPlayer.setMedia(QUrl("qrc:/MonkeysSpinningMonkeys.mp3"));
     musicPlayer.play();
 
     app = mainApp;
