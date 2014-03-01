@@ -60,18 +60,25 @@ Rectangle {
         anchors.topMargin: 5
     }
 
-    Button {
-        id: startOnePlayer
-        width: 100
-        height: 50
-        anchors.centerIn: parent
-        text: "One Player"
-        onClicked: {
-            sendPlayerName( playerNameBox.text );
-            startMenu.state = "INVISIBLE"
-            pentagoBoard.state = "UNLOCKED";
-            clearBoard();
-            readyToStartOnePersonPlay();
+    GUIButton {
+        id: startMenu_startOnePlayer
+        source_string: "singleplayer-button.png"
+        anchors.top: parent.top
+        anchors.topMargin: parent.height/2
+        anchors.left: parent.left
+        anchors.leftMargin: parent.width/2 - 150
+        z: 3
+
+        MouseArea {
+            anchors.fill: parent
+
+            onClicked: {
+                sendPlayerName( playerNameBox.text );
+                startMenu.state = "INVISIBLE"
+                pentagoBoard.state = "UNLOCKED";
+                clearBoard();
+                readyToStartOnePersonPlay();
+            }
         }
     }
 
