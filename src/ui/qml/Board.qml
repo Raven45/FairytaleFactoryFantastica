@@ -32,7 +32,7 @@ Rectangle {
             name: "LOCKED"
             PropertyChanges {
                 target: pentagoBoard
-                opacity: 0.5
+                opacity: 1
             }
 
         },
@@ -45,25 +45,6 @@ Rectangle {
         }
 
     ]
-
-    Arrow{
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.leftMargin: 30
-        myRotation: 45
-        myQuadrantToRotate: 0
-        myRotationDirection: 0
-    }
-
-    Arrow{
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.topMargin: 30
-        rotation: 225
-        myMirror: true
-        myQuadrantToRotate: 0
-        myRotationDirection: 1
-    }
 
     Tbar {
         anchors.top: parent.top
@@ -95,63 +76,6 @@ Rectangle {
 
         pentago_quad: 3
         tbar_rotate_angle: 135
-    }
-
-    Arrow{
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.rightMargin: 30
-        rotation: 315
-        myMirror: true
-        myQuadrantToRotate: 1
-        myRotationDirection: 1
-    }
-
-    Arrow{
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.topMargin: 30
-        rotation: 135
-        myQuadrantToRotate: 1
-        myRotationDirection: 0
-    }
-
-    Arrow{
-        anchors.left: parent.left
-        anchors.bottom: parent.bottom
-        anchors.leftMargin: 30
-        rotation: 135
-        myMirror: true
-        myQuadrantToRotate: 2
-        myRotationDirection: 1
-    }
-
-    Arrow{
-        anchors.left: parent.left
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 30
-        rotation: 315
-        myQuadrantToRotate: 2
-        myRotationDirection: 0
-    }
-
-    Arrow{
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.rightMargin: 30
-        rotation: 225
-        myQuadrantToRotate: 3
-        myRotationDirection: 0
-    }
-
-    Arrow{
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 30
-        rotation: 45
-        myMirror: true
-        myQuadrantToRotate: 3
-        myRotationDirection: 1
     }
 
     function playRotateAnimationOnQuadrant( quadrantIndex, direction ){

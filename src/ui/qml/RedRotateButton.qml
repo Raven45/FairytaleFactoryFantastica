@@ -7,24 +7,25 @@ Item {
     property int roDir
     property var direction_string
 
+    Glow {
+       id: red_rotate_glowEffect
+       anchors.fill: red_rotate_button
+       radius: 16
+       samples: 24
+       spread: 0.5
+       color: "red"
+       source: red_rotate_button
+       visible: false
+       fast: true
+       cached: true
+    }
 
     Image {
         id: red_rotate_button
         source: "red-rotate-" + direction_string + ".png"
         width: 125; height: 125
-        z: 1
+        z: 14
         rotation: -(parent.rotation)
-
-        Glow {
-           id: red_rotate_glowEffect
-           anchors.fill: red_rotate_button
-           radius: 14
-           samples: 16
-           color: "red"
-           source: red_rotate_button
-           visible: false
-           z: 0
-        }
 
         Connections{
             target: page
@@ -41,7 +42,7 @@ Item {
         }
 
        function turnOffGlow(){
-            glowEffect.color = "black"
+            red_rotate_glowEffect.color = "black"
        }
 
         MouseArea {

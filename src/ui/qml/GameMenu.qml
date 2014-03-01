@@ -58,6 +58,15 @@ Rectangle {
         anchors.left: parent.left
         anchors.leftMargin: 30
         z: 3
+
+        MouseArea {
+            anchors.fill: parent
+
+            onClicked: {
+                clearBoard();
+                readyToStartOnePersonPlay();
+            }
+        }
     }
 
     GUIButton {
