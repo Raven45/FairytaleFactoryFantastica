@@ -54,10 +54,10 @@ Rectangle {
         width: 100
         height: 25
         text: "enter a name"
-        anchors.left: parent.left
-        anchors.leftMargin: 400
         anchors.top: parent.top
-        anchors.topMargin: 5
+        anchors.topMargin: parent.height/2 + 135
+        anchors.left: parent.left
+        anchors.leftMargin: parent.width/2 + 90
     }
 
     GUIButton {
@@ -82,23 +82,27 @@ Rectangle {
         }
     }
 
-    Button {
-        id: startNetworkPlay
-        width: 100
-        height: 50
+    GUIButton {
+        id: startMenu_startNetworkPlay
+        source_string: "network-button.png"
         anchors.top: parent.top
-        anchors.topMargin: parent.height/2+30
+        anchors.topMargin: parent.height/2 + 100
         anchors.left: parent.left
         anchors.leftMargin: parent.width/2
-       text: "Network Play"
-        onClicked: {
-            sendPlayerName( playerNameBox.text );
-            networkLobby.state ="VISIBLE"
-            startMenu.state = "INVISIBLE"
-           // pentagoBoard.state = "UNLOCKED";
-            clearBoard();
-            console.log("network play button clicked!");
-            enterNetworkLobby();
+        z: 3
+
+        MouseArea {
+            anchors.fill: parent
+
+            onClicked: {
+                sendPlayerName( playerNameBox.text );
+                networkLobby.state ="VISIBLE"
+                startMenu.state = "INVISIBLE"
+               // pentagoBoard.state = "UNLOCKED";
+                clearBoard();
+                console.log("network play button clicked!");
+                enterNetworkLobby();
+            }
         }
     }
 
@@ -109,9 +113,9 @@ Rectangle {
         id: colorSelection
         source_string: "purp-button.png"
         anchors.top: parent.top
-        anchors.topMargin: (parent.height/2) - 30
+        anchors.topMargin: parent.height/2
         anchors.left: parent.left
-        anchors.leftMargin: 30
+        anchors.leftMargin: parent.width/2
         z: 3
 
         state: "BLACK"
