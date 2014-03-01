@@ -19,6 +19,17 @@ Rectangle {
         visible: false
     }
 
+    Image {
+        id: hg_in_bucket
+        width: 250; height: 215
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.topMargin: (parent.height/2) - 75
+        source: "hg-bucket.png"
+        fillMode: Image.PreserveAspectFit
+        z: 1
+    }
+
     GameMenu {
         id: myGameMenu
         state: "INVISIBLE"

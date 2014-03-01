@@ -5,5 +5,6 @@
     <file alias="tbar.png">../media/tbar.png</file>
 	<file alias="red-rotate-clockwise.png">../media/red-rotate-clockwise.png</file>
 	<file alias="red-rotate-counter.png">../media/red-rotate-counter.png</file>
+	<file alias="hg-bucket.png">../media/hg-bucket.png</file>
     </qresource>
 </RCC>
