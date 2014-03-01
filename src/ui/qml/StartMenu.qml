@@ -186,6 +186,28 @@ Rectangle {
     }
 
     GUIButton {
+        id: startMenu_soundButton
+        source_string: "sound-button.png"
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: ((parent.height - 30)/4) - 30
+        anchors.left: parent.left
+        anchors.leftMargin: 30
+        z: 3
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                if (startMenu_soundButton.source_string === "sound-button.png") {
+                    startMenu_soundButton.source_string = "nosound-button.png"
+                } else {
+                    startMenu_soundButton.source_string = "sound-button.png"
+                }
+                changeSoundState();
+            }
+        }
+    }
+
+    GUIButton {
         source_string: "leave-button.png"
         anchors.bottom: parent.bottom
         anchors.left: parent.left
