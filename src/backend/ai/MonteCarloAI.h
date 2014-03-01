@@ -1,21 +1,26 @@
 #ifndef MONTECARLOAI_H
 #define MONTECARLOAI_H
 #include "Player.h"
-using std::map;
+#include <vector>
+using std::vector;
 
 #define MAX_PIECES_ON_BOARD 36
 #define MAX_PIECES_ON_QUADRANT 9
 #define NUMBER_OF_POSSIBLE_ROTATIONS 8
 #define NUMBER_OF_QUADRANTS 4
-#define MAX_DEPTH_LEVEL 3
-
-#define NUMBER_OF_GAMES_TO_PLAY 15000
+#define MAX_DEPTH_LEVEL 27
+#define NUMBER_OF_GAMES_TO_PLAY 20000
 
 struct BestMove{
     int score;
     int quadrantIndex, pieceIndex;
     unsigned char i;
     Direction d;
+};
+
+struct BoardState{
+    BoardInt current;
+    BoardInt opponent;
 };
 
 class MonteCarloAI : public Player{
@@ -53,6 +58,7 @@ private:
         bool player = false;
 
         //play a single game
+        //int depth = 0;
         do{
             placemove (player, current, opponent);
 
@@ -60,16 +66,23 @@ private:
             Direction rotationDirection = rand() % 2 == 0? LEFT : RIGHT;
             rotate (quadrantIndex, rotationDirection , current, opponent);
             player = !player;
-        }while( !current.didWin() && !opponent.didWin() && !boardIsFull(current, opponent) );
+            //heuristic weight for this playthrough
+            if (current.didWin())
+                return 2;
+            if (opponent.didWin())
+                return -2;
+            if (boardIsFull(current, opponent)){
 
-        //heuristic weight for this playthrough
-        if (current.didWin())
-            return 2;
-        if (opponent.didWin())
-            return -2;
-        if (AIColor == BLACK)
-            return 1;
+                if(AIColor == BLACK)
+                    return 1;
 
+                return 0;
+            }
+        }while( true );
+
+        //++depth < MAX_DEPTH_LEVEL
+        //return for running too long
+        qDebug()<< "ran too long";
         return 0;
 
     }
@@ -77,38 +90,61 @@ private:
     inline static Turn monteCarlo ( const Board& mainboard ){
         PlayerColor myColor = mainboard.turnColor();
         const BitBoard myOriginalBoard = mainboard.getBoardOfPlayer(myColor);
-        const BitBoard myOponnentOriginalBoard = mainboard.getBoardOfPlayer(util.opposite(myColor));
+        const BitBoard myOpponentOriginalBoard = mainboard.getBoardOfPlayer(util.opposite(myColor));
         BestMove bestmove;
         bestmove.score = -5 * NUMBER_OF_GAMES_TO_PLAY;
 
+        vector <BoardState> visited;
         for (int quadrantIndex = 0; quadrantIndex < NUMBER_OF_QUADRANTS; ++quadrantIndex){
             for (int pieceIndex = 0; pieceIndex < MAX_PIECES_ON_QUADRANT; ++pieceIndex){
                 if (!myOriginalBoard.hasPieceAt(quadrantIndex, pieceIndex) &&
-                    !myOponnentOriginalBoard.hasPieceAt(quadrantIndex, pieceIndex)){
+                    !myOpponentOriginalBoard.hasPieceAt(quadrantIndex, pieceIndex)){
 
                     for (int rotations = 0; rotations < 8; rotations++){
 
-                        BitBoard currentcopy = myOriginalBoard;
-                        BitBoard opponentcopy = myOponnentOriginalBoard;
+                        BitBoard currentCopy = myOriginalBoard;
+                        BitBoard opponentCopy = myOpponentOriginalBoard;
 
-                        currentcopy.placePiece( quadrantIndex, pieceIndex );
-                        rotate(rotations % 4, rotations > 4? LEFT : RIGHT, currentcopy, opponentcopy );
+                        currentCopy.placePiece( quadrantIndex, pieceIndex );
+                        rotate(rotations % 4, rotations > 4? LEFT : RIGHT, currentCopy, opponentCopy );
 
-                        int score = 0;
-                        for (int playthrough = 0; playthrough < NUMBER_OF_GAMES_TO_PLAY; ++playthrough){
-                             score += playthroughWin(currentcopy, opponentcopy, myColor);
+                        BoardState boardState;
+                        boardState.current = currentCopy;
+                        boardState.opponent = opponentCopy;
+
+                        bool alreadyVisited = false;
+                        for (BoardState b : visited){
+                            if (b.current == boardState.current && b.opponent == boardState.opponent){
+                                alreadyVisited = true;
+                            }
                         }
-                        if (score > bestmove.score){
-                            bestmove.score = score;
-                            bestmove.quadrantIndex = quadrantIndex;
-                            bestmove.pieceIndex = pieceIndex;
-                            bestmove.i = rotations % 4;
-                            bestmove.d = rotations > 4? LEFT : RIGHT;
+
+                        if (!alreadyVisited){
+                            visited.push_back(boardState);
+
+                            int score = 0;
+                            int count = 0;
+                            for (int playthrough = 0; playthrough < NUMBER_OF_GAMES_TO_PLAY; ++playthrough){
+                                 int thisScore = playthroughWin(currentCopy, opponentCopy, myColor);
+                                 score += thisScore;
+                                 ++count;
+                            }
+
+                            qDebug() << count;
+
+                            if (score > bestmove.score){
+                                bestmove.score = score;
+                                bestmove.quadrantIndex = quadrantIndex;
+                                bestmove.pieceIndex = pieceIndex;
+                                bestmove.i = rotations % 4;
+                                bestmove.d = rotations > 4? LEFT : RIGHT;
+                            }
                         }
                     }
                 }
             }
         }
+
         Turn t;
         BoardLocation bl;
         bl.pieceIndex = bestmove.pieceIndex;
