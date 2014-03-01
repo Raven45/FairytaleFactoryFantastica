@@ -10,6 +10,14 @@ Rectangle {
     z: 100
     color: "#00FFFF"
 
+    Image {
+        id: main_background
+        width: 1440; height: 900; z: 0
+        anchors.centerIn: parent
+        source: "main-menu-background.png"
+        fillMode: Image.PreserveAspectFit
+    }
+
     states: [
         State{
             name: "VISIBLE"
