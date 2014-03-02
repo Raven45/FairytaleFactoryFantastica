@@ -3,8 +3,8 @@
 #include "GuiGameController.h"
 #include "SmarterPlayer.h"
 //#include "MonteCarloAI.h"
-#include "MonteCarloAI3.h"
-//#include "MonteCarloParallelAI.h"
+//#include "MonteCarloAI3.h"
+#include "MonteCarloParallelAI.h"
 #include "NetworkInterface.h"
 #include <time.h>
 
@@ -47,6 +47,7 @@ int main(int argc, char* argv[])
 
     QQuickView window;
     window.rootContext() -> setContextProperty( "gameController", &gameController );
+    window.setResizeMode(QQuickView::SizeRootObjectToView);
     window.setSource( QUrl("qrc:/main.qml") );
 
     gameController.setWindow( &window );
@@ -55,7 +56,7 @@ int main(int argc, char* argv[])
     NetworkInterface myInterface;
     gameController.setNetworkInterface(&myInterface);
 
-    window.show();
+    window.showFullScreen();
 
     return app.exec();
 }

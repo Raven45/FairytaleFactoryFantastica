@@ -5,19 +5,24 @@
 
 QT += multimedia core network concurrent quick
 
-CONFIG += c++11 debug #static release link_prl
+CONFIG += c++11 release #static release link_prl
 #CONFIG -= qt
 
 #CONFIG(release, debug|release): LIBS += -L$$PWD/../../QtSDK-x86_64 - static/lib/ -lQt5Core -lQt5Gui -lQt5Quick -lQt5Multimedia -lQt5Network -lQt5Qml
 #else:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../QtSDK-x86_64 - static/lib/ -lQt5Cored -lQt5Guid -lQt5Quickd -lQt5Multimediad -lQt5Networkd -lQt5Qmld
 
+QMAKE_CXXFLAGS -= -O1 -O2 -O3
+
+
 LIBS += -fopenmp
-QMAKE_CXXFLAGS += -fopenmp
+QMAKE_CXXFLAGS += -fopenmp -Ofast
 
 RESOURCES += \
     ui/resources/qmlResources.qrc \
     ui/resources/imageResources.qrc \
-	ui/resources/audioResources.qrc \
+    ui/resources/guiButtonsResources.qrc \
+    ui/resources/menuResources.qrc \
+    ui/resources/audioResources.qrc \
     ui/resources/MonkeysSpinningMonkeys.qrc
 
 INCLUDEPATH += \
@@ -62,7 +67,14 @@ OTHER_FILES += \
     ui/qml/QmlTimer.qml \
     ui/qml/Quadrant.qml \
     ui/qml/SentChallengePopup.qml \
-    ui/qml/StartMenu.qml
+    ui/qml/StartMenu.qml \
+    ui/qml/ClawPiece.qml \
+    ui/qml/GUIButton.qml \
+    ui/qml/RedRotateButton.qml \
+    ui/qml/Smoke.qml \
+    ui/qml/SplashScreen.qml \
+    ui/qml/Tbar.qml \
+    ui/qml/Witch.qml
 
 HEADERS += \
     backend/networking/Barrager.h \
