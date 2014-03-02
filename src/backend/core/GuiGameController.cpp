@@ -27,6 +27,7 @@ GuiGameController::GuiGameController( QGuiApplication* mainApp ) {
 }
 
 void GuiGameController::setGuiTurnRotation( int quadrantToRotate, int rotationDirection ){
+    qDebug() << "setting quadrantToRotate for gui in gameController with  value of " << quadrantToRotate;
     qGuiTurn.setQuadrantToRotate(quadrantToRotate);
     qGuiTurn.setRotationDirection( (Direction) rotationDirection);
 }

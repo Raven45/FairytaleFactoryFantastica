@@ -59,8 +59,8 @@ Item {
 
     AnimatedSprite {
         id: clawSprite
-        width: 200
-        height: 200
+        width: 131
+        height: 131
         source: parent.source
         frameCount: 72
         frameDuration: _CLAW_OPEN_DURATION
@@ -68,17 +68,18 @@ Item {
         frameHeight: 200
         loops: 1
         running: false
+        z: 410
     }
 
 
     Rectangle {
         id: clawPipe
-        width:30
+        width: 22
         height:  1000
         anchors.bottom: clawSprite.top
-        anchors.bottomMargin: -20
+        anchors.bottomMargin: -13
         anchors.horizontalCenter: clawSprite.horizontalCenter
-        anchors.horizontalCenterOffset: 0
+        anchors.horizontalCenterOffset: -3
         color: "#000000"
         z: 400
     }

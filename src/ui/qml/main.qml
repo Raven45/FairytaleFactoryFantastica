@@ -8,8 +8,7 @@ import QtQuick.Controls.Styles 1.1
 
 Rectangle {
     id: page
-    width: 1190
-    height: 800
+
     color: "#333333"
 
     signal readyToStartOnePersonPlay()
@@ -52,15 +51,15 @@ Rectangle {
     property int _ROTATION_ANIMATION_DURATION: 400
     property int _OPPONENT_START_ROTATION_DELAY: 600 + 1000 + 34*10 + 800 + 2 //claw animation time...
 
-    property int _QUADRANT_WIDTH: 300
-    property int _BOARD_HOLE_WIDTH: 80
-    property int _VERTICAL_OUTSIDE: -45
-    property int _VERTICAL_CENTER: 310
-    property int _HORIZONTAL_TOP: -120
-    property int _HORIZONTAL_CENTER: 237
+    property int _QUADRANT_WIDTH: 200
+    property int _BOARD_HOLE_WIDTH: 65
+    property int _VERTICAL_OUTSIDE: 18
+    property int _VERTICAL_CENTER: 228
+    property int _HORIZONTAL_TOP: -34
+    property int _HORIZONTAL_CENTER: 178
     property int _CLAW_OPEN_DURATION: 10
-    property int _CLAW_X_HOME: pentagoBoard.width / 2 - 100
-    property int _CLAW_Y_HOME: -210
+    property int _CLAW_X_HOME: pentagoBoard.width/2 - 58
+    property int _CLAW_Y_HOME: -300
 
 
     onBackToMainMenu:{
@@ -164,6 +163,10 @@ Rectangle {
         anchors.centerIn: parent
     }
 
+    SplashScreen {
+        id: splash
+    }
+
     StartMenu{
         id:startMenu
         anchors.centerIn: parent
@@ -171,11 +174,14 @@ Rectangle {
     GameOverMenu {
           id: gameOverMenu
           anchors.centerIn: page
-  }
-    Board{
-        id: pentagoBoard
-        anchors.top: page.top
-        anchors.topMargin: 30
-        anchors.horizontalCenter: parent.horizontalCenter
+    }
+    GameScreen{
+        id: gameScreen
+
+        Board{
+            id: pentagoBoard
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
     }
 }

@@ -4,9 +4,11 @@ import QtQuick.Controls.Styles 1.1
 
 Rectangle {
     id: pentagoBoard
-    width: 750
+    width: 575
     height: width
-    color: "#343434"
+    anchors.centerIn: parent
+    color: "transparent"
+
 
     state: "LOCKED"
 
@@ -29,7 +31,7 @@ Rectangle {
             name: "LOCKED"
             PropertyChanges {
                 target: pentagoBoard
-                opacity: 0.5
+                opacity: 1
             }
 
         },
@@ -44,80 +46,37 @@ Rectangle {
     ]
 
 
-    Arrow{
-        anchors.left: parent.left
+
+    Tbar {
         anchors.top: parent.top
-        anchors.leftMargin: 30
-        myRotation: 45
-        myQuadrantToRotate: 0
-        myRotationDirection: 0
-    }
-
-    Arrow{
         anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.topMargin: 30
-        rotation: 225
-        myMirror: true
-        myQuadrantToRotate: 0
-        myRotationDirection: 1
+
+        pentago_quad: 0
+        tbar_rotate_angle: -45
     }
 
-    Arrow{
+    Tbar {
+        anchors.top: parent.top
         anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.rightMargin: 30
-        rotation: 315
-        myMirror: true
-        myQuadrantToRotate: 1
-        myRotationDirection: 1
+
+        pentago_quad: 1
+        tbar_rotate_angle: 45
     }
 
-    Arrow{
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.topMargin: 30
-        rotation: 135
-        myQuadrantToRotate: 1
-        myRotationDirection: 0
-    }
-
-    Arrow{
+    Tbar {
+        anchors.bottom: parent.bottom
         anchors.left: parent.left
-        anchors.bottom: parent.bottom
-        anchors.leftMargin: 30
-        rotation: 135
-        myMirror: true
-        myQuadrantToRotate: 2
-        myRotationDirection: 1
+
+        pentago_quad: 2
+        tbar_rotate_angle: -135
     }
 
-    Arrow{
-        anchors.left: parent.left
+    Tbar {
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 30
-        rotation: 315
-        myQuadrantToRotate: 2
-        myRotationDirection: 0
-    }
-
-    Arrow{
         anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.rightMargin: 30
-        rotation: 225
-        myQuadrantToRotate: 3
-        myRotationDirection: 0
-    }
 
-    Arrow{
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 30
-        rotation: 45
-        myMirror: true
-        myQuadrantToRotate: 3
-        myRotationDirection: 1
+        pentago_quad: 3
+        tbar_rotate_angle: 135
     }
 
     function playRotateAnimationOnQuadrant( quadrantIndex, direction ){
@@ -203,13 +162,22 @@ Rectangle {
     }
 
 
+    Image{
+        id: steel_platform
+        fillMode: Image.PreserveAspectFit
+        width : 420
+        height: width
+        anchors.centerIn: parent
+        source: "steel-platform.png"
+    }
+
     Rectangle {
-
-    width: 650
-    height: width
-    color: "#343434"
-    anchors.centerIn: parent
-
+        id: quads_rec
+        width: 410
+        height: width
+        color: "transparent"
+        anchors.centerIn: pentagoBoard
+        border.color: "#363666"
 
         Quadrant{
             id: quadrant0
@@ -229,7 +197,7 @@ Rectangle {
             anchors.bottom: parent.bottom
             myIndex: 2
         }
-        Quadrant {
+        Quadrant{
             id: quadrant3
             anchors.right: parent.right
             anchors.bottom: parent.bottom

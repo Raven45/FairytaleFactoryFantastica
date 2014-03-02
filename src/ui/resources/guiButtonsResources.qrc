@@ -1,0 +1,28 @@
+<RCC>
+    <qresource>
+	<file alias="network-button.png">../guiButtons/network-button.png</file>
+	<file alias="inverse-network-button.png">../guiButtons/inverse-network-button.png</file>
+	<file alias="singleplayer-button.png">../guiButtons/singleplayer-button.png</file>
+	<file alias="inverse-singleplayer-button.png">../guiButtons/inverse-singleplayer-button.png</file>
+	<file alias="purp-button.png">../guiButtons/purp-button.png</file>
+	<file alias="inverse-purp-button.png">../guiButtons/inverse-purp-button.png</file>
+	<file alias="teal-button.png">../guiButtons/teal-button.png</file>
+	<file alias="inverse-teal-button.png">../guiButtons/inverse-teal-button.png</file>
+	<file alias="leave-button.png">../guiButtons/leave-button.png</file>
+	<file alias="inverse-leave-button.png">../guiButtons/inverse-leave-button.png</file>
+    <file alias="pause-button.png">../guiButtons/pause-button.png</file>
+    <file alias="inverse-pause-button.png">../guiButtons/inverse-pause-button.png</file>
+    <file alias="play-button.png">../guiButtons/play-button.png</file>
+    <file alias="inverse-play-button.png">../guiButtons/inverse-play-button.png</file>
+    <file alias="restart-button.png">../guiButtons/restart-button.png</file>
+    <file alias="inverse-restart-button.png">../guiButtons/inverse-restart-button.png</file>
+    <file alias="sound-button.png">../guiButtons/sound-button.png</file>
+    <file alias="inverse-sound-button.png">../guiButtons/inverse-sound-button.png</file>
+    <file alias="nosound-button.png">../guiButtons/nosound-button.png</file>
+    <file alias="inverse-nosound-button.png">../guiButtons/inverse-nosound-button.png</file>
+    <file alias="help-button.png">../guiButtons/help-button.png</file>
+    <file alias="inverse-help-button.png">../guiButtons/inverse-help-button.png</file>
+    <file alias="back-button.png">../guiButtons/back-button.png</file>
+    <file alias="inverse-back-button.png">../guiButtons/inverse-back-button.png</file>
+    </qresource>
+</RCC>

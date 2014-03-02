@@ -10,18 +10,20 @@ Rectangle {
 
     objectName: "BoardHoleButton"
     id: boardHoleButton
-    width: 70
-    height: 70
+    x: -31
+    y: -36
+    width: 38
+    height: 38
     clip: false
     color: "transparent"
     visible: true
-    radius: 35
+    radius: 19
     z: 14
 
     Image{
         id: backgroundImage
-        x: -40
-        y: -46
+        width: 100
+        height: 100
         visible: false
         source: "teal-gumdrop.png"
     }
@@ -151,8 +153,8 @@ Rectangle {
             name: "BLACK"
             PropertyChanges{
                 target: backgroundImage
-                x: -40
-                y: -46
+                x: -31
+                y: -36
                 visible: false
                 source: "purp-gumdrop.png"
 
@@ -176,8 +178,8 @@ Rectangle {
             name: "WHITE"
             PropertyChanges{
                 target: backgroundImage
-                x: -40
-                y: -47
+                x: -31
+                y: -36
                 visible: false
                 source: "teal-gumdrop.png"
             }
@@ -257,7 +259,7 @@ Rectangle {
                        boardHoleButton.state = "BLACK";
                    }
 
-                   console.log("1. set setGuiTurnHole ");
+                   console.log("calling gameController.setGuiTurnHole(...) (from QML) with quadrantIndex = " + quadrantIndex + " and pieceIndex = " + pieceIndex);
                    gameController.setGuiTurnHole( quadrantIndex, pieceIndex);
                    page.gameMessage = "Choose a rotation.";
 
