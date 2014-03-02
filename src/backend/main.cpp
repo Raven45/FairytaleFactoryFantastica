@@ -3,8 +3,8 @@
 #include "GuiGameController.h"
 #include "SmarterPlayer.h"
 //#include "MonteCarloAI.h"
-//#include "MonteCarloAI3.h"
-#include "MonteCarloParallelAI.h"
+#include "MonteCarloAI3.h"
+//#include "MonteCarloParallelAI.h"
 #include "NetworkInterface.h"
 #include <time.h>
 
@@ -29,7 +29,7 @@
 #include <QQmlComponent>
 #include <QtQml>
 
-typedef MonteCarloParallelAI AIPlayer;
+typedef SmarterPlayer AIPlayer;
 typedef GuiGameController GameController;
 
 int main(int argc, char* argv[])
