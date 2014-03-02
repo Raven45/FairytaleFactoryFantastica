@@ -162,10 +162,11 @@ void GuiGameController::challengeResponseReceivedFromNetwork(bool challengeWasAc
 
 void GuiGameController::networkTurnReceivedFromNetwork( int quadrantIndex, int pieceIndex, int quadrantToRotate, int rotationDirection ){
 
-
+    setMovingPlayerColor(BLACK);
 
     //network opponent is always BLACK to the game core
     registerOpponentsTurnWithBoard( Turn(quadrantIndex, pieceIndex, quadrantToRotate, rotationDirection, PlayerColor::BLACK ) );
+
 
     if( isGameOver() ){
          emit gameIsOver();
@@ -332,7 +333,7 @@ void GuiGameController::registerGuiTurnWithBoard(){
 //TODO: I think we may need to change this to setWhetherGuiMovesFirst or something,
 //because the GUI colors should be decoupled from the gameController
 void GuiGameController::setFirstMovingPlayerColor( PlayerColor playerToMoveFirst ){
-    firstMover = playerToMoveFirst;
+    setMovingPlayerColor(playerToMoveFirst);
 }
 
 void GuiGameController::registerOpponentsTurnWithBoard(Turn opponentsMove ) {

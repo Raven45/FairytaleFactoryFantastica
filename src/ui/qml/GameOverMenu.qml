@@ -41,7 +41,7 @@ Rectangle {
     }
 
     QmlTimer{
-        duration: _ROTATION_ANIMATION_DURATION + 33*_CLAW_OPEN_DURATION + 5000
+        duration: 500
         id: gameOverTimeout
         onTriggered:{
             gameOverMenu.isVisible = true;
