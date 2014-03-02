@@ -77,7 +77,8 @@ OTHER_FILES += \
     ui/qml/Tbar.qml \
     ui/qml/RedRotateButton.qml \
     ui/qml/Smoke.qml \
-    ui/qml/Witch.qml
+    ui/qml/Witch.qml \
+    ui/qml/SplashScreen.qml
 
 HEADERS += \
     backend/networking/Barrager.h \

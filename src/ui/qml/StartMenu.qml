@@ -9,6 +9,9 @@ Rectangle {
     height: parent.height
     z: 100
     color: "#00FFFF"
+    visible: false
+
+    state: "INVISIBLE"
 
     Image {
         id: main_background

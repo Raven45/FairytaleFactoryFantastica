@@ -1,5 +1,6 @@
 <RCC>
     <qresource>
+		<file alias="SplashScreen.qml">../qml/SplashScreen.qml</file>
 		<file alias="Witch.qml">../qml/Witch.qml</file>
 		<file alias="Smoke.qml">../qml/Smoke.qml</file>
 		<file alias="RedRotateButton.qml">../qml/RedRotateButton.qml</file>

@@ -10,5 +10,7 @@
 	<file alias="hg-bucket.png">../media/hg-bucket.png</file>
 	<file alias="main-menu-background.png">../media/main-menu-background.png</file>
 	<file alias="TheWitch.png">../media/TheWitch.png</file>
+	<file alias="Logo.png">../media/Logo.png</file>
+	<file alias="MuffinMan.png">../media/MuffinMan.png</file>
     </qresource>
 </RCC>

@@ -58,8 +58,8 @@ Rectangle {
     property int _HORIZONTAL_TOP: -34
     property int _HORIZONTAL_CENTER: 178
     property int _CLAW_OPEN_DURATION: 10
-    property int _CLAW_X_HOME: pentagoBoard.width / 2 - 100
-    property int _CLAW_Y_HOME: -210
+    property int _CLAW_X_HOME: pentagoBoard.width/2 - 58
+    property int _CLAW_Y_HOME: -300
 
 
     onBackToMainMenu:{
@@ -161,6 +161,10 @@ Rectangle {
     NetworkLobby{
         id:networkLobby
         anchors.centerIn: parent
+    }
+
+    SplashScreen {
+        id: splash
     }
 
     StartMenu{
