@@ -16,26 +16,28 @@ Rectangle {
     states: [
         State{
             name: "INVISIBLE"
-            PropertyChanges { target: pauseOpacity; visible: false }
+            PropertyChanges { target: pauseOpacity; state: "CLEAR" }
             PropertyChanges { target: pentagoBoard; state: "UNLOCKED" }
             PropertyChanges { target: gameMenu; anchors.leftMargin: -width + 25 }
         },
         State{
             name: "VISIBLE"
-            PropertyChanges { target: pauseOpacity; visible: true }
+            PropertyChanges { target: pauseOpacity; state: "OPAQUE" }
             PropertyChanges { target: pentagoBoard; state: "LOCKED" }
             PropertyChanges { target: gameMenu; anchors.leftMargin: 0 }
         }
     ]
 
-    Transition {
-         from: "INVISIBLE"; to: "VISIBLE"
-         NumberAnimation {
-             properties: "x";
-             easing.type: Easing.InOutQuad;
-             duration: 10000
-         }
-    }
+    transitions: [
+        Transition {
+             from: "*"; to: "*"
+             NumberAnimation {
+                 properties: "leftMargin"
+                 easing.type: Easing.InOutQuad;
+                 duration: 300
+            }
+        }
+    ]
 
     GUIButton {
         source_string: "play-button.png"
@@ -112,6 +114,7 @@ Rectangle {
             anchors.fill: parent
 
             onClicked: {
+                gameMenu.state = "INVISIBLE"
                 startMenu.state = "VISIBLE"
                 backToMainMenu();
             }

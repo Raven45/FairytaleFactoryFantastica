@@ -16,7 +16,7 @@ Rectangle {
         source: "game-background.png"
         fillMode: Image.PreserveAspectFit
         z: 0
-        visible: false
+        visible: true
     }
 
     Image {
@@ -42,10 +42,64 @@ Rectangle {
         height: parent.height
         anchors.centerIn: parent
         color: "#000000"
-        opacity: 0.75
+        opacity: 0
         z: 1
-        visible: false
+
+        states: [
+            State{
+
+                name: "CLEAR"
+
+                PropertyChanges {
+
+                    target: pauseOpacity
+                    opacity: 0
+                }
+            },
+
+            State{
+
+                name: "OPAQUE"
+
+                PropertyChanges {
+
+                    target: pauseOpacity
+                    opacity: 0.75
+                }
+            }
+
+        ]
+
+        transitions: [
+            Transition{
+                from: "CLEAR"
+                to: "OPAQUE"
+                NumberAnimation{
+                    properties: "opacity"
+                    from: 0
+                    to: 0.75
+                    duration: 300
+                }
+            },
+            Transition{
+                from: "OPAQUE"
+                to: "CLEAR"
+                NumberAnimation{
+                    properties: "opacity"
+                    from: 0.75
+                    to: 0
+                    duration: 300
+                }
+            }
+
+        ]
+
+
+
+
     }
+
+
 
     GUIButton {
         source_string: "pause-button.png"

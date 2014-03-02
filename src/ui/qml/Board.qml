@@ -8,7 +8,6 @@ Rectangle {
     height: width
     anchors.centerIn: parent
     color: "transparent"
-    border.color: "#363666"
 
 
     state: "LOCKED"
@@ -45,6 +44,8 @@ Rectangle {
         }
 
     ]
+
+
 
     Tbar {
         anchors.top: parent.top
