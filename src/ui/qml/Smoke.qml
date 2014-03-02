@@ -77,7 +77,7 @@ Rectangle {
         ImageParticle {
             groups: ["flame"]
             source: "qrc:///particleresources/glowdot.png"
-            color: "#11ff400f"
+            color: "#11111111"
             colorVariation: 0.1
         }
         Emitter {
