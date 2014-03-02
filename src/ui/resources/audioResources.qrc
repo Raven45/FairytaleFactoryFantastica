@@ -1,5 +1,10 @@
 <RCC>
     <qresource>
-                <file alias="CalltoAdventure.mp3">../media/Call to Adventure.mp3</file>
+        <file alias="GearWind.mp3">../media/science_fiction_steampunk_gear_wind.mp3</file>
+        <file alias="ButtonClick1.mp3">../media/multimedia_button_click_029.mp3</file>
+        <file alias="BigDrum1.mp3">../media/114588__herbertboland__bigdrum1.wav</file>
+        <file alias="BigDrum2.mp3">../media/114591__herbertboland__bigdrum4.wav</file>
+        <file alias="ChainCrank1.mp3">../media/climb4.wav</file>
+        <file alias="ButtonClick2.mp3">../media/two_tone_nav.mp3</file>
     </qresource>
 </RCC>
