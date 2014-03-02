@@ -9,5 +9,6 @@
 	<file alias="red-rotate-counter.png">../media/red-rotate-counter.png</file>
 	<file alias="hg-bucket.png">../media/hg-bucket.png</file>
 	<file alias="main-menu-background.png">../media/main-menu-background.png</file>
+	<file alias="TheWitch.png">../media/TheWitch.png</file>
     </qresource>
 </RCC>

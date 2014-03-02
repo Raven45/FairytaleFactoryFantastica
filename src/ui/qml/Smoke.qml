@@ -48,6 +48,26 @@ Rectangle {
     height: 62
     id: smokeRectangle
     color: "transparent"
+    state: "ON"
+
+    states: [
+        State{
+            name: "ON"
+            PropertyChanges { target: turb;   enabled: true }
+            PropertyChanges { target: flame;  enabled: true }
+            PropertyChanges { target: smoke1; enabled: true }
+            PropertyChanges { target: smoke2; enabled: true }
+        },
+        State{
+            name: "OFF"
+            PropertyChanges { target: turb;   enabled: false }
+            PropertyChanges { target: flame;  enabled: false }
+            PropertyChanges { target: smoke1; enabled: false }
+            PropertyChanges { target: smoke2; enabled: false }
+        }
+
+    ]
+
 
     ParticleSystem {
         id: particle_system
@@ -81,6 +101,7 @@ Rectangle {
             colorVariation: 0.1
         }
         Emitter {
+            id: flame
             anchors.centerIn: parent
             group: "flame"
 
@@ -94,6 +115,7 @@ Rectangle {
         }
         TrailEmitter {
             id: smoke1
+            enabled: true
             width: 500
             height: 500/2
             group: "smoke"
@@ -110,6 +132,7 @@ Rectangle {
         }
         TrailEmitter {
             id: smoke2
+            enabled: true
             width: 500
             height: 500/2 - 20
             group: "smoke"

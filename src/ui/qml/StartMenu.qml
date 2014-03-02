@@ -18,33 +18,36 @@ Rectangle {
         fillMode: Image.PreserveAspectFit
     }
 
-    /* HAMMERS CPU!
     Smoke {
+        id: startMenu_smoke1
         x: 1210
         y: 210
     }
 
     Smoke {
+        id: startMenu_smoke2
         x: 1340
         y: 210
     }
-    */
+
+    Witch {
+        id: startMenu_witch
+    }
 
     states: [
         State{
             name: "VISIBLE"
-            PropertyChanges {
-                target: startMenu
-                visible: true
-            }
-
+            PropertyChanges { target: startMenu_smoke1; state: "ON" }
+            PropertyChanges { target: startMenu_smoke2; state: "ON" }
+            PropertyChanges { target: startMenu_witch;  state: "ON" }
+            PropertyChanges { target: startMenu; visible: true }
         },
         State{
             name: "INVISIBLE"
-            PropertyChanges {
-                target: startMenu
-                visible: false
-            }
+            PropertyChanges { target: startMenu_smoke1; state: "OFF" }
+            PropertyChanges { target: startMenu_smoke2; state: "OFF" }
+            PropertyChanges { target: startMenu_witch;  state: "OFF" }
+            PropertyChanges { target: startMenu; visible: false }
         }
 
     ]
