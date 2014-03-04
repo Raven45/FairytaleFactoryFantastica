@@ -11,7 +11,7 @@
 #define NUMBER_OF_QUADRANTS 4
 #define MAX_DEPTH_LEVEL 3
 
-#define NUMBER_OF_GAMES_TO_PLAY3 23000
+#define NUMBER_OF_GAMES_TO_PLAY3 18000
 
 struct BestMove3{
     signed int weights[19];

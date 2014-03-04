@@ -13,8 +13,7 @@ using std::vector;
 #define NUMBER_OF_GAMES_TO_PLAY 20000
 #define NUM_THREADS 8
 
-struct BestMove{
-    int score;
+struct Move{
     int quadrantIndex, pieceIndex;
     unsigned char i;
     Direction d;
@@ -23,6 +22,7 @@ struct BestMove{
 struct BoardState{
     BitBoard current;
     BitBoard opponent;
+    Move move;
 };
 
 class MonteCarloParallelAI : public Player{
@@ -92,8 +92,7 @@ private:
         PlayerColor myColor = mainboard.turnColor();
         const BitBoard myOriginalBoard = mainboard.getBoardOfPlayer(myColor);
         const BitBoard myOpponentOriginalBoard = mainboard.getBoardOfPlayer(util.opposite(myColor));
-        BestMove bestmove;
-        bestmove.score = -5 * NUMBER_OF_GAMES_TO_PLAY;
+        int bestScore = -5 * NUMBER_OF_GAMES_TO_PLAY;
 
 
 
@@ -123,6 +122,10 @@ private:
                         }
 
                         if (!alreadyVisited){
+                            boardState.move.pieceIndex = pieceIndex;
+                            boardState.move.quadrantIndex = quadrantIndex;
+                            boardState.move.d = rotations > 4? LEFT : RIGHT;
+                            boardState.move.i = rotations % 4;
                             visited.push_back(boardState);
                         }
                     }
@@ -131,36 +134,37 @@ private:
         }
 
 
-        int score = 0;
-        int count = 0;
+
+        
         omp_set_num_threads(NUM_THREADS);
+        int count = 0;
+        int bestBoard = 0;
 
 #pragma omp parallel
         {
-
 #pragma omp for schedule(dynamic, 1)
             for (int iter = 0; iter < visited.size(); iter++){
+                int score = 0;
                 BoardState b = visited[iter];
                 for (int playthrough = 0; playthrough < NUMBER_OF_GAMES_TO_PLAY; ++playthrough){
-                     int thisScore = playthroughWin(b.current, b.opponent, myColor);
-
-#pragma omp atomic
-                     score += thisScore;
+                     score +=  playthroughWin(b.current, b.opponent, myColor);
 #pragma omp atomic
                      ++count;
                 }
+#pragma omp critical
+                {
+                    if (score > bestScore){
+                        bestBoard = iter;
+                        bestScore = score;
+                    }
+                }
             }
         }
+        
+        qDebug() << count;
 
-        //qDebug() << count;
-
-        if (score > bestmove.score){
-            bestmove.score = score;
-            bestmove.quadrantIndex = quadrantIndex;
-            bestmove.pieceIndex = pieceIndex;
-            bestmove.i = rotations % 4;
-            bestmove.d = rotations > 4? LEFT : RIGHT;
-        }
+        
+        Move bestmove = visited[bestBoard];
 
 
         qDebug() << "The total number of games is " << count;

@@ -19,8 +19,8 @@ GuiGameController::GuiGameController( QGuiApplication* mainApp ) {
     //musicPlayer.moveToThread(pMusicThread);
 
     //change this URL path
-    //musicPlayer.setMedia(QUrl("qrc:/MonkeysSpinningMonkeys.mp3"));
-    musicPlayer.setMedia(QUrl("qrc:/CalltoAdventure.mp3"));
+    musicPlayer.setMedia(QUrl("qrc:/MonkeysSpinningMonkeys.mp3"));
+    //musicPlayer.setMedia(QUrl("qrc:/CalltoAdventure.mp3"));
     musicPlayer.play();
 
     app = mainApp;
@@ -179,6 +179,7 @@ void GuiGameController::networkTurnReceivedFromNetwork( int quadrantIndex, int p
 
 
 void GuiGameController::startOnePersonPlay() {
+
 
     GameCore::startNewGame();
 
