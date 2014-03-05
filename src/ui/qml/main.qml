@@ -49,10 +49,11 @@ Rectangle {
     property bool guiPlayerIsWhite: false
     property string gameMessage
     property bool isFirstMoveOfGame: true
-    property int _ROTATION_ANIMATION_DURATION: 400
+    property int _ROTATION_ANIMATION_DURATION: 600
     property int _OPPONENT_START_ROTATION_DELAY: 600 + 1000 + 34*10 + 800 + 2 //claw animation time...
 
     property int _QUADRANT_WIDTH: 200
+    property int _QUADRANT_GROWTH: 10
     property int _BOARD_HOLE_WIDTH: 65
     property int _VERTICAL_OUTSIDE: 18
     property int _VERTICAL_CENTER: 228

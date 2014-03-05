@@ -3,6 +3,7 @@ import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
 
 Image {
+    id: root
     fillMode: Image.PreserveAspectFit
     objectName: "Quadrant"
     width: 200
@@ -15,8 +16,8 @@ Image {
     property int yCenter
 
     function rotate( direction ){
-
         if( parseInt(direction) === 0 ){
+
             rightRotation.start()
             turnCogs( myIndex, "RIGHT")
         }
@@ -27,43 +28,83 @@ Image {
     }
 
 
-
-
-    RotationAnimation on rotation {
+    SequentialAnimation {
         id: rightRotation
-        duration: page._ROTATION_ANIMATION_DURATION
-        //easing {type: Easing.InElastic}
-        running: false
-        from: rotation
-        to: rotation + 90
         property int animationDirection: 0
-
-        onStopped:{
-            console.log("in rotationAnimation onStopped. myIndex = " + myIndex );
-            rotationAnimationFinished( myIndex, animationDirection );
-        }
-
         onStarted:{
             console.log("in rotationAnimation onStarted. myIndex = " + myIndex );
+            root.z += 100;
+        }
+        onStopped:{
+            root.z -= 100;
+            rotationAnimationFinished( myIndex, animationDirection );
+            console.log("in rotationAnimation onStopped. myIndex = " + myIndex );
+        }
+
+        NumberAnimation {
+          target: root
+          properties: "width,height"
+          from: _QUADRANT_WIDTH
+          to: _QUADRANT_WIDTH + _QUADRANT_GROWTH
+          duration: 100
+        }
+
+        NumberAnimation {
+            target: root
+            properties: "rotation"
+            duration: _ROTATION_ANIMATION_DURATION - 200
+            //easing {type: Easing.InElastic}
+            running: false
+            from: rotation
+            to: rotation + 90
+            property int animationDirection: 0
+        }
+        NumberAnimation {
+          target: root
+          properties: "width,height"
+          from: _QUADRANT_WIDTH + _QUADRANT_GROWTH
+          to: _QUADRANT_WIDTH
+          duration: 100
         }
     }
 
-    RotationAnimation on rotation {
+    SequentialAnimation {
         id: leftRotation
-        duration: page._ROTATION_ANIMATION_DURATION
-        //easing {type: Easing.OutElastic}
-        running: false
-        from: rotation
-        to: rotation - 90
         property int animationDirection: 1
-
-        onStopped:{
-            console.log("in rotationAnimation onStopped. myIndex = " + myIndex );
-            rotationAnimationFinished( myIndex, animationDirection );
-        }
-
         onStarted:{
             console.log("in rotationAnimation onStarted. myIndex = " + myIndex );
+            root.z += 100;
+        }
+        onStopped:{
+            root.z -= 100;
+            rotationAnimationFinished( myIndex, animationDirection );
+            console.log("in rotationAnimation onStopped. myIndex = " + myIndex );
+        }
+
+        NumberAnimation {
+          target: root
+          properties: "width,height"
+          from: _QUADRANT_WIDTH
+          to: _QUADRANT_WIDTH + _QUADRANT_GROWTH
+          duration: 100
+        }
+
+        NumberAnimation {
+            target: root
+            properties: "rotation"
+            duration: _ROTATION_ANIMATION_DURATION - 200
+            //easing {type: Easing.InElastic}
+            running: false
+            from: rotation
+            to: rotation - 90
+            property int animationDirection: 0
+        }
+        NumberAnimation {
+          target: root
+          properties: "width,height"
+          from: _QUADRANT_WIDTH + _QUADRANT_GROWTH
+          to: _QUADRANT_WIDTH
+          duration: 100
         }
     }
 
