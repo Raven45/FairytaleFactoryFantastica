@@ -45,16 +45,6 @@ Rectangle {
 
     ]
 
-
-
-    Tbar {
-        anchors.top: parent.top
-        anchors.left: parent.left
-
-        pentago_quad: 0
-        tbar_rotate_angle: -45
-    }
-
     Cogs {
         id: left_cogs
         anchors.top: parent.top
@@ -62,6 +52,44 @@ Rectangle {
 
         anchors.left: parent.left
         anchors.leftMargin: -(left_cogs.width/2)
+    }
+
+    Cogs {
+        id: top_cogs
+        rotation: 90
+        anchors.top: parent.top
+        anchors.topMargin: -(top_cogs.height/2)
+
+        anchors.left: parent.left
+        anchors.leftMargin: 385
+    }
+
+    Cogs {
+        id: right_cogs
+        rotation: 180
+        anchors.top: parent.top
+        anchors.topMargin: 385
+
+        anchors.right: parent.right
+        anchors.rightMargin: -(right_cogs.width/2)
+    }
+
+    Cogs {
+        id: bottom_cogs
+        rotation: -90
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: (-bottom_cogs.height/2)
+
+        anchors.left: parent.left
+        anchors.leftMargin: 190
+    }
+
+    Tbar {
+        anchors.top: parent.top
+        anchors.left: parent.left
+
+        pentago_quad: 0
+        tbar_rotate_angle: -45
     }
 
     Tbar {
