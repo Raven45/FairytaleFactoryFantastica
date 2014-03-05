@@ -55,6 +55,15 @@ Rectangle {
         tbar_rotate_angle: -45
     }
 
+    Cogs {
+        id: left_cogs
+        anchors.top: parent.top
+        anchors.topMargin: 190
+
+        anchors.left: parent.left
+        anchors.leftMargin: -(left_cogs.width/2)
+    }
+
     Tbar {
         anchors.top: parent.top
         anchors.right: parent.right

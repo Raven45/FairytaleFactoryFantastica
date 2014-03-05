@@ -1,5 +1,6 @@
 <RCC>
     <qresource>
+	<file alias="left-cogs-spritesheet.png">../media/left-cogs-spritesheet.png</file>
 	<file alias="purp-claw-spritesheet-75.png">../media/purp-claw-spritesheet-75.png</file>
 	<file alias="teal-claw-spritesheet-75.png">../media/teal-claw-spritesheet-75.png</file>
     <file alias="ingame-menu.png">../media/ingame-menu.png</file>
