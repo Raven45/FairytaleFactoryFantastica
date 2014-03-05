@@ -5,6 +5,7 @@
 //#include "MonteCarloAI.h"
 //#include "MonteCarloAI3.h"
 #include "MonteCarloParallelAI.h"
+#include "AlphaBetaAI.h"
 #include "NetworkInterface.h"
 #include <time.h>
 

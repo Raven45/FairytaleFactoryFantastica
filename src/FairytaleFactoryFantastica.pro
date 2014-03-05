@@ -104,7 +104,8 @@ HEADERS += \
     backend/ai/MonteCarloAI2.h \
     backend/ai/MonteCarloAI3.h \
     backend/ai/MonteCarloAI4.h \
-    backend/ai/MonteCarloParallelAI.h
+    backend/ai/MonteCarloParallelAI.h \
+    backend/ai/AlphaBetaAI.h
 
 
 

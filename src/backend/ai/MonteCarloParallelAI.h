@@ -2,19 +2,20 @@
 #define MONTECARLOPARALLELAI_H
 #include "Player.h"
 #include <vector>
+#include <algorithm>
 #include <omp.h>
 using std::vector;
+using std::sort;
 
 #define MAX_PIECES_ON_BOARD 36
 #define MAX_PIECES_ON_QUADRANT 9
 #define NUMBER_OF_POSSIBLE_ROTATIONS 8
 #define NUMBER_OF_QUADRANTS 4
-#define MAX_DEPTH_LEVEL 10
-#define NUMBER_OF_GAMES_TO_PLAY 20000
+//#define MAX_DEPTH_LEVEL 10
+#define MAX_NUMBER_GAMES_PLAYED 1000000
 #define NUM_THREADS 8
 
-struct BestMove{
-    int score;
+struct Move{
     int quadrantIndex, pieceIndex;
     unsigned char i;
     Direction d;
@@ -23,6 +24,7 @@ struct BestMove{
 struct BoardState{
     BitBoard current;
     BitBoard opponent;
+    Move move;
 };
 
 class MonteCarloParallelAI : public Player{
@@ -72,7 +74,7 @@ private:
             if (current.didWin())
                 return 2;
             if (opponent.didWin())
-                return -2;
+                return -3;
             if (boardIsFull(current, opponent)){
 
                 if(AIColor == BLACK)
@@ -80,24 +82,16 @@ private:
 
                 return 0;
             }
-        }while( ++depth < MAX_DEPTH_LEVEL );
+        }while( true );
 
-        // true
+        // ++depth < MAX_DEPTH_LEVEL
         //return for running too long
         return 0;
 
     }
 
-    inline static Turn monteCarlo ( const Board& mainboard ){
-        PlayerColor myColor = mainboard.turnColor();
-        const BitBoard myOriginalBoard = mainboard.getBoardOfPlayer(myColor);
-        const BitBoard myOpponentOriginalBoard = mainboard.getBoardOfPlayer(util.opposite(myColor));
-        BestMove bestmove;
-        bestmove.score = -5 * NUMBER_OF_GAMES_TO_PLAY;
-
-
-
-        vector <BoardState> visited;
+    inline static vector<BoardState> getPossibleNextMoves (BitBoard myOriginalBoard, BitBoard myOpponentOriginalBoard){
+        vector<BoardState> visited;
         for (int quadrantIndex = 0; quadrantIndex < NUMBER_OF_QUADRANTS; ++quadrantIndex){
             for (int pieceIndex = 0; pieceIndex < MAX_PIECES_ON_QUADRANT; ++pieceIndex){
                 if (!myOriginalBoard.hasPieceAt(quadrantIndex, pieceIndex) &&
@@ -123,47 +117,102 @@ private:
                         }
 
                         if (!alreadyVisited){
+                            boardState.move.pieceIndex = pieceIndex;
+                            boardState.move.quadrantIndex = quadrantIndex;
+                            boardState.move.d = rotations > 4? LEFT : RIGHT;
+                            boardState.move.i = rotations % 4;
                             visited.push_back(boardState);
                         }
                     }
                 }
             }
         }
+        return visited;
+    }
 
+    inline static Turn monteCarlo ( const Board& mainboard ){
+        PlayerColor myColor = mainboard.turnColor();
+        const BitBoard myOriginalBoard = mainboard.getBoardOfPlayer(myColor);
+        const BitBoard myOpponentOriginalBoard = mainboard.getBoardOfPlayer(util.opposite(myColor));
+        int bestScore = -2 * MAX_NUMBER_GAMES_PLAYED;
 
-        int score = 0;
-        int count = 0;
+        vector <BoardState> visited;
+        visited = getPossibleNextMoves(myOriginalBoard, myOpponentOriginalBoard);
+
+        vector <BoardState> nextMove[visited.size()];
+        for (int i = 0; i < visited.size(); i++){
+            nextMove[i] = getPossibleNextMoves(visited[i].current, visited[i].opponent);
+        }
+
         omp_set_num_threads(NUM_THREADS);
+        int count = 0;
+        int gamesEachThreadToPlay = (MAX_NUMBER_GAMES_PLAYED / visited.size());
+
+        int allScores[visited.size()];
 
 #pragma omp parallel
         {
-
 #pragma omp for schedule(dynamic, 1)
             for (int iter = 0; iter < visited.size(); iter++){
+                int score = 0;
                 BoardState b = visited[iter];
-                for (int playthrough = 0; playthrough < NUMBER_OF_GAMES_TO_PLAY; ++playthrough){
-                     int thisScore = playthroughWin(b.current, b.opponent, myColor);
-
-#pragma omp atomic
-                     score += thisScore;
+                for (int playthrough = 0; playthrough < gamesEachThreadToPlay; ++playthrough){
+                     score +=  playthroughWin(b.current, b.opponent, myColor);
 #pragma omp atomic
                      ++count;
                 }
+                allScores[iter] = score;
             }
         }
 
-        //qDebug() << count;
+    int numberOfNextMoveBoards = 0;
+    for ( vector<BoardState> b : nextMove){
+        numberOfNextMoveBoards += b.size();
+    }
 
-        if (score > bestmove.score){
-            bestmove.score = score;
-            bestmove.quadrantIndex = quadrantIndex;
-            bestmove.pieceIndex = pieceIndex;
-            bestmove.i = rotations % 4;
-            bestmove.d = rotations > 4? LEFT : RIGHT;
+//    int allScoresNextMoves[numberOfNextMoveBoards];
+//    for ( int i = 0; i < visited.size(); i++){
+//        vector<BoardState> b = visited[i];
+//#pragma omp parallel
+//        {
+//#pragma omp for schedule(dynamic, 1)
+//        for (int iter = 0; iter < b.size(); iter++){
+//            int score = 0;
+//            BoardState bs = b[iter];
+//            for (int playthrough = 0; playthrough < gamesEachThreadToPlay; ++playthrough){
+//                 score +=  playthroughWin(b.current, b.opponent, myColor);
+//            }
+//            something[i*visited.size() + iter] = score;
+//        }
+//        }
+//    }
+
+
+
+
+
+
+        //determine the best board
+        int bestBoard = 0;
+        for (int iter = 0; iter < visited.size(); iter++){
+            if (allScores[iter] > bestScore){
+                bestScore = allScores[iter];
+                bestBoard = iter;
+            }
         }
 
+        Move bestmove = visited[bestBoard].move;
 
+        qDebug() << "Selected move is " << bestBoard << " with score of " << allScores[bestBoard];
+        qDebug() << "The number of checked boards is " << visited.size();
+        qDebug() << "The number of next checked boards is " << numberOfNextMoveBoards;
         qDebug() << "The total number of games is " << count;
+
+        qDebug() << "Sorted scores";
+        sort(allScores, allScores + visited.size());
+        for (int i = 0; i < visited.size(); i++){
+            qDebug() << i << " " << allScores[i];
+        }
         Turn t;
         BoardLocation bl;
         bl.pieceIndex = bestmove.pieceIndex;
