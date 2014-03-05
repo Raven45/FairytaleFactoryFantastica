@@ -46,43 +46,94 @@ Rectangle {
     ]
 
     Cogs {
-        id: left_cogs
-        anchors.top: parent.top
-        anchors.topMargin: 190
+         id: leftHighCog
+         quadrantToOperateOn: 0
+         anchors.top: parent.top
+         anchors.topMargin: 190 - _QUADRANT_WIDTH/2 + 20
 
-        anchors.left: parent.left
-        anchors.leftMargin: -(left_cogs.width/2)
-    }
-
-    Cogs {
-        id: top_cogs
-        rotation: 90
-        anchors.top: parent.top
-        anchors.topMargin: -(top_cogs.height/2)
-
-        anchors.left: parent.left
-        anchors.leftMargin: 385
-    }
+         anchors.left: parent.left
+         anchors.leftMargin: 20
+     }
 
     Cogs {
-        id: right_cogs
-        rotation: 180
-        anchors.top: parent.top
-        anchors.topMargin: 385
+         id: leftLowCog
+         quadrantToOperateOn: 2
+         anchors.top: parent.top
+         anchors.topMargin: 190 + _QUADRANT_WIDTH/2 + 30
 
-        anchors.right: parent.right
-        anchors.rightMargin: -(right_cogs.width/2)
-    }
+         anchors.left: parent.left
+        anchors.leftMargin: 20
+     }
 
-    Cogs {
-        id: bottom_cogs
-        rotation: -90
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: (-bottom_cogs.height/2)
+     Cogs {
+         id: topLeftCog
+         quadrantToOperateOn: 0
+         rotation: 90
+         anchors.top: parent.top
+         anchors.topMargin: 20
 
-        anchors.left: parent.left
-        anchors.leftMargin: 190
-    }
+         anchors.left: parent.left
+         anchors.leftMargin: 385  - _QUADRANT_WIDTH/2 - 30
+     }
+     Cogs {
+         id:topRightCog
+         quadrantToOperateOn: 1
+         rotation: 90
+         anchors.top: parent.top
+         anchors.topMargin: 20
+
+         anchors.left: parent.left
+         anchors.leftMargin: 385 + _QUADRANT_WIDTH/2 - 20
+     }
+
+
+     Cogs {
+         id: rightHighCog
+         quadrantToOperateOn: 1
+         rotation: 180
+         anchors.top: parent.top
+         anchors.topMargin: 385 - _QUADRANT_WIDTH/2 - 30
+
+         anchors.right: parent.right
+         anchors.rightMargin: 20
+     }
+
+     Cogs {
+         id: rightLowCog
+         quadrantToOperateOn: 3
+         rotation: 180
+         anchors.top: parent.top
+         anchors.topMargin: 385 + _QUADRANT_WIDTH/2 - 20
+
+         anchors.right: parent.right
+         anchors.rightMargin: 20
+     }
+
+     Cogs {
+         id:bottomLeftCog
+         quadrantToOperateOn: 2
+         rotation: -90
+         anchors.bottom: parent.bottom
+         anchors.bottomMargin: 20
+
+         anchors.left: parent.left
+         anchors.leftMargin: 190 - _QUADRANT_WIDTH/2 + 20
+     }
+
+     Cogs {
+         id: bottomRightCog
+         quadrantToOperateOn: 3
+         rotation: -90
+         anchors.bottom: parent.bottom
+         anchors.bottomMargin:20
+
+         anchors.left: parent.left
+         anchors.leftMargin: 190 + _QUADRANT_WIDTH/2 + 30
+     }
+
+
+
+
 
     Tbar {
         anchors.top: parent.top
@@ -128,75 +179,7 @@ Rectangle {
     }
 
 
-    function getXYOffset(quadrantIndex, pieceIndex){
-        var xyOffset = { "x": 0, "y":0 };
-        var distanceFromCenter = _QUADRANT_WIDTH/2 - _BOARD_HOLE_WIDTH/2;
-        var xCenter;
-        var yCenter;
 
-        switch(quadrantIndex){
-        case 0:
-            xCenter = _VERTICAL_OUTSIDE + _QUADRANT_WIDTH/2;
-            yCenter = _HORIZONTAL_TOP + _QUADRANT_WIDTH/2;
-            break;
-        case 1:
-            xCenter = _VERTICAL_CENTER + _QUADRANT_WIDTH/2;
-            yCenter = _HORIZONTAL_TOP + _QUADRANT_WIDTH/2;
-            break;
-        case 2:
-            xCenter = _VERTICAL_OUTSIDE + _QUADRANT_WIDTH/2;
-            yCenter = _HORIZONTAL_CENTER + _QUADRANT_WIDTH/2;
-            break;
-        case 3:
-            xCenter = _VERTICAL_CENTER + _QUADRANT_WIDTH/2;
-            yCenter = _HORIZONTAL_CENTER + _QUADRANT_WIDTH/2;
-            break;
-
-        }
-
-        switch( pieceIndex ){
-        case 0:
-            xyOffset.x = xCenter - distanceFromCenter;
-            xyOffset.y = yCenter - distanceFromCenter;
-            break;
-        case 1:
-            xyOffset.x = xCenter;
-            xyOffset.y = yCenter - distanceFromCenter;
-            break;
-        case 2:
-            xyOffset.x = xCenter + distanceFromCenter;
-            xyOffset.y = yCenter - distanceFromCenter;
-            break;
-        case 3:
-            xyOffset.x = xCenter - distanceFromCenter;
-            xyOffset.y = yCenter;
-            break;
-        case 4:
-            xyOffset.x = xCenter;
-            xyOffset.y = yCenter;
-            break;
-        case 5:
-            xyOffset.x = xCenter + distanceFromCenter;
-            xyOffset.y = yCenter;
-            break;
-        case 6:
-            xyOffset.x = xCenter - distanceFromCenter;
-            xyOffset.y = yCenter + distanceFromCenter;
-            break;
-        case 7:
-            xyOffset.x = xCenter;
-            xyOffset.y = yCenter + distanceFromCenter;
-            break;
-        case 8:
-            xyOffset.x = xCenter + distanceFromCenter;
-            xyOffset.y = yCenter + distanceFromCenter;
-            break;
-        }
-
-        console.log( " moving to x: " + xyOffset.x +" and y: " + xyOffset.y );
-
-        return xyOffset;
-    }
 
 
     Image{
@@ -221,7 +204,9 @@ Rectangle {
             anchors.left: parent.left
             anchors.top: parent.top
             myIndex: 0
+
         }
+
         Quadrant{
             id: quadrant1
             anchors.right: parent.right

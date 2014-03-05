@@ -18,13 +18,16 @@ Image {
 
         if( parseInt(direction) === 0 ){
             rightRotation.start()
-            //call signal to start right-cogs
+            turnCogs( myIndex, "RIGHT")
         }
         else{
             leftRotation.start()
-            //call signal to start left-cogs
+            turnCogs( myIndex, "LEFT")
         }
     }
+
+
+
 
     RotationAnimation on rotation {
         id: rightRotation

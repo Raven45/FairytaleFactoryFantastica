@@ -30,7 +30,7 @@ Rectangle {
     signal sendPlayerName(var playerName )
     signal readyToOpenClaw(int qIndex, int pIndex, var whichClaw )
     signal showPiece( int qIndex, int pIndex )
-    signal turnCogs(int quadrantIndex, int direction )
+    signal turnCogs(int quadrantIndex, var direction )
 
     //network-related signals
     //TODO: receive challenge response
@@ -185,5 +185,75 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
         }
+    }
+
+    function getXYOffset(quadrantIndex, pieceIndex){
+        var xyOffset = { "x": 0, "y":0 };
+        var distanceFromCenter = _QUADRANT_WIDTH/2 - _BOARD_HOLE_WIDTH/2;
+        var xCenter;
+        var yCenter;
+
+        switch(quadrantIndex){
+        case 0:
+            xCenter = _VERTICAL_OUTSIDE + _QUADRANT_WIDTH/2;
+            yCenter = _HORIZONTAL_TOP + _QUADRANT_WIDTH/2;
+            break;
+        case 1:
+            xCenter = _VERTICAL_CENTER + _QUADRANT_WIDTH/2;
+            yCenter = _HORIZONTAL_TOP + _QUADRANT_WIDTH/2;
+            break;
+        case 2:
+            xCenter = _VERTICAL_OUTSIDE + _QUADRANT_WIDTH/2;
+            yCenter = _HORIZONTAL_CENTER + _QUADRANT_WIDTH/2;
+            break;
+        case 3:
+            xCenter = _VERTICAL_CENTER + _QUADRANT_WIDTH/2;
+            yCenter = _HORIZONTAL_CENTER + _QUADRANT_WIDTH/2;
+            break;
+
+        }
+
+        switch( pieceIndex ){
+        case 0:
+            xyOffset.x = xCenter - distanceFromCenter;
+            xyOffset.y = yCenter - distanceFromCenter;
+            break;
+        case 1:
+            xyOffset.x = xCenter;
+            xyOffset.y = yCenter - distanceFromCenter;
+            break;
+        case 2:
+            xyOffset.x = xCenter + distanceFromCenter;
+            xyOffset.y = yCenter - distanceFromCenter;
+            break;
+        case 3:
+            xyOffset.x = xCenter - distanceFromCenter;
+            xyOffset.y = yCenter;
+            break;
+        case 4:
+            xyOffset.x = xCenter;
+            xyOffset.y = yCenter;
+            break;
+        case 5:
+            xyOffset.x = xCenter + distanceFromCenter;
+            xyOffset.y = yCenter;
+            break;
+        case 6:
+            xyOffset.x = xCenter - distanceFromCenter;
+            xyOffset.y = yCenter + distanceFromCenter;
+            break;
+        case 7:
+            xyOffset.x = xCenter;
+            xyOffset.y = yCenter + distanceFromCenter;
+            break;
+        case 8:
+            xyOffset.x = xCenter + distanceFromCenter;
+            xyOffset.y = yCenter + distanceFromCenter;
+            break;
+        }
+
+        console.log( " moving to x: " + xyOffset.x +" and y: " + xyOffset.y );
+
+        return xyOffset;
     }
 }

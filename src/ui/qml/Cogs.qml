@@ -2,22 +2,49 @@ import QtQuick 2.0
 
 Item {
 
-    property int quadrantsToOperateOn
+    property int quadrantToOperateOn
 
     Connections{
-        target: pentagoBoard
+        target: page
         onTurnCogs:{
-            cogsSprite.jumpTo()
-            //if-else depending on something
+            if( quadrantIndex == quadrantToOperateOn){
+
+                console.log("turning cogs " + direction );
+
+                if( direction == "LEFT" ){
+                    cogsSprite.jumpTo("leftCogsSprite")
+
+                }
+                else if( direction == "RIGHT" ){
+                    cogsSprite.jumpTo( "rightCogsSprite")
+                }
+                else{
+                    console.log("oops bad direction")
+                }
+            }
         }
     }
 
     SpriteSequence{
         id: cogsSprite
-        width: 165;
-        height: 200;
+        width: 120;
+        height: 150;
         z: 0;
+
+
         sprites:[
+            Sprite{
+              name: "stillCogsSprite"
+              source: "left-cogs-spritesheet.png"
+
+              frameWidth: 165;
+              frameHeight: 200
+              frameX: 0
+              frameY: 0
+              frameCount: 1
+              frameDuration: 30
+            },
+
             Sprite {
                 name: "leftCogsSprite"
 
@@ -28,7 +55,11 @@ Item {
                 frameX: 0
                 frameY: 0
                 frameCount: 90
-                duration: _ROTATION_ANIMATION_DURATION
+                frameDuration: _ROTATION_ANIMATION_DURATION / frameCount
+                to:{
+                    "stillCogsSprite":1
+                }
+
             },
             Sprite {
                 name: "rightCogsSprite"
@@ -41,7 +72,11 @@ Item {
                 frameY: 0
                 frameCount: 90
                 reverse: true
-                duration: _ROTATION_ANIMATION_DURATION
+                frameDuration: _ROTATION_ANIMATION_DURATION / frameCount
+
+                to:{
+                    "stillCogsSprite":1
+                }
             }
         ]
 
