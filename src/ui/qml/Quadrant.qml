@@ -18,9 +18,11 @@ Image {
 
         if( parseInt(direction) === 0 ){
             rightRotation.start()
+            //call signal to start right-cogs
         }
         else{
             leftRotation.start()
+            //call signal to start left-cogs
         }
     }
 

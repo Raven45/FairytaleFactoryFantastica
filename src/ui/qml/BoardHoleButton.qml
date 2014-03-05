@@ -126,7 +126,7 @@ Rectangle {
 
     QmlTimer {
         id: showPieceTimer
-        duration: 33 *_CLAW_OPEN_DURATION
+        duration: _CLAW_OPEN_DURATION
         onTriggered: {
             backgroundImage.visible = true;
         }
@@ -209,12 +209,12 @@ Rectangle {
                 NumberAnimation {
                     target: tealClawPiece
                     property: "y"
-                    duration: 500
+                    duration: _CLAW_MOVE_DURATION / 2
                 }
                 NumberAnimation {
                     target: tealClawPiece;
                     property: "x"
-                    duration: 500
+                    duration: _CLAW_MOVE_DURATION / 2
                 }
                 ScriptAction{
                     scriptName: "openTealClaw"
@@ -230,12 +230,12 @@ Rectangle {
                 NumberAnimation {
                     target: purpleClawPiece
                     property: "y"
-                    duration: 500
+                    duration: _CLAW_MOVE_DURATION / 2
                 }
                 NumberAnimation {
                     target: purpleClawPiece;
                     property: "x"
-                    duration: 500
+                    duration: _CLAW_MOVE_DURATION / 2
                 }
                 ScriptAction{
                     scriptName: "openPurpleClaw"

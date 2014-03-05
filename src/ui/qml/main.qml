@@ -30,6 +30,7 @@ Rectangle {
     signal sendPlayerName(var playerName )
     signal readyToOpenClaw(int qIndex, int pIndex, var whichClaw )
     signal showPiece( int qIndex, int pIndex )
+    signal turnCogs(int quadrantIndex, int direction )
 
     //network-related signals
     //TODO: receive challenge response
@@ -57,7 +58,8 @@ Rectangle {
     property int _VERTICAL_CENTER: 228
     property int _HORIZONTAL_TOP: -34
     property int _HORIZONTAL_CENTER: 178
-    property int _CLAW_OPEN_DURATION: 10
+    property int _CLAW_OPEN_DURATION: 350
+    property int _CLAW_MOVE_DURATION: 800
     property int _CLAW_X_HOME: pentagoBoard.width/2 - 58
     property int _CLAW_Y_HOME: -300
 
