@@ -30,8 +30,11 @@
 #include <QQmlComponent>
 #include <QtQml>
 
-typedef MonteCarloParallelAI AIPlayer;
+
 typedef GuiGameController GameController;
+
+
+
 
 int main(int argc, char* argv[])
 {
@@ -41,21 +44,26 @@ int main(int argc, char* argv[])
     app.setOrganizationName("Team 2");
     app.setApplicationName("Pentago");
 
-    //put this on a thread later?
-    AIPlayer aiPlayer;
+    QThread testLocal;
+    QThread* coreThread = &testLocal; //new QThread;
+
     GameController gameController( &app );
-    gameController.setPlayer2( &aiPlayer );
+    gameController.moveToThread(coreThread);
+    coreThread->start();
 
     QQuickView window;
-    window.rootContext() -> setContextProperty( "gameController", &gameController );
     window.setResizeMode(QQuickView::SizeRootObjectToView);
     window.setSource( QUrl("qrc:/main.qml") );
 
-    gameController.setWindow( &window );
+    GuiProxy proxy( &gameController, qobject_cast<QQuickItem*>(window.rootObject()) );
+    window.rootContext() -> setContextProperty( "gameController", &proxy );
 
-    //put this on a thread later
-    NetworkInterface myInterface;
-    gameController.setNetworkInterface(&myInterface);
+    gameController.setWindow( &proxy );
+    //QMetaObject::invokeMethod( &gameController, "setWindow", Qt::QueuedConnection, Q_ARG(Proxy*, &proxy));
+
+    //gameController.setNetworkInterface();
+    QMetaObject::invokeMethod( &gameController, "setNetworkInterface", Qt::QueuedConnection );
+
 
     window.showFullScreen();
 

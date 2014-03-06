@@ -65,7 +65,7 @@ Rectangle {
     property int _CLAW_Y_HOME: -300
 
 
-    onBackToMainMenu:{
+    onBackToMainMenu: {
         isFirstMoveOfGame = true;
     }
 
@@ -136,6 +136,7 @@ Rectangle {
         onReadyForGuiMove:{
 
 
+
             var opponentsMove = gameController.getOpponentsTurn();
 
             if( !isFirstMoveOfGame ){
@@ -161,6 +162,7 @@ Rectangle {
         }
 
     }
+
     NetworkLobby{
         id:networkLobby
         anchors.centerIn: parent
