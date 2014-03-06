@@ -6,7 +6,6 @@ Rectangle {
 
     property int pieceIndex
     property int quadrantIndex
-    property bool isLocked
 
     objectName: "BoardHoleButton"
     id: boardHoleButton
@@ -41,15 +40,6 @@ Rectangle {
                 state = page.guiPlayerIsWhite? "BLACK" : "WHITE"
 
             }
-        }
-
-        onLockBoardPieces:{
-            isLocked = true;
-
-        }
-
-        onUnlockBoardPieces:{
-            isLocked = false;
         }
 
         onClearBoard:{
@@ -138,6 +128,7 @@ Rectangle {
             if( qIndex == quadrantIndex && pIndex == pieceIndex ){
                 showPieceTimer.startTimer();
             }
+            lockBoardPieces();
         }
     }
 
@@ -250,28 +241,23 @@ Rectangle {
        onClicked: {
 
            console.log("pieceIndex of click: " + pieceIndex );
-           if( !isLocked ){
-               if( boardHoleButton.state == "EMPTY" ){
-                   if(guiPlayerIsWhite){
-                        boardHoleButton.state = "WHITE";
-                   }
-                   else{
-                       boardHoleButton.state = "BLACK";
-                   }
+           if( boardHoleButton.state == "EMPTY" ){
+                if(guiPlayerIsWhite){
+                    boardHoleButton.state = "WHITE";
+                }
+                else{
+                    boardHoleButton.state = "BLACK";
+                }
 
-                   console.log("calling gameController.setGuiTurnHole(...) (from QML) with quadrantIndex = " + quadrantIndex + " and pieceIndex = " + pieceIndex);
-                   gameController.setGuiTurnHole( quadrantIndex, pieceIndex);
-                   page.gameMessage = "Choose a rotation.";
+                console.log("calling gameController.setGuiTurnHole(...) (from QML) with quadrantIndex = " + quadrantIndex + " and pieceIndex = " + pieceIndex);
+                gameController.setGuiTurnHole( quadrantIndex, pieceIndex);
+                page.gameMessage = "Choose a rotation.";
 
 
-               }
-               else{
-                    page.gameMessage = "This place is taken!";
-               }
-           }else{
-               page.gameMessage = "Can't click that right now!"
            }
-
+           else{
+                page.gameMessage = "This place is taken!";
+           }
        }
     }
 }

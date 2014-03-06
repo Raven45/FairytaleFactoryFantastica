@@ -17,11 +17,7 @@ Rectangle {
         onReadyForRotation:{
 
             lockBoardPieces();
-
-            //TODO here:
-            //unlock rotation buttons
-            //get real rotation info
-            //setup another signal layer before calling guiMoveChosen
+            unlockQuadrantRotation();
         }
     }
 

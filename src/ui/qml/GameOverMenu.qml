@@ -27,8 +27,6 @@ Rectangle {
 
 
     Button {
-
-        //ELIZABETH - use this example
         width: 200
         height: 100
         anchors.centerIn: gameOverMenu
@@ -79,15 +77,6 @@ Rectangle {
                 winnerInfo.parent.winText ="Black Wins";
                 break;
             }
-
-
-
-
-
-
-
-            //change text using the winner variable
-            //show this menu
         }
 
     }

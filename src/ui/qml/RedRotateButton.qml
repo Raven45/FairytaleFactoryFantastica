@@ -30,14 +30,17 @@ Item {
         Connections{
             target: page
             onReadyForRotation:{
-                red_rotate_glowEffect.visible = true
+                red_rotate_glowEffect.visible = true;
+                lockBoardPieces();
+                unlockQuadrantRotation();
             }
         }
 
         Connections{
             target: page
             onRotationClicked:{
-                red_rotate_glowEffect.visible = false
+                red_rotate_glowEffect.visible = false;
+                lockQuadrantRotation();
             }
         }
 

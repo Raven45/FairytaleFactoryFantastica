@@ -19,8 +19,6 @@ Rectangle {
     signal clickedRandomMove()
     //signal updateCurrentBoard()
     signal readyForRotation()
-    signal lockBoardPieces()
-    signal unlockBoardPieces()
     signal rotationClicked( int index, int direction )
     signal rotationAnimationFinished(int quadrantRotated, int direction )
     signal placeOpponentsPiece( int qIndex, int pIndex )
@@ -47,6 +45,8 @@ Rectangle {
 
     property alias main: page
     property bool guiPlayerIsWhite: false
+    property bool guiPlayerCanClickBoardHoleButton: false
+    property bool guiPlayerCanClickRotation: false
     property string gameMessage
     property bool isFirstMoveOfGame: true
     property int _ROTATION_ANIMATION_DURATION: 600
@@ -64,6 +64,34 @@ Rectangle {
     property int _CLAW_X_HOME: pentagoBoard.width/2 - 58
     property int _CLAW_Y_HOME: -300
 
+
+    function lockBoardPieces(){
+        guiPlayerCanClickBoardHoleButton = false;
+    }
+
+    function unlockBoardPieces(){
+        if (guiPlayerCanClickRotation)
+        {
+            console.log("guiPlayerCanClickRotation is still true");
+        }
+        else{
+            guiPlayerCanClickBoardHoleButton = true;
+        }
+    }
+
+    function lockQuadrantRotation(){
+        guiPlayerCanClickRotation = false;
+    }
+
+    function unlockQuadrantRotation(){
+        if (guiPlayerCanClickBoardHoleButton)
+        {
+            console.log("guiPlayerCanClickBoardHoleButton is still true");
+        }
+        else{
+            guiPlayerCanClickRotation = true;
+        }
+    }
 
     onBackToMainMenu:{
         isFirstMoveOfGame = true;
@@ -93,9 +121,11 @@ Rectangle {
         property int rotationDirection
 
         onTriggered:{
-            console.log("o5: animate opponent rotation." );
-            pentagoBoard.playRotateAnimationOnQuadrant(quadrantToRotate, rotationDirection);
-            unlockGuiPiecesTimeout.startTimer();
+            if (guiPlayerCanClickRotation){
+                console.log("o5: animate opponent rotation." );
+                pentagoBoard.playRotateAnimationOnQuadrant(quadrantToRotate, rotationDirection);
+                unlockGuiPiecesTimeout.startTimer();
+            }
 
         }
     }
@@ -118,16 +148,14 @@ Rectangle {
 
     Connections{
         onRotationClicked:{
+            if (guiPlayerCanClickRotation){
+                console.log("4. start rotation animation ");
+                pentagoBoard.playRotateAnimationOnQuadrant( index, direction );
 
-            console.log("4. start rotation animation ");
-            pentagoBoard.playRotateAnimationOnQuadrant( index, direction );
-
-            console.log("5. start User timer ");
-            userMoveTimeout.startTimer();
+                console.log("5. start User timer ");
+                userMoveTimeout.startTimer();
+            }
         }
-
-
-
 
     }
 
