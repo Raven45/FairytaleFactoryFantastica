@@ -118,6 +118,13 @@ void GuiGameController::setNetworkInterface(){
     }else{
         qDebug() << "WEIRD, net should've been null";
     }
+
+    if( player2 == nullptr ){
+        setPlayer2(new AIPlayer);
+    }
+    else{
+        qDebug() << "WEIRD, player2 should've been null";
+    }
 }
 
 void GuiGameController::backToMainMenu(){
@@ -186,9 +193,7 @@ void GuiGameController::networkTurnReceivedFromNetwork( int quadrantIndex, int p
 
 void GuiGameController::startOnePersonPlay() {
 
-    if( player2 == nullptr ){
-        setPlayer2(new AIPlayer);
-    }
+
 
     GameCore::startNewGame();
 
@@ -250,10 +255,16 @@ void GuiGameController::togglePlayback(){
 }
 
 void GuiGameController::setGuiPlayerColor( int menuSelectedColor ){
+
+        qDebug() << "in setGuiPlayerColor";
+
         guiPlayerColor = static_cast<PlayerColor>(menuSelectedColor);
+
+        qDebug() << "guiPlayerColor is set";
+
         if(menuSelectedColor == 0)
         {
-           player2 -> setColor(PlayerColor::BLACK);
+            player2 -> setColor(PlayerColor::BLACK);
         }
         else if (menuSelectedColor == 1)
         {

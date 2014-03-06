@@ -197,10 +197,10 @@ public:
 
                         int checkWeight = evaluateBitBoard( boardToRotate, opponentsBoard, myOriginalBoard );
 
-                        //if it's the best move we've found this far, keep it
-                        if( checkWeight > bestMoveWeight ){
+                        Board test(boardToRotate,opponentsBoard, util.opposite(myColor) );
 
-                            Board test(boardToRotate,opponentsBoard, util.opposite(myColor) );
+
+                        if( checkWeight > bestMoveWeight && !test.checkWin().isDraw ){
 
                             int opponentsBestMoveWeight = 0;
 

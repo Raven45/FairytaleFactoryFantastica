@@ -1,6 +1,6 @@
 #ifndef MONTECARLOPARALLELAI_H
 #define MONTECARLOPARALLELAI_H
-/*#include "Player.h"
+#include "Player.h"
 #include <vector>
 #include <algorithm>
 #include <omp.h>
@@ -233,5 +233,5 @@ public:
         qDebug() << "Time: " << ((std::clock() - start) / (double)(CLOCKS_PER_SEC)) << " seconds";
         return result;
     }
-};*/
+};
 #endif // MONTECARLOPARALLELAI_H

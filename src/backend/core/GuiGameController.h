@@ -11,7 +11,7 @@
 #include <QMediaPlayer>
 #include <QThread>
 
-#include "MonteCarloParallelAI.h"
+//#include "MonteCarloParallelAI.h"
 #include "NetworkInterface.h"
 #include "SmarterPlayer2.h"
 
