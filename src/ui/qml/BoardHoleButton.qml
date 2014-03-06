@@ -119,6 +119,10 @@ Rectangle {
         duration: _CLAW_OPEN_DURATION
         onTriggered: {
             backgroundImage.visible = true;
+
+            if( isGuiPlayersTurn ){
+                unlockQuadrantRotation();
+            }
         }
     }
 
@@ -128,7 +132,6 @@ Rectangle {
             if( qIndex == quadrantIndex && pIndex == pieceIndex ){
                 showPieceTimer.startTimer();
             }
-            lockBoardPieces();
         }
     }
 
@@ -239,24 +242,27 @@ Rectangle {
     MouseArea{
         anchors.fill: boardHoleButton
        onClicked: {
+           if (!menuIsShowing){
+                if(guiPlayerCanClickBoardHoleButton){
+                    console.log("pieceIndex of click: " + pieceIndex );
+                    if( boardHoleButton.state == "EMPTY" ){
+                        if(guiPlayerIsWhite){
+                             boardHoleButton.state = "WHITE";
+                         }
+                         else{
+                            boardHoleButton.state = "BLACK";
+                         }
 
-           console.log("pieceIndex of click: " + pieceIndex );
-           if( boardHoleButton.state == "EMPTY" ){
-                if(guiPlayerIsWhite){
-                    boardHoleButton.state = "WHITE";
+                        console.log("calling gameController.setGuiTurnHole(...) (from QML) with quadrantIndex = " + quadrantIndex + " and pieceIndex = " + pieceIndex);
+                        gameController.setGuiTurnHole( quadrantIndex, pieceIndex);
+                        page.gameMessage = "Choose a rotation.";
+                        lockBoardPieces();
+
+                    }
+                    else{
+                       page.gameMessage = "This place is taken!";
+                    }
                 }
-                else{
-                    boardHoleButton.state = "BLACK";
-                }
-
-                console.log("calling gameController.setGuiTurnHole(...) (from QML) with quadrantIndex = " + quadrantIndex + " and pieceIndex = " + pieceIndex);
-                gameController.setGuiTurnHole( quadrantIndex, pieceIndex);
-                page.gameMessage = "Choose a rotation.";
-
-
-           }
-           else{
-                page.gameMessage = "This place is taken!";
            }
        }
     }

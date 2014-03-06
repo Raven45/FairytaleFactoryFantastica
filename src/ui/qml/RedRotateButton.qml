@@ -31,8 +31,8 @@ Item {
             target: page
             onReadyForRotation:{
                 red_rotate_glowEffect.visible = true;
-                lockBoardPieces();
-                unlockQuadrantRotation();
+                //lockBoardPieces();
+                //unlockQuadrantRotation();
             }
         }
 
@@ -40,7 +40,7 @@ Item {
             target: page
             onRotationClicked:{
                 red_rotate_glowEffect.visible = false;
-                lockQuadrantRotation();
+                //lockQuadrantRotation();
             }
         }
 
