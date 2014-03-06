@@ -14,8 +14,8 @@ CONFIG += c++11 release #static release link_prl
 QMAKE_CXXFLAGS -= -O1 -O2 -O3
 
 
-LIBS += -fopenmp
-QMAKE_CXXFLAGS += -fopenmp -Ofast
+#LIBS += -fopenmp
+QMAKE_CXXFLAGS += -Ofast
 
 RESOURCES += \
     ui/resources/qmlResources.qrc \
@@ -106,7 +106,8 @@ HEADERS += \
     backend/ai/MonteCarloAI3.h \
     backend/ai/MonteCarloAI4.h \
     backend/ai/MonteCarloParallelAI.h \
-    backend/ai/AlphaBetaAI.h
+    backend/ai/AlphaBetaAI.h \
+    backend/ai/SmarterPlayer2.h
 
 
 

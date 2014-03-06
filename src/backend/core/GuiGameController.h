@@ -13,8 +13,9 @@
 
 #include "MonteCarloParallelAI.h"
 #include "NetworkInterface.h"
+#include "SmarterPlayer2.h"
 
-typedef MonteCarloParallelAI AIPlayer;
+typedef SmarterPlayer2 AIPlayer;
 
 
 class Proxy : public QObject {

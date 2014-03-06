@@ -1,7 +1,5 @@
-﻿#include "SmarterPlayer.h"
-#include "PentagoExceptions.h"
+﻿#include "PentagoExceptions.h"
 #include "GuiGameController.h"
-#include "SmarterPlayer.h"
 //#include "MonteCarloAI.h"
 //#include "MonteCarloAI3.h"
 #include "MonteCarloParallelAI.h"
