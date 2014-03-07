@@ -39,7 +39,7 @@ Rectangle {
         width: 100; height: 100
         x: -31; y: -36
         visible: false
-        source: "teal-gumdrop.png"
+        source: page.guiPlayerIsWhite ? "teal-gumdrop.png" : "purp-gumdrop.png"
     }
     state: "EMPTY" //...property binding didn't work but should have?
 
@@ -157,12 +157,6 @@ Rectangle {
 
     states: [
         State {
-            name: "GLOWING"
-            when: (boardHole_mouseArea.containsMouse && (state != "BLACK" && state != "WHITE") )
-            PropertyChanges{ target: backgroundImage; visible: true }
-            PropertyChanges{ target: boardHole_glowEffect; visible: true }
-        },
-        State {
             name: "EMPTY"
             PropertyChanges{
                 target: backgroundImage
@@ -237,49 +231,6 @@ Rectangle {
                 }
             }
         },
-
-        Transition {
-            from: "GLOWING"
-            to: "WHITE"
-
-            SequentialAnimation{
-                NumberAnimation {
-                    target: tealClawPiece
-                    property: "y"
-                    duration: _CLAW_MOVE_DURATION / 2
-                }
-                NumberAnimation {
-                    target: tealClawPiece;
-                    property: "x"
-                    duration: _CLAW_MOVE_DURATION / 2
-                }
-                ScriptAction{
-                    scriptName: "openTealClaw"
-                }
-            }
-        },
-
-        Transition {
-            from: "GLOWING"
-            to: "BLACK"
-
-            SequentialAnimation{
-                NumberAnimation {
-                    target: purpleClawPiece
-                    property: "y"
-                    duration: _CLAW_MOVE_DURATION / 2
-                }
-                NumberAnimation {
-                    target: purpleClawPiece;
-                    property: "x"
-                    duration: _CLAW_MOVE_DURATION / 2
-                }
-                ScriptAction{
-                    scriptName: "openPurpleClaw"
-                }
-            }
-        },
-
         Transition {
             from: "EMPTY"
             to: "BLACK"
@@ -308,11 +259,31 @@ Rectangle {
         anchors.fill: boardHoleButton
         hoverEnabled: true
 
+        onEntered: {
+            if (!isLocked ) {
+                if( boardHoleButton.state == "EMPTY" ) {
+                    backgroundImage.visible = true;
+                    boardHole_glowEffect.visible = true;
+                }
+            }
+        }
+
+        onExited: {
+            if( boardHole_glowEffect.visible == true) {
+                boardHole_glowEffect.visible = false;
+                backgroundImage.visible = false;
+            }
+        }
+
        onClicked: {
+           if( boardHole_glowEffect.visible == true) {
+               boardHole_glowEffect.visible = false;
+               backgroundImage.visible = false;
+           }
 
            console.log("pieceIndex of click: " + pieceIndex );
            if( !isLocked ){
-               if( boardHoleButton.state == "GLOWING" ){
+               if( boardHoleButton.state == "EMPTY" ){
                    if(guiPlayerIsWhite){
                         boardHoleButton.state = "WHITE";
                    }
