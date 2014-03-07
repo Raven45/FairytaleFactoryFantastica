@@ -1,12 +1,26 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
+import QtGraphicalEffects 1.0
 
 Rectangle {
 
     property int pieceIndex
     property int quadrantIndex
     property bool isLocked
+
+    Glow {
+       id: boardHole_glowEffect
+       anchors.fill: backgroundImage
+       radius: 16
+       samples: 24
+       spread: 0.5
+       color: "yellow"
+       source: backgroundImage
+       visible: false
+       fast: true
+       cached: true
+    }
 
     objectName: "BoardHoleButton"
     id: boardHoleButton
@@ -22,8 +36,8 @@ Rectangle {
 
     Image{
         id: backgroundImage
-        width: 100
-        height: 100
+        width: 100; height: 100
+        x: -31; y: -36
         visible: false
         source: "teal-gumdrop.png"
     }
@@ -143,6 +157,12 @@ Rectangle {
 
     states: [
         State {
+            name: "GLOWING"
+            when: (boardHole_mouseArea.containsMouse && (state != "BLACK" && state != "WHITE") )
+            PropertyChanges{ target: backgroundImage; visible: true }
+            PropertyChanges{ target: boardHole_glowEffect; visible: true }
+        },
+        State {
             name: "EMPTY"
             PropertyChanges{
                 target: backgroundImage
@@ -153,8 +173,6 @@ Rectangle {
             name: "BLACK"
             PropertyChanges{
                 target: backgroundImage
-                x: -31
-                y: -36
                 visible: false
                 source: "purp-gumdrop.png"
 
@@ -178,8 +196,6 @@ Rectangle {
             name: "WHITE"
             PropertyChanges{
                 target: backgroundImage
-                x: -31
-                y: -36
                 visible: false
                 source: "teal-gumdrop.png"
             }
@@ -223,6 +239,48 @@ Rectangle {
         },
 
         Transition {
+            from: "GLOWING"
+            to: "WHITE"
+
+            SequentialAnimation{
+                NumberAnimation {
+                    target: tealClawPiece
+                    property: "y"
+                    duration: _CLAW_MOVE_DURATION / 2
+                }
+                NumberAnimation {
+                    target: tealClawPiece;
+                    property: "x"
+                    duration: _CLAW_MOVE_DURATION / 2
+                }
+                ScriptAction{
+                    scriptName: "openTealClaw"
+                }
+            }
+        },
+
+        Transition {
+            from: "GLOWING"
+            to: "BLACK"
+
+            SequentialAnimation{
+                NumberAnimation {
+                    target: purpleClawPiece
+                    property: "y"
+                    duration: _CLAW_MOVE_DURATION / 2
+                }
+                NumberAnimation {
+                    target: purpleClawPiece;
+                    property: "x"
+                    duration: _CLAW_MOVE_DURATION / 2
+                }
+                ScriptAction{
+                    scriptName: "openPurpleClaw"
+                }
+            }
+        },
+
+        Transition {
             from: "EMPTY"
             to: "BLACK"
 
@@ -246,12 +304,15 @@ Rectangle {
 
 
     MouseArea{
+        id: boardHole_mouseArea
         anchors.fill: boardHoleButton
+        hoverEnabled: true
+
        onClicked: {
 
            console.log("pieceIndex of click: " + pieceIndex );
            if( !isLocked ){
-               if( boardHoleButton.state == "EMPTY" ){
+               if( boardHoleButton.state == "GLOWING" ){
                    if(guiPlayerIsWhite){
                         boardHoleButton.state = "WHITE";
                    }
