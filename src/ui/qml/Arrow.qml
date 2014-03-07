@@ -33,14 +33,14 @@ Item{
         Connections{
             target: page
             onReadyForRotation:{
-                glowEffect.visible = true
+                glowEffect.visible = true;
             }
         }
 
         Connections{
             target: page
             onRotationClicked:{
-                glowEffect.visible = false
+                glowEffect.visible = false;
             }
         }
 
@@ -52,15 +52,18 @@ Item{
             id: myMouseArea
             anchors.fill: parent
             onClicked:{
+                if(!menuIsShowing){
+                    if(guiPlayerCanClickRotation){
+                        console.log("clicked to rotate direction " + myRotationDirection );
 
-                console.log("clicked to rotate direction " + myRotationDirection );
+                        page.gameMessage = "OK";
 
-                page.gameMessage = "OK";
-
-                console.log("2. set setGuiTurnRotation ");
-                gameController.setGuiTurnRotation( myQuadrantToRotate , myRotationDirection );
-                page.gameMessage = "rotating quadrant " + myQuadrantToRotate + " to the " + ((myRotationDirection == 0)?"RIGHT":"LEFT");
-                rotationClicked(myQuadrantToRotate, myRotationDirection);
+                        console.log("2. set setGuiTurnRotation ");
+                        gameController.setGuiTurnRotation( myQuadrantToRotate , myRotationDirection );
+                        page.gameMessage = "rotating quadrant " + myQuadrantToRotate + " to the " + ((myRotationDirection == 0)?"RIGHT":"LEFT");
+                        rotationClicked(myQuadrantToRotate, myRotationDirection);
+                    }
+                }
             }
         }
     }

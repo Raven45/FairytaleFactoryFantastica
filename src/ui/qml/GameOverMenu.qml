@@ -27,8 +27,6 @@ Rectangle {
 
 
     Button {
-
-        //ELIZABETH - use this example
         width: 200
         height: 100
         anchors.centerIn: gameOverMenu
@@ -45,6 +43,7 @@ Rectangle {
         id: gameOverTimeout
         onTriggered:{
             gameOverMenu.isVisible = true;
+            menuIsShowing = true;
         }
     }
 
@@ -79,15 +78,6 @@ Rectangle {
                 winnerInfo.parent.winText ="Black Wins";
                 break;
             }
-
-
-
-
-
-
-
-            //change text using the winner variable
-            //show this menu
         }
 
     }
