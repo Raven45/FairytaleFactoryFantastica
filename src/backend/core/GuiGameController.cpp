@@ -118,6 +118,12 @@ void GuiGameController::setNetworkInterface(){
     }else{
         qDebug() << "WEIRD, net should've been null";
     }
+
+    if ( player2 == nullptr ) {
+        setPlayer2(new AIPlayer);
+    } else {
+        qDebug() << "WEIRD, player2 should've been null";
+    }
 }
 
 void GuiGameController::backToMainMenu(){
@@ -185,10 +191,6 @@ void GuiGameController::networkTurnReceivedFromNetwork( int quadrantIndex, int p
 
 
 void GuiGameController::startOnePersonPlay() {
-
-    if( player2 == nullptr ){
-        setPlayer2(new AIPlayer);
-    }
 
     GameCore::startNewGame();
 
