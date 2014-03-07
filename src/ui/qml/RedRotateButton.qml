@@ -6,7 +6,6 @@ Item {
     property int quadToRo
     property int roDir
     property var direction_string
-
     Glow {
        id: red_rotate_glowEffect
        anchors.fill: red_rotate_button
@@ -30,17 +29,18 @@ Item {
         Connections{
             target: page
             onReadyForRotation:{
-                red_rotate_glowEffect.visible = true;
-                //lockBoardPieces();
-                //unlockQuadrantRotation();
+                if(guiPlayerCanClickRotation && !menuIsShowing){
+                    red_rotate_glowEffect.visible = true;
+                }
             }
         }
 
         Connections{
             target: page
             onRotationClicked:{
-                red_rotate_glowEffect.visible = false;
-                //lockQuadrantRotation();
+                if (!menuIsShowing){
+                    red_rotate_glowEffect.visible = false;
+                }
             }
         }
 

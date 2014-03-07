@@ -40,7 +40,7 @@ Item{
         Connections{
             target: page
             onRotationClicked:{
-                    glowEffect.visible = false;
+                glowEffect.visible = false;
             }
         }
 

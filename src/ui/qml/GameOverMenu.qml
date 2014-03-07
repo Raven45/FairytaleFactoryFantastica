@@ -43,6 +43,7 @@ Rectangle {
         id: gameOverTimeout
         onTriggered:{
             gameOverMenu.isVisible = true;
+            menuIsShowing = true;
         }
     }
 

@@ -69,33 +69,23 @@ Rectangle {
 
     function lockBoardPieces(){
         guiPlayerCanClickBoardHoleButton = false;
-        console.log ("guiPlayerCanClickBoardHoleButton set to = " + guiPlayerCanClickBoardHoleButton);
     }
 
     function unlockBoardPieces(){
-        if (guiPlayerCanClickRotation)
+        if (!guiPlayerCanClickRotation)
         {
-            console.log ("guiPlayerCanClickRotation = " + guiPlayerCanClickRotation);
-        }
-        else{
             guiPlayerCanClickBoardHoleButton = true;
-            console.log ("guiPlayerCanClickBoardHoleButton set to = " + guiPlayerCanClickBoardHoleButton);
         }
     }
 
     function lockQuadrantRotation(){
         guiPlayerCanClickRotation = false;
-        console.log ("guiPlayerCanClickRotation set to  = " + guiPlayerCanClickRotation);
     }
 
     function unlockQuadrantRotation(){
-        if (guiPlayerCanClickBoardHoleButton)
+        if (!guiPlayerCanClickBoardHoleButton)
         {
-            console.log ("guiPlayerCanClickBoardHoleButton = " + guiPlayerCanClickBoardHoleButton);
-        }
-        else{
             guiPlayerCanClickRotation = true;
-            console.log ("guiPlayerCanClickRotation set to  = " + guiPlayerCanClickRotation);
         }
     }
 
@@ -149,7 +139,17 @@ Rectangle {
     }
 
     onClearBoard:{
-        //unlockBoardPieces();
+        menuIsShowing = false;
+        if (!guiPlayerIsWhite){
+            lockBoardPieces();
+            lockQuadrantRotation();
+        }
+        else{
+            lockQuadrantRotation();
+            unlockBoardPieces();
+            isGuiPlayersTurn = true;
+        }
+
     }
 
     Connections{

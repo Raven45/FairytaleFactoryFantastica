@@ -11,10 +11,10 @@
 #include <QMediaPlayer>
 #include <QThread>
 
-#include "SmarterPlayer.h"
+#include "MonteCarloParallelAI.h"
 #include "NetworkInterface.h"
 
-typedef SmarterPlayer AIPlayer;
+typedef MonteCarloParallelAI AIPlayer;
 
 
 class Proxy : public QObject {
