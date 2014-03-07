@@ -75,7 +75,9 @@ OTHER_FILES += \
     ui/qml/SplashScreen.qml \
     ui/qml/Tbar.qml \
     ui/qml/Witch.qml \
-    ui/qml/Cogs.qml
+    ui/qml/Cogs.qml \
+    ui/qml/GameMenu.qml \
+    ui/qml/GameScreen.qml
 
 HEADERS += \
     backend/networking/Barrager.h \

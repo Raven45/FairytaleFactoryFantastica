@@ -20,6 +20,81 @@ Rectangle {
     }
 
     Image {
+        id: top_tubes
+        width: 525; height: 135; z: 1
+        source: "top_tubes.png"
+        fillMode: Image.PreserveAspectFit
+        visible: true
+
+        anchors.top: parent.top
+        anchors.topMargin: 25
+        anchors.left: parent.left
+        anchors.leftMargin: parent.width/2 - (top_tubes.width/2)
+    }
+
+    Rectangle {
+        id: middle_tube
+        width: 56
+        height: parent.height - 140
+        color: "grey"
+        opacity: 0.5
+        z:0
+
+        anchors.top: top_tubes.bottom
+        anchors.topMargin: - 20
+        anchors.left: parent.left
+        anchors.leftMargin: parent.width/2 - (middle_tube.width/2)
+    }
+
+    Image {
+        id: small_gumdrop
+        width: 100; height: 100; z: 1
+        scale: 0.65
+        x: parent.width/2 - (small_gumdrop.width/2)
+        y: parent.height + small_gumdrop.height
+        source: "teal-gumdrop.png"
+    }
+
+    SequentialAnimation{
+        id: tube_animation
+        running: true
+        loops: Animation.Infinite
+
+        PropertyAnimation {
+            target: small_gumdrop;
+            property: "y";
+            easing.type: Easing.InExpo
+            from: 1000;
+            to: 40;
+            duration: 1800;
+        }
+        PropertyAnimation {
+            target: small_gumdrop;
+            property: "x";
+            easing.type: Easing.InExpo;
+            from: 670;
+            to: 300;
+            duration: 1000;
+        }
+        PropertyAnimation {
+            target: small_gumdrop;
+            property: "x";
+            easing.type: Easing.InExpo;
+            from: 300;
+            to: 670;
+            duration: 1000;
+        }
+        PropertyAnimation {
+            target: small_gumdrop;
+            property: "y";
+            easing.type: Easing.InExpo
+            from: 40;
+            to: 1000;
+            duration: 1800;
+        }
+    }
+
+    Image {
         id: hg_in_bucket
         width: 250; height: 215
         anchors.right: parent.right
