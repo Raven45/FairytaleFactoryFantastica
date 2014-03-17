@@ -103,6 +103,7 @@ HEADERS += \
     backend/ai/MonteCarloAI.h \
     backend/ai/randomplayer.h \
     backend/ai/SmarterPlayer.h \
+    backend/ai/SmarterPlayer2.h \
     backend/ai/MonteCarloAI2.h \
     backend/ai/MonteCarloAI3.h \
     backend/ai/MonteCarloAI4.h \
