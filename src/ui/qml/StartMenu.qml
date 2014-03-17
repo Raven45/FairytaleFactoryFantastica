@@ -106,7 +106,6 @@ Rectangle {
                 startMenu.state = "INVISIBLE"
                // pentagoBoard.state = "UNLOCKED";
                 clearBoard();
-                console.log("network play button clicked!");
                 enterNetworkLobby();
             }
         }
@@ -146,7 +145,6 @@ Rectangle {
                     colorSelection.source_string = "teal-button.png"
                     colorSelection.state = "WHITE"
                     page.guiPlayerIsWhite = true;
-                    console.log("changing gui player color");
                     changeGuiPlayerColor(colorSelection.buttonColor);
                 }
                 else
@@ -154,7 +152,6 @@ Rectangle {
                     colorSelection.source_string = "purp-button.png"
                     colorSelection.state = "BLACK"
                     page.guiPlayerIsWhite = false;
-                    console.log("changing gui player color");
                     changeGuiPlayerColor(colorSelection.buttonColor);
                 }
             }

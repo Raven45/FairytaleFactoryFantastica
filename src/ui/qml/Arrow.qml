@@ -54,11 +54,11 @@ Item{
             onClicked:{
                 if(!menuIsShowing){
                     if(guiPlayerCanClickRotation){
-                        console.log("clicked to rotate direction " + myRotationDirection );
+                        //console.log("clicked to rotate direction " + myRotationDirection );
 
                         page.gameMessage = "OK";
 
-                        console.log("2. set setGuiTurnRotation ");
+                        //console.log("setting setGuiTurnRotation ");
                         gameController.setGuiTurnRotation( myQuadrantToRotate , myRotationDirection );
                         page.gameMessage = "rotating quadrant " + myQuadrantToRotate + " to the " + ((myRotationDirection == 0)?"RIGHT":"LEFT");
                         rotationClicked(myQuadrantToRotate, myRotationDirection);

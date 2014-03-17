@@ -32,13 +32,13 @@ Image {
         id: rightRotation
         property int animationDirection: 0
         onStarted:{
-            console.log("in rotationAnimation onStarted. myIndex = " + myIndex );
+            //console.log("in rotationAnimation onStarted. myIndex = " + myIndex );
             root.z += 100;
         }
         onStopped:{
             root.z -= 100;
             rotationAnimationFinished( myIndex, animationDirection );
-            console.log("in rotationAnimation onStopped. myIndex = " + myIndex );
+            //console.log("in rotationAnimation onStopped. myIndex = " + myIndex );
         }
 
         NumberAnimation {
@@ -72,13 +72,13 @@ Image {
         id: leftRotation
         property int animationDirection: 1
         onStarted:{
-            console.log("in rotationAnimation onStarted. myIndex = " + myIndex );
+            //console.log("in rotationAnimation onStarted. myIndex = " + myIndex );
             root.z += 100;
         }
         onStopped:{
             root.z -= 100;
             rotationAnimationFinished( myIndex, animationDirection );
-            console.log("in rotationAnimation onStopped. myIndex = " + myIndex );
+            //console.log("in rotationAnimation onStopped. myIndex = " + myIndex );
         }
 
         NumberAnimation {

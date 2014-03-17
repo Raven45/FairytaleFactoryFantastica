@@ -14,8 +14,8 @@ CONFIG += c++11 release #static release link_prl
 QMAKE_CXXFLAGS -= -O1 -O2 -O3
 
 
-#LIBS += -fopenmp
-QMAKE_CXXFLAGS += -Ofast #-fopenmp
+LIBS += -fopenmp
+QMAKE_CXXFLAGS += -Ofast -fopenmp
 
 RESOURCES += \
     ui/resources/qmlResources.qrc \
@@ -76,8 +76,7 @@ OTHER_FILES += \
     ui/qml/Tbar.qml \
     ui/qml/Witch.qml \
     ui/qml/Cogs.qml \
-    ui/qml/GameMenu.qml \
-    ui/qml/GameScreen.qml
+    ui/qml/GameMenu.qml
 
 HEADERS += \
     backend/networking/Barrager.h \

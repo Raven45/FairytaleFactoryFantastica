@@ -35,3 +35,4 @@ bin/build-FairytaleFactoryFantastica-RSSLL_Qt_5_2_0_MinGW_32bit-Debug/release/qr
 bin/build-FairytaleFactoryFantastica-RSSLL_Qt_5_2_0_MinGW_32bit-Debug/release/qrc_imageResources.cpp
 bin/build-FairytaleFactoryFantastica-RSSLL_Qt_5_2_0_MinGW_32bit-Debug/release/qrc_menuResources.cpp
 bin/build-FairytaleFactoryFantastica-RSSLL_Qt_5_2_0_MinGW_32bit-Debug/release/qrc_qmlResources.cpp
+*.orig

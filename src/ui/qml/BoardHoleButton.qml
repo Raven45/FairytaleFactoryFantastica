@@ -51,19 +51,10 @@ Rectangle {
         onPlaceOpponentsPiece: {
             if( qIndex === quadrantIndex && pIndex === pieceIndex ){
 
-                console.log("o2: coloring opponents piece at " + quadrantIndex + ", " + pieceIndex);
+                //console.log("coloring opponents piece at " + quadrantIndex + ", " + pieceIndex);
                 state = page.guiPlayerIsWhite? "BLACK" : "WHITE"
 
             }
-        }
-
-        onLockBoardPieces:{
-            isLocked = true;
-
-        }
-
-        onUnlockBoardPieces:{
-            isLocked = false;
         }
 
         onClearBoard:{
@@ -76,7 +67,7 @@ Rectangle {
 
 
             if( quadrantRotated === quadrantIndex ){
-                console.log( "6. rearranging pieceIndex-es of quadrant " + quadrantRotated + " for a " + direction + " rotation, pieceIndex " + pieceIndex);
+                //console.log( "6. rearranging pieceIndex-es of quadrant " + quadrantRotated + " for a " + direction + " rotation, pieceIndex " + pieceIndex);
 
                 //"which piece was I before the rotation?"
                 //correct the pieceIndex because the rotation animation only animates and doesn't change values
@@ -132,7 +123,7 @@ Rectangle {
                     }else   pieceIndex = 6;
                     break;
 
-                default: console.log("oops, my pieceIndex is wrong: pieceIndex = " + pieceIndex); break;
+                default: console.log("ERROR, my pieceIndex is wrong: pieceIndex = " + pieceIndex); break;
                 }
             }
         }
@@ -143,6 +134,10 @@ Rectangle {
         duration: _CLAW_OPEN_DURATION
         onTriggered: {
             backgroundImage.visible = true;
+
+            if( isGuiPlayersTurn ){
+                unlockQuadrantRotation();
+            }
         }
     }
 
@@ -260,50 +255,43 @@ Rectangle {
         hoverEnabled: true
 
         onEntered: {
-            if (!isLocked ) {
+            if (!menuIsShowing && guiPlayerCanClickBoardHoleButton ) {
                 if( boardHoleButton.state == "EMPTY" ) {
-                    backgroundImage.visible = true;
                     boardHole_glowEffect.visible = true;
                 }
             }
         }
 
         onExited: {
-            if( boardHole_glowEffect.visible == true) {
+            if( boardHole_glowEffect.visible == true ){
                 boardHole_glowEffect.visible = false;
-                backgroundImage.visible = false;
             }
         }
 
        onClicked: {
-           if( boardHole_glowEffect.visible == true) {
-               boardHole_glowEffect.visible = false;
-               backgroundImage.visible = false;
+
+           if (!menuIsShowing && guiPlayerCanClickBoardHoleButton ){
+                console.log("pieceIndex of click: " + pieceIndex );
+
+                if( boardHoleButton.state == "EMPTY" ){
+                    boardHole_glowEffect.visible = false;
+
+                    if(guiPlayerIsWhite){
+                         boardHoleButton.state = "WHITE";
+                     }
+                     else{
+                        boardHoleButton.state = "BLACK";
+                     }
+
+                    gameController.setGuiTurnHole( quadrantIndex, pieceIndex);
+                    page.gameMessage = "Choose a rotation.";
+                    lockBoardPieces();
+
+                }
+                else{
+                   page.gameMessage = "This place is taken!";
+                }
            }
-
-           console.log("pieceIndex of click: " + pieceIndex );
-           if( !isLocked ){
-               if( boardHoleButton.state == "EMPTY" ){
-                   if(guiPlayerIsWhite){
-                        boardHoleButton.state = "WHITE";
-                   }
-                   else{
-                       boardHoleButton.state = "BLACK";
-                   }
-
-                   console.log("calling gameController.setGuiTurnHole(...) (from QML) with quadrantIndex = " + quadrantIndex + " and pieceIndex = " + pieceIndex);
-                   gameController.setGuiTurnHole( quadrantIndex, pieceIndex);
-                   page.gameMessage = "Choose a rotation.";
-
-
-               }
-               else{
-                    page.gameMessage = "This place is taken!";
-               }
-           }else{
-               page.gameMessage = "Can't click that right now!"
-           }
-
        }
     }
 }

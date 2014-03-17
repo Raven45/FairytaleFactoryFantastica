@@ -89,15 +89,19 @@ void GuiGameController::setPlayerName(QVariant name){
 
 }
 
+void GuiGameController::initialize(){
+    setNetworkInterface();
+    setAIPlayer( new DefaultAIPlayer );
+}
+
 //must be called after setWindow
 void GuiGameController::setNetworkInterface(){
     if( net == nullptr){
 
-        qDebug() << "making child woohoo";
         net = new NetworkInterface(this);
-        qDebug() << "made a child yippee";
 
         qDebug() << "connecting network signals";
+
         //gameController -> network
         connect( this, SIGNAL(gameIsOver()), net, SLOT( tellMeGameIsOver()) );
 
@@ -119,10 +123,17 @@ void GuiGameController::setNetworkInterface(){
         qDebug() << "WEIRD, net should've been null";
     }
 
+}
+
+void GuiGameController::setAIPlayer(Player* newAIPlayer){
+
     if ( player2 == nullptr ) {
-        setPlayer2(new AIPlayer);
-    } else {
-        qDebug() << "WEIRD, player2 should've been null";
+        setPlayer2(newAIPlayer);
+    }
+    else{
+        delete player2;
+        player2 = nullptr;
+        setPlayer2( newAIPlayer );
     }
 }
 
@@ -252,10 +263,16 @@ void GuiGameController::togglePlayback(){
 }
 
 void GuiGameController::setGuiPlayerColor( int menuSelectedColor ){
+
+        qDebug() << "in setGuiPlayerColor";
+
         guiPlayerColor = static_cast<PlayerColor>(menuSelectedColor);
+
+        qDebug() << "guiPlayerColor is set";
+
         if(menuSelectedColor == 0)
         {
-           player2 -> setColor(PlayerColor::BLACK);
+            player2 -> setColor(PlayerColor::BLACK);
         }
         else if (menuSelectedColor == 1)
         {
@@ -308,13 +325,7 @@ void GuiGameController::registerGuiTurnWithBoard(){
      }
      else{
 
-        //print to debug before opponent move
-#if PENTAGO_RELEASE == false
         copyCurrentBoard().print();
-#endif
-
-        //connected to slot Player::chooseMove(Turn)
-        //player2 -> chooseMove( guiPlayersMove );
 
         //network moves are registered elsewhere.
         if( !isNetworkGame ){
@@ -331,11 +342,7 @@ void GuiGameController::registerGuiTurnWithBoard(){
             }
 
 
-
- //print to debug after opponent move
-#if PENTAGO_RELEASE == false
         copyCurrentBoard().print();
-#endif
 
         emit readyForGuiMove();
 

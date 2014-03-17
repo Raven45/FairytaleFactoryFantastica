@@ -149,10 +149,30 @@ class MainBoard {
     }
 
     void print() {
-        qDebug() << "BLACK: ";
-        blackBoard.print();
-        qDebug() << "WHITE: ";
-        whiteBoard.print();
+        #if PENTAGO_RELEASE == false
+        qDebug() << '\n';
+
+        for( int row = 0; row < 6; ++row ){
+            auto blackStringRow = blackBoard.getPrintableRow(row);
+            auto whiteStringRow = whiteBoard.getPrintableRow(row);
+
+            QString combinedRow;
+
+            for( int column = 0; column < 6; ++column ){
+                if( blackStringRow[column] == '1' ){
+                    combinedRow += 'B';
+                }
+                else if( whiteStringRow[column] == '1' ){
+                    combinedRow += 'W';
+                }
+                else{
+                    combinedRow += '.';
+                }
+            }
+
+            qDebug() << combinedRow;
+        }
+        #endif
     }
 
     //this function checks to see if a move wins before a rotation happens, for gui

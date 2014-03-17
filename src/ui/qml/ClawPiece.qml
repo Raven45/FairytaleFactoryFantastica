@@ -10,9 +10,6 @@ Item {
         target:page
         onReadyToOpenClaw:{
             if( type == whichClaw ){
-                console.log("starting spriteTimer")
-                //spriteTimer.startTimer()
-
                 clawSprite.jumpTo("dropPieceSprite");
                 clawSpriteTimer.startTimer()
                 showPiece( qIndex, pIndex );
@@ -24,7 +21,6 @@ Item {
         id: clawSpriteTimer
         duration: _CLAW_OPEN_DURATION + 20
         onTriggered:{
-            console.log("moving to home")
             moveToHome.start()
 
             if( (guiPlayerIsWhite && type == "TEAL" ) || (!guiPlayerIsWhite && type == "PURPLE") ){

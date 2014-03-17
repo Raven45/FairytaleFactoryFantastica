@@ -201,7 +201,7 @@ Rectangle {
             case 1: quadrant1.rotate(direction);break;
             case 2: quadrant2.rotate(direction);break;
             case 3: quadrant3.rotate(direction);break;
-            default: console.log( "Oops! bad quadrantIndex of " + quadrantIndex + " received.\n" );
+            default: console.log( "ERROR! bad quadrantIndex of " + quadrantIndex + " received.\n" );
         }
     }
 

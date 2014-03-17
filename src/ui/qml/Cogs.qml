@@ -9,8 +9,6 @@ Item {
         onTurnCogs:{
             if( quadrantIndex == quadrantToOperateOn){
 
-                console.log("turning cogs " + direction );
-
                 if( direction == "LEFT" ){
                     cogsSprite.jumpTo("leftCogsSprite")
 
@@ -19,7 +17,7 @@ Item {
                     cogsSprite.jumpTo( "rightCogsSprite")
                 }
                 else{
-                    console.log("oops bad direction")
+                    console.log("ERROR! bad direction received in onTurnCogs")
                 }
             }
         }

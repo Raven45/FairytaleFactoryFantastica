@@ -72,10 +72,11 @@ Rectangle {
     }
 
     function unlockBoardPieces(){
-        if (!guiPlayerCanClickRotation)
-        {
-            guiPlayerCanClickBoardHoleButton = true;
-        }
+        console.log("unlocking board pieces and locking rotation");
+        lockQuadrantRotation();
+        isGuiPlayersTurn = true;
+        guiPlayerCanClickBoardHoleButton = true;
+
     }
 
     function lockQuadrantRotation(){
@@ -105,9 +106,10 @@ Rectangle {
         id: userMoveTimeout
         duration: _ROTATION_ANIMATION_DURATION
         onTriggered:{
-            console.log("7. register move ")
+            //console.log("registering guiPlayer's move... ");
             gameController.registerGuiTurnWithBoard();
             lockQuadrantRotation();
+            //console.log("guiPlayers turn is over.");
             isGuiPlayersTurn = false;
         }
     }
@@ -119,7 +121,7 @@ Rectangle {
         property int rotationDirection
 
         onTriggered:{
-                console.log("o5: animate opponent rotation." );
+                //console.log("animating opponent rotation." );
                 pentagoBoard.playRotateAnimationOnQuadrant(quadrantToRotate, rotationDirection);
                 unlockGuiPiecesTimeout.startTimer();
 
@@ -133,21 +135,25 @@ Rectangle {
         property int rotationDirection
 
         onTriggered:{
-            isGuiPlayersTurn = true;
+
             unlockBoardPieces();
         }
     }
 
     onClearBoard:{
         menuIsShowing = false;
+        isFirstMoveOfGame = true;
+
+        lockQuadrantRotation();
+
         if (!guiPlayerIsWhite){
             lockBoardPieces();
-            lockQuadrantRotation();
+
         }
         else{
-            lockQuadrantRotation();
+
             unlockBoardPieces();
-            isGuiPlayersTurn = true;
+
         }
 
     }
@@ -156,14 +162,8 @@ Rectangle {
         onRotationClicked:{
             if(!menuIsShowing){
                 if (guiPlayerCanClickRotation){
-                    console.log("4. start rotation animation ");
                     pentagoBoard.playRotateAnimationOnQuadrant( index, direction );
-
-                    console.log("5. start User timer ");
                     userMoveTimeout.startTimer();
-                }
-                else{
-                    console.log ("guiPlayerCanClickRotation = " + guiPlayerCanClickRotation);
                 }
             }
         }
@@ -178,15 +178,14 @@ Rectangle {
             var opponentsMove = gameController.getOpponentsTurn();
 
             if( !isFirstMoveOfGame ){
-                console.log("o1: get opponents move, " + opponentsMove);
+                console.log("Opponents move: " + opponentsMove);
                 placeOpponentsPiece( opponentsMove[0], opponentsMove[1] );
 
                 if( parseInt(opponentsMove[2]) !== 111 ) //DONT_ROTATE_CODE
                 {
-                    console.log("o3: tell the timer the rotation" );
+                    //console.log("telling the timer rotation data" );
                     opponentsMoveTimeout.quadrantToRotate = opponentsMove[2];
                     opponentsMoveTimeout.rotationDirection = opponentsMove[3];
-                    console.log("o4: start timer" );
                     opponentsMoveTimeout.startTimer();
                 }
 
@@ -289,7 +288,7 @@ Rectangle {
             break;
         }
 
-        console.log( " moving to x: " + xyOffset.x +" and y: " + xyOffset.y );
+        //console.log( " moving to x: " + xyOffset.x +" and y: " + xyOffset.y );
 
         return xyOffset;
     }

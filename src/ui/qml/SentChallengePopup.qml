@@ -38,9 +38,6 @@ Rectangle {
         target: page
 
         onSendThisChallenge:{
-
-            console.log("showing sentChallengePopup!!!");
-
             sentChallengePopup.state = "VISIBLE";
             challengeResponseTimer.start();
         }

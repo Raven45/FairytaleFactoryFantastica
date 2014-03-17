@@ -95,11 +95,6 @@ public:
         return (bitBoard & pattern) > 0;
     }
 
-    /*inline BitBoard& operator=(const BitBoard& b){
-        bitBoard = b.bitBoard;
-        return *this;
-    }*/
-
     inline BitBoard& operator=(const BoardInt& b){
         bitBoard = b;
         return *this;
@@ -111,15 +106,6 @@ public:
 
     inline operator BoardInt() const {
         return bitBoard;
-    }
-
-    /*
-    static void rotateSwitch(char i, Direction d ){
-        #include "switch.hpp"
-    }*/
-
-    void printQuadrant(unsigned char i) {
-        qDebug() << std::bitset<9>(getQuadrant(i)).to_string().c_str();
     }
 
     inline void rotate(unsigned char i, Direction d ){
@@ -160,6 +146,10 @@ public:
         return board;
     }
 
+    std::string getPrintableRow( unsigned char rowIndex ){
+        return std::bitset<6>( reverse(getRow(rowIndex)) >> 2 ).to_string();
+    }
+
     inline bool didWin() const {
 
         for( auto win : WINS ){
@@ -171,11 +161,6 @@ public:
         return false;
 
     }
-
-//    BoardInt getWin(int i){
-//        return WINS[i];
-//    }
-
 
 
 };

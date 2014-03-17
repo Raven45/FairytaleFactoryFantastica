@@ -59,8 +59,10 @@ int main(int argc, char* argv[])
     gameController.setWindow( &proxy );
     //QMetaObject::invokeMethod( &gameController, "setWindow", Qt::QueuedConnection, Q_ARG(Proxy*, &proxy));
 
-    //gameController.setNetworkInterface();
-    QMetaObject::invokeMethod( &gameController, "setNetworkInterface", Qt::QueuedConnection );
+
+    QMetaObject::invokeMethod( &gameController, "initialize", Qt::QueuedConnection );
+
+
 
 
     window.showFullScreen();

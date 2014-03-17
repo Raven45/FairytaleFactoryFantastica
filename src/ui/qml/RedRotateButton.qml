@@ -54,7 +54,6 @@ Item {
             onClicked:{
 
                 console.log("clicked to rotate direction " + roDir );
-                console.log("2. set setGuiTurnRotation ");
 
                 gameController.setGuiTurnRotation( quadToRo , roDir );
                 rotationClicked(quadToRo, roDir);

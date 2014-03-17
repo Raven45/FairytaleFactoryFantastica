@@ -66,6 +66,8 @@ Rectangle {
 
             onClicked: {
                 clearBoard();
+                gameMenu.state = "INVISIBLE";
+                changeGuiPlayerColor( guiPlayerIsWhite? 0 : 1 );
                 readyToStartOnePersonPlay();
             }
         }

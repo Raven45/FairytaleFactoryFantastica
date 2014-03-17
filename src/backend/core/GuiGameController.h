@@ -15,7 +15,7 @@
 #include "NetworkInterface.h"
 #include "SmarterPlayer2.h"
 
-typedef SmarterPlayer2 AIPlayer;
+typedef SmarterPlayer2 DefaultAIPlayer;
 
 
 class Proxy : public QObject {
@@ -137,7 +137,9 @@ public slots:
     void forwardChallengeResponse(bool accepted);
     void challengeResponseReceivedFromNetwork(bool);
     void networkTurnReceivedFromNetwork( int, int, int, int );
+    void initialize();
     void setNetworkInterface();
+    void setAIPlayer(Player*);
     void backToMainMenu();
 };
 
