@@ -22,7 +22,6 @@
 
 using namespace PentagoNetworkUtil;
 
-//will be on its own thread, and will have signals connected to GuiGameController slots and vice versa
 class NetworkInterface : public QObject {
 
     Q_OBJECT
@@ -49,14 +48,6 @@ class NetworkInterface : public QObject {
     NetworkPlayerInfo connectedPlayerInfo;
     bool waitingOnPlayerToReconnect;
     Barrager barrager;
-
-
-
-
-    //for robustness
-    //QTimer socketReconnectTimer;
-
-
 
 public:
 
@@ -91,7 +82,6 @@ public:
         connect(&gameListenSocket, SIGNAL(disconnected()), this, SLOT(closeSocket()));
         connect(&announceSocket, SIGNAL(disconnected()), this, SLOT(closeSocket()));
         connect(&announceTimer, SIGNAL(timeout()), this, SLOT(broadcastAnnounce()));
-        //connect(&socketReconnectTimer, SIGNAL(timeout()), this, connectToPlayer())
 
         myInfo.id = rand();
 
@@ -147,13 +137,11 @@ public slots:
 
         //this is the timer that sends out announces every ANNOUNCE_INTERVAL milliseconds
         announceTimer.start( ANNOUNCE_INTERVAL );
-
-         //QtConcurrent::run(this, &NetworkInterface::sendLoop);
     }
 
     void tellMeGameIsOver(){
         networkGameIsOver = true;
-        qDebug() << "GAME OVER!";
+        qDebug() << "network interface knows that game is over!";
     }
 
     void leaveLobby(){
@@ -195,14 +183,9 @@ public slots:
 
             emit playerJoinedNetwork( vName, vAddress, announceTransaction.author.id  );
 
-            if( pTimer == nullptr ){
-                qDebug() << "making new QTimer for " << announceTransaction.author.name;
-                pTimer = new QTimer(this);
-                pTimer -> setSingleShot(true);
-            }
-            else{
-                qDebug() << "hmm, what's going on??";
-            }
+            qDebug() << "making new QTimer for " << announceTransaction.author.name;
+            pTimer = new QTimer(this);
+            pTimer -> setSingleShot(true);
 
             timerPlayerMap[pTimer] = announceTransaction.author;
             playerTimerMap[ announceTransaction.author] = pTimer;
@@ -227,43 +210,11 @@ public slots:
 
     void connectToPlayer( QHostAddress address ){
 
-        //for robustness
-       /* if( !gameSocket.isOpen() ){
-            static int socketErrorCount = 0;
-            socketErrorCount++;
-            disconnectGameSocket();
-            qDebug() << "yikes! gameSocket wasn't closed!!!";
+        qDebug() << "connecting to address " << address.toString();
+        gameSendSocket.bind(address, GAME_PORT );
+        waitingOnPlayerToReconnect = false;
+        connectedPlayerInfo.address = address.toIPv4Address();
 
-            //socketReconnectTimer.start(SOCKET_RECONNECT_TIMEOUT);
-            //this may not work at all
-
-            if( socketErrorCount < 5 ){
-                connectToPlayer( address );
-            }
-            else{
-                assert(false);
-            }*/
-       // }
-       // else{
-
-            qDebug() << "connected to address " << address.toString();
-            qDebug() << "binding gameSendSocket";
-            gameSendSocket.bind(address, GAME_PORT );
-
-            /*if( gameSendSocket.waitForConnected(2000))//gameSendSocket.state() == QAbstractSocket::ConnectedState)
-            {
-                qDebug() << "Connection stabished" ;
-            }
-            else
-            {
-                qDebug() << "FAILED TO CONNECT";
-            }*/
-
-
-            waitingOnPlayerToReconnect = false;
-            connectedPlayerInfo.address = address.toIPv4Address();
-
-       // }
     }
 
     void barrageConnectedPlayer( Transaction t, std::function<void()> onComplete = []{} ){
@@ -290,8 +241,6 @@ public slots:
         //button has been clicked in the gui and sends
         //the IP address back down to c++
 
-
-
         if ( QHostAddress(connectedPlayerInfo.address) != address ){
             connectToPlayer( address );
 
@@ -299,10 +248,10 @@ public slots:
             challengeTransaction.author = myInfo;
             challengeTransaction.seal = freshSeal();
             challengeTransaction.transactionType = Transaction::CHALLENGE;
-            //as of 2/8/14 a challenge transaction's union data doesn't carry anything meaningful
-
+            //challenge transaction's union data doesn't carry anything meaningful
 
             sendTransaction( challengeTransaction );
+
         }
         else{
             qDebug() << "hmm, tried to send a challenge during other connection.";
@@ -310,20 +259,11 @@ public slots:
 
 
         //we need to set a timeout for (busy) in case he is already being challenged
-        //****DOCUMENTATION
-        // barrages are checked for their seal, but nothing else (count, etc)
-        //for security of transmission
-        //top of playerTxStack is sent to player as barrage
-        //stacks should match across network
-        //volley with one player at a time
-
     }
 
     void handleChallenge( Transaction challengeTransaction ){
 
         qDebug() << "challenge received";
-
-
 
         assert(receivedFromConnectedPlayerStack.size() == 1);
 
@@ -333,15 +273,12 @@ public slots:
 
 
         //this will go back to the gameController which will
-        //set up the challenge stuff in the GUI
-
-        //TODO: gui will need some info about transaction
+        //set up the challenge in the GUI
         emit challengeReceived( QVariant(QString(challengeTransaction.author.name)), QVariant(QHostAddress(challengeTransaction.author.address).toString()) );
 
     }
 
     //connected to a gameController signal
-    //signal is emulated in testDriver as testDriverChallengeResponseReady( Transaction )
     void sendChallengeResponse( bool acceptChallenge ){
 
         qDebug() << "sending challenge response, accepted = " << (acceptChallenge? "true":"false");
@@ -606,6 +543,8 @@ public slots:
     }
 
     void closeSocket(){
+
+        QString sentName = "UNKNOWN";
         QObject* sentBy = QObject::sender();
 
         //this slot is connected to QTimer::timeout().
@@ -614,9 +553,18 @@ public slots:
         QUdpSocket* socket = qobject_cast<QUdpSocket*>(sentBy);
         assert( socket != NULL );
 
-        qDebug() << "closing socket...";
-        socket -> close();
+        if( sentBy == &announceSocket ){
+            sentName = "announceSocket";
+        }
+        else if( sentBy == &gameSendSocket ){
+            sentName == "gameSendSocket";
+        }
+        else if( sentBy == &gameListenSocket ){
+            sentName == "gameListenSocket";
+        }
 
+        qDebug() << "closing socket: " << sentName;
+        socket -> close();
     }
 
 };
