@@ -39,8 +39,8 @@ struct RotationConfig{
     }
 
     inline void randomize(){
-        direction = (Direction)(rand()%2);
-        quadrantIndex = rand()%4;
+        direction = (Direction)(qrand()%2);
+        quadrantIndex = qrand()%4;
     }
 };
 
@@ -175,8 +175,8 @@ public:
         //make every possible move for mover
         //make every possible piece placement
 
-        for( int quadrantIndex = rand()% 4, quadrantCount = 0;  quadrantCount < NUMBER_OF_QUADRANTS;    quadrantIndex = ((quadrantIndex == 3)? 0 : quadrantIndex + 1), ++quadrantCount ){
-            for( int pieceIndex = rand()%9, pieceCount = 0;     pieceCount    < MAX_PIECES_ON_QUADRANT;   pieceIndex  = ((pieceIndex    == 8)? 0 : pieceIndex    + 1), ++pieceCount    ){
+        for( int quadrantIndex = qrand()% 4, quadrantCount = 0;  quadrantCount < NUMBER_OF_QUADRANTS;    quadrantIndex = ((quadrantIndex == 3)? 0 : quadrantIndex + 1), ++quadrantCount ){
+            for( int pieceIndex = qrand()%9, pieceCount = 0;     pieceCount    < MAX_PIECES_ON_QUADRANT;   pieceIndex  = ((pieceIndex    == 8)? 0 : pieceIndex    + 1), ++pieceCount    ){
 
                 if( mainBoard.holeIsEmpty( quadrantIndex, pieceIndex )){
 
@@ -209,8 +209,8 @@ public:
                             int opponentsBestMoveWeight = 0;
 
                             //REPEAT FOR OPPONENT... ugly
-                            for( int quadrantIndexOpp = rand() % 4, quadrantCountOpp = 0;  quadrantCountOpp < NUMBER_OF_QUADRANTS;    quadrantIndexOpp = ((quadrantIndexOpp == 3)? 0 : quadrantIndexOpp + 1), ++quadrantCountOpp ){
-                                for( int pieceIndexOpp = rand()%9, pieceCountOpp = 0;     pieceCountOpp    < MAX_PIECES_ON_QUADRANT;   pieceIndexOpp  = ((pieceIndexOpp    == 8)? 0 : pieceIndexOpp    + 1), ++pieceCountOpp    ){
+                            for( int quadrantIndexOpp = qrand() % 4, quadrantCountOpp = 0;  quadrantCountOpp < NUMBER_OF_QUADRANTS;    quadrantIndexOpp = ((quadrantIndexOpp == 3)? 0 : quadrantIndexOpp + 1), ++quadrantCountOpp ){
+                                for( int pieceIndexOpp = qrand()%9, pieceCountOpp = 0;     pieceCountOpp    < MAX_PIECES_ON_QUADRANT;   pieceIndexOpp  = ((pieceIndexOpp    == 8)? 0 : pieceIndexOpp    + 1), ++pieceCountOpp    ){
 
                                     if( test.holeIsEmpty( quadrantIndexOpp, pieceIndexOpp )){
 

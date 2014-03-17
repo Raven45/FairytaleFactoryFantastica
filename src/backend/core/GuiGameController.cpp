@@ -6,6 +6,9 @@
 #include <QGuiApplication>
 #include <QQmlEngine>
 #include <QtQml>
+#include <QGlobal.h>
+#include <QTime>
+
 
 //called from main
 GuiGameController::GuiGameController( QGuiApplication* mainApp ) {
@@ -90,6 +93,7 @@ void GuiGameController::setPlayerName(QVariant name){
 }
 
 void GuiGameController::initialize(){
+    qsrand(QTime::currentTime().msec());
     setNetworkInterface();
     setAIPlayer( new DefaultAIPlayer );
 }

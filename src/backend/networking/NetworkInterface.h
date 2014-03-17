@@ -7,6 +7,7 @@
 #include <QUdpSocket>
 #include <QTimer>
 #include <QTime>
+#include <QGlobal.h>
 #include <QtConcurrent>
 #include <QFuture>
 #include <QThread>
@@ -83,7 +84,7 @@ public:
         connect(&announceSocket, SIGNAL(disconnected()), this, SLOT(closeSocket()));
         connect(&announceTimer, SIGNAL(timeout()), this, SLOT(broadcastAnnounce()));
 
-        myInfo.id = rand();
+        myInfo.id = qrand();
 
         qDebug() << "my id is " << myInfo.id;
 
@@ -205,7 +206,7 @@ public slots:
     }
 
     WaxSeal freshSeal(){
-        return rand();
+        return qrand();
     }
 
     void connectToPlayer( QHostAddress address ){
