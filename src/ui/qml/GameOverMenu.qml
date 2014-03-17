@@ -5,6 +5,7 @@ import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
 
 Rectangle {
+    opacity: 0.4
     id: gameOverMenu
     //adjust these how you want, it doesn't really matter
     width: 500
