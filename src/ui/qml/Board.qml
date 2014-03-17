@@ -16,12 +16,8 @@ Rectangle {
         target: page
         onReadyForRotation:{
 
-            lockBoardPieces();
-
-            //TODO here:
-            //unlock rotation buttons
-            //get real rotation info
-            //setup another signal layer before calling guiMoveChosen
+  //          lockBoardPieces();
+    //        unlockQuadrantRotation();
         }
     }
 
@@ -34,6 +30,13 @@ Rectangle {
                 opacity: 1
             }
 
+            StateChangeScript {
+                name: "lockGameBoard"
+                script: {
+                    page.menuIsShowing = true;
+                }
+            }
+
         },
         State{
             name: "UNLOCKED"
@@ -41,9 +44,33 @@ Rectangle {
                 target: pentagoBoard
                 opacity: 1
             }
+
+            StateChangeScript {
+                name: "unlockGameBoard"
+                script: {
+                    page.menuIsShowing = false;
+                }
+            }
         }
 
     ]
+
+    transitions: [
+        Transition {
+            from: "UNLOCKED"
+            to: "LOCKED"
+            ScriptAction{
+                scriptName: "lockGameBoard"
+            }
+        },
+        Transition {
+            from: "LOCKED"
+            to: "UNLOCKED"
+            ScriptAction{
+                scriptName: "unlockGameBoard"
+            }
+        }
+]
 
     Cogs {
          id: leftHighCog

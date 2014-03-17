@@ -19,8 +19,6 @@ Rectangle {
     signal clickedRandomMove()
     //signal updateCurrentBoard()
     signal readyForRotation()
-    signal lockBoardPieces()
-    signal unlockBoardPieces()
     signal rotationClicked( int index, int direction )
     signal rotationAnimationFinished(int quadrantRotated, int direction )
     signal placeOpponentsPiece( int qIndex, int pIndex )
@@ -47,6 +45,10 @@ Rectangle {
 
     property alias main: page
     property bool guiPlayerIsWhite: false
+    property bool isGuiPlayersTurn: false
+    property bool guiPlayerCanClickBoardHoleButton: false
+    property bool guiPlayerCanClickRotation: false
+    property bool menuIsShowing: false
     property string gameMessage
     property bool isFirstMoveOfGame: true
     property int _ROTATION_ANIMATION_DURATION: 600
@@ -65,7 +67,29 @@ Rectangle {
     property int _CLAW_Y_HOME: -300
 
 
-    onBackToMainMenu: {
+    function lockBoardPieces(){
+        guiPlayerCanClickBoardHoleButton = false;
+    }
+
+    function unlockBoardPieces(){
+        if (!guiPlayerCanClickRotation)
+        {
+            guiPlayerCanClickBoardHoleButton = true;
+        }
+    }
+
+    function lockQuadrantRotation(){
+        guiPlayerCanClickRotation = false;
+    }
+
+    function unlockQuadrantRotation(){
+        if (!guiPlayerCanClickBoardHoleButton)
+        {
+            guiPlayerCanClickRotation = true;
+        }
+    }
+
+    onBackToMainMenu:{
         isFirstMoveOfGame = true;
     }
 
@@ -83,6 +107,8 @@ Rectangle {
         onTriggered:{
             console.log("7. register move ")
             gameController.registerGuiTurnWithBoard();
+            lockQuadrantRotation();
+            isGuiPlayersTurn = false;
         }
     }
 
@@ -93,9 +119,9 @@ Rectangle {
         property int rotationDirection
 
         onTriggered:{
-            console.log("o5: animate opponent rotation." );
-            pentagoBoard.playRotateAnimationOnQuadrant(quadrantToRotate, rotationDirection);
-            unlockGuiPiecesTimeout.startTimer();
+                console.log("o5: animate opponent rotation." );
+                pentagoBoard.playRotateAnimationOnQuadrant(quadrantToRotate, rotationDirection);
+                unlockGuiPiecesTimeout.startTimer();
 
         }
     }
@@ -107,34 +133,46 @@ Rectangle {
         property int rotationDirection
 
         onTriggered:{
+            isGuiPlayersTurn = true;
             unlockBoardPieces();
-
         }
     }
 
     onClearBoard:{
-        unlockBoardPieces();
+        menuIsShowing = false;
+        if (!guiPlayerIsWhite){
+            lockBoardPieces();
+            lockQuadrantRotation();
+        }
+        else{
+            lockQuadrantRotation();
+            unlockBoardPieces();
+            isGuiPlayersTurn = true;
+        }
+
     }
 
     Connections{
         onRotationClicked:{
+            if(!menuIsShowing){
+                if (guiPlayerCanClickRotation){
+                    console.log("4. start rotation animation ");
+                    pentagoBoard.playRotateAnimationOnQuadrant( index, direction );
 
-            console.log("4. start rotation animation ");
-            pentagoBoard.playRotateAnimationOnQuadrant( index, direction );
-
-            console.log("5. start User timer ");
-            userMoveTimeout.startTimer();
+                    console.log("5. start User timer ");
+                    userMoveTimeout.startTimer();
+                }
+                else{
+                    console.log ("guiPlayerCanClickRotation = " + guiPlayerCanClickRotation);
+                }
+            }
         }
-
-
-
 
     }
 
     Connections{
         target: gameController
         onReadyForGuiMove:{
-
 
 
             var opponentsMove = gameController.getOpponentsTurn();
@@ -156,13 +194,9 @@ Rectangle {
             }
 
             isFirstMoveOfGame = false;
-
-
-            //need to unlock the gui
         }
 
     }
-
     NetworkLobby{
         id:networkLobby
         anchors.centerIn: parent
