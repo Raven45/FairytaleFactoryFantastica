@@ -8,8 +8,7 @@ import QtQuick.Controls.Styles 1.1
 
 Rectangle {
     id: page
-    width: 1190
-    height: 800
+
     color: "#333333"
 
     signal readyToStartOnePersonPlay()
@@ -20,8 +19,6 @@ Rectangle {
     signal clickedRandomMove()
     //signal updateCurrentBoard()
     signal readyForRotation()
-    signal lockBoardPieces()
-    signal unlockBoardPieces()
     signal rotationClicked( int index, int direction )
     signal rotationAnimationFinished(int quadrantRotated, int direction )
     signal placeOpponentsPiece( int qIndex, int pIndex )
@@ -31,6 +28,7 @@ Rectangle {
     signal sendPlayerName(var playerName )
     signal readyToOpenClaw(int qIndex, int pIndex, var whichClaw )
     signal showPiece( int qIndex, int pIndex )
+    signal turnCogs(int quadrantIndex, var direction )
 
     //network-related signals
     //TODO: receive challenge response
@@ -47,21 +45,50 @@ Rectangle {
 
     property alias main: page
     property bool guiPlayerIsWhite: false
+    property bool isGuiPlayersTurn: false
+    property bool guiPlayerCanClickBoardHoleButton: false
+    property bool guiPlayerCanClickRotation: false
+    property bool menuIsShowing: false
     property string gameMessage
     property bool isFirstMoveOfGame: true
-    property int _ROTATION_ANIMATION_DURATION: 400
+    property int _ROTATION_ANIMATION_DURATION: 600
     property int _OPPONENT_START_ROTATION_DELAY: 600 + 1000 + 34*10 + 800 + 2 //claw animation time...
 
-    property int _QUADRANT_WIDTH: 300
-    property int _BOARD_HOLE_WIDTH: 80
-    property int _VERTICAL_OUTSIDE: -45
-    property int _VERTICAL_CENTER: 310
-    property int _HORIZONTAL_TOP: -120
-    property int _HORIZONTAL_CENTER: 237
-    property int _CLAW_OPEN_DURATION: 10
-    property int _CLAW_X_HOME: pentagoBoard.width / 2 - 100
-    property int _CLAW_Y_HOME: -210
+    property int _QUADRANT_WIDTH: 200
+    property int _QUADRANT_GROWTH: 10
+    property int _BOARD_HOLE_WIDTH: 65
+    property int _VERTICAL_OUTSIDE: 18
+    property int _VERTICAL_CENTER: 228
+    property int _HORIZONTAL_TOP: -34
+    property int _HORIZONTAL_CENTER: 178
+    property int _CLAW_OPEN_DURATION: 350
+    property int _CLAW_MOVE_DURATION: 800
+    property int _CLAW_X_HOME: pentagoBoard.width/2 - 58
+    property int _CLAW_Y_HOME: -300
 
+
+    function lockBoardPieces(){
+        guiPlayerCanClickBoardHoleButton = false;
+    }
+
+    function unlockBoardPieces(){
+        console.log("unlocking board pieces and locking rotation");
+        lockQuadrantRotation();
+        isGuiPlayersTurn = true;
+        guiPlayerCanClickBoardHoleButton = true;
+
+    }
+
+    function lockQuadrantRotation(){
+        guiPlayerCanClickRotation = false;
+    }
+
+    function unlockQuadrantRotation(){
+        if (!guiPlayerCanClickBoardHoleButton)
+        {
+            guiPlayerCanClickRotation = true;
+        }
+    }
 
     onBackToMainMenu:{
         isFirstMoveOfGame = true;
@@ -79,8 +106,11 @@ Rectangle {
         id: userMoveTimeout
         duration: _ROTATION_ANIMATION_DURATION
         onTriggered:{
-            console.log("7. register move ")
+            //console.log("registering guiPlayer's move... ");
             gameController.registerGuiTurnWithBoard();
+            lockQuadrantRotation();
+            //console.log("guiPlayers turn is over.");
+            isGuiPlayersTurn = false;
         }
     }
 
@@ -91,9 +121,9 @@ Rectangle {
         property int rotationDirection
 
         onTriggered:{
-            console.log("o5: animate opponent rotation." );
-            pentagoBoard.playRotateAnimationOnQuadrant(quadrantToRotate, rotationDirection);
-            unlockGuiPiecesTimeout.startTimer();
+                //console.log("animating opponent rotation." );
+                pentagoBoard.playRotateAnimationOnQuadrant(quadrantToRotate, rotationDirection);
+                unlockGuiPiecesTimeout.startTimer();
 
         }
     }
@@ -105,27 +135,38 @@ Rectangle {
         property int rotationDirection
 
         onTriggered:{
-            unlockBoardPieces();
 
+            unlockBoardPieces();
         }
     }
 
     onClearBoard:{
-        unlockBoardPieces();
+        menuIsShowing = false;
+        isFirstMoveOfGame = true;
+
+        lockQuadrantRotation();
+
+        if (!guiPlayerIsWhite){
+            lockBoardPieces();
+
+        }
+        else{
+
+            unlockBoardPieces();
+
+        }
+
     }
 
     Connections{
         onRotationClicked:{
-
-            console.log("4. start rotation animation ");
-            pentagoBoard.playRotateAnimationOnQuadrant( index, direction );
-
-            console.log("5. start User timer ");
-            userMoveTimeout.startTimer();
+            if(!menuIsShowing){
+                if (guiPlayerCanClickRotation){
+                    pentagoBoard.playRotateAnimationOnQuadrant( index, direction );
+                    userMoveTimeout.startTimer();
+                }
+            }
         }
-
-
-
 
     }
 
@@ -137,15 +178,14 @@ Rectangle {
             var opponentsMove = gameController.getOpponentsTurn();
 
             if( !isFirstMoveOfGame ){
-                console.log("o1: get opponents move, " + opponentsMove);
+                console.log("Opponents move: " + opponentsMove);
                 placeOpponentsPiece( opponentsMove[0], opponentsMove[1] );
 
                 if( parseInt(opponentsMove[2]) !== 111 ) //DONT_ROTATE_CODE
                 {
-                    console.log("o3: tell the timer the rotation" );
+                    //console.log("telling the timer rotation data" );
                     opponentsMoveTimeout.quadrantToRotate = opponentsMove[2];
                     opponentsMoveTimeout.rotationDirection = opponentsMove[3];
-                    console.log("o4: start timer" );
                     opponentsMoveTimeout.startTimer();
                 }
 
@@ -153,15 +193,16 @@ Rectangle {
             }
 
             isFirstMoveOfGame = false;
-
-
-            //need to unlock the gui
         }
 
     }
     NetworkLobby{
         id:networkLobby
         anchors.centerIn: parent
+    }
+
+    SplashScreen {
+        id: splash
     }
 
     StartMenu{
@@ -171,11 +212,84 @@ Rectangle {
     GameOverMenu {
           id: gameOverMenu
           anchors.centerIn: page
-  }
-    Board{
-        id: pentagoBoard
-        anchors.top: page.top
-        anchors.topMargin: 30
-        anchors.horizontalCenter: parent.horizontalCenter
+    }
+    GameScreen{
+        id: gameScreen
+
+        Board{
+            id: pentagoBoard
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
+    }
+
+    function getXYOffset(quadrantIndex, pieceIndex){
+        var xyOffset = { "x": 0, "y":0 };
+        var distanceFromCenter = _QUADRANT_WIDTH/2 - _BOARD_HOLE_WIDTH/2;
+        var xCenter;
+        var yCenter;
+
+        switch(quadrantIndex){
+        case 0:
+            xCenter = _VERTICAL_OUTSIDE + _QUADRANT_WIDTH/2;
+            yCenter = _HORIZONTAL_TOP + _QUADRANT_WIDTH/2;
+            break;
+        case 1:
+            xCenter = _VERTICAL_CENTER + _QUADRANT_WIDTH/2;
+            yCenter = _HORIZONTAL_TOP + _QUADRANT_WIDTH/2;
+            break;
+        case 2:
+            xCenter = _VERTICAL_OUTSIDE + _QUADRANT_WIDTH/2;
+            yCenter = _HORIZONTAL_CENTER + _QUADRANT_WIDTH/2;
+            break;
+        case 3:
+            xCenter = _VERTICAL_CENTER + _QUADRANT_WIDTH/2;
+            yCenter = _HORIZONTAL_CENTER + _QUADRANT_WIDTH/2;
+            break;
+
+        }
+
+        switch( pieceIndex ){
+        case 0:
+            xyOffset.x = xCenter - distanceFromCenter;
+            xyOffset.y = yCenter - distanceFromCenter;
+            break;
+        case 1:
+            xyOffset.x = xCenter;
+            xyOffset.y = yCenter - distanceFromCenter;
+            break;
+        case 2:
+            xyOffset.x = xCenter + distanceFromCenter;
+            xyOffset.y = yCenter - distanceFromCenter;
+            break;
+        case 3:
+            xyOffset.x = xCenter - distanceFromCenter;
+            xyOffset.y = yCenter;
+            break;
+        case 4:
+            xyOffset.x = xCenter;
+            xyOffset.y = yCenter;
+            break;
+        case 5:
+            xyOffset.x = xCenter + distanceFromCenter;
+            xyOffset.y = yCenter;
+            break;
+        case 6:
+            xyOffset.x = xCenter - distanceFromCenter;
+            xyOffset.y = yCenter + distanceFromCenter;
+            break;
+        case 7:
+            xyOffset.x = xCenter;
+            xyOffset.y = yCenter + distanceFromCenter;
+            break;
+        case 8:
+            xyOffset.x = xCenter + distanceFromCenter;
+            xyOffset.y = yCenter + distanceFromCenter;
+            break;
+        }
+
+        //console.log( " moving to x: " + xyOffset.x +" and y: " + xyOffset.y );
+
+        return xyOffset;
     }
 }

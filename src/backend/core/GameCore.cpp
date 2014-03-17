@@ -5,6 +5,10 @@ Board GameCore::copyCurrentBoard(){
     return currentBoard;
 }
 
+void GameCore::setMovingPlayerColor( PlayerColor mover ){
+    currentBoard.setFirstMover( mover );
+}
+
 void GameCore::startNewGame(){
 
     //inform players that a new game is starting

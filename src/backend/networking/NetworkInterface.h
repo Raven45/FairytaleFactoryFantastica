@@ -134,7 +134,7 @@ public slots:
 
         networkTurnTransaction.transactionType = TransactionType::NETWORK_TURN;
         networkTurnTransaction.author = myInfo;
-        networkTurnTransaction.data.turn = Turn( q, p, qr, rd );
+        networkTurnTransaction.data.turn = Turn( q, p, qr, rd, PlayerColor::BLACK );
         networkTurnTransaction.seal = freshSeal();
 
         sendTransaction( networkTurnTransaction );

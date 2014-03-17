@@ -26,7 +26,7 @@ class MainBoard {
     BitBoard blackBoard;
 
     PlayerColor movingPlayersColor;
-    int pieceCount;
+    //int pieceCount;
     public:
 
     const BitBoard& getBoardOfPlayer( PlayerColor player ) const {
@@ -35,7 +35,7 @@ class MainBoard {
         return (player == PlayerColor::BLACK? blackBoard : whiteBoard );
     }
 
-    void setFirstMover( PlayerColor first ){
+    inline void setFirstMover( PlayerColor first ){
         movingPlayersColor = first;
     }
 
@@ -52,18 +52,24 @@ class MainBoard {
         movingPlayersColor = b.movingPlayersColor;
     }
 
+    MainBoard( const BitBoard& w, const BitBoard& b, PlayerColor mover ){
+        whiteBoard = w;
+        blackBoard = b;
+        movingPlayersColor = mover;
+    }
+
     void reset(){
 
         blackBoard.reset();
         whiteBoard.reset();
-        pieceCount = 0;
+        //pieceCount = 0;
         //white moves first
         movingPlayersColor = PlayerColor::WHITE;
     }
 
-    inline int getPieceCount() const {
+    /*inline int getPieceCount() const {
         return pieceCount;
-    }
+    }*/
 
     PlayerColor pieceAt (BoardLocation bl){
         if (whiteBoard.hasPieceAt(bl.quadrantIndex, bl.pieceIndex))
@@ -134,7 +140,7 @@ class MainBoard {
             blackBoard.rotate(t.getQuadrantToRotate(), t.getRotationDirection() );
             whiteBoard.rotate(t.getQuadrantToRotate(), t.getRotationDirection() );
 
-            pieceCount++;
+            //pieceCount++;
             result = true;
         }
 
@@ -143,10 +149,30 @@ class MainBoard {
     }
 
     void print() {
-        qDebug() << "BLACK: ";
-        blackBoard.print();
-        qDebug() << "WHITE: ";
-        whiteBoard.print();
+        #if PENTAGO_RELEASE == false
+        qDebug() << '\n';
+
+        for( int row = 0; row < 6; ++row ){
+            auto blackStringRow = blackBoard.getPrintableRow(row);
+            auto whiteStringRow = whiteBoard.getPrintableRow(row);
+
+            QString combinedRow;
+
+            for( int column = 0; column < 6; ++column ){
+                if( blackStringRow[column] == '1' ){
+                    combinedRow += 'B';
+                }
+                else if( whiteStringRow[column] == '1' ){
+                    combinedRow += 'W';
+                }
+                else{
+                    combinedRow += '.';
+                }
+            }
+
+            qDebug() << combinedRow;
+        }
+        #endif
     }
 
     //this function checks to see if a move wins before a rotation happens, for gui

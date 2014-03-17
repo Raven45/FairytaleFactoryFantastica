@@ -11,6 +11,7 @@ class GameCore {
 
 public:
     void registerTurnWithBoard( Turn playersMove );
+    void setMovingPlayerColor( PlayerColor mover );
 
 private:
 

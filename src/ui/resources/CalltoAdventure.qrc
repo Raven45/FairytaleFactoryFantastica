@@ -1,0 +1,5 @@
+<RCC>
+    <qresource>
+                <file alias="CalltoAdventure.mp3">../media/Call to Adventure.mp3</file>
+    </qresource>
+</RCC>

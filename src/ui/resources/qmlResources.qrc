@@ -1,5 +1,14 @@
 <RCC>
     <qresource>
+		<file alias="Cogs.qml">../qml/Cogs.qml</file>
+		<file alias="SplashScreen.qml">../qml/SplashScreen.qml</file>
+		<file alias="Witch.qml">../qml/Witch.qml</file>
+		<file alias="Smoke.qml">../qml/Smoke.qml</file>
+		<file alias="RedRotateButton.qml">../qml/RedRotateButton.qml</file>
+		<file alias="Tbar.qml">../qml/Tbar.qml</file>
+        <file alias="GameMenu.qml">../qml/GameMenu.qml</file>
+        <file alias="GameScreen.qml">../qml/GameScreen.qml</file>
+        <file alias="GUIButton.qml">../qml/GUIButton.qml</file>
         <file alias="Arrow.qml">../qml/Arrow.qml</file>
 		<file alias="LobbyRow.qml">../qml/LobbyRow.qml</file>
 		<file alias="Board.qml">../qml/Board.qml</file>

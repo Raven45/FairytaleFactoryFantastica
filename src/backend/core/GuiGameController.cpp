@@ -12,21 +12,24 @@ GuiGameController::GuiGameController( QGuiApplication* mainApp ) {
     guiPlayerColor = PlayerColor::BLACK;
     firstMover = PlayerColor::WHITE;
 
+    player2 = nullptr;
     net = nullptr;
+
     isNetworkGame = false;
 
     //pMusicThread = new QThread(this);
     //musicPlayer.moveToThread(pMusicThread);
 
     //change this URL path
-    //musicPlayer.setMedia(QUrl("qrc:/MonkeysSpinningMonkeys.mp3"));
-    musicPlayer.setMedia(QUrl("qrc:/CalltoAdventure.mp3"));
+    musicPlayer.setMedia(QUrl("qrc:/MonkeysSpinningMonkeys.mp3"));
+    //musicPlayer.setMedia(QUrl("qrc:/CalltoAdventure.mp3"));
     musicPlayer.play();
 
     app = mainApp;
 }
 
 void GuiGameController::setGuiTurnRotation( int quadrantToRotate, int rotationDirection ){
+    qDebug() << "setting quadrantToRotate for gui in gameController with  value of " << quadrantToRotate;
     qGuiTurn.setQuadrantToRotate(quadrantToRotate);
     qGuiTurn.setRotationDirection( (Direction) rotationDirection);
 }
@@ -61,20 +64,19 @@ int GuiGameController::getWinner(){
     return (int) gameData.winner;
 }
 
-void GuiGameController::setWindow(QQuickView* w){
-    window = w;
+void GuiGameController::setWindow(Proxy* g){
 
-    QObject* object = window -> rootObject();
-    QQuickItem* gui = qobject_cast<QQuickItem*>(object);
+    gui = g;
 
-    connect(gui, SIGNAL( readyToStartOnePersonPlay() ), this, SLOT( startOnePersonPlay() ) );
-    connect(gui, SIGNAL( readyToStartTwoPersonPlay() ), this, SLOT( startTwoPersonPlay() ) );
-    connect(gui, SIGNAL( sendPlayerName(QVariant) ), this, SLOT(setPlayerName(QVariant) ) );
-    connect(gui, SIGNAL( enterNetworkLobby() ), this, SLOT( enterNetworkLobby()) );
-    connect(gui, SIGNAL( changeSoundState() ), this, SLOT( togglePlayback() ) );
-    connect(gui, SIGNAL( changeGuiPlayerColor( int )), this, SLOT( setGuiPlayerColor( int ) ) );
-    connect(gui, SIGNAL( readyToExitGame() ), this, SLOT( exitGame() ) );
-    connect(gui, SIGNAL( backToMainMenu() ), this, SLOT(backToMainMenu()) );
+    qDebug() << "connecting window signals";
+    connect(gui, SIGNAL( readyToStartOnePersonPlay() ), this, SLOT( startOnePersonPlay() ),     Qt::QueuedConnection  );
+    connect(gui, SIGNAL( readyToStartTwoPersonPlay() ), this, SLOT( startTwoPersonPlay() ),     Qt::QueuedConnection  );
+    connect(gui, SIGNAL( sendPlayerName( QVariant ) ) , this, SLOT( setPlayerName( QVariant ) ),Qt::QueuedConnection  );
+    connect(gui, SIGNAL( enterNetworkLobby() ),         this, SLOT( enterNetworkLobby() ),      Qt::QueuedConnection  );
+    connect(gui, SIGNAL( changeSoundState() ),          this, SLOT( togglePlayback() ),         Qt::QueuedConnection  );
+    connect(gui, SIGNAL( changeGuiPlayerColor( int )),  this, SLOT( setGuiPlayerColor( int ) ), Qt::QueuedConnection  );
+    connect(gui, SIGNAL( readyToExitGame() ),           this, SLOT( exitGame() ),               Qt::QueuedConnection  );
+    connect(gui, SIGNAL( backToMainMenu() ),            this, SLOT( backToMainMenu() ),         Qt::QueuedConnection  );
 
 }
 
@@ -87,30 +89,52 @@ void GuiGameController::setPlayerName(QVariant name){
 
 }
 
+void GuiGameController::initialize(){
+    setNetworkInterface();
+    setAIPlayer( new DefaultAIPlayer );
+}
+
 //must be called after setWindow
-void GuiGameController::setNetworkInterface(NetworkInterface* ni){
-    net = ni;
+void GuiGameController::setNetworkInterface(){
+    if( net == nullptr){
 
-    assert( window != nullptr );
-    QObject* object = window -> rootObject();
-    QQuickItem* gui = qobject_cast<QQuickItem*>(object);
+        net = new NetworkInterface(this);
 
-    //gameController -> network
-    connect( this, SIGNAL(gameIsOver()), net, SLOT( tellMeGameIsOver()) );
+        qDebug() << "connecting network signals";
 
-    //network -> GUI
-    connect( net, SIGNAL(challengeReceived(QVariant, QVariant) ), gui, SIGNAL(challengeReceivedFromNetwork(QVariant, QVariant)) );
-    connect( net, SIGNAL(challengeResponseReceived(bool)), this, SLOT(challengeResponseReceivedFromNetwork(bool)) );
-    connect( net, SIGNAL(networkTurnReceived(int,int,int,int) ), this, SLOT(networkTurnReceivedFromNetwork(int,int,int,int)) );
-    connect( this, SIGNAL(challengeAccepted()), gui, SIGNAL(challengeWasAccepted()) );
-    connect( this, SIGNAL(challengeDeclined()), gui, SIGNAL(challengeWasDeclined()) );
-    connect( net, SIGNAL(playerJoinedNetwork(QVariant, QVariant, int )), gui, SIGNAL(playerEnteredLobby(QVariant, QVariant, int )));
-    connect( net, SIGNAL(playerLeftNetwork(int)), gui, SIGNAL(playerLeftLobby(int)));
+        //gameController -> network
+        connect( this, SIGNAL(gameIsOver()), net, SLOT( tellMeGameIsOver()) );
 
-    //GUI -> network
-    connect(gui, SIGNAL(sendThisChallenge(QVariant)), net, SLOT(sendChallenge(QVariant)) );
-    connect(gui, SIGNAL(sendThisChallengeResponse(bool)), this, SLOT(forwardChallengeResponse(bool)) );
-    connect(gui, SIGNAL(sendThisNetworkMove( int, int, int, int )), net, SLOT(sendGuiTurn( int, int, int, int )) );
+        //network -> GUI
+        connect( net,   SIGNAL( challengeReceived(QVariant, QVariant) ),        gui,    SIGNAL(challengeReceivedFromNetwork(QVariant, QVariant)),   Qt::QueuedConnection );
+        connect( net,   SIGNAL( challengeResponseReceived(bool)),               this,   SLOT(challengeResponseReceivedFromNetwork(bool)),           Qt::QueuedConnection );
+        connect( net,   SIGNAL( networkTurnReceived(int,int,int,int) ),         this,   SLOT(networkTurnReceivedFromNetwork(int,int,int,int)),      Qt::QueuedConnection );
+        connect( this,  SIGNAL( challengeAccepted()),                           gui,    SIGNAL(challengeWasAccepted() ),                            Qt::QueuedConnection );
+        connect( this,  SIGNAL( challengeDeclined()),                           gui,    SIGNAL(challengeWasDeclined()) ,                            Qt::QueuedConnection );
+        connect( net,   SIGNAL( playerJoinedNetwork(QVariant, QVariant, int )), gui,    SIGNAL(playerEnteredLobby(QVariant, QVariant, int )),       Qt::QueuedConnection );
+        connect( net,   SIGNAL( playerLeftNetwork(int)),                        gui,    SIGNAL(playerLeftLobby(int)));
+
+        //GUI -> network
+        connect(gui, SIGNAL(sendThisChallenge(QVariant)),               net,    SLOT(sendChallenge(QVariant)),              Qt::QueuedConnection );
+        connect(gui, SIGNAL(sendThisChallengeResponse(bool)),           this,   SLOT(forwardChallengeResponse(bool)),       Qt::QueuedConnection );
+        connect(gui, SIGNAL(sendThisNetworkMove( int, int, int, int )), net,    SLOT(sendGuiTurn( int, int, int, int )),    Qt::QueuedConnection );
+
+    }else{
+        qDebug() << "WEIRD, net should've been null";
+    }
+
+}
+
+void GuiGameController::setAIPlayer(Player* newAIPlayer){
+
+    if ( player2 == nullptr ) {
+        setPlayer2(newAIPlayer);
+    }
+    else{
+        delete player2;
+        player2 = nullptr;
+        setPlayer2( newAIPlayer );
+    }
 }
 
 void GuiGameController::backToMainMenu(){
@@ -161,10 +185,11 @@ void GuiGameController::challengeResponseReceivedFromNetwork(bool challengeWasAc
 
 void GuiGameController::networkTurnReceivedFromNetwork( int quadrantIndex, int pieceIndex, int quadrantToRotate, int rotationDirection ){
 
-
+    setMovingPlayerColor(BLACK);
 
     //network opponent is always BLACK to the game core
     registerOpponentsTurnWithBoard( Turn(quadrantIndex, pieceIndex, quadrantToRotate, rotationDirection, PlayerColor::BLACK ) );
+
 
     if( isGameOver() ){
          emit gameIsOver();
@@ -238,10 +263,16 @@ void GuiGameController::togglePlayback(){
 }
 
 void GuiGameController::setGuiPlayerColor( int menuSelectedColor ){
+
+        qDebug() << "in setGuiPlayerColor";
+
         guiPlayerColor = static_cast<PlayerColor>(menuSelectedColor);
+
+        qDebug() << "guiPlayerColor is set";
+
         if(menuSelectedColor == 0)
         {
-           player2 -> setColor(PlayerColor::BLACK);
+            player2 -> setColor(PlayerColor::BLACK);
         }
         else if (menuSelectedColor == 1)
         {
@@ -251,8 +282,24 @@ void GuiGameController::setGuiPlayerColor( int menuSelectedColor ){
 
 void GuiGameController::exitGame() {
 
-    app->exit();
+    if( player2 != nullptr ){
+        delete player2;
+        player2 = nullptr;
+    }
+
+    if( net != nullptr ){
+        delete net;
+        net = nullptr;
+    }
+
+    QThread* coreThread = this -> thread();
+    moveToThread(QGuiApplication::instance()->thread());
+
+    coreThread -> exit();
+    connect( coreThread, SIGNAL(finished()), app, SLOT(quit()) );
+
 }
+
 
 void GuiGameController::setPlayer2( Player* p ){
     player2 = p;
@@ -278,13 +325,7 @@ void GuiGameController::registerGuiTurnWithBoard(){
      }
      else{
 
-        //print to debug before opponent move
-#if PENTAGO_RELEASE == false
         copyCurrentBoard().print();
-#endif
-
-        //connected to slot Player::chooseMove(Turn)
-        //player2 -> chooseMove( guiPlayersMove );
 
         //network moves are registered elsewhere.
         if( !isNetworkGame ){
@@ -301,11 +342,7 @@ void GuiGameController::registerGuiTurnWithBoard(){
             }
 
 
-
- //print to debug after opponent move
-#if PENTAGO_RELEASE == false
         copyCurrentBoard().print();
-#endif
 
         emit readyForGuiMove();
 
@@ -331,7 +368,7 @@ void GuiGameController::registerGuiTurnWithBoard(){
 //TODO: I think we may need to change this to setWhetherGuiMovesFirst or something,
 //because the GUI colors should be decoupled from the gameController
 void GuiGameController::setFirstMovingPlayerColor( PlayerColor playerToMoveFirst ){
-    firstMover = playerToMoveFirst;
+    setMovingPlayerColor(playerToMoveFirst);
 }
 
 void GuiGameController::registerOpponentsTurnWithBoard(Turn opponentsMove ) {

@@ -12,11 +12,11 @@
 //used to account for special win condition where there is no rotation
 #define DONT_ROTATE_CODE 111
 
-#if PENTAGO_RELEASE == false
+//#if PENTAGO_RELEASE == false
 #define TURN_DEBUGGING true
-#else
-#define TURN_DEBUGGING false
-#endif
+//#else
+//#define TURN_DEBUGGING false
+//#endif
 
 
 class Turn{
@@ -147,7 +147,7 @@ public:
     void setQuadrantToRotate(int x) {
         if( TURN_DEBUGGING ){
             if ( (x < 0 || x >= 4 ) && x != DONT_ROTATE_CODE ){
-                qDebug() << "Error: tried to set turn with bad quadrantToRotate value";
+                qDebug() << "Error: tried to set turn with bad quadrantToRotate value of " << x;
                 assert(false);
             }
         }
@@ -158,11 +158,11 @@ public:
     void setHole(BoardLocation bl) {
         if( TURN_DEBUGGING ){
             if ( bl.pieceIndex < 0 || bl.pieceIndex >= 9 ){
-                qDebug() << "Error: tried to set turn with bad.getHole().pieceIndex value";
+                qDebug() << "Error: tried to set turn with bad.getHole().pieceIndex value of " << bl.pieceIndex;
                 assert(false);
             }
             if ( bl.quadrantIndex < 0 || bl.quadrantIndex >= 4 ){
-                qDebug() << "Error: tried to set turn with bad.getHole().quadrantIndex value";
+                qDebug() << "Error: tried to set turn with bad.getHole().quadrantIndex value of " << bl.quadrantIndex;
                 assert(false);
             }
         }

@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
+import QtGraphicalEffects 1.0
 
 Rectangle {
 
@@ -8,22 +9,37 @@ Rectangle {
     property int quadrantIndex
     property bool isLocked
 
+    Glow {
+       id: boardHole_glowEffect
+       anchors.fill: backgroundImage
+       radius: 16
+       samples: 24
+       spread: 0.5
+       color: "yellow"
+       source: backgroundImage
+       visible: false
+       fast: true
+       cached: true
+    }
+
     objectName: "BoardHoleButton"
     id: boardHoleButton
-    width: 70
-    height: 70
+    x: -31
+    y: -36
+    width: 38
+    height: 38
     clip: false
     color: "transparent"
     visible: true
-    radius: 35
+    radius: 19
     z: 14
 
     Image{
         id: backgroundImage
-        x: -40
-        y: -46
+        width: 100; height: 100
+        x: -31; y: -36
         visible: false
-        source: "teal-gumdrop.png"
+        source: page.guiPlayerIsWhite ? "teal-gumdrop.png" : "purp-gumdrop.png"
     }
     state: "EMPTY" //...property binding didn't work but should have?
 
@@ -35,19 +51,10 @@ Rectangle {
         onPlaceOpponentsPiece: {
             if( qIndex === quadrantIndex && pIndex === pieceIndex ){
 
-                console.log("o2: coloring opponents piece at " + quadrantIndex + ", " + pieceIndex);
+                //console.log("coloring opponents piece at " + quadrantIndex + ", " + pieceIndex);
                 state = page.guiPlayerIsWhite? "BLACK" : "WHITE"
 
             }
-        }
-
-        onLockBoardPieces:{
-            isLocked = true;
-
-        }
-
-        onUnlockBoardPieces:{
-            isLocked = false;
         }
 
         onClearBoard:{
@@ -60,7 +67,7 @@ Rectangle {
 
 
             if( quadrantRotated === quadrantIndex ){
-                console.log( "6. rearranging pieceIndex-es of quadrant " + quadrantRotated + " for a " + direction + " rotation, pieceIndex " + pieceIndex);
+                //console.log( "6. rearranging pieceIndex-es of quadrant " + quadrantRotated + " for a " + direction + " rotation, pieceIndex " + pieceIndex);
 
                 //"which piece was I before the rotation?"
                 //correct the pieceIndex because the rotation animation only animates and doesn't change values
@@ -116,7 +123,7 @@ Rectangle {
                     }else   pieceIndex = 6;
                     break;
 
-                default: console.log("oops, my pieceIndex is wrong: pieceIndex = " + pieceIndex); break;
+                default: console.log("ERROR, my pieceIndex is wrong: pieceIndex = " + pieceIndex); break;
                 }
             }
         }
@@ -124,9 +131,13 @@ Rectangle {
 
     QmlTimer {
         id: showPieceTimer
-        duration: 33 *_CLAW_OPEN_DURATION
+        duration: _CLAW_OPEN_DURATION
         onTriggered: {
             backgroundImage.visible = true;
+
+            if( isGuiPlayersTurn ){
+                unlockQuadrantRotation();
+            }
         }
     }
 
@@ -151,8 +162,6 @@ Rectangle {
             name: "BLACK"
             PropertyChanges{
                 target: backgroundImage
-                x: -40
-                y: -46
                 visible: false
                 source: "purp-gumdrop.png"
 
@@ -176,8 +185,6 @@ Rectangle {
             name: "WHITE"
             PropertyChanges{
                 target: backgroundImage
-                x: -40
-                y: -47
                 visible: false
                 source: "teal-gumdrop.png"
             }
@@ -207,19 +214,18 @@ Rectangle {
                 NumberAnimation {
                     target: tealClawPiece
                     property: "y"
-                    duration: 500
+                    duration: _CLAW_MOVE_DURATION / 2
                 }
                 NumberAnimation {
                     target: tealClawPiece;
                     property: "x"
-                    duration: 500
+                    duration: _CLAW_MOVE_DURATION / 2
                 }
                 ScriptAction{
                     scriptName: "openTealClaw"
                 }
             }
         },
-
         Transition {
             from: "EMPTY"
             to: "BLACK"
@@ -228,12 +234,12 @@ Rectangle {
                 NumberAnimation {
                     target: purpleClawPiece
                     property: "y"
-                    duration: 500
+                    duration: _CLAW_MOVE_DURATION / 2
                 }
                 NumberAnimation {
                     target: purpleClawPiece;
                     property: "x"
-                    duration: 500
+                    duration: _CLAW_MOVE_DURATION / 2
                 }
                 ScriptAction{
                     scriptName: "openPurpleClaw"
@@ -244,32 +250,48 @@ Rectangle {
 
 
     MouseArea{
+        id: boardHole_mouseArea
         anchors.fill: boardHoleButton
+        hoverEnabled: true
+
+        onEntered: {
+            if (!menuIsShowing && guiPlayerCanClickBoardHoleButton ) {
+                if( boardHoleButton.state == "EMPTY" ) {
+                    boardHole_glowEffect.visible = true;
+                }
+            }
+        }
+
+        onExited: {
+            if( boardHole_glowEffect.visible == true ){
+                boardHole_glowEffect.visible = false;
+            }
+        }
+
        onClicked: {
 
-           console.log("pieceIndex of click: " + pieceIndex );
-           if( !isLocked ){
-               if( boardHoleButton.state == "EMPTY" ){
-                   if(guiPlayerIsWhite){
-                        boardHoleButton.state = "WHITE";
-                   }
-                   else{
-                       boardHoleButton.state = "BLACK";
-                   }
+           if (!menuIsShowing && guiPlayerCanClickBoardHoleButton ){
+                console.log("pieceIndex of click: " + pieceIndex );
 
-                   console.log("1. set setGuiTurnHole ");
-                   gameController.setGuiTurnHole( quadrantIndex, pieceIndex);
-                   page.gameMessage = "Choose a rotation.";
+                if( boardHoleButton.state == "EMPTY" ){
+                    boardHole_glowEffect.visible = false;
 
+                    if(guiPlayerIsWhite){
+                         boardHoleButton.state = "WHITE";
+                     }
+                     else{
+                        boardHoleButton.state = "BLACK";
+                     }
 
-               }
-               else{
-                    page.gameMessage = "This place is taken!";
-               }
-           }else{
-               page.gameMessage = "Can't click that right now!"
+                    gameController.setGuiTurnHole( quadrantIndex, pieceIndex);
+                    page.gameMessage = "Choose a rotation.";
+                    lockBoardPieces();
+
+                }
+                else{
+                   page.gameMessage = "This place is taken!";
+                }
            }
-
        }
     }
 }

@@ -5,6 +5,7 @@ import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
 
 Rectangle {
+    opacity: 0.4
     id: gameOverMenu
     //adjust these how you want, it doesn't really matter
     width: 500
@@ -27,8 +28,6 @@ Rectangle {
 
 
     Button {
-
-        //ELIZABETH - use this example
         width: 200
         height: 100
         anchors.centerIn: gameOverMenu
@@ -41,10 +40,11 @@ Rectangle {
     }
 
     QmlTimer{
-        duration: _ROTATION_ANIMATION_DURATION + 1000
+        duration: 500
         id: gameOverTimeout
         onTriggered:{
             gameOverMenu.isVisible = true;
+            menuIsShowing = true;
         }
     }
 
@@ -79,15 +79,6 @@ Rectangle {
                 winnerInfo.parent.winText ="Black Wins";
                 break;
             }
-
-
-
-
-
-
-
-            //change text using the winner variable
-            //show this menu
         }
 
     }
