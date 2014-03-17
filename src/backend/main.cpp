@@ -27,6 +27,9 @@
 #include <QQmlEngine>
 #include <QQmlComponent>
 #include <QtQml>
+#include <QGlobal.h>
+#include <QTime>
+
 
 
 typedef GuiGameController GameController;
@@ -36,7 +39,6 @@ typedef GuiGameController GameController;
 
 int main(int argc, char* argv[])
 {
-    srand(time(0));
 
     QGuiApplication app (argc, argv);
     app.setOrganizationName("Team 2");
@@ -57,13 +59,8 @@ int main(int argc, char* argv[])
     window.rootContext() -> setContextProperty( "gameController", &proxy );
 
     gameController.setWindow( &proxy );
-    //QMetaObject::invokeMethod( &gameController, "setWindow", Qt::QueuedConnection, Q_ARG(Proxy*, &proxy));
-
 
     QMetaObject::invokeMethod( &gameController, "initialize", Qt::QueuedConnection );
-
-
-
 
     window.showFullScreen();
 

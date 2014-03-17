@@ -91,9 +91,7 @@ namespace PentagoNetworkUtil {
 
 
     //WaxSeal is a unique number that is used to compare against the previous seal,
-    //Like when you know a letter has been opened when its seal is broken. How it is
-    //derived makes no difference, as long as it is guaranteed to be unique. For instance,
-    //hashing time + playerId would suffice.
+    //Like when you know a letter has been opened when its seal is broken
     typedef unsigned int WaxSeal;
 
     union TransactionData{
