@@ -202,10 +202,14 @@ public:
 
                         if( checkWeight > bestMoveWeight && !test.checkWin().isDraw ){
 
+                            if( test.checkWin().winner == myColor ){
+                                return Turn(quadrantIndex, pieceIndex, rotationConfig.quadrantIndex, rotationConfig.direction, myColor);
+                            }
+
                             int opponentsBestMoveWeight = 0;
 
                             //REPEAT FOR OPPONENT... ugly
-                            for( int quadrantIndexOpp = rand()% 4, quadrantCountOpp = 0;  quadrantCountOpp < NUMBER_OF_QUADRANTS;    quadrantIndexOpp = ((quadrantIndexOpp == 3)? 0 : quadrantIndexOpp + 1), ++quadrantCountOpp ){
+                            for( int quadrantIndexOpp = rand() % 4, quadrantCountOpp = 0;  quadrantCountOpp < NUMBER_OF_QUADRANTS;    quadrantIndexOpp = ((quadrantIndexOpp == 3)? 0 : quadrantIndexOpp + 1), ++quadrantCountOpp ){
                                 for( int pieceIndexOpp = rand()%9, pieceCountOpp = 0;     pieceCountOpp    < MAX_PIECES_ON_QUADRANT;   pieceIndexOpp  = ((pieceIndexOpp    == 8)? 0 : pieceIndexOpp    + 1), ++pieceCountOpp    ){
 
                                     if( test.holeIsEmpty( quadrantIndexOpp, pieceIndexOpp )){
