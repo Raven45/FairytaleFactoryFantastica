@@ -5,12 +5,17 @@ Rectangle {
     id: networkLobby
     width: 750
     height: 750
-    z: 100
+    z: 101
     color: "#00FFFF"
     state: "INVISIBLE"
     property int playerCount: 0
+    property bool guiPlayerIsWhiteAtEnter
 
-    Text{
+    function challengePopupsAreHidden(){
+        return challengePopup.state == "INVISIBLE" && sentChallengePopup.state == "INVISIBLE";
+    }
+
+    Text {
       id: network
       text: "Network Lobby"
       font.pointSize: 15
@@ -61,6 +66,8 @@ Rectangle {
             row5.clearRow();
             row6.clearRow();
             row7.clearRow();
+
+            guiPlayerIsWhite = guiPlayerIsWhiteAtEnter;
         }
 
         onPlayerLeftLobby:{
@@ -174,9 +181,12 @@ Rectangle {
         height: 50
         text: "Main Menu"
         onClicked: {
-           networkLobby.state = "INVISIBLE";
-           startMenu.state = "VISIBLE"
-            backToMainMenu();
+
+           if( challengePopupsAreHidden() ){
+                networkLobby.state = "INVISIBLE";
+                startMenu.state = "VISIBLE"
+                backToMainMenu();
+            }
         }
     }
 
@@ -186,6 +196,7 @@ Rectangle {
     }
 
     SentChallengePopup{
+        id: sentChallengePopup
         anchors.centerIn: parent
     }
 

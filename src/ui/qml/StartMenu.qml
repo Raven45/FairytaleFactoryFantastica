@@ -81,6 +81,7 @@ Rectangle {
             onClicked: {
                 sendPlayerName( playerNameBox.text );
                 startMenu.state = "INVISIBLE"
+                isNetworkGame = false;
                 pentagoBoard.state = "UNLOCKED";
                 clearBoard();
                 readyToStartOnePersonPlay();
@@ -103,8 +104,7 @@ Rectangle {
             onClicked: {
                 sendPlayerName( playerNameBox.text );
                 networkLobby.state ="VISIBLE"
-                startMenu.state = "INVISIBLE"
-               // pentagoBoard.state = "UNLOCKED";
+                isNetworkGame = true;
                 clearBoard();
                 enterNetworkLobby();
             }

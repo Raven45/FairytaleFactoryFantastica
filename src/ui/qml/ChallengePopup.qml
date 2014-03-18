@@ -111,7 +111,14 @@ Rectangle {
             resetValues();
             challengePopup.state = "INVISIBLE";
             networkLobby.state = "INVISIBLE";
-            pentagoBoard.state = "UNLOCKED";
+            startMenu.state = "INVISIBLE";
+            unlockBoardPieces();
+            lockQuadrantRotation();
+
+            //we need to save it so we can put it back later, fixes a bug where returning to main menu at starting a game and the guiPlayerIsWhite is wrong
+            guiPlayerIsWhiteAtEnter = guiPlayerIsWhite;
+            guiPlayerIsWhite = true;
+
             sendThisChallengeResponse( true );
         }
     }

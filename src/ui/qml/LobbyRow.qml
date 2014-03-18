@@ -46,7 +46,11 @@ Rectangle {
          visible: false;
          text: "Challenge!"
          onClicked: {
-             sendThisChallenge( myAddress.text );
+
+             if( challengePopupsAreHidden() ){
+                 sendThisChallenge( myAddress.text );
+             }
+
          }
 
      }

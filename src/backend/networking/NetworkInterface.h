@@ -142,6 +142,7 @@ public slots:
 
     void tellMeGameIsOver(){
         networkGameIsOver = true;
+        forgetAllAboutPlayer(connectedPlayerInfo);
         qDebug() << "network interface knows that game is over!";
     }
 
@@ -365,10 +366,18 @@ public slots:
     }
 
     void forgetAllAboutPlayer(NetworkPlayerInfo disconnectedPlayerInfo){
+        qDebug() << "forgetting all about player";
         auto pTimer = playerTimerMap[disconnectedPlayerInfo];
-        pTimer -> deleteLater();
-        timerPlayerMap[pTimer] = NetworkPlayerInfo();
-        playerTimerMap[disconnectedPlayerInfo] = nullptr;
+
+        if( pTimer != nullptr ){
+            pTimer -> deleteLater();
+            timerPlayerMap[pTimer] = NetworkPlayerInfo();
+            playerTimerMap[disconnectedPlayerInfo] = nullptr;
+        }
+        else{
+            qDebug() << "WARNING from NetworkInterface, tried to forget about unknown player!!";
+        }
+
     }
 
     void playerDisconnected(){

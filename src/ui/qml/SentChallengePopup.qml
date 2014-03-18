@@ -52,6 +52,13 @@ Rectangle {
 
             //challenger does not move first
             isFirstMoveOfGame = false;
+
+            //we need to save it so we can put it back later, fixes a bug where returning to main menu at starting a game and the guiPlayerIsWhite is wrong
+            guiPlayerIsWhiteAtEnter = guiPlayerIsWhite;
+            guiPlayerIsWhite = false;
+
+            lockBoardPieces();
+            lockQuadrantRotation();
         }
 
         onChallengeWasDeclined:{
@@ -74,7 +81,7 @@ Rectangle {
 
            if( wasAccepted ){
                networkLobby.state = "INVISIBLE";
-               pentagoBoard.state = "UNLOCKED";
+               startMenu.state = "INVISIBLE";
            }
            else{
                networkLobby.state = "VISIBLE";
@@ -113,6 +120,11 @@ Rectangle {
             }
             else{
                 if( challengeNotYetAccepted ){
+
+                    // 3/17/2014 resume working here in the morning
+                    challengeWasDeclined();
+                    challengeResponseResultTimer.wasAccepted = false;
+                    challengeResponseResultTimer.start();
                     resetValues();
                 }
             }
