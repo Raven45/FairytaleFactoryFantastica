@@ -136,15 +136,15 @@ Item {
     }*/
 
 
-    Rectangle {
+    Image {
         id: clawPipe
-        width: 22
-        height:  1000
+        source: "bar.png"
+        width: 40
+        height: 700
         anchors.bottom: clawSprite.top
-        anchors.bottomMargin: -13
+        anchors.bottomMargin: -41
         anchors.horizontalCenter: clawSprite.horizontalCenter
-        anchors.horizontalCenterOffset: -3
-        color: "#000000"
+        anchors.horizontalCenterOffset: -2
         z: 400
     }
 
