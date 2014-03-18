@@ -1,139 +1,74 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.0
 
-Rectangle {
+GenericPopup {
     id: challengePopup
-    width: 300
-    height: 250
     z: 200
-    color: "#FF2A48"
-    state: "INVISIBLE"
 
-    states: [
-        State{
-            name: "VISIBLE"
-            PropertyChanges {
-                target: challengePopup
-                visible: true
-            }
-
-        },
-        State{
-            name: "INVISIBLE"
-            PropertyChanges {
-                target: challengePopup
-                visible: false
-            }
-        }
-
-    ]
-
-    Connections{
+    Connections {
         target: page
         onChallengeReceivedFromNetwork:{
-            var challengingPlayerName = challengerName.toString();
-            var challengerIpAddress = stringAddressOfPlayerWhoChallenged.toString();
-            challengingPlayer.text = "You have been challenged by " + challengingPlayerName + "!";
-            challengingPlayerAddress.text = challengerIpAddress + "is his computer address.";
+            message = "You have been challenged by " + challengerName.toString() + "!";
             state = "VISIBLE";
             challengeTimer.start();
         }
     }
 
-    Text{
-      id: challengeTextBox
-      text: "Network Game Challenge"
-      font.pointSize: 18
-      font.bold: true
-      anchors.top: challengePopup.top
-      anchors.horizontalCenter: challengePopup.horizontalCenter
-      anchors.topMargin: 5
-    }
-
-    Text{
-      id: challengingPlayer
-      text: "player"
-      font.pointSize: 15
-      anchors.top: challengeTextBox.bottom
-      anchors.horizontalCenter: challengePopup.horizontalCenter
-      anchors.topMargin: 5
-    }
-
-    Text{
-      id: challengingPlayerAddress
-      text: "address"
-      font.pointSize: 15
-      anchors.top: challengingPlayer.bottom
-      anchors.horizontalCenter: challengePopup.horizontalCenter
-    }
+    message: "You have been challenged by NOBODY"
 
     Text {
         id: challengeTimerText
-        font.pointSize: 15
+        font.pointSize: 20
         text: "9"
-        anchors.top: challengingPlayerAddress.bottom
-        anchors.horizontalCenter: challengePopup.horizontalCenter
+        color: "red"
+        anchors.top: parent.top
+        anchors.topMargin: 10
+        anchors.right: parent.right
+        anchors.rightMargin: 10
     }
 
     Timer {
         id: challengeTimer
-        property int counter: 9
+        property int counter: 10
         interval: 1000
         onTriggered:{
            challengeTimerText.text = counter.toString();
            counter--;
 
-            if( counter > 0 ){
+            if( counter >= 0 ){
                 challengeTimer.start();
             }
             else{
                 declineChallengeFunction();
             }
         }
+    }
 
+    button1Text: "Accept"
+    onButton1Clicked: {
+        challengeTimer.stop();
+        resetValues();
+        challengePopup.state = "INVISIBLE";
+        networkLobby.state = "INVISIBLE";
+        startMenu.state = "INVISIBLE";
+        unlockBoardPieces();
+        lockQuadrantRotation();
 
+        //we need to save it so we can put it back later, fixes a bug where returning to main menu at starting a game and the guiPlayerIsWhite is wrong
+        guiPlayerIsWhiteAtEnter = guiPlayerIsWhite;
+        guiPlayerIsWhite = true;
+
+        sendThisChallengeResponse( true );
+    }
+
+    button2Text: "Decline"
+    onButton2Clicked: {
+       declineChallengeFunction();
     }
 
     function resetValues(){
-        challengeTimer.counter = 9;
-        challengeTimerText.text = '9';
-    }
-
-    Button {
-        id: acceptChallenge
-        width: 100
-        height: 50
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        text: "Accept"
-        onClicked: {
-            challengeTimer.stop();
-            resetValues();
-            challengePopup.state = "INVISIBLE";
-            networkLobby.state = "INVISIBLE";
-            startMenu.state = "INVISIBLE";
-            unlockBoardPieces();
-            lockQuadrantRotation();
-
-            //we need to save it so we can put it back later, fixes a bug where returning to main menu at starting a game and the guiPlayerIsWhite is wrong
-            guiPlayerIsWhiteAtEnter = guiPlayerIsWhite;
-            guiPlayerIsWhite = true;
-
-            sendThisChallengeResponse( true );
-        }
-    }
-
-    Button {
-        id: declineChallenge
-        width: 100
-        height: 50
-        anchors.bottom: parent.bottom
-        anchors.right: parent.right
-        text: "Decline"
-
-        onClicked: {
-           declineChallengeFunction();
-        }
+        challengeTimer.counter = 10;
+        challengeTimerText.text = '10';
     }
 
     function declineChallengeFunction(){

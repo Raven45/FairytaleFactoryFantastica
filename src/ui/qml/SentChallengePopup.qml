@@ -3,36 +3,11 @@ import QtQuick 2.0
 import QtQuick 2.0
 import QtQuick.Controls 1.0
 
-Rectangle {
+GenericPopup {
     id: sentChallengePopup
-    width: 300
-    height: 250
     z: 200
 
     property bool challengeNotYetAccepted: true
-
-    color: "#FF2A48"
-    state: "INVISIBLE"
-
-    states: [
-        State{
-            name: "VISIBLE"
-            PropertyChanges {
-                target: sentChallengePopup
-                visible: true
-            }
-        },
-        State{
-
-            name: "INVISIBLE"
-
-            PropertyChanges {
-                target: sentChallengePopup
-                visible: false
-            }
-        }
-
-    ]
 
     Connections{
         target: page
@@ -44,9 +19,9 @@ Rectangle {
 
         onChallengeWasAccepted:{
             challengeResponseTimer.stop();
-            resetValues();
             challengeNotYetAccepted = false;
-            challengeResponseTimerText.text = "CHALLENGE ACCEPTED!!";
+            challengeResponseTimerText.text = "";
+            message = "CHALLENGE ACCEPTED!";
             challengeResponseResultTimer.wasAccepted = true;
             challengeResponseResultTimer.start();
 
@@ -64,7 +39,8 @@ Rectangle {
         onChallengeWasDeclined:{
             challengeResponseTimer.stop();
             resetValues();
-            challengeResponseTimerText.text = "CHALLENGE DECLINED.";
+            challengeResponseTimerText.text = "";
+            message = "CHALLENGE DECLINED.";
             challengeResponseResultTimer.wasAccepted = false;
             challengeResponseResultTimer.start();
         }
@@ -76,8 +52,7 @@ Rectangle {
         property bool wasAccepted
         onTriggered:{
            sentChallengePopup.state = "INVISIBLE";
-           challengeResponseTimer.counter = 9;
-           challengeResponseTimerText.text = '9';
+           resetValues();
 
            if( wasAccepted ){
                networkLobby.state = "INVISIBLE";
@@ -89,22 +64,20 @@ Rectangle {
         }
     }
 
-    Text{
-      id: sentChallengeTextBox
-      text: "Waiting for response..."
-      font.pointSize: 18
-      font.bold: true
-      anchors.top: sentChallengePopup.top
-      anchors.horizontalCenter: sentChallengePopup.horizontalCenter
-      anchors.topMargin: 5
-    }
+    property string defaultMessage: "Waiting for response..."
+    message: defaultMessage
+
+    hideButtons: true
 
     Text {
         id: challengeResponseTimerText
-        font.pointSize: 15
+        font.pointSize: 20
         text: "9"
-        anchors.top: sentChallengeTextBox.bottom
-        anchors.horizontalCenter: sentChallengePopup.horizontalCenter
+        color: "red"
+        anchors.top: parent.top
+        anchors.topMargin: 10
+        anchors.right: parent.right
+        anchors.rightMargin: 10
     }
 
     Timer {
@@ -133,6 +106,7 @@ Rectangle {
     }
 
     function resetValues(){
+        message = defaultMessage
         challengeResponseTimer.counter = 9;
         challengeResponseTimerText.text = '9';
     }

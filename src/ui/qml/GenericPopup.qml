@@ -5,16 +5,18 @@ Rectangle{
     property string message
     property string button1Text
     property string button2Text
+    property bool hideButtons: false
 
     signal button1Clicked()
     signal button2Clicked()
 
-    width: 400
-    height: 150
+    width: 600
+    height: 200
     border.color: "black"
-    border.width: 5
-    radius: 20
+    border.width: 10
+    radius: 10
     state: "INVISIBLE"
+
     states:[
         State{
             name: "INVISIBLE"
@@ -43,18 +45,20 @@ Rectangle{
         text: message
     }
 
-    GenericButton{
+    GenericButton {
         id: button1
         buttonText: button1Text
+        visible: !hideButtons
         onClicked:{
             button1Clicked()
         }
     }
 
-    GenericButton{
+    GenericButton {
         id: button2
         buttonText: button2Text
         anchors.rightMargin: 121
+        visible: !hideButtons
         onClicked:{
             button2Clicked()
         }
