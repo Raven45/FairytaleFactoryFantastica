@@ -51,6 +51,7 @@ Rectangle {
     property bool menuIsShowing: false
     property string gameMessage
     property bool isFirstMoveOfGame: true
+    property bool isNetworkGame: false
     property int _ROTATION_ANIMATION_DURATION: 600
     property int _OPPONENT_START_ROTATION_DELAY: 600 + 1000 + 34*10 + 800 + 2 //claw animation time...
 
