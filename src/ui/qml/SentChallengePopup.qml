@@ -52,6 +52,9 @@ Rectangle {
 
             //challenger does not move first
             isFirstMoveOfGame = false;
+            guiPlayerIsWhite = false;
+            lockBoardPieces();
+            lockQuadrantRotation();
         }
 
         onChallengeWasDeclined:{

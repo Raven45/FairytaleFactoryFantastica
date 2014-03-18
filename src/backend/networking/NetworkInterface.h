@@ -365,6 +365,7 @@ public slots:
     }
 
     void forgetAllAboutPlayer(NetworkPlayerInfo disconnectedPlayerInfo){
+        qDebug() << "forgetting all about player";
         auto pTimer = playerTimerMap[disconnectedPlayerInfo];
         pTimer -> deleteLater();
         timerPlayerMap[pTimer] = NetworkPlayerInfo();

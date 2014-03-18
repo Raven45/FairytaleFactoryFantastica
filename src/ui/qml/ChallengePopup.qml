@@ -112,6 +112,9 @@ Rectangle {
             challengePopup.state = "INVISIBLE";
             networkLobby.state = "INVISIBLE";
             pentagoBoard.state = "UNLOCKED";
+            unlockBoardPieces();
+            lockQuadrantRotation();
+            guiPlayerIsWhite = true;
             sendThisChallengeResponse( true );
         }
     }
