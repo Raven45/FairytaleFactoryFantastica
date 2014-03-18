@@ -22,5 +22,8 @@
         <file alias="SentChallengePopup.qml" >../qml/SentChallengePopup.qml</file>
         <file alias="StartMenu.qml" >../qml/StartMenu.qml</file>
 		<file alias="ClawPiece.qml" >../qml/ClawPiece.qml</file>
+		<file alias="GenericPopup.qml" >../qml/GenericPopup.qml</file>
+		<file alias="GenericButton.qml" >../qml/GenericButton.qml</file>
+		<file alias="GenericText.qml" >../qml/GenericText.qml</file>
     </qresource>
 </RCC>

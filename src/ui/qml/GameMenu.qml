@@ -129,6 +129,33 @@ Rectangle {
         }
     }
 
+    GenericPopup{
+        id: networkQuitConfirmationPopup
+        width: 700
+        height: 200
+        anchors.left: parent.left
+        anchors.leftMargin: (1440 / 2) - (width/2)
+        anchors.verticalCenter: parent.verticalCenter
+
+        message: "Are you sure you want to quit?"
+        button2Text: "Quit"
+        button1Text: "Cancel"
+
+        onButton1Clicked: {
+            gameMenu.state = "INVISIBLE";
+            networkQuitConfirmationPopup.state = "INVISIBLE";
+        }
+
+        onButton2Clicked: {
+            gameMenu.state = "INVISIBLE";
+            networkQuitConfirmationPopup.state = "INVISIBLE";
+            startMenu.state = "VISIBLE";
+            backToMainMenu();
+        }
+
+    }
+
+    /*
     Rectangle{
         //make pretty
         id: networkQuitConfirmationPopup
@@ -189,5 +216,5 @@ Rectangle {
             }
         }
 
-    }
+    }*/
 }
