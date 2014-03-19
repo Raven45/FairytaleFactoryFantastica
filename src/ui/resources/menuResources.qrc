@@ -1,18 +1,19 @@
 <RCC>
-    <qresource>
-	<file alias="top_tubes.png">../media/top_tubes.png</file>
-	<file alias="left-cogs-spritesheet.png">../media/left-cogs-spritesheet.png</file>
-	<file alias="purp-claw-spritesheet-75.png">../media/purp-claw-spritesheet-75.png</file>
-	<file alias="teal-claw-spritesheet-75.png">../media/teal-claw-spritesheet-75.png</file>
-    <file alias="ingame-menu.png">../media/ingame-menu.png</file>
-    <file alias="game-background.png">../media/game-background.png</file>
-    <file alias="tbar.png">../media/tbar.png</file>
-	<file alias="red-rotate-clockwise.png">../media/red-rotate-clockwise.png</file>
-	<file alias="red-rotate-counter.png">../media/red-rotate-counter.png</file>
-	<file alias="hg-bucket.png">../media/hg-bucket.png</file>
-	<file alias="main-menu-background.png">../media/main-menu-background.png</file>
-	<file alias="TheWitch.png">../media/TheWitch.png</file>
-	<file alias="Logo.png">../media/Logo.png</file>
-	<file alias="MuffinMan.png">../media/MuffinMan.png</file>
+    <qresource prefix="/">
+        <file alias="top_tubes.png">../media/top_tubes.png</file>
+        <file alias="left-cogs-spritesheet.png">../media/left-cogs-spritesheet.png</file>
+        <file alias="purp-claw-spritesheet-75.png">../media/purp-claw-spritesheet-75.png</file>
+        <file alias="teal-claw-spritesheet-75.png">../media/teal-claw-spritesheet-75.png</file>
+        <file alias="ingame-menu.png">../media/ingame-menu.png</file>
+        <file alias="game-background.png">../media/game-background.png</file>
+        <file alias="tbar.png">../media/tbar.png</file>
+        <file alias="red-rotate-clockwise.png">../media/red-rotate-clockwise.png</file>
+        <file alias="red-rotate-counter.png">../media/red-rotate-counter.png</file>
+        <file alias="hg-bucket.png">../media/hg-bucket.png</file>
+        <file alias="main-menu-background.png">../media/main-menu-background.png</file>
+        <file alias="TheWitch.png">../media/TheWitch.png</file>
+        <file alias="Logo.png">../media/Logo.png</file>
+        <file alias="MuffinMan.png">../media/MuffinMan.png</file>
+        <file alias="HomeMenu.png">../media/HomeMenu.png</file>
     </qresource>
 </RCC>

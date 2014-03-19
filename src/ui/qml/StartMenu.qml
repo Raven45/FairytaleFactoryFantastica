@@ -17,9 +17,10 @@ Rectangle {
         id: main_background
         width: 1440; height: 900; z: 0
         anchors.centerIn: parent
-        source: "main-menu-background.png"
+        source: "HomeMenu.png"
         fillMode: Image.PreserveAspectFit
     }
+
 
     Smoke {
         id: startMenu_smoke1
