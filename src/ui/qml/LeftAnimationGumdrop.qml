@@ -23,9 +23,11 @@ Item{
 
     Image {
         id: small_gumdrop
-        width: 100; height: 100; z: 2
+        width: 100;
+        height: 100;
+        z: 2 + (startDelay % 2)
         scale: 0.65
-        x: parent.width/2 - (small_gumdrop.width/2)
+        x: 658 + (startDelay % 4) * 7;
         y: 900 + small_gumdrop.height
         source: "teal-gumdrop-centered.png"
     }
@@ -35,23 +37,25 @@ Item{
         id: tube_animation
         loops: Animation.Infinite
 
-        property int leg1: 1600
-        property int leg2: 500
-        property int leg3: 900
+        property int leg1: 1200 + (startDelay % 1001)
+        property int leg2: 500 + (startDelay % 101)
+        property int leg3: 650 + (startDelay % 101)
         property int leg4: 3000
         property int leg5: 1200
+        property int _THROW_DURATION: leg1 + leg2 + leg3
 
-        property int endOfConverorBeltX: 172
-        property int endOfConverorBeltY: 132
+        property int endOfConverorBeltX: 165
+        property int endOfConverorBeltY: 134
+        property int startOfConverorBeltX: 356
+        property int startOfConverorBeltY: 84
 
         ParallelAnimation{
 
             RotationAnimation {
                 target: small_gumdrop
-                duration: 500
-                from: 0
-                to: 360
-                loops: ( tube_animation.leg1 + tube_animation.leg2 + tube_animation.leg3 ) / duration
+                duration: tube_animation._THROW_DURATION / ((startDelay % 3) + 2)
+                to: 385
+                loops: tube_animation._THROW_DURATION /duration
 
             }
 
@@ -61,8 +65,8 @@ Item{
                     target: small_gumdrop;
                     property: "y";
                     easing.type: Easing.Linear
-                    from: 1000;
-                    to: 60;
+                    from: 900 + small_gumdrop.height;
+                    to: 58;
                     duration: tube_animation.leg1;
                 }
 
@@ -71,7 +75,6 @@ Item{
                         target: small_gumdrop;
                         property: "x";
                         easing.type: Easing.Linear;
-                        from: 670;
                         to: -5;
                         duration: tube_animation.leg2;
                     }
@@ -79,7 +82,7 @@ Item{
                         target: small_gumdrop;
                         property: "y";
                         easing.type: Easing.Linear;
-                        to: -27;
+                        to: -34 + (startDelay % 8)*10;
                         duration: tube_animation.leg2;
                     }
                 }
@@ -89,14 +92,14 @@ Item{
                         target: small_gumdrop;
                         property: "x";
                         easing.type: Easing.Linear;
-                        to: 356;
+                        to: tube_animation.startOfConverorBeltX;
                         duration: tube_animation.leg3;
                     }
                     PropertyAnimation {
                         target: small_gumdrop;
                         property: "y";
                         easing.type: Easing.InBack;
-                        to: 84;
+                        to: tube_animation.startOfConverorBeltY;
                         duration: tube_animation.leg3;
                     }
                 }
@@ -106,10 +109,10 @@ Item{
     ParallelAnimation{
         RotationAnimation {
             target: small_gumdrop
-            duration: tube_animation.leg4 -200
+            duration: 1000
             easing.type: Easing.OutQuad
-            from: -1080
-            to: -15
+            from: 385
+            to: 705
 
         }
         PropertyAnimation {
@@ -136,35 +139,32 @@ Item{
             target: small_gumdrop;
             property: "x";
             easing.type: Easing.Linear;
-            to: tube_animation.endOfConverorBeltX - small_gumdrop.width - 40;
+            to: tube_animation.endOfConverorBeltX - 65;
             duration: tube_animation.leg5;
         }
         PropertyAnimation {
             target: small_gumdrop;
             property: "y";
             easing.type: Easing.InExpo;
-            to: 900 //TODO: into box
+            to: 900 + small_gumdrop.height //TODO: into box
             duration: tube_animation.leg5;
         }
         RotationAnimation{
             target: small_gumdrop
             duration: tube_animation.leg5
             from: -15
-            to: -375
+            to: -200
         }
 
     }
 
 
-
-
-
-
-    PropertyAnimation{
+    PropertyAnimation {
         target: small_gumdrop;
         property: "x";
-        to: 670;
-        duration: 0;
+        to: 658 + (startDelay % 4) * 7;
+        duration: startDelay % 700;
     }
+
 }
 }
