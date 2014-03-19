@@ -129,64 +129,26 @@ Rectangle {
         }
     }
 
-    Rectangle{
-        //make pretty
+    GenericPopup{
         id: networkQuitConfirmationPopup
-        width: 700
-        height: 200
         anchors.left: parent.left
         anchors.leftMargin: (1440 / 2) - (width/2)
         anchors.verticalCenter: parent.verticalCenter
 
-        Text{
-            anchors.left: parent.left
-            text: "Are you sure you want to quit?"
-        }
-        state: "INVISIBLE"
-        states:[
-            State{
-                name: "INVISIBLE"
-                PropertyChanges {
-                    target: networkQuitConfirmationPopup
-                    visible: false
-                }
-            },
-            State{
-                name: "VISIBLE"
-                PropertyChanges {
-                    target: networkQuitConfirmationPopup
-                    visible: true
-                }
-            }
-        ]
+        message: "Are you sure you want to quit?"
+        button2Text: "Quit"
+        button1Text: "Cancel"
 
-        Button {
-            width: 100
-            height: 50
-            anchors.bottom: parent.bottom
-            anchors.right: parent.right
-            text: "Leave game"
-
-            onClicked: {
-                gameMenu.state = "INVISIBLE";
-                networkQuitConfirmationPopup.state = "INVISIBLE";
-                startMenu.state = "VISIBLE";
-                backToMainMenu();
-            }
+        onButton1Clicked: {
+            gameMenu.state = "INVISIBLE";
+            networkQuitConfirmationPopup.state = "INVISIBLE";
         }
 
-        Button {
-            width: 100
-            height: 50
-            anchors.bottom: parent.bottom
-            anchors.right: parent.right
-            anchors.rightMargin: 120
-            text: "Cancel"
-
-            onClicked: {
-                networkQuitConfirmationPopup.state = "INVISIBLE";
-                gameMenu.state = "INVISIBLE";
-            }
+        onButton2Clicked: {
+            gameMenu.state = "INVISIBLE";
+            networkQuitConfirmationPopup.state = "INVISIBLE";
+            startMenu.state = "VISIBLE";
+            backToMainMenu();
         }
 
     }

@@ -17,7 +17,6 @@ Rectangle {
     signal changeSoundState()
     signal changeGuiPlayerColor(int color)
     signal clickedRandomMove()
-    //signal updateCurrentBoard()
     signal readyForRotation()
     signal rotationClicked( int index, int direction )
     signal rotationAnimationFinished(int quadrantRotated, int direction )
@@ -31,7 +30,6 @@ Rectangle {
     signal turnCogs(int quadrantIndex, var direction )
 
     //network-related signals
-    //TODO: receive challenge response
     signal enterNetworkLobby()
     signal sendThisChallenge( var stringAddressOfPlayerToChallenge )
     signal challengeReceivedFromNetwork( var challengerName, var stringAddressOfPlayerWhoChallenged )
@@ -41,7 +39,8 @@ Rectangle {
     signal sendThisNetworkMove( int quadrantIndex, int pieceIndex, int quadrantToRotate, int rotationDirection )
     signal playerEnteredLobby( var arrivingPlayerName, var addressOfArrivingPlayer, int playerId )
     signal playerLeftLobby( int playerId )
-
+    signal opponentDisconnected()
+    signal opponentReconnected()
 
     property alias main: page
     property bool guiPlayerIsWhite: false
@@ -52,9 +51,9 @@ Rectangle {
     property string gameMessage
     property bool isFirstMoveOfGame: true
     property bool isNetworkGame: false
+
     property int _ROTATION_ANIMATION_DURATION: 600
     property int _OPPONENT_START_ROTATION_DELAY: 600 + 1000 + 34*10 + 800 + 2 //claw animation time...
-
     property int _QUADRANT_WIDTH: 200
     property int _QUADRANT_GROWTH: 10
     property int _BOARD_HOLE_WIDTH: 65
@@ -200,6 +199,49 @@ Rectangle {
     NetworkLobby{
         id:networkLobby
         anchors.centerIn: parent
+    }
+
+    GenericPopup{
+        id: networkPlayerDisconnectedPopup
+        message: "Connection lost. Waiting for reconnect..."
+        hideButton2: true
+        anchors.centerIn: page
+        z: 400
+        button1Text: "Leave Game"
+
+        QmlTimer{
+            id: reconnectSuccessTimer
+            duration: 1000
+            onTriggered:{
+                networkPlayerDisconnectedPopup.state = "INVISIBLE";
+                networkPlayerDisconnectedPopup.message = "Connection lost. Waiting for reconnect...";
+                networkPlayerDisconnectedPopup.enableButton1();
+            }
+        }
+
+        Connections{
+            target: page
+            onOpponentDisconnected:{
+                if( startMenu.state == "INVISIBLE" && networkLobby.state == "INVISIBLE" && isNetworkGame ){
+                    networkPlayerDisconnectedPopup.state = "VISIBLE";
+                }
+            }
+
+            onOpponentReconnected:{
+                if( startMenu.state == "INVISIBLE" && networkLobby.state == "INVISIBLE" && isNetworkGame ){
+                    networkPlayerDisconnectedPopup.disableButton1();
+                     networkPlayerDisconnectedPopup.message = "Connection reestablished!"
+                    reconnectSuccessTimer.startTimer();
+                }
+            }
+        }
+
+        onButton1Clicked: {
+            state = "INVISIBLE";
+            startMenu.state = "VISIBLE";
+            clearBoard();
+            backToMainMenu();
+        }
     }
 
     SplashScreen {

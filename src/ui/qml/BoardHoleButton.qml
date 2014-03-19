@@ -34,7 +34,7 @@ Rectangle {
     radius: 19
     z: 14
 
-    Image{
+    Image {
         id: backgroundImage
         width: 100; height: 100
         x: -31; y: -36
