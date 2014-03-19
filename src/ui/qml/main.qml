@@ -28,6 +28,8 @@ Rectangle {
     signal readyToOpenClaw(int qIndex, int pIndex, var whichClaw )
     signal showPiece( int qIndex, int pIndex )
     signal turnCogs(int quadrantIndex, var direction )
+    signal pauseOpacity()
+    signal clearPauseOpacity()
 
     //network-related signals
     signal enterNetworkLobby()
@@ -55,7 +57,7 @@ Rectangle {
     property bool piecesHaveStartedAnimating: false
 
     property int _ROTATION_ANIMATION_DURATION: 600
-    property int _OPPONENT_START_ROTATION_DELAY: 600 + 1000 + 34*10 + 800 + 2 //claw animation time...
+    property int _OPPONENT_START_ROTATION_DELAY: 300 + _CLAW_OPEN_DURATION + _CLAW_MOVE_DURATION + 2 //claw animation time...
     property int _QUADRANT_WIDTH: 200
     property int _QUADRANT_GROWTH: 10
     property int _BOARD_HOLE_WIDTH: 65
