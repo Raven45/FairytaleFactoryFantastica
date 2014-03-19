@@ -12,5 +12,7 @@
 		<file alias="steel-platform.png">../media/steel-platform.png</file>
 		<file alias="steelplate.jpg">../media/steelplate.jpg</file>
 		<file alias="blackbuttonsmall.png">../media/blackbuttonsmall.png</file>
+		<file alias="line8.png">../media/line8.png</file>
+		<file alias="teal-gumdrop-centered.png">../media/teal-gumdrop-centered.png</file>
     </qresource>
 </RCC>

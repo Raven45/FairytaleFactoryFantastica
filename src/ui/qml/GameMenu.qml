@@ -46,7 +46,7 @@ Rectangle {
         anchors.left: parent.left
         anchors.topMargin: 15
         anchors.leftMargin: 30
-        z: 3
+        z: parent.z+1
 
         MouseArea {
             anchors.fill: parent
@@ -60,7 +60,7 @@ Rectangle {
         anchors.topMargin: (parent.height - 30)/4
         anchors.left: parent.left
         anchors.leftMargin: 30
-        z: 3
+        z: parent.z+1
 
         MouseArea {
             anchors.fill: parent
@@ -81,7 +81,7 @@ Rectangle {
         anchors.topMargin: (parent.height/2) - 30
         anchors.left: parent.left
         anchors.leftMargin: 30
-        z: 3
+        z: parent.z+1
 
         MouseArea {
             anchors.fill: parent
@@ -102,7 +102,7 @@ Rectangle {
         anchors.bottomMargin: ((parent.height - 30)/4) - 30
         anchors.left: parent.left
         anchors.leftMargin: 30
-        z: 3
+        z: parent.z+1
     }
 
     GUIButton {
@@ -111,7 +111,7 @@ Rectangle {
         anchors.left: parent.left
         anchors.bottomMargin: 15
         anchors.leftMargin: 30
-        z: 3
+        z: parent.z+1
 
         MouseArea {
             anchors.fill: parent

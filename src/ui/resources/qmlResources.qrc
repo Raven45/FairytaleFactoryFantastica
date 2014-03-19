@@ -25,5 +25,7 @@
 		<file alias="GenericPopup.qml" >../qml/GenericPopup.qml</file>
 		<file alias="GenericButton.qml" >../qml/GenericButton.qml</file>
 		<file alias="GenericText.qml" >../qml/GenericText.qml</file>
+		<file alias="ConveyorBelt.qml" >../qml/ConveyorBelt.qml</file>
+		<file alias="LeftAnimationGumdrop.qml" >../qml/LeftAnimationGumdrop.qml</file>
     </qresource>
 </RCC>

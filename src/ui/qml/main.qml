@@ -41,6 +41,7 @@ Rectangle {
     signal playerLeftLobby( int playerId )
     signal opponentDisconnected()
     signal opponentReconnected()
+    signal startPieceAnimations()
 
     property alias main: page
     property bool guiPlayerIsWhite: false
@@ -51,6 +52,7 @@ Rectangle {
     property string gameMessage
     property bool isFirstMoveOfGame: true
     property bool isNetworkGame: false
+    property bool piecesHaveStartedAnimating: false
 
     property int _ROTATION_ANIMATION_DURATION: 600
     property int _OPPONENT_START_ROTATION_DELAY: 600 + 1000 + 34*10 + 800 + 2 //claw animation time...
@@ -95,11 +97,13 @@ Rectangle {
     }
 
     TextArea{
+        //deprecated and invisible - should probably get rid of. leaving in case we need it.
         text:gameMessage
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.topMargin: 5
         height: 20
+        visible: false
     }
 
     QmlTimer{
@@ -258,8 +262,9 @@ Rectangle {
     }
     GameScreen{
         id: gameScreen
-
+        z:1
         Board{
+            z: parent.z+20
             id: pentagoBoard
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter

@@ -216,6 +216,7 @@ Rectangle {
         height: width
         anchors.centerIn: parent
         source: "steel-platform.png"
+        z: 20
     }
 
     Rectangle {
@@ -225,7 +226,7 @@ Rectangle {
         color: "transparent"
         anchors.centerIn: pentagoBoard
         border.color: "#363666"
-
+        z: 21
         Quadrant{
             id: quadrant0
             anchors.left: parent.left
@@ -260,7 +261,7 @@ Rectangle {
     ClawPiece {
         type: "PURPLE"
         id: purpleClawPiece
-        z: 10
+        z: 30
         source: "purp-claw-spritesheet.png"
         x: _CLAW_X_HOME
         y: _CLAW_Y_HOME
@@ -269,7 +270,7 @@ Rectangle {
     ClawPiece {
         type: "TEAL"
         id: tealClawPiece
-        z: 10
+        z: 30
         source: "teal-claw-spritesheet.png"
         x: _CLAW_X_HOME
         y: _CLAW_Y_HOME

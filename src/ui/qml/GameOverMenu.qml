@@ -23,7 +23,6 @@ Rectangle {
       anchors.top: gameOverMenu.top
       anchors.horizontalCenter: gameOverMenu.horizontalCenter
       anchors.topMargin: 5
-
     }
 
 
