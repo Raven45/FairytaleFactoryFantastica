@@ -80,7 +80,9 @@ OTHER_FILES += \
     ui/qml/GenericPopup.qml \
     ui/qml/GenericButton.qml \
     ui/qml/GenericText.qml \
-    ui/qml/GameScreen.qml
+    ui/qml/GameScreen.qml \
+    ui/qml/ConveyorBelt.qml \
+    ui/qml/LeftAnimationGumdrop.qml
 
 HEADERS += \
     backend/networking/Barrager.h \

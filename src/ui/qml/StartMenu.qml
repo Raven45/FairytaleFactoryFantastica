@@ -79,6 +79,13 @@ Rectangle {
             anchors.fill: parent
 
             onClicked: {
+
+                if( !piecesHaveStartedAnimating ){
+                    startPieceAnimations();
+                    piecesHaveStartedAnimating = true;
+
+                }
+
                 sendPlayerName( playerNameBox.text );
                 startMenu.state = "INVISIBLE"
                 isNetworkGame = false;
@@ -102,6 +109,13 @@ Rectangle {
             anchors.fill: parent
 
             onClicked: {
+
+                if( !piecesHaveStartedAnimating ){
+                    startPieceAnimations();
+                    piecesHaveStartedAnimating = true;
+
+                }
+
                 sendPlayerName( playerNameBox.text );
                 networkLobby.state ="VISIBLE"
                 isNetworkGame = true;

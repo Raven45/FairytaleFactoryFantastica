@@ -8,7 +8,7 @@ Image {
     objectName: "Quadrant"
     width: 200
     height: width
-    z: 1
+    z: 22
     source: "grahm-quad.png"
 
     property int myIndex
@@ -33,10 +33,10 @@ Image {
         property int animationDirection: 0
         onStarted:{
             //console.log("in rotationAnimation onStarted. myIndex = " + myIndex );
-            root.z += 100;
+            root.z++;
         }
         onStopped:{
-            root.z -= 100;
+            root.z--;
             rotationAnimationFinished( myIndex, animationDirection );
             //console.log("in rotationAnimation onStopped. myIndex = " + myIndex );
         }
@@ -73,13 +73,14 @@ Image {
         property int animationDirection: 1
         onStarted:{
             //console.log("in rotationAnimation onStarted. myIndex = " + myIndex );
-            root.z += 100;
+            root.z++;
         }
         onStopped:{
-            root.z -= 100;
+            root.z--;
             rotationAnimationFinished( myIndex, animationDirection );
             //console.log("in rotationAnimation onStopped. myIndex = " + myIndex );
         }
+
 
         NumberAnimation {
           target: root

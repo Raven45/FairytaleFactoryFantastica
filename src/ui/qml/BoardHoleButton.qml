@@ -32,7 +32,7 @@ Rectangle {
     color: "transparent"
     visible: true
     radius: 19
-    z: 14
+    z: 27
 
     Image {
         id: backgroundImage

@@ -23,7 +23,7 @@ Item {
         id: red_rotate_button
         source: "red-rotate-" + direction_string + ".png"
         width: 125; height: 125
-        z: 14
+        z: 19
         rotation: -(parent.rotation)
 
         Connections{

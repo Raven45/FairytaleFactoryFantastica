@@ -27,7 +27,7 @@ Item {
         id: cogsSprite
         width: 120;
         height: 150;
-        z: 0;
+        z: 18
 
 
         sprites:[

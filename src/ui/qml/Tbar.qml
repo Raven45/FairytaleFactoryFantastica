@@ -16,7 +16,7 @@ Rectangle {
         anchors.centerIn: tbar_rec
         width: 115; height: 120
         rotation: tbar_rec.tbar_rotate_angle
-        z: 0
+        z: 18
 
         RedRotateButton {
             id: rotate_clockwise
