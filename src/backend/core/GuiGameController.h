@@ -47,6 +47,8 @@ signals:
     void sendThisNetworkMove( int quadrantIndex, int pieceIndex, int quadrantToRotate, int rotationDirection );
     void playerEnteredLobby( QVariant arrivingPlayerName, QVariant addressOfArrivingPlayer, int playerId );
     void playerLeftLobby( int playerId );
+    void opponentDisconnected();
+    void opponentReconnected();
 
     //GuiGameController proxy
     void readyForGuiMove();
@@ -183,6 +185,8 @@ public:
         connect( this,  SIGNAL( challengeWasDeclined()),                            gui,    SIGNAL(challengeWasDeclined()));
         connect( this,  SIGNAL( playerEnteredLobby(QVariant, QVariant, int )),      gui,    SIGNAL(playerEnteredLobby(QVariant, QVariant, int )));
         connect( this,  SIGNAL( playerLeftLobby(int)),                              gui,    SIGNAL(playerLeftLobby(int)));
+        connect( this,  SIGNAL(opponentReconnected()),                              gui,    SIGNAL(opponentReconnected()));
+        connect( this,  SIGNAL(opponentDisconnected()),                             gui,    SIGNAL(opponentDisconnected()));
 
         qDebug() << "connecting core proxy signals";
         connect( core,  SIGNAL( readyForGuiMove() ),                                this,   SIGNAL(readyForGuiMove()),          Qt::QueuedConnection );

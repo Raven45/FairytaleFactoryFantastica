@@ -6,6 +6,7 @@ Rectangle{
     property string button1Text
     property string button2Text
     property bool hideButtons: false
+    property bool hideButton2: false
 
     signal button1Clicked()
     signal button2Clicked()
@@ -54,11 +55,18 @@ Rectangle{
         }
     }
 
+    function disableButton1(){
+       button1.visible = false;
+    }
+    function enableButton1(){
+        button1.visible = true;
+    }
+
     GenericButton {
         id: button2
         buttonText: button2Text
         anchors.rightMargin: 121
-        visible: !hideButtons
+        visible: (!hideButtons && !hideButton2)
         onClicked:{
             button2Clicked()
         }

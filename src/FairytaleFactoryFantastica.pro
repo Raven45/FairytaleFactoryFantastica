@@ -79,7 +79,8 @@ OTHER_FILES += \
     ui/qml/GameMenu.qml \
     ui/qml/GenericPopup.qml \
     ui/qml/GenericButton.qml \
-    ui/qml/GenericText.qml
+    ui/qml/GenericText.qml \
+    ui/qml/GameScreen.qml
 
 HEADERS += \
     backend/networking/Barrager.h \

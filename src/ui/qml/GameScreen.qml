@@ -55,42 +55,58 @@ Rectangle {
         source: "teal-gumdrop.png"
     }
 
-    SequentialAnimation{
+    ParallelAnimation{
         id: tube_animation
         running: true
         loops: Animation.Infinite
 
-        PropertyAnimation {
-            target: small_gumdrop;
-            property: "y";
-            easing.type: Easing.InExpo
-            from: 1000;
-            to: 40;
-            duration: 1800;
+        RotationAnimation {
+            running: true
+            loops: Animation.Infinite
+            target: small_gumdrop
+            duration: 900
+            from: 0
+            to: 360
         }
-        PropertyAnimation {
-            target: small_gumdrop;
-            property: "x";
-            easing.type: Easing.InExpo;
-            from: 670;
-            to: 300;
-            duration: 1000;
-        }
-        PropertyAnimation {
-            target: small_gumdrop;
-            property: "x";
-            easing.type: Easing.InExpo;
-            from: 300;
-            to: 670;
-            duration: 1000;
-        }
-        PropertyAnimation {
-            target: small_gumdrop;
-            property: "y";
-            easing.type: Easing.InExpo
-            from: 40;
-            to: 1000;
-            duration: 1800;
+
+
+        SequentialAnimation{
+
+            running: true
+            loops: Animation.Infinite
+
+            PropertyAnimation {
+                target: small_gumdrop;
+                property: "y";
+                easing.type: Easing.InExpo
+                from: 1000;
+                to: 40;
+                duration: 1800;
+            }
+            PropertyAnimation {
+                target: small_gumdrop;
+                property: "x";
+                easing.type: Easing.InExpo;
+                from: 670;
+                to: 300;
+                duration: 1000;
+            }
+            PropertyAnimation {
+                target: small_gumdrop;
+                property: "x";
+                easing.type: Easing.InExpo;
+                from: 300;
+                to: 670;
+                duration: 1000;
+            }
+            PropertyAnimation {
+                target: small_gumdrop;
+                property: "y";
+                easing.type: Easing.InExpo
+                from: 40;
+                to: 1000;
+                duration: 1800;
+            }
         }
     }
 

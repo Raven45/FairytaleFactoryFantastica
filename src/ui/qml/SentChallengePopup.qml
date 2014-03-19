@@ -77,7 +77,7 @@ GenericPopup {
         anchors.top: parent.top
         anchors.topMargin: 10
         anchors.right: parent.right
-        anchors.rightMargin: 10
+        anchors.rightMargin: 15
     }
 
     Timer {

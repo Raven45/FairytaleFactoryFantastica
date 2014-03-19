@@ -108,6 +108,9 @@ signals:
     void networkTurnReceived( int, int, int, int ); //turn in int form
     void playerLeftNetwork( int id );
     void playerJoinedNetwork( QVariant name, QVariant address, int id );
+    void opponentDisconnectedEarly();
+    void connectionReestablished();
+
 public slots:
 
 
@@ -424,6 +427,7 @@ public slots:
                 else{
                     //TODO: handle disconnect/reconnect
                     qDebug() << "disconnectedPlayer was involved in something important!!!!";
+                    emit opponentDisconnectedEarly();
                 }
             }
         }

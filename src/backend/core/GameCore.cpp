@@ -9,7 +9,7 @@ void GameCore::setMovingPlayerColor( PlayerColor mover ){
     currentBoard.setFirstMover( mover );
 }
 
-void GameCore::startNewGame(){
+void GameCore::startNewGame() {
 
     //inform players that a new game is starting
     currentBoard.reset();

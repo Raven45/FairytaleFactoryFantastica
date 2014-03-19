@@ -24,7 +24,7 @@ GenericPopup {
         anchors.top: parent.top
         anchors.topMargin: 10
         anchors.right: parent.right
-        anchors.rightMargin: 10
+        anchors.rightMargin: 15
     }
 
     Timer {
@@ -44,8 +44,8 @@ GenericPopup {
         }
     }
 
-    button1Text: "Accept"
-    onButton1Clicked: {
+    button2Text: "Accept"
+    onButton2Clicked: {
         challengeTimer.stop();
         resetValues();
         challengePopup.state = "INVISIBLE";
@@ -61,8 +61,8 @@ GenericPopup {
         sendThisChallengeResponse( true );
     }
 
-    button2Text: "Decline"
-    onButton2Clicked: {
+    button1Text: "Decline"
+    onButton1Clicked: {
        declineChallengeFunction();
     }
 
