@@ -82,7 +82,9 @@ OTHER_FILES += \
     ui/qml/GenericText.qml \
     ui/qml/GameScreen.qml \
     ui/qml/ConveyorBelt.qml \
-    ui/qml/LeftAnimationGumdrop.qml
+    ui/qml/LeftAnimationGumdrop.qml \
+    ui/qml/RightAnimationGumdrop.qml \
+    ui/qml/GumdropKnob.qml
 
 HEADERS += \
     backend/networking/Barrager.h \

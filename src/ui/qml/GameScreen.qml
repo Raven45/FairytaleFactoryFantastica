@@ -68,15 +68,15 @@ Rectangle {
         anchors.leftMargin: parent.width/2 - (middle_tube.width/2)
     }
 
-
-    LeftAnimationGumdrop {
-        startDelay: 1000
-        z: 2
-    }
-
     LeftAnimationGumdrop {
         startDelay: 1989
         z: 2
+    }
+
+    /*
+    LeftAnimationGumdrop {
+        startDelay: 1000
+        z: 3
     }
 
     LeftAnimationGumdrop {
@@ -86,7 +86,7 @@ Rectangle {
 
     LeftAnimationGumdrop {
         startDelay: 2785
-        z: 2
+        z: 3
     }
 
     LeftAnimationGumdrop {
@@ -96,7 +96,7 @@ Rectangle {
 
     LeftAnimationGumdrop {
         startDelay: 3902
-        z: 2
+        z: 3
     }
 
     LeftAnimationGumdrop {
@@ -106,7 +106,7 @@ Rectangle {
 
     LeftAnimationGumdrop {
         startDelay: 4191
-        z: 2
+        z: 3
     }
 
     LeftAnimationGumdrop {
@@ -116,7 +116,7 @@ Rectangle {
 
     LeftAnimationGumdrop {
         startDelay: 4535
-        z: 2
+        z: 3
     }
 
     LeftAnimationGumdrop {
@@ -126,7 +126,7 @@ Rectangle {
 
     LeftAnimationGumdrop {
         startDelay: 4809
-        z: 2
+        z: 3
     }
 
     LeftAnimationGumdrop {
@@ -136,7 +136,7 @@ Rectangle {
 
     LeftAnimationGumdrop {
         startDelay: 5943
-        z: 2
+        z: 3
     }
     LeftAnimationGumdrop {
         startDelay: 7215
@@ -144,7 +144,7 @@ Rectangle {
     }
     LeftAnimationGumdrop {
         startDelay: 7922
-        z: 2
+        z: 3
     }
     LeftAnimationGumdrop {
         startDelay: 8812
@@ -152,7 +152,7 @@ Rectangle {
     }
     LeftAnimationGumdrop {
         startDelay: 9532
-        z: 2
+        z: 3
     }
     LeftAnimationGumdrop {
         startDelay: 10954
@@ -160,13 +160,123 @@ Rectangle {
     }
     LeftAnimationGumdrop {
         startDelay: 11911
-        z: 2
+        z: 3
     }
     LeftAnimationGumdrop {
         startDelay: 13001
         z: 2
     }
 
+    LeftAnimationGumdrop {
+        startDelay: 20001
+        z: 2
+        isStrayPiece: true
+    }
+    */
+
+    RightAnimationGumdrop {
+        startDelay: 1000
+        z: 3
+    }
+    /*
+    RightAnimationGumdrop {
+        startDelay: 1989
+        z: 2
+    }
+
+    RightAnimationGumdrop {
+        startDelay: 2385
+        z: 3
+    }
+
+    RightAnimationGumdrop {
+        startDelay: 2785
+        z: 2
+    }
+
+    RightAnimationGumdrop {
+        startDelay: 3799
+        z: 3
+    }
+
+    RightAnimationGumdrop {
+        startDelay: 3902
+        z: 2
+    }
+
+    RightAnimationGumdrop {
+        startDelay: 4007
+        z: 3
+    }
+
+    RightAnimationGumdrop {
+        startDelay: 4191
+        z: 2
+    }
+
+    RightAnimationGumdrop {
+        startDelay: 4335
+        z: 3
+    }
+
+    RightAnimationGumdrop {
+        startDelay: 4535
+        z: 2
+    }
+
+    RightAnimationGumdrop {
+        startDelay: 4739
+        z: 3
+    }
+
+    RightAnimationGumdrop {
+        startDelay: 4809
+        z: 2
+    }
+
+    RightAnimationGumdrop {
+        startDelay: 5001
+        z: 3
+    }
+
+    RightAnimationGumdrop {
+        startDelay: 5943
+        z: 2
+    }
+    RightAnimationGumdrop {
+        startDelay: 7215
+        z: 3
+    }
+    RightAnimationGumdrop {
+        startDelay: 7922
+        z: 2
+    }
+    RightAnimationGumdrop {
+        startDelay: 8812
+        z: 3
+    }
+    RightAnimationGumdrop {
+        startDelay: 9532
+        z: 2
+    }
+    RightAnimationGumdrop {
+        startDelay: 10954
+        z: 3
+    }
+    RightAnimationGumdrop {
+        startDelay: 11911
+        z: 2
+    }
+    RightAnimationGumdrop {
+        startDelay: 13001
+        z: 3
+    }
+    RightAnimationGumdrop {
+        startDelay: 24001
+        z: 3
+        isStrayPiece: true
+    }
+    */
     Image {
         id: hg_in_bucket
         width: 250; height: 215
