@@ -1,5 +1,6 @@
 <RCC>
     <qresource>
+		<file alias="GumdropKnob.qml">../qml/GumdropKnob.qml</file>
 		<file alias="Cogs.qml">../qml/Cogs.qml</file>
 		<file alias="SplashScreen.qml">../qml/SplashScreen.qml</file>
 		<file alias="Witch.qml">../qml/Witch.qml</file>
@@ -27,5 +28,6 @@
 		<file alias="GenericText.qml" >../qml/GenericText.qml</file>
 		<file alias="ConveyorBelt.qml" >../qml/ConveyorBelt.qml</file>
 		<file alias="LeftAnimationGumdrop.qml" >../qml/LeftAnimationGumdrop.qml</file>
+		<file alias="RightAnimationGumdrop.qml" >../qml/RightAnimationGumdrop.qml</file>
     </qresource>
 </RCC>

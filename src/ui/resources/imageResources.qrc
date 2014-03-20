@@ -1,5 +1,11 @@
 <RCC>
     <qresource>
+		<file alias="knob.png">../media/knob.png</file>
+		<file alias="knob-1.png">../media/knob-1.png</file>
+		<file alias="knob-2.png">../media/knob-2.png</file>
+		<file alias="knob-3.png">../media/knob-3.png</file>
+		<file alias="knob-4.png">../media/knob-4.png</file>
+		<file alias="knob-5.png">../media/knob-5.png</file>
 		<file alias="cogs-2nd-spritesheet.png">../media/cogs-2nd-spritesheet.png</file>
 		<file alias="bar.png">../media/bar.png</file>
 		<file alias="grahm-quad.png">../media/grahm-quad.png</file>
@@ -14,5 +20,6 @@
 		<file alias="blackbuttonsmall.png">../media/blackbuttonsmall.png</file>
 		<file alias="line8.png">../media/line8.png</file>
 		<file alias="teal-gumdrop-centered.png">../media/teal-gumdrop-centered.png</file>
+		<file alias="purp-gumdrop-centered.png">../media/purp-gumdrop-centered.png</file>
     </qresource>
 </RCC>
