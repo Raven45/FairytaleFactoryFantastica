@@ -15,6 +15,22 @@
         <file alias="Logo.png">../media/Logo.png</file>
         <file alias="MuffinMan.png">../media/MuffinMan.png</file>
 		<file alias="MuffinLogo.png">../media/MuffinLogo.png</file>
-        <file alias="HomeMenu.png">../media/HomeMenu.png</file>
+        <file alias="HomeMenu.png">../media/SkyandGround.png</file>
+		<file alias="Gretel.png">../media/Grettle.png</file>
+		<file alias="Hansel.png">../media/Hansel.png</file>
+		<file alias="Tree1.png">../media/Tree1.png</file>
+		<file alias="Tree2.png">../media/Tree2.png</file>
+		<file alias="Tree3.png">../media/Tree3.png</file>
+		<file alias="Tree4.png">../media/Tree4.png</file>
+		<file alias="Tree5.png">../media/Tree5.png</file>
+		<file alias="Tree6.png">../media/Tree6.png</file>
+		<file alias="Tree7.png">../media/Tree7.png</file>
+		<file alias="Gate.png">../media/Gate.png</file>
+		<file alias="GatePart1.png">../media/GatePart1.png</file>
+		<file alias="GatePart2.png">../media/GatePart2.png</file>
+		<file alias="Bread.png">../media/Bread.png</file>
+		<file alias="FootPrints.png">../media/FootPrints.png</file>
+		<file alias="Factory.png">../media/Factory.png</file>
+		<file alias="Wolf.png">../media/Wolf.png</file>
     </qresource>
 </RCC>

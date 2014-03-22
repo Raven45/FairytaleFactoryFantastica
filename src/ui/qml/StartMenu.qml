@@ -15,29 +15,57 @@ Rectangle {
 
     Image {
         id: main_background
-        width: 1440; height: 900; z: 0
+        width: parent.width; height: parent.height; z: 0
         anchors.centerIn: parent
         source: "HomeMenu.png"
+        fillMode: Image.PreserveAspectCrop
+    }
+
+
+    Image{
+        id: main_gate
+        source: "Gate.png"
+        anchors.right: parent.right
+        anchors.rightMargin: 70
+        anchors.top: parent.top
+        anchors.topMargin: 20
+        z: 10
+        height: 512
+        width: 692
         fillMode: Image.PreserveAspectFit
+    }
+
+    Image{
+        id: main_factory
+        source: "Factory.png"
+        anchors.right: parent.right
+        anchors.rightMargin: 2
+        anchors.top: parent.top
+        anchors.topMargin: 100
+        z: 1
     }
 
 
     Smoke {
         id: startMenu_smoke1
-        x: 1210
-        y: 210
+        anchors.bottom: main_factory.top
+        anchors.bottomMargin: -43
+        anchors.left: main_factory.left
+        anchors.leftMargin: 12
     }
 
     Smoke {
         id: startMenu_smoke2
-        x: 1340
-        y: 210
+        anchors.bottom: main_factory.top
+        anchors.bottomMargin: -45
+        anchors.right: main_factory.right
+        anchors.rightMargin: -17
     }
-
+/*
     Witch {
         id: startMenu_witch
     }
-
+*/
     states: [
         State{
             name: "VISIBLE"
@@ -55,6 +83,7 @@ Rectangle {
         }
 
     ]
+    /*
 
     TextArea{
         id: playerNameBox
@@ -212,5 +241,6 @@ Rectangle {
             }
         }
     }
+    */
 
 }
