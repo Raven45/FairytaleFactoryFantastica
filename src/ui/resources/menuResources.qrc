@@ -14,6 +14,7 @@
         <file alias="TheWitch.png">../media/TheWitch.png</file>
         <file alias="Logo.png">../media/Logo.png</file>
         <file alias="MuffinMan.png">../media/MuffinMan.png</file>
+		<file alias="MuffinLogo.png">../media/MuffinLogo.png</file>
         <file alias="HomeMenu.png">../media/HomeMenu.png</file>
     </qresource>
 </RCC>

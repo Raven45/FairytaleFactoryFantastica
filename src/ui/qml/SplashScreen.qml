@@ -92,8 +92,8 @@ Rectangle {
 
     Image {
         id: splashImage
-        source: "Logo.png"
-        width: 400; height: 400
+        source: "MuffinLogo.png"
+        width: 700; height: 700
         anchors.centerIn: splash
 
     }
