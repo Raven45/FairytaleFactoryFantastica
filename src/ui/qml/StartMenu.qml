@@ -23,10 +23,40 @@ Rectangle {
 
 
     Image{
+        id: main_factory
+        source: "Factory.png"
+        anchors.right: parent.right
+        anchors.rightMargin: 2
+        anchors.top: parent.top
+        anchors.topMargin: 100
+        z: 1
+        height: 165
+        width: 240
+        fillMode: Image.PreserveAspectFit
+    }
+
+
+    Smoke {
+        id: startMenu_smoke1
+        anchors.bottom: main_factory.top
+        anchors.bottomMargin: -47
+        anchors.left: main_factory.left
+        anchors.leftMargin: 40
+    }
+
+    Smoke {
+        id: startMenu_smoke2
+        anchors.bottom: main_factory.top
+        anchors.bottomMargin: -50
+        anchors.right: main_factory.right
+    }
+
+
+    Image{
         id: main_gate
         source: "Gate.png"
         anchors.right: parent.right
-        anchors.rightMargin: 70
+        anchors.rightMargin: 150
         anchors.top: parent.top
         anchors.topMargin: 20
         z: 10
@@ -36,31 +66,90 @@ Rectangle {
     }
 
     Image{
-        id: main_factory
-        source: "Factory.png"
-        anchors.right: parent.right
-        anchors.rightMargin: 2
+        id: gate_rDoor
+        source: "GatePart2.png"
+        anchors.bottom: main_gate.bottom
+        anchors.bottomMargin: 20
+        anchors.right: main_gate.right
+        anchors.rightMargin: 130
+        z: 9
+        height: 360
+        width: 280
+        fillMode: Image.PreserveAspectFit
+    }
+
+    Image{
+        id: gate_lDoor
+        source: "GatePart1.png"
+        anchors.bottom: main_gate.bottom
+        anchors.bottomMargin: 30
+        anchors.left: main_gate.left
+        anchors.leftMargin: 80
+        z: 10
+        height: 360
+        width: 280
+        fillMode: Image.PreserveAspectFit
+    }
+
+    Image{
+        id: hansel
+        source: "Hansel.png"
+        anchors.right: gate_lDoor.right
+        anchors.rightMargin: 58
+        anchors.bottom: gate_lDoor.bottom
+        anchors.bottomMargin: -55
+        z: 11
+        height: 240
+        width: 160
+        fillMode: Image.PreserveAspectFit
+
+    }
+
+
+    Image{
+        id: gretel
+        source: "Gretel.png"
+        anchors.left: hansel.right
+        anchors.leftMargin: -15
+        anchors.top: gate_lDoor.bottom
+        anchors.bottomMargin: -60
+        z: 11
+        height: 240
+        width: 160
+        fillMode: Image.PreserveAspectFit
+
+    }
+
+
+    Image{
+        id: breadcrumbs
+        source: "Bread.png"
+        anchors.right: gretel.left
+        anchors.rightMargin: -25
+        anchors.top: gretel.bottom
+        anchors.topMargin: -20
+        z: 11
+     }
+
+
+    Image{
+        id:  footprints
+        source: "FootPrints.png"
+        anchors.left: parent.left
+        anchors.bottom: parent.bottom
+        z: 5
+    }
+
+    Image{
+        id: treeLayer1
+        source: "Tree5.png"
+        anchors.left: parent.left
+        anchors.leftMargin: 2
         anchors.top: parent.top
-        anchors.topMargin: 100
+        anchors.topMargin: 40
         z: 1
     }
 
-
-    Smoke {
-        id: startMenu_smoke1
-        anchors.bottom: main_factory.top
-        anchors.bottomMargin: -43
-        anchors.left: main_factory.left
-        anchors.leftMargin: 12
-    }
-
-    Smoke {
-        id: startMenu_smoke2
-        anchors.bottom: main_factory.top
-        anchors.bottomMargin: -45
-        anchors.right: main_factory.right
-        anchors.rightMargin: -17
-    }
 /*
     Witch {
         id: startMenu_witch
