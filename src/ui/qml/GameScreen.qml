@@ -127,7 +127,7 @@ Rectangle {
         anchors.right: gameScreen.right
         anchors.rightMargin: 75
 
-        Connections{
+        Connections {
             target: page
 
             onMakeRightCanGoBack:{
