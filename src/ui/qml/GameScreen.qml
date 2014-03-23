@@ -186,7 +186,7 @@ Rectangle {
         z: 2
         isStrayPiece: true
     }
-    */
+
 
     RightAnimationGumdrop {
         startDelay: 1000
