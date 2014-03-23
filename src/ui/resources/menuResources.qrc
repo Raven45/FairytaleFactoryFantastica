@@ -32,5 +32,6 @@
 		<file alias="FootPrints.png">../media/FootPrints.png</file>
 		<file alias="Factory.png">../media/Factory.png</file>
 		<file alias="Wolf.png">../media/Wolf.png</file>
+		<file alias="Sign.png">../media/sign.png</file>
     </qresource>
 </RCC>

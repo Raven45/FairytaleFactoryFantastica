@@ -51,7 +51,6 @@ Rectangle {
         anchors.right: main_factory.right
     }
 
-
     Image{
         id: main_gate
         source: "Gate.png"
@@ -131,13 +130,36 @@ Rectangle {
         z: 11
      }
 
+    Image{
+        id: sign
+        source: "Sign.png"
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.horizontalCenterOffset: -130
+        z: 16
+        width: 320
+        height: 400
+
+    }
+
 
     Image{
         id:  footprints
         source: "FootPrints.png"
         anchors.left: parent.left
+        anchors.leftMargin: 100
         anchors.bottom: parent.bottom
+        anchors.bottomMargin: 80
         z: 5
+    }
+
+    Image{
+        id: wolf
+        source: "Wolf.png"
+        anchors.left: footprints.right
+        anchors.leftMargin: -50
+        anchors.bottom: footprints.top
+        z: 13
     }
 
     Image{
@@ -150,11 +172,74 @@ Rectangle {
         z: 1
     }
 
-/*
+    Image{
+        id: treeLayer2
+        source: "Tree5.png"
+        anchors.left: treeLayer1.right
+        anchors.top: parent.top
+        anchors.topMargin: 40
+        z: 1
+    }
+
+    Image{
+        id: treeLayer3
+        source: "Tree1.png"
+        anchors.left: parent.left
+        anchors.leftMargin: -150
+        anchors.bottom: parent.bottom
+        z: 15
+    }
+    Image{
+        id: treeLayer4
+        source: "Tree2.png"
+        anchors.left: parent.left
+        anchors.leftMargin: -200
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 200
+        z: 14
+    }
+
+    Image{
+        id: treeLayer5
+        source: "Tree4.png"
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.verticalCenterOffset: -150
+        z: 11
+    }
+    Image{
+        id: treeLayer6
+        source: "Tree7.png"
+        anchors.left: treeLayer5.right
+        anchors.leftMargin: -100
+        anchors.bottom: treeLayer5.bottom
+        z: 12
+    }
+
+
+    Image{
+        id: treeLayer7
+        source: "Tree1.png"
+        anchors.right: parent.right
+        anchors.rightMargin: -150
+        anchors.bottom: parent.bottom
+        z: 15
+    }
+    Image{
+        id: treeLayer8
+        source: "Tree2.png"
+        anchors.right: parent.right
+        anchors.rightMargin: -200
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 200
+        z: 14
+    }
+
     Witch {
         id: startMenu_witch
+        z: 2
     }
-*/
+
     states: [
         State{
             name: "VISIBLE"
