@@ -72,7 +72,7 @@ private:
         bool player = false;
 
         //play a single game
-        int depth = 0;
+        //int depth = 0;
         do{
             placemove (player, current, opponent);
 
@@ -243,10 +243,13 @@ private:
                 }
             }
         }
+
+        assert(false);
+        return Turn();
     }
 
 public:
-    inline int getVisits(){
+    inline int getVisits() {
         return visits;
     }
 

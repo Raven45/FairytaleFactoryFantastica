@@ -91,6 +91,7 @@ Rectangle {
                     piecesHaveStartedAnimating = true;
 
                 }
+                startGumdropAnimation();
 
                 sendPlayerName( playerNameBox.text );
                 startMenu.state = "INVISIBLE"
@@ -120,8 +121,8 @@ Rectangle {
                 if( !piecesHaveStartedAnimating ){
                     startPieceAnimations();
                     piecesHaveStartedAnimating = true;
-
                 }
+                startGumdropAnimation();
 
                 sendPlayerName( playerNameBox.text );
                 networkLobby.state ="VISIBLE"

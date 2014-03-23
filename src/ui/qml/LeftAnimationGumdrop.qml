@@ -3,16 +3,79 @@ Item{
 
     property int startDelay
     property bool isStrayPiece:false
+    property bool runAtStart: false
+    property int intensityGroup
+    property bool i_left: false
 
+    Connections{
+        target: page
 
+        onPieceFlowIntensityChanged: {
+            if( volume >= intensityGroup ){
+                if(tube_animation.loops == 0){
+                    tube_animation.loops = Animation.Infinite
+                }
+                startPieceAnimationTimer.startTimer();
+            }
+            else{
+                tube_animation.stop();
+                tube_animation.loops = 0;
+            }
+        }
 
+        onStartGumdropAnimation:{
+            if( i_left && tube_animation.paused ){
+                small_gumdrop.visible = false;
+                tube_animation.loops = 0;
+
+                small_gumdrop.x = 658 + (startDelay % 4) * 7;
+                small_gumdrop.y = 900 + small_gumdrop.height;
+
+                tube_animation.stop();
+
+                tube_animation.loops = Animation.Infinite;
+                tube_animation.start();
+            }
+        }
+        onPauseGumdropAnimation:{
+            tube_animation.pause();
+            if( startPieceAnimationTimer.timerActive ){
+                startPieceAnimationTimer.stopTimer();
+            }
+        }
+        onResumeGumdropAnimation:{
+            tube_animation.resume();
+            if( !startPieceAnimationTimer.timerActive && volume >= intensityGroup ){
+                startPieceAnimationTimer.startTimer();
+            }
+        }
+        onResetGumdropAnimation:{
+            if( tube_animation.paused ) {
+                small_gumdrop.visible = false;
+                tube_animation.loops = 0;
+
+                small_gumdrop.x = 658 + (startDelay % 4) * 7;
+                small_gumdrop.y = 900 + small_gumdrop.height;
+
+                tube_animation.stop();
+
+                tube_animation.loops = Animation.Infinite;
+                tube_animation.start();
+            }
+        }
+        onLeaveGumdropAnimation:{
+            i_left = true;
+        }
+    }
 
     QmlTimer{
-        id:root
+        id: startPieceAnimationTimer
         Connections{
             target: page
             onStartPieceAnimations:{
-                root.startTimer();
+                if( runAtStart ){
+                    startPieceAnimationTimer.startTimer();
+                }
             }
         }
         duration: startDelay
@@ -30,11 +93,13 @@ Item{
         x: 658 + (startDelay % 4) * 7;
         y: 900 + small_gumdrop.height
         source: isStrayPiece? "purp-gumdrop-centered.png" : "teal-gumdrop-centered.png";
+        visible: false
     }
 
 
     SequentialAnimation{
         id: tube_animation
+        alwaysRunToEnd: true
         loops: Animation.Infinite
 
         property int leg1: 1200 + (startDelay % 1001)
@@ -48,6 +113,8 @@ Item{
         property int endOfConverorBeltY: 134
         property int startOfConverorBeltX: 356
         property int startOfConverorBeltY: 84
+
+        PropertyAction { target: small_gumdrop; property: "visible"; value: "true" }
 
         ParallelAnimation{
 
@@ -146,7 +213,7 @@ Item{
             target: small_gumdrop;
             property: "y";
             easing.type: Easing.InExpo;
-            to: 900 + small_gumdrop.height //TODO: into box
+            to: left_can_back.y + left_can_back.height/2 //900 + small_gumdrop.height //TODO: into can
             duration: tube_animation.leg5;
         }
         RotationAnimation{
@@ -158,6 +225,9 @@ Item{
 
     }
 
+    //Immediately changes visibility to false so you don't see the gumdrop
+    //animate from the can to the starting position
+    PropertyAction { target: small_gumdrop; property: "visible"; value: "false" }
 
     PropertyAnimation {
         target: small_gumdrop;

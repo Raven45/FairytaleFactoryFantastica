@@ -35,6 +35,97 @@ Rectangle {
         visible: true
     }
 
+    Rectangle {
+        id: claw_width_bar
+        width: gameScreen.width; height: 10; z: 1
+        anchors.top: gameScreen.top
+        anchors.topMargin: 10
+        anchors.left: gameScreen.left
+        color: "grey"
+    }
+
+    GumdropKnob {
+        id: gumdrop_knob
+    }
+
+    Rectangle {
+        id: left_can_arm
+        width: 150; height: 50; z: 1
+        color: "black"
+
+        anchors.top: gameScreen.top
+        anchors.topMargin: gameScreen.height/2 + left_can_arm.height
+        anchors.left: gameScreen.left
+        anchors.leftMargin: -20
+    }
+
+    Image {
+        id: left_can_back
+        width: 152; height: 256; z: 2
+        source: "can-back.png"
+        scale: 0.65
+        fillMode: Image.PreserveAspectFit
+        visible: true
+
+        anchors.top: gameScreen.top
+        anchors.topMargin: gameScreen.height/2 - left_can_back.height/2 + 60
+        anchors.left: gameScreen.left
+        anchors.leftMargin: 75
+    }
+
+    Image {
+        id: left_can_front
+        width: 152; height: 256; z: 10
+        source: "can-front.png"
+        scale: 0.65
+        fillMode: Image.PreserveAspectFit
+        visible: true
+
+        anchors.top: gameScreen.top
+        anchors.topMargin: gameScreen.height/2 - left_can_front.height/2 + 60
+        anchors.left: gameScreen.left
+        anchors.leftMargin: 75
+    }
+
+    Rectangle {
+        id: right_can_arm
+        width: 150; height: 50; z: 1
+        color: "black"
+
+        anchors.top: gameScreen.top
+        anchors.topMargin: gameScreen.height/2 + right_can_arm.height
+        anchors.right: gameScreen.right
+        anchors.leftMargin: -20
+    }
+
+    Image {
+        id: right_can_back
+        width: 152; height: 256; z: 2
+        source: "can-back.png"
+        scale: 0.65
+        fillMode: Image.PreserveAspectFit
+        visible: true
+
+        anchors.top: gameScreen.top
+        anchors.topMargin: gameScreen.height/2 - left_can_back.height/2 + 60
+        anchors.right: gameScreen.right
+        anchors.rightMargin: 75
+    }
+
+    Image {
+        id: right_can_front
+        width: 152; height: 256; z: 10
+        source: "can-front.png"
+        scale: 0.65
+        fillMode: Image.PreserveAspectFit
+        visible: true
+
+        anchors.top: gameScreen.top
+        anchors.topMargin: gameScreen.height/2 - left_can_front.height/2 + 60
+        anchors.right: gameScreen.right
+        anchors.rightMargin: 75
+    }
+
     Image {
         id: top_tubes
         width: 525; height: 135; z:5
@@ -82,215 +173,7 @@ Rectangle {
         anchors.leftMargin: parent.width/2 - (middle_tube.width/2)
     }
 
-    LeftAnimationGumdrop {
-        startDelay: 1989
-        z: 2
-    }
-
-    
-    LeftAnimationGumdrop {
-        startDelay: 1000
-        z: 3
-    }
-
-    LeftAnimationGumdrop {
-        startDelay: 2385
-        z: 2
-    }
-
-    LeftAnimationGumdrop {
-        startDelay: 2785
-        z: 3
-    }
-
-    LeftAnimationGumdrop {
-        startDelay: 3799
-        z: 2
-    }
-
-    LeftAnimationGumdrop {
-        startDelay: 3902
-        z: 3
-    }
-
-    LeftAnimationGumdrop {
-        startDelay: 4007
-        z: 2
-    }
-
-    LeftAnimationGumdrop {
-        startDelay: 4191
-        z: 3
-    }
-
-    LeftAnimationGumdrop {
-        startDelay: 4335
-        z: 2
-    }
-
-    LeftAnimationGumdrop {
-        startDelay: 4535
-        z: 3
-    }
-
-    LeftAnimationGumdrop {
-        startDelay: 4739
-        z: 2
-    }
-
-    LeftAnimationGumdrop {
-        startDelay: 4809
-        z: 3
-    }
-
-    LeftAnimationGumdrop {
-        startDelay: 5001
-        z: 2
-    }
-
-    LeftAnimationGumdrop {
-        startDelay: 5943
-        z: 3
-    }
-    LeftAnimationGumdrop {
-        startDelay: 7215
-        z: 2
-    }
-    LeftAnimationGumdrop {
-        startDelay: 7922
-        z: 3
-    }
-    LeftAnimationGumdrop {
-        startDelay: 8812
-        z: 2
-    }
-    LeftAnimationGumdrop {
-        startDelay: 9532
-        z: 3
-    }
-    LeftAnimationGumdrop {
-        startDelay: 10954
-        z: 2
-    }
-    LeftAnimationGumdrop {
-        startDelay: 11911
-        z: 3
-    }
-    LeftAnimationGumdrop {
-        startDelay: 13001
-        z: 2
-    }
-
-    LeftAnimationGumdrop {
-        startDelay: 20001
-        z: 2
-        isStrayPiece: true
-    }
-
-
-    RightAnimationGumdrop {
-        startDelay: 1000
-        z: 3
-    }
-    
-    RightAnimationGumdrop {
-        startDelay: 1989
-        z: 2
-    }
-
-    RightAnimationGumdrop {
-        startDelay: 2385
-        z: 3
-    }
-
-    RightAnimationGumdrop {
-        startDelay: 2785
-        z: 2
-    }
-
-    RightAnimationGumdrop {
-        startDelay: 3799
-        z: 3
-    }
-
-    RightAnimationGumdrop {
-        startDelay: 3902
-        z: 2
-    }
-
-    RightAnimationGumdrop {
-        startDelay: 4007
-        z: 3
-    }
-
-    RightAnimationGumdrop {
-        startDelay: 4191
-        z: 2
-    }
-
-    RightAnimationGumdrop {
-        startDelay: 4335
-        z: 3
-    }
-
-    RightAnimationGumdrop {
-        startDelay: 4535
-        z: 2
-    }
-
-    RightAnimationGumdrop {
-        startDelay: 4739
-        z: 3
-    }
-
-    RightAnimationGumdrop {
-        startDelay: 4809
-        z: 2
-    }
-
-    RightAnimationGumdrop {
-        startDelay: 5001
-        z: 3
-    }
-
-    RightAnimationGumdrop {
-        startDelay: 5943
-        z: 2
-    }
-    RightAnimationGumdrop {
-        startDelay: 7215
-        z: 3
-    }
-    RightAnimationGumdrop {
-        startDelay: 7922
-        z: 2
-    }
-    RightAnimationGumdrop {
-        startDelay: 8812
-        z: 3
-    }
-    RightAnimationGumdrop {
-        startDelay: 9532
-        z: 2
-    }
-    RightAnimationGumdrop {
-        startDelay: 10954
-        z: 3
-    }
-    RightAnimationGumdrop {
-        startDelay: 11911
-        z: 2
-    }
-    RightAnimationGumdrop {
-        startDelay: 13001
-        z: 3
-    }
-    RightAnimationGumdrop {
-        startDelay: 24001
-        z: 3
-        isStrayPiece: true
-    }
-
+    /*
     Image {
         id: hg_in_bucket
         width: 250; height: 215
@@ -300,6 +183,379 @@ Rectangle {
         source: "hg-bucket.png"
         fillMode: Image.PreserveAspectFit
         z: 5
+    }
+    */
+
+    LeftAnimationGumdrop {
+        startDelay: 1989
+        runAtStart: true
+        z: 2
+    }
+
+    LeftAnimationGumdrop {
+        startDelay: 1000
+        intensityGroup: 2
+        z: 3
+    }
+
+    LeftAnimationGumdrop {
+        startDelay: 2385
+        intensityGroup: 2
+        z: 2
+    }
+
+
+    LeftAnimationGumdrop {
+        startDelay: 2785
+        intensityGroup: 3
+        z: 3
+    }
+
+    LeftAnimationGumdrop {
+        startDelay: 3799
+        intensityGroup: 3
+        z: 2
+    }
+
+    LeftAnimationGumdrop {
+        startDelay: 3902
+        intensityGroup: 3
+        z: 3
+    }
+
+    LeftAnimationGumdrop {
+        startDelay: 4007
+        intensityGroup: 3
+        z: 2
+    }
+
+    LeftAnimationGumdrop {
+        startDelay: 4191
+        intensityGroup: 4
+        z: 3
+    }
+
+    LeftAnimationGumdrop {
+        startDelay: 4335
+        intensityGroup: 4
+        z: 2
+    }
+
+    LeftAnimationGumdrop {
+        startDelay: 4535
+        intensityGroup: 4
+        z: 3
+    }
+
+    LeftAnimationGumdrop {
+        startDelay: 4739
+        intensityGroup: 4
+        z: 2
+    }
+
+    LeftAnimationGumdrop {
+        startDelay: 4809
+        intensityGroup: 4
+        z: 3
+    }
+
+    LeftAnimationGumdrop {
+        startDelay: 5001
+        intensityGroup: 4
+        z: 2
+    }
+
+    LeftAnimationGumdrop {
+        startDelay: 5943
+        intensityGroup: 4
+        z: 3
+    }
+    LeftAnimationGumdrop {
+        startDelay: 7215
+        intensityGroup: 4
+        z: 2
+    }
+    LeftAnimationGumdrop {
+        startDelay: 7922
+        intensityGroup: 5
+        z: 3
+    }
+    LeftAnimationGumdrop {
+        startDelay: 8812
+        intensityGroup: 5
+        z: 2
+    }
+    LeftAnimationGumdrop {
+        startDelay: 9532
+        intensityGroup: 5
+        z: 3
+    }
+    LeftAnimationGumdrop {
+        startDelay: 10954
+        intensityGroup: 5
+        z: 2
+    }
+    LeftAnimationGumdrop {
+        startDelay: 11911
+        intensityGroup: 5
+        z: 3
+    }
+    LeftAnimationGumdrop {
+        startDelay: 13001
+        intensityGroup: 5
+        z: 2
+    }
+
+    LeftAnimationGumdrop {
+        startDelay: 20001
+        intensityGroup: 5
+        z: 2
+        isStrayPiece: true
+    }
+
+    //--------------------
+
+    LeftAnimationGumdrop {
+        startDelay: 8943
+        intensityGroup: 5
+        z: 3
+    }
+    LeftAnimationGumdrop {
+        startDelay: 3415
+        intensityGroup: 5
+        z: 2
+    }
+    LeftAnimationGumdrop {
+        startDelay: 7922
+        intensityGroup: 5
+        z: 3
+    }
+    LeftAnimationGumdrop {
+        startDelay: 1412
+        intensityGroup: 5
+        z: 2
+    }
+    LeftAnimationGumdrop {
+        startDelay: 18532
+        intensityGroup: 5
+        z: 3
+    }
+    LeftAnimationGumdrop {
+        startDelay: 67654
+        intensityGroup: 5
+        z: 2
+    }
+    LeftAnimationGumdrop {
+        startDelay: 89911
+        intensityGroup: 5
+        z: 3
+    }
+    LeftAnimationGumdrop {
+        startDelay: 14401
+        intensityGroup: 5
+        z: 2
+    }
+
+    LeftAnimationGumdrop {
+        startDelay: 29001
+        intensityGroup: 5
+        z: 2
+        isStrayPiece: true
+    }
+
+    //--------------------
+    RightAnimationGumdrop {
+        startDelay: 1000
+        runAtStart: true
+        z: 3
+    }
+
+    RightAnimationGumdrop {
+        startDelay: 1989
+        intensityGroup: 2
+        z: 2
+    }
+
+    RightAnimationGumdrop {
+        startDelay: 2385
+        intensityGroup: 2
+        z: 3
+    }
+
+    RightAnimationGumdrop {
+        startDelay: 2785
+        intensityGroup: 3
+        z: 2
+    }
+
+    RightAnimationGumdrop {
+        startDelay: 3799
+        intensityGroup: 3
+        z: 3
+    }
+
+    RightAnimationGumdrop {
+        startDelay: 3902
+        intensityGroup: 3
+        z: 2
+    }
+
+    RightAnimationGumdrop {
+        startDelay: 4007
+        intensityGroup: 3
+        z: 3
+    }
+
+    RightAnimationGumdrop {
+        startDelay: 4191
+        intensityGroup: 4
+        z: 2
+    }
+
+    RightAnimationGumdrop {
+        startDelay: 4335
+        intensityGroup: 4
+        z: 3
+    }
+
+    RightAnimationGumdrop {
+        startDelay: 4535
+        intensityGroup: 4
+        z: 2
+    }
+
+    RightAnimationGumdrop {
+        startDelay: 4739
+        intensityGroup: 4
+        z: 3
+    }
+
+    RightAnimationGumdrop {
+        startDelay: 4809
+        intensityGroup: 4
+        z: 2
+    }
+
+    RightAnimationGumdrop {
+        startDelay: 5001
+        intensityGroup: 4
+        z: 3
+    }
+
+    RightAnimationGumdrop {
+        startDelay: 5943
+        intensityGroup: 4
+        z: 2
+    }
+    RightAnimationGumdrop {
+        startDelay: 7215
+        intensityGroup: 4
+        z: 3
+    }
+    RightAnimationGumdrop {
+        startDelay: 7922
+        intensityGroup: 4
+        z: 2
+    }
+
+    //--------------------
+
+    RightAnimationGumdrop {
+        startDelay: 8812
+        intensityGroup: 5
+        z: 3
+    }
+    RightAnimationGumdrop {
+        startDelay: 9532
+        intensityGroup: 5
+        z: 2
+    }
+    RightAnimationGumdrop {
+        startDelay: 10954
+        intensityGroup: 5
+        z: 3
+    }
+    RightAnimationGumdrop {
+        startDelay: 11911
+        intensityGroup: 5
+        z: 2
+    }
+    RightAnimationGumdrop {
+        startDelay: 13001
+        intensityGroup: 5
+        z: 3
+    }
+    RightAnimationGumdrop {
+        startDelay: 24001
+        intensityGroup: 5
+        z: 3
+        isStrayPiece: true
+    }
+
+    //--------------------
+
+    RightAnimationGumdrop {
+        startDelay: 111112
+        intensityGroup: 5
+        z: 3
+    }
+    RightAnimationGumdrop {
+        startDelay: 19532
+        intensityGroup: 5
+        z: 2
+    }
+    RightAnimationGumdrop {
+        startDelay: 15954
+        intensityGroup: 5
+        z: 3
+    }
+    RightAnimationGumdrop {
+        startDelay: 17911
+        intensityGroup: 5
+        z: 2
+    }
+    RightAnimationGumdrop {
+        startDelay: 14501
+        intensityGroup: 5
+        z: 3
+    }
+    RightAnimationGumdrop {
+        startDelay: 24701
+        intensityGroup: 5
+        z: 3
+        isStrayPiece: true
+    }
+
+    RightAnimationGumdrop {
+        startDelay: 88112
+        intensityGroup: 5
+        z: 2
+    }
+    RightAnimationGumdrop {
+        startDelay: 9572
+        intensityGroup: 5
+        z: 3
+    }
+    RightAnimationGumdrop {
+        startDelay: 10954
+        intensityGroup: 5
+        z: 2
+    }
+    RightAnimationGumdrop {
+        startDelay: 155911
+        intensityGroup: 5
+        z: 2
+    }
+    RightAnimationGumdrop {
+        startDelay: 16601
+        intensityGroup: 5
+        z: 3
+    }
+    RightAnimationGumdrop {
+        startDelay: 24801
+        intensityGroup: 5
+        z: 2
+        isStrayPiece: true
     }
 
     GameMenu {
@@ -394,7 +650,10 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             onPressed: { playSound.play() }
-            onClicked: myGameMenu.state = "VISIBLE"
+            onClicked: {
+            	myGameMenu.state = "VISIBLE"
+            	pauseGumdropAnimation();
+	    }
         }
     }
 }

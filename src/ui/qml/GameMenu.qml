@@ -56,7 +56,10 @@ Rectangle {
             anchors.fill: parent
             onPressed: { playSound.play()
                 console.log("played sound")}
-            onClicked: gameMenu.state = "INVISIBLE"
+            onClicked:{
+            	resumeGumdropAnimation();
+            	gameMenu.state = "INVISIBLE"
+            }
         }
     }
 
@@ -78,6 +81,7 @@ Rectangle {
                 gameMenu.state = "INVISIBLE";
                 changeGuiPlayerColor( guiPlayerIsWhite? 0 : 1 );
                 readyToStartOnePersonPlay();
+                resetGumdropAnimation();
             }
         }
     }
@@ -139,6 +143,7 @@ Rectangle {
                 }else{
                     gameMenu.state = "INVISIBLE";
                     startMenu.state = "VISIBLE";
+                    leaveGumdropAnimation();
                     backToMainMenu();
                 }
             }

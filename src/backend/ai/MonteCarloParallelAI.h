@@ -62,7 +62,7 @@ private:
         bool player = false;
 
         //play a single game
-        int depth = 0;
+        //int depth = 0;
         do{
             placemove (player, current, opponent);
 
@@ -140,7 +140,7 @@ private:
         visited = getPossibleNextMoves(myOriginalBoard, myOpponentOriginalBoard);
 
         vector <BoardState> nextMove[visited.size()];
-        for (int i = 0; i < visited.size(); i++){
+        for (unsigned int i = 0; i < visited.size(); i++){
             nextMove[i] = getPossibleNextMoves(visited[i].current, visited[i].opponent);
         }
 
@@ -153,7 +153,7 @@ private:
 #pragma omp parallel
         {
 #pragma omp for schedule(dynamic, 1)
-            for (int iter = 0; iter < visited.size(); iter++){
+            for (unsigned int iter = 0; iter < visited.size(); iter++){
                 int score = 0;
                 BoardState b = visited[iter];
                 for (int playthrough = 0; playthrough < gamesEachThreadToPlay; ++playthrough){
@@ -194,7 +194,7 @@ private:
 
         //determine the best board
         int bestBoard = 0;
-        for (int iter = 0; iter < visited.size(); iter++){
+        for (unsigned int iter = 0; iter < visited.size(); iter++){
             if (allScores[iter] > bestScore){
                 bestScore = allScores[iter];
                 bestBoard = iter;
@@ -210,7 +210,7 @@ private:
 
         qDebug() << "Sorted scores";
         sort(allScores, allScores + visited.size());
-        for (int i = 0; i < visited.size(); i++){
+        for (unsigned int i = 0; i < visited.size(); i++){
             qDebug() << i << " " << allScores[i];
         }
         Turn t;

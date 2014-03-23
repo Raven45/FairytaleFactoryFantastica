@@ -1,5 +1,7 @@
 <RCC>
     <qresource>
+		<file alias="can-front.png">../media/can-front.png</file>
+		<file alias="can-back.png">../media/can-back.png</file>
 		<file alias="knob.png">../media/knob.png</file>
 		<file alias="knob-1.png">../media/knob-1.png</file>
 		<file alias="knob-2.png">../media/knob-2.png</file>

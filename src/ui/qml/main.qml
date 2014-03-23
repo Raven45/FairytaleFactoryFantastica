@@ -30,6 +30,12 @@ Rectangle {
     signal turnCogs(int quadrantIndex, var direction )
     signal pauseOpacity()
     signal clearPauseOpacity()
+    signal pieceFlowIntensityChanged( int volume )
+    signal startGumdropAnimation()
+    signal pauseGumdropAnimation()
+    signal resumeGumdropAnimation()
+    signal resetGumdropAnimation()
+    signal leaveGumdropAnimation()
 
     //network-related signals
     signal enterNetworkLobby()
