@@ -14,7 +14,17 @@ Rectangle {
     SoundEffect {
             id: playSound
             source: "ButtonClick2.wav"
-        }
+    }
+        
+    Oven{
+        anchors.left: parent.left
+        anchors.leftMargin: -75
+        anchors.bottom: parent.bottom
+        //anchors.bottomMargin: -200
+        z: 1
+    }
+
+        
     Image {
         id: gameScreen_background
         width: parent.width; height: parent.height
@@ -77,7 +87,7 @@ Rectangle {
         z: 2
     }
 
-    /*
+    
     LeftAnimationGumdrop {
         startDelay: 1000
         z: 3
@@ -182,7 +192,7 @@ Rectangle {
         startDelay: 1000
         z: 3
     }
-    /*
+    
     RightAnimationGumdrop {
         startDelay: 1989
         z: 2
@@ -280,7 +290,7 @@ Rectangle {
         z: 3
         isStrayPiece: true
     }
-    */
+
     Image {
         id: hg_in_bucket
         width: 250; height: 215

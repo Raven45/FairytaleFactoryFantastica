@@ -84,7 +84,8 @@ OTHER_FILES += \
     ui/qml/ConveyorBelt.qml \
     ui/qml/LeftAnimationGumdrop.qml \
     ui/qml/RightAnimationGumdrop.qml \
-    ui/qml/GumdropKnob.qml
+    ui/qml/GumdropKnob.qml \
+    ui/qml/Flame.qml
 
 HEADERS += \
     backend/networking/Barrager.h \

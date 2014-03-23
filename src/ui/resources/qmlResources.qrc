@@ -29,5 +29,7 @@
 		<file alias="ConveyorBelt.qml" >../qml/ConveyorBelt.qml</file>
 		<file alias="LeftAnimationGumdrop.qml" >../qml/LeftAnimationGumdrop.qml</file>
 		<file alias="RightAnimationGumdrop.qml" >../qml/RightAnimationGumdrop.qml</file>
+		<file alias="Oven.qml" >../qml/Oven.qml</file>
+		<file alias="Flame.qml" >../qml/Flame.qml</file>
     </qresource>
 </RCC>

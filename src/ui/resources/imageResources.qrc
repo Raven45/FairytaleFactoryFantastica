@@ -21,5 +21,11 @@
 		<file alias="line8.png">../media/line8.png</file>
 		<file alias="teal-gumdrop-centered.png">../media/teal-gumdrop-centered.png</file>
 		<file alias="purp-gumdrop-centered.png">../media/purp-gumdrop-centered.png</file>
+		<file alias="fireball.png">../media/fireball.png</file>
+		<file alias="fireball_hit.png">../media/fireball_hit.png</file>
+		<file alias="flame.png">../media/flame.png</file>
+		<file alias="flamethrower.png">../media/flamethrower.png</file>
+		<file alias="oven.png">../media/oven.png</file>
+		<file alias="oven_front.png">../media/oven_front.png</file>
     </qresource>
 </RCC>
