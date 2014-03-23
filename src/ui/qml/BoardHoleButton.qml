@@ -2,13 +2,17 @@ import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
 import QtGraphicalEffects 1.0
+import QtMultimedia 5.0
 
 Rectangle {
 
     property int pieceIndex
     property int quadrantIndex
     property bool isLocked
-
+    SoundEffect {
+            id: playSound
+            source: "ButtonClick2.wav"
+        }
     Glow {
        id: boardHole_glowEffect
        anchors.fill: backgroundImage
@@ -287,6 +291,7 @@ Rectangle {
                     page.gameMessage = "Choose a rotation.";
                     lockBoardPieces();
 
+                    playSound.play()
                 }
                 else{
                    page.gameMessage = "This place is taken!";

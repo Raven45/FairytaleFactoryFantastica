@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
+import QtMultimedia 5.0
 
 Rectangle {
 
@@ -12,6 +13,10 @@ Rectangle {
     visible: false
 
     state: "INVISIBLE"
+    SoundEffect {
+            id: playSound
+            source: "ButtonClick2.wav"
+        }
 
     Image {
         id: main_background
@@ -77,7 +82,8 @@ Rectangle {
 
         MouseArea {
             anchors.fill: parent
-
+            onPressed: { playSound.play()
+                console.log("played sound")}
             onClicked: {
 
                 if( !piecesHaveStartedAnimating ){
@@ -107,7 +113,8 @@ Rectangle {
 
         MouseArea {
             anchors.fill: parent
-
+            onPressed: { playSound.play()
+                console.log("played sound")}
             onClicked: {
 
                 if( !piecesHaveStartedAnimating ){
@@ -153,6 +160,8 @@ Rectangle {
 
         MouseArea {
             anchors.fill: parent
+            onPressed: { playSound.play()
+                console.log("played sound")}
             onClicked: {
                 if(colorSelection.state == "BLACK")
                 {
@@ -183,6 +192,8 @@ Rectangle {
 
         MouseArea {
             anchors.fill: parent
+            onPressed: { playSound.play()
+                console.log("played sound")}
             onClicked: {
                 if (startMenu_soundButton.source_string === "sound-button.png") {
                     startMenu_soundButton.source_string = "nosound-button.png"
@@ -205,7 +216,8 @@ Rectangle {
 
         MouseArea {
             anchors.fill: parent
-
+            onPressed: { playSound.play()
+                console.log("played sound")}
             onClicked: {
                 readyToExitGame()
             }

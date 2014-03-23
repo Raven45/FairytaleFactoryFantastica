@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtMultimedia 5.0
 
 Rectangle {
     id: gameScreen
@@ -10,7 +11,10 @@ Rectangle {
     z: 0
 
     property int _MIDDLE_TUBE_WIDTH: 56
-
+    SoundEffect {
+            id: playSound
+            source: "ButtonClick2.wav"
+        }
     Image {
         id: gameScreen_background
         width: parent.width; height: parent.height
@@ -379,6 +383,7 @@ Rectangle {
 
         MouseArea {
             anchors.fill: parent
+            onPressed: { playSound.play() }
             onClicked: myGameMenu.state = "VISIBLE"
         }
     }

@@ -2,6 +2,8 @@ import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
 
+import QtMultimedia 5.0
+
 Image {
     id: root
     fillMode: Image.PreserveAspectFit
@@ -11,11 +13,16 @@ Image {
     z: 22
     source: "grahm-quad.png"
 
+    SoundEffect {
+            id: rotationSound
+            source: "ChainCrank1.wav"
+        }
     property int myIndex
     property int xCenter
     property int yCenter
 
     function rotate( direction ){
+
         if( parseInt(direction) === 0 ){
 
             rightRotation.start()
@@ -25,6 +32,8 @@ Image {
             leftRotation.start()
             turnCogs( myIndex, "LEFT")
         }
+
+        rotationSound.play()
     }
 
 

@@ -242,12 +242,13 @@ public:
 
                                             if( test.checkWin().winner == opponentColor ){
                                                 isTerribleMove = true;
+                                                checkWeight = INT_MIN / 4 - 1;
+                                                opponentsBestMoveWeight = INT_MAX / 4 - 1;
                                                 break;
                                             }
 
                                             if( checkWeightOpp > opponentsBestMoveWeight  && ( !test.checkWin().isDraw || opponentsBestMoveWeight == INT_MIN ) ){
                                                opponentsBestMoveWeight = checkWeightOpp;
-
 
 
                                                //Now we are looking at 3rd level
@@ -291,6 +292,8 @@ public:
                                                                   }
 
                                                                   bool isTerribleMove = false;
+
+
                                                                   for( int quadrantIndexOpp = qrand() % 4, quadrantCountOpp = 0;  quadrantCountOpp < NUMBER_OF_QUADRANTS && !isTerribleMove;    quadrantIndexOpp = ((quadrantIndexOpp == 3)? 0 : quadrantIndexOpp + 1), ++quadrantCountOpp ){
                                                                       for( int pieceIndexOpp = qrand()%9, pieceCountOpp = 0;     pieceCountOpp    < MAX_PIECES_ON_QUADRANT && !isTerribleMove;   pieceIndexOpp  = ((pieceIndexOpp    == 8)? 0 : pieceIndexOpp    + 1), ++pieceCountOpp    ){
 
@@ -317,6 +320,8 @@ public:
 
                                                                                   if( test.checkWin().winner == opponentColor ){
                                                                                       isTerribleMove = true;
+                                                                                      checkWeight = INT_MIN / 2 - 1;
+                                                                                      opponentsOtherBestMoveWeight = INT_MAX / 2 - 1;
                                                                                       break;
                                                                                   }
 
@@ -324,6 +329,14 @@ public:
                                                                                      opponentsOtherBestMoveWeight = checkWeightOpp;
                                                                                   }
                                                                                 }
+
+                                                                              //TINKER
+                                                                              int realCheckWeight = checkWeight - opponentsBestMoveWeight + ourOtherBestMoveWeight/2 - opponentsOtherBestMoveWeight/2;
+
+                                                                              if( realCheckWeight > bestMoveWeight ){
+                                                                                   bestMove = Turn(quadrantIndex, pieceIndex, rotationConfig.quadrantIndex, rotationConfig.direction, myColor);
+                                                                                   bestMoveWeight = realCheckWeight;
+                                                                              }
                                                                           }
                                                                       }
                                                                     }
@@ -340,13 +353,7 @@ public:
                                 }
 
 
-                           //TINKER
-                           int realCheckWeight = checkWeight - opponentsBestMoveWeight + ourOtherBestMoveWeight - opponentsOtherBestMoveWeight;
 
-                           if( realCheckWeight > bestMoveWeight ){
-                                bestMove = Turn(quadrantIndex, pieceIndex, rotationConfig.quadrantIndex, rotationConfig.direction, myColor);
-                                bestMoveWeight = realCheckWeight;
-                           }
                         }
                     }
                 }

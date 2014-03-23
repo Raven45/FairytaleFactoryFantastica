@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.0
+import QtMultimedia 5.0
 
 Rectangle {
     id: gameMenu
@@ -7,7 +8,10 @@ Rectangle {
     width: 250; height: parent.height
 
     state: "VISIBLE"
-
+    SoundEffect {
+            id: playSound
+            source: "ButtonClick2.wav"
+        }
     Image {
         width: parent.width; height: parent.height
         source: "ingame-menu.png"
@@ -50,6 +54,8 @@ Rectangle {
 
         MouseArea {
             anchors.fill: parent
+            onPressed: { playSound.play()
+                console.log("played sound")}
             onClicked: gameMenu.state = "INVISIBLE"
         }
     }
@@ -65,6 +71,8 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
 
+            onPressed: { playSound.play()
+                console.log("played sound")}
             onClicked: {
                 clearBoard();
                 gameMenu.state = "INVISIBLE";
@@ -85,6 +93,8 @@ Rectangle {
 
         MouseArea {
             anchors.fill: parent
+            onPressed: { playSound.play()
+                console.log("played sound")}
             onClicked: {
                 if (soundButton.source_string === "sound-button.png") {
                     soundButton.source_string = "nosound-button.png"
@@ -103,6 +113,11 @@ Rectangle {
         anchors.left: parent.left
         anchors.leftMargin: 30
         z: parent.z+1
+        MouseArea{
+            anchors.fill: parent
+            onPressed: { playSound.play()
+                console.log("played sound")}
+        }
     }
 
     GUIButton {
@@ -115,7 +130,8 @@ Rectangle {
 
         MouseArea {
             anchors.fill: parent
-
+            onPressed: { playSound.play()
+                console.log("played sound")}
             onClicked: {
 
                 if( isNetworkGame ){

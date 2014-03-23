@@ -1,6 +1,5 @@
 import QtQuick 2.0
 import QtGraphicalEffects 1.0
-
 Item {
 
     property int quadToRo
@@ -18,7 +17,6 @@ Item {
        fast: true
        cached: true
     }
-
     Image {
         id: red_rotate_button
         source: "red-rotate-" + direction_string + ".png"
@@ -50,13 +48,14 @@ Item {
 
         MouseArea {
             anchors.fill: red_rotate_button
-
             onClicked:{
 
                 console.log("clicked to rotate direction " + roDir );
 
                 gameController.setGuiTurnRotation( quadToRo , roDir );
                 rotationClicked(quadToRo, roDir);
+
+
             }
 
 

@@ -5,6 +5,7 @@
 #include "MonteCarloParallelAI.h"
 #include "AlphaBetaAI.h"
 #include "NetworkInterface.h"
+#include "SmarterPlayer4.h"
 #include <time.h>
 
 /*
