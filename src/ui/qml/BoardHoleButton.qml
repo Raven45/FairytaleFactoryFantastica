@@ -55,8 +55,20 @@ Rectangle {
         onPlaceOpponentsPiece: {
             if( qIndex === quadrantIndex && pIndex === pieceIndex ){
 
-                //console.log("coloring opponents piece at " + quadrantIndex + ", " + pieceIndex);
-                state = page.guiPlayerIsWhite? "BLACK" : "WHITE"
+                console.log("placing opponents piece at " + quadrantIndex + ", " + pieceIndex);
+
+                //state = page.guiPlayerIsWhite? "PURPLE" : "WHITE"
+                if( page.guiPlayerIsWhite ){
+                    getFromCan( "PURPLE" );
+                    stateChangeTimer.playerColor = "BLACK";
+
+                }
+                else{
+                    getFromCan( "TEAL" );
+                    stateChangeTimer.playerColor = "WHITE";
+                }
+
+                stateChangeTimer.startTimer();
 
             }
         }
@@ -154,6 +166,12 @@ Rectangle {
         }
     }
 
+    Rectangle{
+        id: dummy
+        visible: false;
+        color: "transparent"
+    }
+
     states: [
         State {
             name: "EMPTY"
@@ -162,6 +180,7 @@ Rectangle {
                 visible: false
             }
         },
+
         State {
             name: "BLACK"
             PropertyChanges{
@@ -209,42 +228,54 @@ Rectangle {
         }
     ]
 
+
+
     transitions: [
+
+
         Transition {
             from: "EMPTY"
             to: "WHITE"
 
             SequentialAnimation{
+
+
                 NumberAnimation {
                     target: tealClawPiece
-                    property: "y"
-                    duration: _CLAW_MOVE_DURATION / 2
-                }
-                NumberAnimation {
-                    target: tealClawPiece;
                     property: "x"
                     duration: _CLAW_MOVE_DURATION / 2
                 }
+
+                NumberAnimation {
+                    target: tealClawPiece;
+                    property: "y"
+                    duration: _CLAW_MOVE_DURATION / 2
+                }
+
                 ScriptAction{
                     scriptName: "openTealClaw"
                 }
             }
         },
+
+
         Transition {
             from: "EMPTY"
             to: "BLACK"
 
             SequentialAnimation{
+
                 NumberAnimation {
                     target: purpleClawPiece
-                    property: "y"
+                    property: "x"
                     duration: _CLAW_MOVE_DURATION / 2
                 }
                 NumberAnimation {
                     target: purpleClawPiece;
-                    property: "x"
+                    property: "y"
                     duration: _CLAW_MOVE_DURATION / 2
                 }
+
                 ScriptAction{
                     scriptName: "openPurpleClaw"
                 }
@@ -252,6 +283,16 @@ Rectangle {
         }
     ]
 
+    QmlTimer{
+        id: stateChangeTimer
+        property string playerColor
+        duration: _CLAW_CAN_ANIMATION_DURATION
+        onTriggered:{
+
+            console.log( "timer triggered, changing state to " + playerColor )
+            parent.state = playerColor;
+        }
+    }
 
     MouseArea{
         id: boardHole_mouseArea
@@ -281,11 +322,19 @@ Rectangle {
                     boardHole_glowEffect.visible = false;
 
                     if(guiPlayerIsWhite){
-                         boardHoleButton.state = "WHITE";
+                         //boardHoleButton.state = "WHITE";
+                        console.log( "calling getFromCan( TEAL )" );
+                        getFromCan( "TEAL" );
+                        stateChangeTimer.playerColor = "WHITE";
                      }
                      else{
-                        boardHoleButton.state = "BLACK";
+                        //boardHoleButton.state = "BLACK";
+                        console.log( "calling getFromCan( BLACK )" );
+                        getFromCan( "PURPLE" );
+                        stateChangeTimer.playerColor = "BLACK";
                      }
+
+                    stateChangeTimer.startTimer();
 
                     gameController.setGuiTurnHole( quadrantIndex, pieceIndex);
                     page.gameMessage = "Choose a rotation.";

@@ -73,9 +73,11 @@ Rectangle {
         anchors.leftMargin: 75
     }
 
+
+
     Image {
         id: left_can_front
-        width: 152; height: 256; z: 10
+        width: 152; height: 256 ; z: pauseOpacity.z - 10
         source: "can-front.png"
         scale: 0.65
         fillMode: Image.PreserveAspectFit
@@ -114,7 +116,7 @@ Rectangle {
 
     Image {
         id: right_can_front
-        width: 152; height: 256; z: 10
+        width: 152; height: 256; z: pauseOpacity.z - 10
         source: "can-front.png"
         scale: 0.65
         fillMode: Image.PreserveAspectFit
@@ -124,6 +126,17 @@ Rectangle {
         anchors.topMargin: gameScreen.height/2 - left_can_front.height/2 + 60
         anchors.right: gameScreen.right
         anchors.rightMargin: 75
+
+        Connections {
+            target: page
+
+            onMakeRightCanGoBack:{
+                right_can_front.z = 10;
+            }
+            onResetRightCan:{
+                right_can_front.z = pauseOpacity.z - 10;
+            }
+        }
     }
 
     Image {

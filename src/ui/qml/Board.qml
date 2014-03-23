@@ -10,6 +10,7 @@ Rectangle {
     color: "transparent"
 
 
+
     state: "LOCKED"
 
     Connections{
@@ -18,6 +19,11 @@ Rectangle {
 
   //          lockBoardPieces();
     //        unlockQuadrantRotation();
+        }
+
+        onClearBoard:{
+            tealClawPiece.reset();
+            purpleClawPiece.reset();
         }
     }
 
@@ -263,8 +269,11 @@ Rectangle {
         id: purpleClawPiece
         z: 30
         source: "purp-claw-spritesheet.png"
+        reverseSource: "purp-claw-reverse-spritesheet.png"
         x: _CLAW_X_HOME
         y: _CLAW_Y_HOME
+
+
     }
 
     ClawPiece {
@@ -272,6 +281,7 @@ Rectangle {
         id: tealClawPiece
         z: 30
         source: "teal-claw-spritesheet.png"
+        reverseSource: "teal-claw-reverse-spritesheet.png"
         x: _CLAW_X_HOME
         y: _CLAW_Y_HOME
     }
