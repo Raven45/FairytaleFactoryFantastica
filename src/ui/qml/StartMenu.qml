@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
+import QtQuick.Particles 2.0
 
 Rectangle {
 
@@ -36,19 +37,217 @@ Rectangle {
     }
 
 
-    Smoke {
-        id: startMenu_smoke1
-        anchors.bottom: main_factory.top
-        anchors.bottomMargin: -47
-        anchors.left: main_factory.left
-        anchors.leftMargin: 40
-    }
+//    Smoke {
+//        id: startMenu_smoke1
+//        anchors.bottom: main_factory.top
+//        anchors.bottomMargin: -47
+//        anchors.left: main_factory.left
+//        anchors.leftMargin: 40
+//    }
 
-    Smoke {
-        id: startMenu_smoke2
-        anchors.bottom: main_factory.top
-        anchors.bottomMargin: -50
-        anchors.right: main_factory.right
+//    Smoke {
+//        id: startMenu_smoke2
+//        anchors.bottom: main_factory.top
+//        anchors.bottomMargin: -50
+//        anchors.right: main_factory.right
+//    }
+
+
+
+
+
+
+    Rectangle {
+        id: smokeRectangle
+        color: "transparent"
+        state: "ON"
+        anchors.centerIn: parent
+        anchors.fill: parent
+        states: [
+            State{
+                name: "ON"
+                PropertyChanges { target: fog;  enabled: true }
+                PropertyChanges { target: flame;  enabled: true }
+                PropertyChanges { target: smoke1; enabled: true }
+                PropertyChanges { target: smoke2; enabled: true }
+                PropertyChanges { target: flame2;  enabled: true }
+                PropertyChanges { target: smoke3; enabled: true }
+                PropertyChanges { target: smoke4; enabled: true }
+            },
+            State{
+                name: "OFF"
+                PropertyChanges { target: fog;  enabled: false }
+                PropertyChanges { target: flame;  enabled: false }
+                PropertyChanges { target: smoke1; enabled: false }
+                PropertyChanges { target: smoke2; enabled: false }
+                PropertyChanges { target: flame2;  enabled: false }
+                PropertyChanges { target: smoke3; enabled: false }
+                PropertyChanges { target: smoke4; enabled: false }
+            }
+
+        ]
+
+
+        ParticleSystem {
+            id: particle_system
+            anchors.fill: parent
+
+            /*Turbulence {
+                id: turb
+                enabled: true
+                height: (parent.height / 2) - 4
+                width: parent.width
+                //height: 500
+                //width: 500
+                x: parent. width / 4
+                anchors.fill: parent
+                strength: -16
+                NumberAnimation on strength{from: -32; to: 0; easing.type: Easing.InOutBounce; duration: 1800; loops: -1}
+            }*/
+
+            ImageParticle {
+                groups: ["fog"]
+                source: "qrc:///particleresources/glowdot.png"
+                color: "#11111111"
+                colorVariation: 0
+                opacity: .7
+            }
+            ImageParticle {
+                groups: ["smoke", "smoke2"]
+                source: "qrc:///particleresources/glowdot.png"
+                color: "#11111111"
+                colorVariation: 0
+            }
+
+            ImageParticle {
+                groups: ["flame", "flame2"]
+                source: "qrc:///particleresources/glowdot.png"
+                color: "#11111111"
+                //colorVariation: 0.1
+            }
+
+
+            Emitter {
+                id: fog
+                anchors.left: parent.left
+                anchors.bottom: parent.bottom
+                height: parent.height*.8
+                group: "fog"
+                z:15
+                shape: LineShape
+                lifeSpan: 8500
+                lifeSpanVariation: 400
+                emitRate: 10
+                size: 600
+                endSize: 100
+                sizeVariation: 300
+                acceleration: PointDirection { x: 30; xVariation: 20; y: 5; yVariation: 3}
+                velocity: AngleDirection { angle: 0; magnitude: 90; angleVariation: 30; magnitudeVariation: 50 }
+            }
+
+
+            Emitter {
+                id: flame
+                anchors.bottom: parent.top
+                anchors.bottomMargin: -115
+                anchors.right: parent.right
+                anchors.rightMargin: 50
+                group: "flame"
+
+                emitRate: 120
+                lifeSpan: 1200
+                size: 20
+                endSize: 10
+                sizeVariation: 10
+                acceleration: PointDirection { y: -40 }
+                velocity: AngleDirection { angle: 270; magnitude: 20; angleVariation: 100; magnitudeVariation: 5 }
+            }
+            TrailEmitter {
+                id: smoke1
+                enabled: true
+                width: 500
+                height: 500/2
+                group: "smoke"
+                follow: "flame"
+
+                emitRatePerParticle: 2
+                lifeSpan: 3600
+                lifeSpanVariation: 400
+                size: 16
+                endSize: 8
+                sizeVariation: 8
+                acceleration: PointDirection { y: -10 }
+                velocity: AngleDirection { angle: 270; magnitude: 40; angleVariation: 90; magnitudeVariation: 5 }
+            }
+            TrailEmitter {
+                id: smoke2
+                enabled: true
+                width: 500
+                height: 500/2 - 20
+                group: "smoke"
+                follow: "flame"
+
+                emitRatePerParticle: 1
+                lifeSpan: 4800
+                size: 36
+                endSize: 24
+                sizeVariation: 12
+                acceleration: PointDirection { y: -20 }
+                velocity: AngleDirection { angle: 270; magnitude: 40; angleVariation: 30; magnitudeVariation: 5 }
+            }
+
+            Emitter {
+                id: flame2
+                anchors.bottom: parent.top
+                anchors.bottomMargin: -115
+                anchors.right: parent.right
+                anchors.rightMargin: 150
+                group: "flame2"
+
+                emitRate: 120
+                lifeSpan: 1200
+                size: 20
+                endSize: 10
+                sizeVariation: 10
+                acceleration: PointDirection { y: -40 }
+                velocity: AngleDirection { angle: 270; magnitude: 20; angleVariation: 100; magnitudeVariation: 5 }
+            }
+            TrailEmitter {
+                id: smoke3
+                enabled: true
+                width: 500
+                height: 500/2
+                group: "smoke2"
+                follow: "flame2"
+
+                emitRatePerParticle: 2
+                lifeSpan: 3600
+                lifeSpanVariation: 400
+                size: 16
+                endSize: 8
+                sizeVariation: 8
+                acceleration: PointDirection { y: -10 }
+                velocity: AngleDirection { angle: 270; magnitude: 40; angleVariation: 90; magnitudeVariation: 5 }
+            }
+            TrailEmitter {
+                id: smoke4
+                enabled: true
+                width: 500
+                height: 500/2 - 20
+                group: "smoke2"
+                follow: "flame2"
+
+                emitRatePerParticle: 1
+                lifeSpan: 4800
+                size: 36
+                endSize: 24
+                sizeVariation: 12
+                acceleration: PointDirection { y: -20 }
+                velocity: AngleDirection { angle: 270; magnitude: 40; angleVariation: 30; magnitudeVariation: 5 }
+            }
+
+        }
+
     }
 
     Image{
@@ -243,15 +442,15 @@ Rectangle {
     states: [
         State{
             name: "VISIBLE"
-            PropertyChanges { target: startMenu_smoke1; state: "ON" }
-            PropertyChanges { target: startMenu_smoke2; state: "ON" }
+            //PropertyChanges { target: startMenu_smoke1; state: "ON" }
+            //PropertyChanges { target: startMenu_smoke2; state: "ON" }
             PropertyChanges { target: startMenu_witch;  state: "ON" }
             PropertyChanges { target: startMenu; visible: true }
         },
         State{
             name: "INVISIBLE"
-            PropertyChanges { target: startMenu_smoke1; state: "OFF" }
-            PropertyChanges { target: startMenu_smoke2; state: "OFF" }
+            //PropertyChanges { target: startMenu_smoke1; state: "OFF" }
+            //PropertyChanges { target: startMenu_smoke2; state: "OFF" }
             PropertyChanges { target: startMenu_witch;  state: "OFF" }
             PropertyChanges { target: startMenu; visible: false }
         }
