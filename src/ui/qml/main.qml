@@ -14,6 +14,8 @@ Rectangle {
     signal readyToStartOnePersonPlay()
     signal readyToStartTwoPersonPlay()
 
+    signal makeRightCanGoBack()
+    signal resetRightCan()
     signal changeSoundState()
     signal changeGuiPlayerColor(int color)
     signal clickedRandomMove()
@@ -26,6 +28,7 @@ Rectangle {
     signal backToMainMenu()
     signal sendPlayerName(var playerName )
     signal readyToOpenClaw(int qIndex, int pIndex, var whichClaw )
+    signal getFromCan( var whichClaw )
     signal showPiece( int qIndex, int pIndex )
     signal turnCogs(int quadrantIndex, var direction )
     signal pauseOpacity()
@@ -63,7 +66,7 @@ Rectangle {
     property bool piecesHaveStartedAnimating: false
 
     property int _ROTATION_ANIMATION_DURATION: 600
-    property int _OPPONENT_START_ROTATION_DELAY: 300 + _CLAW_OPEN_DURATION + _CLAW_MOVE_DURATION + 2 //claw animation time...
+    property int _OPPONENT_START_ROTATION_DELAY: 300 + _CLAW_OPEN_DURATION + _CLAW_MOVE_DURATION + _CLAW_CAN_ANIMATION_DURATION + 2 //claw animation time...
     property int _QUADRANT_WIDTH: 200
     property int _QUADRANT_GROWTH: 10
     property int _BOARD_HOLE_WIDTH: 65
@@ -73,9 +76,21 @@ Rectangle {
     property int _HORIZONTAL_CENTER: 178
     property int _CLAW_OPEN_DURATION: 350
     property int _CLAW_MOVE_DURATION: 800
-    property int _CLAW_X_HOME: pentagoBoard.width/2 - 58
-    property int _CLAW_Y_HOME: -300
-
+    property int _CLAW_X_TO_CAN_DURATION: 400
+    property int _CLAW_Y_TO_CAN_DURATION: 400
+    property int _CLAW_PAUSE_OVER_CAN_BEFORE_DURATION: 275
+    property int _CLAW_MOVE_INTO_CAN_DURATION: 300
+    property int _CLAW_TIME_IN_CAN_DURATION: 300
+    property int _CLAW_MOVE_OUT_OF_CAN_DURATION: _CLAW_MOVE_INTO_CAN_DURATION
+    property int _CLAW_PAUSE_OVER_CAN_AFTER_DURATION: _CLAW_PAUSE_OVER_CAN_BEFORE_DURATION
+    property int _CLAW_CAN_ANIMATION_DURATION: _CLAW_X_TO_CAN_DURATION + _CLAW_Y_TO_CAN_DURATION + _CLAW_PAUSE_OVER_CAN_BEFORE_DURATION + _CLAW_MOVE_INTO_CAN_DURATION + _CLAW_TIME_IN_CAN_DURATION + _CLAW_MOVE_OUT_OF_CAN_DURATION + _CLAW_PAUSE_OVER_CAN_AFTER_DURATION + 50
+    property int _CLAW_X_HOME: 900//pentagoBoard.width/2 - 58
+    property int _CLAW_Y_HOME: -180
+    property int _RIGHT_CAN_X: 815
+    property int _CAN_HEIGHT: 160
+    property int _RIGHT_CAN_Y: 300
+    property int _LEFT_CAN_X: -325
+    property int _LEFT_CAN_Y: _RIGHT_CAN_Y
 
     function lockBoardPieces(){
         guiPlayerCanClickBoardHoleButton = false;
@@ -304,6 +319,8 @@ Rectangle {
             break;
 
         }
+
+
 
         switch( pieceIndex ){
         case 0:
