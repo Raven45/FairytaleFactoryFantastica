@@ -4,7 +4,7 @@ Rectangle {
     color: "transparent"
 
     property var source_string
-
+    property bool hasInverse: true
 
     Image {
         id: normal
@@ -22,7 +22,8 @@ Rectangle {
 
         states:
             State {
-                name: "mouse-over"; when: mouseArea.containsMouse
+                name: "mouse-over";
+                when: mouseArea.containsMouse && hasInverse;
                 PropertyChanges { target: normal; opacity: 0}
                 PropertyChanges { target: inverse; opacity: 1}
         }
@@ -34,7 +35,7 @@ Rectangle {
 
     Image {
         id: inverse
-        source: "inverse-" + source_string
+        source: hasInverse? "inverse-" + source_string : "";
         smooth: true
         opacity: 0
         anchors.fill: normal

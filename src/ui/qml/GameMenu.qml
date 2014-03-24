@@ -63,6 +63,7 @@ Rectangle {
         }
     }
 
+
     GUIButton {
         source_string: "restart-button.png"
         anchors.top: parent.top
@@ -125,14 +126,26 @@ Rectangle {
     }
 
     GUIButton {
-        source_string: "back-button.png"
+        source_string: "exitButton.png"
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.bottomMargin: 15
         anchors.leftMargin: 30
         z: parent.z+1
+        hasInverse: false
 
         MouseArea {
+
+            hoverEnabled: true
+
+            onEntered: {
+                parent.source_string = "exitButtonHover.png"
+            }
+
+            onExited: {
+                parent.source_string = "exitButton.png"
+            }
+
             anchors.fill: parent
             onPressed: { playSound.play()
                 console.log("played sound")}
