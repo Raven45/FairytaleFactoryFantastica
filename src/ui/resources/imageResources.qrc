@@ -2,8 +2,8 @@
     <qresource>
 		<file alias="can-front.png">../media/can-front.png</file>
 		<file alias="can-front-rusty.png">../media/can-front-rusty.png</file>
-		<file alias="can-front-rusty2.png">../media/can-front-rusty2.png</file>
 		<file alias="can-back.png">../media/can-back.png</file>
+		<file alias="can-back-rusty.png">../media/can-back-rusty.png</file>
 		<file alias="knob.png">../media/knob.png</file>
 		<file alias="knob-1.png">../media/knob-1.png</file>
 		<file alias="knob-2.png">../media/knob-2.png</file>
@@ -33,5 +33,7 @@
 		<file alias="flamethrower.png">../media/flamethrower.png</file>
 		<file alias="oven.png">../media/oven.png</file>
 		<file alias="oven_front.png">../media/oven_front.png</file>
+		<file alias="exitButton.png">../media/exitButton.png</file>
+		<file alias="exitButtonHover.png">../media/exitButtonHover.png</file>
     </qresource>
 </RCC>

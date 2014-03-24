@@ -170,6 +170,7 @@ Item {
         width: 131
         height: 131
 
+
         sprites:[
 
             Sprite{
@@ -292,6 +293,7 @@ Item {
     Image {
         id: clawPipe
         source: "bar.png"
+
         width: 40
         height: 700
         anchors.bottom: clawSprite.top

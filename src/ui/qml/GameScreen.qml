@@ -17,11 +17,11 @@ Rectangle {
     }
         
     Oven{
-        anchors.left: parent.left
+        anchors.horizontalCenter: parent.horizontalCenter
         anchors.leftMargin: -75
         anchors.bottom: parent.bottom
-        //anchors.bottomMargin: -200
-        z: 1
+        anchors.bottomMargin: -100
+        z: 35
     }
 
         
@@ -62,7 +62,7 @@ Rectangle {
     Image {
         id: left_can_back
         width: 152; height: 256; z: 2
-        source: "can-back.png"
+        source: "can-back-rusty.png"
         scale: 0.65
         fillMode: Image.PreserveAspectFit
         visible: true
@@ -78,7 +78,7 @@ Rectangle {
     Image {
         id: left_can_front
         width: 152; height: 256 ; z: pauseOpacity.z - 10
-        source: "can-front.png"
+        source: "can-front-rusty.png"
         scale: 0.65
         fillMode: Image.PreserveAspectFit
         visible: true
@@ -103,7 +103,7 @@ Rectangle {
     Image {
         id: right_can_back
         width: 152; height: 256; z: 2
-        source: "can-back.png"
+        source: "can-back-rusty.png"
         scale: 0.65
         fillMode: Image.PreserveAspectFit
         visible: true
@@ -117,7 +117,7 @@ Rectangle {
     Image {
         id: right_can_front
         width: 152; height: 256; z: pauseOpacity.z - 10
-        source: "can-front.png"
+        source: "can-front-rusty.png"
         scale: 0.65
         fillMode: Image.PreserveAspectFit
         visible: true
@@ -584,7 +584,22 @@ Rectangle {
         anchors.centerIn: parent
         color: "#000000"
         opacity: 0
+        visible: false
         z: 85
+
+        MouseArea{
+            anchors.fill: parent
+
+            onClicked:{
+
+                resumeGumdropAnimation();
+                myGameMenu.state = "INVISIBLE"
+                console.log("clicked pauseOpacity");
+            }
+
+        }
+
+
 
         Connections{
             target: page
@@ -606,6 +621,10 @@ Rectangle {
                     target: pauseOpacity
                     opacity: 0
                 }
+                PropertyChanges{
+                    target: pauseOpacity
+                    visible: false
+                }
             },
 
             State{
@@ -617,6 +636,10 @@ Rectangle {
                     target: pauseOpacity
                     opacity: 0.75
                 }
+                PropertyChanges{
+                    target: pauseOpacity
+                    visible: true
+                }
             }
 
         ]
@@ -625,6 +648,13 @@ Rectangle {
             Transition{
                 from: "CLEAR"
                 to: "OPAQUE"
+
+                PropertyAnimation{
+                    properties: "visible"
+                    to: true
+                    duration: 0
+                }
+
                 NumberAnimation{
                     properties: "opacity"
                     from: 0
@@ -639,6 +669,16 @@ Rectangle {
                     properties: "opacity"
                     from: 0.75
                     to: 0
+                    duration: 300
+
+                    onStopped:{
+                        pauseOpacity.visible = false;
+                    }
+                }
+
+                PropertyAnimation{
+                    properties: "visible"
+                    to: false
                     duration: 300
                 }
             }
