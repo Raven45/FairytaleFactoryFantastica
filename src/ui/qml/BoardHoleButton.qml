@@ -190,6 +190,11 @@ Rectangle {
 
             }
 
+            PropertyChanges {
+                target: clawHouse
+                x: getXYOffset( quadrantIndex, pieceIndex ).x
+            }
+
             PropertyChanges{
                 target: purpleClawPiece
                 x: getXYOffset( quadrantIndex, pieceIndex ).x
@@ -229,6 +234,11 @@ Rectangle {
                 target: backgroundImage
                 visible: false
                 source: "teal-gumdrop.png"
+            }
+
+            PropertyChanges {
+                target: clawHouse
+                x: getXYOffset( quadrantIndex, pieceIndex ).x
             }
 
             PropertyChanges{
@@ -281,7 +291,7 @@ Rectangle {
 
 
                 NumberAnimation {
-                    target: tealClawPiece
+                    targets: [tealClawPiece, clawHouse]
                     property: "x"
                     duration: _CLAW_MOVE_DURATION / 2
                 }
@@ -315,10 +325,11 @@ Rectangle {
             SequentialAnimation{
 
                 NumberAnimation {
-                    target: purpleClawPiece
+                    targets: [purpleClawPiece, clawHouse]
                     property: "x"
                     duration: _CLAW_MOVE_DURATION / 2
                 }
+
 
                 ScriptAction{
                     scriptName: "moveYSignal1"
@@ -331,7 +342,7 @@ Rectangle {
                 }
 
                 ScriptAction{
-                    scriptName: "moveYSignal1"
+                    scriptName: "moveYSignal2"
                 }
 
                 ScriptAction{

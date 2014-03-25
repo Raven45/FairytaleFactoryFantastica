@@ -54,7 +54,7 @@ Rectangle {
 
     Rectangle {
         id: claw_width_bar
-        width: gameScreen.width; height: 10; z: 1
+        width: gameScreen.width * 1.7; height: 10; z: 1
         anchors.top: gameScreen.top
         anchors.topMargin: 10
         anchors.left: gameScreen.left

@@ -53,12 +53,29 @@ Item {
                 frameX: 0
                 frameY: 0
                 frameCount: 90
-                frameDuration: _ROTATION_ANIMATION_DURATION / frameCount
+                frameDuration: _ROTATION_ANIMATION_DURATION / (2*frameCount)
+                to:{
+                    "leftCogsSprite2":1
+                }
+
+            },
+            Sprite {
+                name: "leftCogsSprite2"
+
+                source: "left-cogs-spritesheet.png"
+
+                frameWidth: 165;
+                frameHeight: 200
+                frameX: 0
+                frameY: 0
+                frameCount: 90
+                frameDuration: _ROTATION_ANIMATION_DURATION / (2*frameCount)
                 to:{
                     "stillCogsSprite":1
                 }
 
             },
+
             Sprite {
                 name: "rightCogsSprite"
 
@@ -70,12 +87,30 @@ Item {
                 frameY: 0
                 frameCount: 90
                 reverse: true
-                frameDuration: _ROTATION_ANIMATION_DURATION / frameCount
+                frameDuration: _ROTATION_ANIMATION_DURATION / (2*frameCount)
+
+                to:{
+                    "rightCogsSprite2":1
+                }
+            },
+            Sprite {
+                name: "rightCogsSprite2"
+
+                source: "left-cogs-spritesheet.png"
+
+                frameWidth: 165;
+                frameHeight: 200
+                frameX: 0
+                frameY: 0
+                frameCount: 90
+                reverse: true
+                frameDuration: _ROTATION_ANIMATION_DURATION / (2*frameCount)
 
                 to:{
                     "stillCogsSprite":1
                 }
             }
+
         ]
 
     }

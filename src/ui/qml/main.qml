@@ -69,7 +69,7 @@ Rectangle {
     property bool isNetworkGame: false
     property bool piecesHaveStartedAnimating: false
 
-    property int _ROTATION_ANIMATION_DURATION: 600
+    property int _ROTATION_ANIMATION_DURATION: 800
     property int _OPPONENT_START_ROTATION_DELAY: 300 + _CLAW_OPEN_DURATION + _CLAW_MOVE_DURATION + _CLAW_CAN_ANIMATION_DURATION + 2 //claw animation time...
     property int _QUADRANT_WIDTH: 200
     property int _QUADRANT_GROWTH: 10
@@ -95,9 +95,10 @@ Rectangle {
     property int _RIGHT_CAN_Y: 300
     property int _LEFT_CAN_X: -325
     property int _LEFT_CAN_Y: _RIGHT_CAN_Y
-    property int _CLAW_HOUSE_Y_OFFSET: -30
+    property int _CLAW_HOUSE_Y_OFFSET: -25
     property int _CLAW_SPRITE_WIDTH: 131
-    property int _CLAW_HOUSE_X_OFFSET: 60
+    property int _CLAW_HOUSE_X_OFFSET: -23
+    property int _CLAW_HOUSE_X_MOVE_WHEN_SHRINKING: 27
 
     function lockBoardPieces(){
         guiPlayerCanClickBoardHoleButton = false;
