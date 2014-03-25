@@ -269,12 +269,13 @@ Rectangle {
 
     Rectangle{
         id: clawHouse
-        width: 171 + _CLAW_HOUSE_X_OFFSET
+        width: 171
         height: 98
         color: "transparent"
 
+        z:35
         x: _CLAW_X_HOME
-        y: _CLAW_Y_HOME - _CLAW_HOUSE_Y_OFFSET
+        y: _CLAW_Y_HOME + _CLAW_HOUSE_Y_OFFSET
 
         Image{
             id: clawHouseImg
@@ -283,6 +284,7 @@ Rectangle {
 
             z:35
             anchors.left: parent.left
+            anchors.leftMargin: _CLAW_HOUSE_X_OFFSET
             source: "clawHouse.png"
 
 

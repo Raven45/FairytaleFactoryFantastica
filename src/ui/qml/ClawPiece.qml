@@ -81,19 +81,36 @@ Item {
         }
     }
 
-    NumberAnimation {
-        targets: [root, clawHouse]
-        properties: "scale"
+    ParallelAnimation{
         id: scaleOutAnimation
-        to: 0.65
-        duration: _CLAW_PAUSE_OVER_CAN_BEFORE_DURATION
-        running: false
+
+        NumberAnimation {
+            targets: [root, clawHouse]
+            properties: "scale"
+
+            to: 0.65
+            duration: _CLAW_PAUSE_OVER_CAN_BEFORE_DURATION
+            running: false
+
+        }
+
+        NumberAnimation{
+            target: clawHouse
+            properties: "x"
+            to: clawHouse.x - _CLAW_HOUSE_X_MOVE_WHEN_SHRINKING
+            duration: _CLAW_PAUSE_OVER_CAN_BEFORE_DURATION
+
+        }
+
         onStopped:{
             console.log( "moving into can")
             clawMovingDown();
             moveYIntoCan.start();
         }
+
     }
+
+
 
     NumberAnimation on y{
         id: moveYIntoCan
@@ -132,13 +149,28 @@ Item {
         }
     }
 
-    NumberAnimation {
-        targets: [root, clawHouse]
-        properties: "scale"
-        id: scaleInAnimation
-        to: 1
-        duration: _CLAW_PAUSE_OVER_CAN_AFTER_DURATION
-        running: false
+     ParallelAnimation{
+
+         id: scaleInAnimation
+
+        NumberAnimation {
+            targets: [root, clawHouse]
+            properties: "scale"
+
+            to: 1
+            duration: _CLAW_PAUSE_OVER_CAN_AFTER_DURATION
+            running: false
+        }
+
+        NumberAnimation{
+            target: clawHouse
+            properties: "x"
+            to: clawHouse.x + _CLAW_HOUSE_X_MOVE_WHEN_SHRINKING
+            duration: _CLAW_PAUSE_OVER_CAN_AFTER_DURATION
+
+        }
+
+
     }
 
 
@@ -156,13 +188,18 @@ Item {
 
     }
 
-    NumberAnimation on x{
+
+
+    NumberAnimation {
+        targets: [ root, clawHouse ]
+        properties: "x"
         id: moveToHome
         to: _CLAW_X_HOME
         duration: _CLAW_MOVE_DURATION * 3 / 4
 
         onStopped: {
-            x = to;
+            root.x = to;
+            clawHouse.x = to;
             resetRightCan();
             clawMovingUp();
             moveYToHome.start();
