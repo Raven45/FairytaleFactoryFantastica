@@ -14,6 +14,10 @@ Rectangle {
     signal readyToStartOnePersonPlay()
     signal readyToStartTwoPersonPlay()
 
+
+    signal clawMovingUp()
+    signal clawMovingDown()
+    signal finishedClawMovingY()
     signal makeRightCanGoBack()
     signal resetRightCan()
     signal changeSoundState()
@@ -71,9 +75,9 @@ Rectangle {
     property int _QUADRANT_GROWTH: 10
     property int _BOARD_HOLE_WIDTH: 65
     property int _VERTICAL_OUTSIDE: 18
-    property int _VERTICAL_CENTER: 228
-    property int _HORIZONTAL_TOP: -34
-    property int _HORIZONTAL_CENTER: 178
+    property int _VERTICAL_CENTER: 230
+    property int _HORIZONTAL_TOP: -30
+    property int _HORIZONTAL_CENTER: 182
     property int _CLAW_OPEN_DURATION: 350
     property int _CLAW_MOVE_DURATION: 800
     property int _CLAW_X_TO_CAN_DURATION: 400
@@ -91,6 +95,9 @@ Rectangle {
     property int _RIGHT_CAN_Y: 300
     property int _LEFT_CAN_X: -325
     property int _LEFT_CAN_Y: _RIGHT_CAN_Y
+    property int _CLAW_HOUSE_Y_OFFSET: -30
+    property int _CLAW_SPRITE_WIDTH: 131
+    property int _CLAW_HOUSE_X_OFFSET: 60
 
     function lockBoardPieces(){
         guiPlayerCanClickBoardHoleButton = false;

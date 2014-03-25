@@ -196,6 +196,25 @@ Rectangle {
                 y: getXYOffset( quadrantIndex, pieceIndex ).y
             }
 
+            StateChangeScript{
+                name: "moveYSignal1"
+                script:{
+                    if( quadrantIndex == 0 || quadrantIndex == 1 ){
+                       clawMovingUp()
+                   }
+                   else{
+                       clawMovingDown()
+                   }
+                }
+            }
+
+            StateChangeScript{
+                name: "moveYSignal2"
+                script:{
+                    finishedClawMovingY()
+                }
+            }
+
             StateChangeScript {
                 name: "openPurpleClaw"
                 script: {
@@ -218,6 +237,25 @@ Rectangle {
                 y: getXYOffset( quadrantIndex, pieceIndex ).y
             }
 
+            StateChangeScript{
+                name: "moveYSignal1"
+                script:{
+                    if( quadrantIndex == 0 || quadrantIndex == 1 ){
+                       clawMovingUp()
+                   }
+                   else{
+                       clawMovingDown()
+                   }
+                }
+            }
+
+            StateChangeScript{
+                name: "moveYSignal2"
+                script:{
+                    finishedClawMovingY()
+                }
+            }
+
             StateChangeScript {
                 name: "openTealClaw"
                 script: {
@@ -225,6 +263,8 @@ Rectangle {
                 }
 
             }
+
+
         }
     ]
 
@@ -246,10 +286,19 @@ Rectangle {
                     duration: _CLAW_MOVE_DURATION / 2
                 }
 
-                NumberAnimation {
+                ScriptAction{
+                    scriptName: "moveYSignal1"
+                }
+
+                NumberAnimation
+                {
                     target: tealClawPiece;
                     property: "y"
                     duration: _CLAW_MOVE_DURATION / 2
+                }
+
+                ScriptAction{
+                    scriptName: "moveYSignal2"
                 }
 
                 ScriptAction{
@@ -270,10 +319,19 @@ Rectangle {
                     property: "x"
                     duration: _CLAW_MOVE_DURATION / 2
                 }
+
+                ScriptAction{
+                    scriptName: "moveYSignal1"
+                }
+
                 NumberAnimation {
                     target: purpleClawPiece;
                     property: "y"
                     duration: _CLAW_MOVE_DURATION / 2
+                }
+
+                ScriptAction{
+                    scriptName: "moveYSignal1"
                 }
 
                 ScriptAction{
