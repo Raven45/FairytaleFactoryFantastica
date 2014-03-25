@@ -23,6 +23,8 @@ Image {
 
     function rotate( direction ){
 
+        rotationSound.play()
+
         if( parseInt(direction) === 0 ){
 
             rightRotation.start()
@@ -33,7 +35,48 @@ Image {
             turnCogs( myIndex, "LEFT")
         }
 
-        rotationSound.play()
+        if(bhb0.state == "EMPTY")
+            bhb0.rotation += (direction === 0)? -90 : 90;
+        if(bhb1.state == "EMPTY")
+            bhb1.rotation += (direction === 0)? -90 : 90;
+        if(bhb2.state == "EMPTY")
+            bhb2.rotation += (direction === 0)? -90 : 90;
+        if(bhb3.state == "EMPTY")
+            bhb3.rotation += (direction === 0)? -90 : 90;
+        if(bhb4.state == "EMPTY")
+            bhb4.rotation += (direction === 0)? -90 : 90;
+        if(bhb5.state == "EMPTY")
+            bhb5.rotation += (direction === 0)? -90 : 90;
+        if(bhb6.state == "EMPTY")
+            bhb6.rotation += (direction === 0)? -90 : 90;
+        if(bhb7.state == "EMPTY")
+            bhb7.rotation += (direction === 0)? -90 : 90;
+        if(bhb8.state == "EMPTY")
+            bhb8.rotation += (direction === 0)? -90 : 90;
+
+    }
+
+    function resetRotations(){
+            root.rotation = 0;
+
+            bhb0.rotation = 0;
+            bhb0.pieceIndex = 0;
+            bhb1.rotation = 0;
+            bhb1.pieceIndex = 1;
+            bhb2.rotation = 0;
+            bhb2.pieceIndex = 2;
+            bhb3.rotation = 0;
+            bhb3.pieceIndex = 3;
+            bhb4.rotation = 0;
+            bhb4.pieceIndex = 4;
+            bhb5.rotation = 0;
+            bhb5.pieceIndex = 5;
+            bhb6.rotation = 0;
+            bhb6.pieceIndex = 6;
+            bhb7.rotation = 0;
+            bhb7.pieceIndex = 7;
+            bhb8.rotation = 0;
+            bhb8.pieceIndex = 8;
     }
 
 
@@ -119,6 +162,7 @@ Image {
     }
 
     BoardHoleButton{
+        id: bhb0
         anchors.leftMargin: 15
         anchors.topMargin: 13
         anchors.left: parent.left
@@ -128,6 +172,7 @@ Image {
 
     }
     BoardHoleButton{
+        id: bhb1
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
         anchors.topMargin: 13
@@ -135,6 +180,7 @@ Image {
         quadrantIndex: myIndex
     }
     BoardHoleButton{
+        id: bhb2
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.topMargin: 13
@@ -143,6 +189,7 @@ Image {
         quadrantIndex: myIndex
     }
     BoardHoleButton{
+        id: bhb3
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
         anchors.leftMargin: 15
@@ -150,12 +197,14 @@ Image {
         quadrantIndex: myIndex
     }
     BoardHoleButton{
+        id: bhb4
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         pieceIndex: 4
         quadrantIndex: myIndex
     }
     BoardHoleButton{
+        id: bhb5
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
         anchors.rightMargin: 15
@@ -163,6 +212,7 @@ Image {
         quadrantIndex: myIndex
     }
     BoardHoleButton{
+        id: bhb6
         anchors.leftMargin: 15
         anchors.bottomMargin: 13
         anchors.left: parent.left
@@ -171,6 +221,7 @@ Image {
         quadrantIndex: myIndex
     }
     BoardHoleButton{
+        id:bhb7
         anchors.bottomMargin: 13
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
@@ -178,6 +229,7 @@ Image {
         quadrantIndex: myIndex
     }
     BoardHoleButton{
+        id:bhb8
         anchors.rightMargin: 15
         anchors.bottomMargin: 13
         anchors.right: parent.right

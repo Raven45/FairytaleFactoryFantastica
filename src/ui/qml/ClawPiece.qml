@@ -2,9 +2,13 @@ import QtQuick 2.0
 
 Item {
 
+    id: root
+
     property string source
     property string reverseSource
     property string type
+
+    property int yDirection: 0
 
     function reset(){
         if( type == "TEAL" ){
@@ -19,7 +23,8 @@ Item {
 
     }
 
-    id: root
+
+
 
     Connections{
         target:page
@@ -43,7 +48,10 @@ Item {
         }
     }
 
-    NumberAnimation on x{
+
+    NumberAnimation {
+        targets: [root, clawHouse]
+        properties: "x"
         id: moveToCan
         to: type == "PURPLE"? _RIGHT_CAN_X : _LEFT_CAN_X
         duration: _CLAW_X_TO_CAN_DURATION
@@ -52,6 +60,7 @@ Item {
             x = to;
 
             console.log( "starting to open claw and move down to can")
+            clawMovingDown();
             moveYToCan.start();
         }
     }
@@ -63,6 +72,8 @@ Item {
         running: false
         onStopped: {
             y = to;
+            finishedClawMovingY();
+
             console.log( "opening and scaling back " + type + " claw");
             scaleOutAnimation.start()
             clawSprite.jumpTo("openEmptyClawSprite");
@@ -70,13 +81,16 @@ Item {
         }
     }
 
-    NumberAnimation on scale{
+    NumberAnimation {
+        targets: [root, clawHouse]
+        properties: "scale"
         id: scaleOutAnimation
         to: 0.65
         duration: _CLAW_PAUSE_OVER_CAN_BEFORE_DURATION
         running: false
         onStopped:{
             console.log( "moving into can")
+            clawMovingDown();
             moveYIntoCan.start();
         }
     }
@@ -89,6 +103,7 @@ Item {
         onStopped: {
             y = to;
             console.log( "waiting in can")
+            finishedClawMovingY();
             waitInCan.startTimer();
             clawSprite.jumpTo("pickUpPieceSprite");
             //waitInCan.startTimer();
@@ -100,6 +115,7 @@ Item {
         duration: _CLAW_TIME_IN_CAN_DURATION
         onTriggered:{
             console.log( "moving out of can")
+            clawMovingUp();
             moveOutOfCan.start()
         }
     }
@@ -111,14 +127,18 @@ Item {
         onStopped: {
             console.log( "done moving out of can (boardHoleButton's timer is about to trigger)")
             y = to;
+            finishedClawMovingY()
             scaleInAnimation.start()
         }
     }
 
-    NumberAnimation on scale{
+    NumberAnimation {
+        targets: [root, clawHouse]
+        properties: "scale"
         id: scaleInAnimation
         to: 1
         duration: _CLAW_PAUSE_OVER_CAN_AFTER_DURATION
+        running: false
     }
 
 
@@ -144,6 +164,7 @@ Item {
         onStopped: {
             x = to;
             resetRightCan();
+            clawMovingUp();
             moveYToHome.start();
         }
     }
@@ -154,6 +175,7 @@ Item {
         duration: _CLAW_MOVE_DURATION / 4
 
         onStopped: {
+            finishedClawMovingY();
             y = to;
         }
     }
@@ -167,8 +189,8 @@ Item {
 
     SpriteSequence{
         id: clawSprite
-        width: 131
-        height: 131
+        width: _CLAW_SPRITE_WIDTH
+        height: _CLAW_SPRITE_WIDTH
 
 
         sprites:[
@@ -300,7 +322,7 @@ Item {
         anchors.bottomMargin: -41
         anchors.horizontalCenter: clawSprite.horizontalCenter
         anchors.horizontalCenterOffset: -2
-        z: 400
+        z: 30
     }
 
 }

@@ -35,14 +35,7 @@ Rectangle {
         visible: true
     }
 
-    Rectangle {
-        id: claw_width_bar
-        width: gameScreen.width; height: 10; z: 1
-        anchors.top: gameScreen.top
-        anchors.topMargin: 10
-        anchors.left: gameScreen.left
-        color: "grey"
-    }
+
 
     GumdropKnob {
         id: gumdrop_knob
@@ -57,6 +50,15 @@ Rectangle {
         anchors.topMargin: gameScreen.height/2 + left_can_arm.height
         anchors.left: gameScreen.left
         anchors.leftMargin: -20
+    }
+
+    Rectangle {
+        id: claw_width_bar
+        width: gameScreen.width; height: 10; z: 1
+        anchors.top: gameScreen.top
+        anchors.topMargin: 10
+        anchors.left: gameScreen.left
+        color: "grey"
     }
 
     Image {

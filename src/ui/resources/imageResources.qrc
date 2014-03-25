@@ -35,5 +35,7 @@
 		<file alias="oven_front.png">../media/oven_front.png</file>
 		<file alias="exitButton.png">../media/exitButton.png</file>
 		<file alias="exitButtonHover.png">../media/exitButtonHover.png</file>
+		<file alias="clawHouse.png">../media/clawHouse.png</file>
+		<file alias="messyGear.png">../media/messyGear.png</file>
     </qresource>
 </RCC>
