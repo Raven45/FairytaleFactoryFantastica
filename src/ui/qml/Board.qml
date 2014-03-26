@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
+import QtQuick.Particles 2.0
 
 Rectangle {
     id: pentagoBoard
@@ -12,6 +13,12 @@ Rectangle {
 
 
     state: "LOCKED"
+
+
+
+
+
+
 
     Connections{
         target: page
@@ -213,6 +220,7 @@ Rectangle {
             case 3: quadrant3.rotate(direction);break;
             default: console.log( "ERROR! bad quadrantIndex of " + quadrantIndex + " received.\n" );
         }
+        boardShake.start();
     }
 
 
@@ -229,6 +237,19 @@ Rectangle {
         z: 20
     }
 
+
+
+
+    SequentialAnimation {
+        id: boardShake
+        loops: 7
+        PropertyAnimation { easing.type: Easing.InQuad; duration:_ROTATION_ANIMATION_DURATION/28; targets: steel_platform; properties: "rotation"; to: .5 }
+        PropertyAnimation { easing.type: Easing.InQuad; duration:_ROTATION_ANIMATION_DURATION/28; target: steel_platform; properties: "rotation"; to: 0 }
+        PropertyAnimation { easing.type: Easing.InQuad; duration: _ROTATION_ANIMATION_DURATION/28; target: steel_platform; properties: "rotation"; to: -.5 }
+        PropertyAnimation { easing.type: Easing.InQuad; duration:_ROTATION_ANIMATION_DURATION/28; target: steel_platform; properties: "rotation"; to: 0 }
+
+    }
+
     Rectangle {
         id: quads_rec
         width: 410
@@ -237,6 +258,9 @@ Rectangle {
         anchors.centerIn: pentagoBoard
         border.color: "#363666"
         z: 21
+
+
+
         Quadrant{
             id: quadrant0
             anchors.left: parent.left
