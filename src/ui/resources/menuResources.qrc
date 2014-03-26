@@ -33,5 +33,8 @@
 		<file alias="Factory.png">../media/Factory.png</file>
 		<file alias="Wolf.png">../media/Wolf.png</file>
 		<file alias="Sign.png">../media/sign.png</file>
+		<file alias="RightWall.png">../media/Final_RightWall.png</file>
+		<file alias="LeftWall.png">../media/Left_Wall.png</file>
+		<file alias="HiringSign.png">../media/Hiring_Sign.png</file>
     </qresource>
 </RCC>

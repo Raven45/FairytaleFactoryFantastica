@@ -264,6 +264,29 @@ Rectangle {
     }
 
     Image{
+        id: rightWall
+        source: "RightWall.png"
+        anchors.right: main_gate.left
+        anchors.rightMargin: -35
+        anchors.bottom: main_gate.bottom
+        anchors.bottomMargin: 28
+        z: 9
+        fillMode: Image.PreserveAspectFit
+    }
+
+    Image{
+        id: leftWall
+        source: "LeftWall.png"
+        anchors.left: main_gate.right
+        anchors.leftMargin: -75
+        anchors.bottom: main_gate.bottom
+        anchors.bottomMargin: -8
+        z: 10
+        fillMode: Image.PreserveAspectFit
+    }
+
+
+    Image{
         id: gate_rDoor
         source: "GatePart2.png"
         anchors.bottom: main_gate.bottom
@@ -404,7 +427,7 @@ Rectangle {
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: -150
-        z: 11
+        z: 7
     }
     Image{
         id: treeLayer6
@@ -412,7 +435,8 @@ Rectangle {
         anchors.left: treeLayer5.right
         anchors.leftMargin: -100
         anchors.bottom: treeLayer5.bottom
-        z: 12
+        anchors.bottomMargin: -50
+        z: 10
     }
 
 
