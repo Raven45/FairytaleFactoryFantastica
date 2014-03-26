@@ -15,7 +15,7 @@ Item {
 	states: [
         State{
             name: "ON"
-            PropertyChanges { target: witch;  y: 170 }
+            PropertyChanges { target: witch;  y: 90 }
             PropertyChanges { target: witch_image; mirror: false }
             PropertyChanges { target: witch_animation; running: true }
         },

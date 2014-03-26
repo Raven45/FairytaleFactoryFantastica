@@ -14,5 +14,7 @@
 		<file alias="blackbuttonsmall.png">../media/blackbuttonsmall.png</file>
 		<file alias="line8.png">../media/line8.png</file>
 		<file alias="teal-gumdrop-centered.png">../media/teal-gumdrop-centered.png</file>
+		<file alias="gretelFrown.png">../media/GretelFrown.png</file>
+		<file alias="gretelBlink.png">../media/gretelBlink.png</file>
     </qresource>
 </RCC>

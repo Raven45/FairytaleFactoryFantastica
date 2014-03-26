@@ -42,6 +42,7 @@ Rectangle {
     signal opponentDisconnected()
     signal opponentReconnected()
     signal startPieceAnimations()
+    signal gateOpened()
 
     property alias main: page
     property bool guiPlayerIsWhite: false
@@ -68,6 +69,14 @@ Rectangle {
     property int _CLAW_X_HOME: pentagoBoard.width/2 - 58
     property int _CLAW_Y_HOME: -300
 
+
+    Rectangle{
+        id: menuFade
+        anchors.fill: parent
+        z: 600
+        color: "black"
+        opacity: 0;
+    }
 
     function lockBoardPieces(){
         guiPlayerCanClickBoardHoleButton = false;

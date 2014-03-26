@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+		<file alias="left-gate-spritesheet.png">../media/left-gate-spritesheet.png</file>
+		<file alias="right-gate-spritesheet.png">../media/right-gate-spritesheet.png</file>
+		    </qresource>
+</RCC>

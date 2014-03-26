@@ -23,7 +23,8 @@ RESOURCES += \
     ui/resources/guiButtonsResources.qrc \
     ui/resources/menuResources.qrc \
     ui/resources/audioResources.qrc \
-    ui/resources/MonkeysSpinningMonkeys.qrc
+    ui/resources/MonkeysSpinningMonkeys.qrc \
+    ui/resources/gateSprites.qrc
 
 INCLUDEPATH += \
     backend \

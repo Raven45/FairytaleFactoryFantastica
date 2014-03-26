@@ -32,8 +32,6 @@ Item {
         timerAnimation.stop();
     }
 
-
-
     NumberAnimation on opacity{
         id: timerAnimation
         from: 0

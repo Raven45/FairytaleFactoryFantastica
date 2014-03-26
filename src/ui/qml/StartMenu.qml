@@ -36,24 +36,24 @@ Rectangle {
         fillMode: Image.PreserveAspectFit
     }
 
+    QmlTimer{
+        id: gretelBlinkTimer
+        duration: 5000
+        onTriggered:{
+            gretelBlink.visible = true;
+            showGretelBlinkTimer.startTimer();
 
-//    Smoke {
-//        id: startMenu_smoke1
-//        anchors.bottom: main_factory.top
-//        anchors.bottomMargin: -47
-//        anchors.left: main_factory.left
-//        anchors.leftMargin: 40
-//    }
+        }
 
-//    Smoke {
-//        id: startMenu_smoke2
-//        anchors.bottom: main_factory.top
-//        anchors.bottomMargin: -50
-//        anchors.right: main_factory.right
-//    }
-
-
-
+        QmlTimer{
+            id: showGretelBlinkTimer
+            duration: 150
+            onTriggered:{
+                gretelBlink.visible = false;
+                gretelBlinkTimer.startTimer();
+            }
+        }
+    }
 
 
 
@@ -63,6 +63,7 @@ Rectangle {
         state: "ON"
         anchors.centerIn: parent
         anchors.fill: parent
+        z: 20
         states: [
             State{
                 name: "ON"
@@ -73,6 +74,8 @@ Rectangle {
                 PropertyChanges { target: flame2;  enabled: true }
                 PropertyChanges { target: smoke3; enabled: true }
                 PropertyChanges { target: smoke4; enabled: true }
+                PropertyChanges { target: thickFog; enabled: false }
+                PropertyChanges { target: thickFog2; enabled: false }
             },
             State{
                 name: "OFF"
@@ -83,6 +86,8 @@ Rectangle {
                 PropertyChanges { target: flame2;  enabled: false }
                 PropertyChanges { target: smoke3; enabled: false }
                 PropertyChanges { target: smoke4; enabled: false }
+                PropertyChanges { target: thickFog; enabled: false }
+                PropertyChanges { target: thickFog2; enabled: false }
             }
 
         ]
@@ -111,11 +116,22 @@ Rectangle {
                 color: "#11111111"
                 colorVariation: 0
                 opacity: .7
+
             }
+
+            ImageParticle {
+                groups: ["thickFog"]
+                source: "qrc:///particleresources/glowdot.png"
+                color: "#000000"
+                colorVariation: 0
+                opacity: 1
+
+            }
+
             ImageParticle {
                 groups: ["smoke", "smoke2"]
                 source: "qrc:///particleresources/glowdot.png"
-                color: "#11111111"
+                color: "#DDDDDD"
                 colorVariation: 0
             }
 
@@ -128,21 +144,100 @@ Rectangle {
 
 
             Emitter {
+                id: thickFog
+                anchors.left: parent.left
+                anchors.bottom: parent.bottom
+                height: parent.height
+                group: "thickFog"
+                z:15
+                shape: LineShape{}
+                lifeSpan: 5000
+                lifeSpanVariation: 400
+                emitRate: 25
+                size: 800
+                endSize: 1200
+                sizeVariation: 100
+                enabled: false
+                acceleration: PointDirection { x: 250; xVariation: 20; y: 0; yVariation: 3}
+                velocity: AngleDirection { angle: 0; magnitude: 180; angleVariation: 30; magnitudeVariation: 80 }
+
+                Connections{
+                    target: page
+
+                    onGateOpened:{
+                        thickFog.enabled = true;
+                        thickFog2.enabled = true;
+                        flame.enabled = false;
+                        flame2.enabled = false;
+                        fadeTimer.startTimer();
+                        frownTimer.startTimer();
+                    }
+                }
+
+                NumberAnimation{
+                    id: fadeStartMenu; target: menuFade; properties: "opacity"; to: 1; duration: 1800;
+                    onStopped: {
+                        thickFog.enabled = false;
+                        thickFog2.enabled = false;
+                    }
+                }
+
+                QmlTimer{
+                    id: frownTimer
+                    duration: 360
+                    onTriggered: {
+                        gretelFrown.visible = true;
+                    }
+                }
+
+                QmlTimer{
+                    id: fadeTimer
+                    duration: 1600
+                    onTriggered: {
+                        fadeStartMenu.start();
+                    }
+                }
+
+
+            }
+
+            Emitter {
+                id: thickFog2
+                anchors.left: parent.right
+                anchors.bottom: parent.bottom
+                height: parent.height
+                group: "thickFog"
+                z:20
+                shape: LineShape{}
+                lifeSpan: 3500
+                lifeSpanVariation: 400
+                emitRate: 15
+                size: 800
+                endSize: 1200
+                sizeVariation: 100
+                enabled: false
+                acceleration: PointDirection { x: -30; xVariation: 20; y: 0; yVariation: 3}
+                velocity: AngleDirection { angle: 180; magnitude: 160; angleVariation: 30; magnitudeVariation: 80 }
+            }
+
+            Emitter {
                 id: fog
                 anchors.left: parent.left
                 anchors.bottom: parent.bottom
-                height: parent.height*.8
+                height: parent.height*.75
                 group: "fog"
                 z:15
-                shape: LineShape
-                lifeSpan: 8500
+                shape: LineShape{}
+                lifeSpan: 9500
                 lifeSpanVariation: 400
                 emitRate: 10
                 size: 600
                 endSize: 100
                 sizeVariation: 300
                 acceleration: PointDirection { x: 30; xVariation: 20; y: 5; yVariation: 3}
-                velocity: AngleDirection { angle: 0; magnitude: 90; angleVariation: 30; magnitudeVariation: 50 }
+                velocity: AngleDirection { angle: 0; magnitude: 80; angleVariation: 30; magnitudeVariation: 50 }
+
+
             }
 
 
@@ -153,7 +248,7 @@ Rectangle {
                 anchors.right: parent.right
                 anchors.rightMargin: 50
                 group: "flame"
-
+                z: 15
                 emitRate: 120
                 lifeSpan: 1200
                 size: 20
@@ -169,7 +264,7 @@ Rectangle {
                 height: 500/2
                 group: "smoke"
                 follow: "flame"
-
+                z: 15
                 emitRatePerParticle: 2
                 lifeSpan: 3600
                 lifeSpanVariation: 400
@@ -186,7 +281,7 @@ Rectangle {
                 height: 500/2 - 20
                 group: "smoke"
                 follow: "flame"
-
+                z: 15
                 emitRatePerParticle: 1
                 lifeSpan: 4800
                 size: 36
@@ -203,7 +298,7 @@ Rectangle {
                 anchors.right: parent.right
                 anchors.rightMargin: 150
                 group: "flame2"
-
+                z: 15
                 emitRate: 120
                 lifeSpan: 1200
                 size: 20
@@ -219,7 +314,7 @@ Rectangle {
                 height: 500/2
                 group: "smoke2"
                 follow: "flame2"
-
+                z: 15
                 emitRatePerParticle: 2
                 lifeSpan: 3600
                 lifeSpanVariation: 400
@@ -236,7 +331,7 @@ Rectangle {
                 height: 500/2 - 20
                 group: "smoke2"
                 follow: "flame2"
-
+                z: 15
                 emitRatePerParticle: 1
                 lifeSpan: 4800
                 size: 36
@@ -280,11 +375,57 @@ Rectangle {
         anchors.left: main_gate.right
         anchors.leftMargin: -75
         anchors.bottom: main_gate.bottom
-        anchors.bottomMargin: -8
+        anchors.bottomMargin: -17
         z: 10
         fillMode: Image.PreserveAspectFit
     }
 
+    SpriteSequence{
+        id: gate_lDoorSprite
+        height: 360
+        width: 280
+        anchors.bottom: main_gate.bottom
+        anchors.bottomMargin: 30
+        anchors.left: main_gate.left
+        anchors.leftMargin: 80
+        z: 10
+        sprites:[
+            Sprite{
+                name: "closed_gate"
+                source: "left-gate-spritesheet.png"
+                frameCount: 1
+                frameX: 0
+                frameY: 0
+                frameDuration: 5000
+                frameWidth: 280
+                frameHeight: 360
+            },
+            Sprite{
+                name: "opening_gate"
+                source: "left-gate-spritesheet.png"
+                frameCount: 20
+                frameX: 0
+                frameY: 0
+                frameDuration: 68
+                frameWidth: 280
+                frameHeight: 360
+                to:{
+                    "open_gate": 1
+                }
+            },
+            Sprite{
+                name: "open_gate"
+                source: "left-gate-spritesheet.png"
+                frameCount: 1
+                frameX: 840
+                frameY: 1440
+                frameDuration: 100
+                frameWidth: 280
+                frameHeight: 360
+            }
+
+        ]
+    }
 
     Image{
         id: gate_rDoor
@@ -300,24 +441,11 @@ Rectangle {
     }
 
     Image{
-        id: gate_lDoor
-        source: "GatePart1.png"
-        anchors.bottom: main_gate.bottom
-        anchors.bottomMargin: 30
-        anchors.left: main_gate.left
-        anchors.leftMargin: 80
-        z: 10
-        height: 360
-        width: 280
-        fillMode: Image.PreserveAspectFit
-    }
-
-    Image{
         id: hansel
         source: "Hansel.png"
-        anchors.right: gate_lDoor.right
+        anchors.right: gate_lDoorSprite.right
         anchors.rightMargin: 58
-        anchors.bottom: gate_lDoor.bottom
+        anchors.bottom: gate_lDoorSprite.bottom
         anchors.bottomMargin: -55
         z: 11
         height: 240
@@ -332,13 +460,37 @@ Rectangle {
         source: "Gretel.png"
         anchors.left: hansel.right
         anchors.leftMargin: -15
-        anchors.top: gate_lDoor.bottom
+        anchors.top: gate_lDoorSprite.bottom
         anchors.bottomMargin: -60
         z: 11
         height: 240
         width: 160
         fillMode: Image.PreserveAspectFit
 
+
+    }
+
+
+    Image{
+        id: gretelFrown
+        source: "gretelFrown.png"
+        anchors.centerIn: gretel
+        z: 12
+        height: 240
+        width: 160
+        fillMode: Image.PreserveAspectFit
+        visible: false
+    }
+
+    Image{
+        id: gretelBlink
+        source: "gretelBlink.png"
+        anchors.centerIn: gretel
+        z: 12
+        height: 240
+        width: 160
+        fillMode: Image.PreserveAspectFit
+        visible: false
     }
 
 
@@ -361,6 +513,14 @@ Rectangle {
         z: 16
         width: 320
         height: 400
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked:{
+                gate_lDoorSprite.jumpTo("opening_gate");
+                gateOpened();
+            }
+        }
 
     }
 
@@ -426,7 +586,7 @@ Rectangle {
         source: "Tree4.png"
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
-        anchors.verticalCenterOffset: -150
+        anchors.verticalCenterOffset: -220
         z: 7
     }
     Image{
@@ -435,7 +595,7 @@ Rectangle {
         anchors.left: treeLayer5.right
         anchors.leftMargin: -100
         anchors.bottom: treeLayer5.bottom
-        anchors.bottomMargin: -50
+        anchors.bottomMargin: -130
         z: 10
     }
 
@@ -466,17 +626,24 @@ Rectangle {
     states: [
         State{
             name: "VISIBLE"
-            //PropertyChanges { target: startMenu_smoke1; state: "ON" }
-            //PropertyChanges { target: startMenu_smoke2; state: "ON" }
+            PropertyChanges { target: smokeRectangle; state: "ON" }
             PropertyChanges { target: startMenu_witch;  state: "ON" }
+            PropertyChanges { target: menuFade; opacity: 0; visible: true; }
+            PropertyChanges { target: gretelFrown; visible: false }
             PropertyChanges { target: startMenu; visible: true }
+            PropertyChanges { target: gretelBlink; visible: false }
+            PropertyChanges { target: gretelBlinkTimer; duration: 5000 }
+            StateChangeScript { script: gretelBlinkTimer.startTimer() }
         },
         State{
             name: "INVISIBLE"
-            //PropertyChanges { target: startMenu_smoke1; state: "OFF" }
-            //PropertyChanges { target: startMenu_smoke2; state: "OFF" }
+            PropertyChanges { target: smokeRectangle; state: "OFF" }
             PropertyChanges { target: startMenu_witch;  state: "OFF" }
+            PropertyChanges { target: menuFade; opacity: 0; visible: false; }
             PropertyChanges { target: startMenu; visible: false }
+            PropertyChanges { target: gretelFrown; visible: false }
+            PropertyChanges { target: gretelBlink; visible: false }
+            PropertyChanges { target: gretelBlinkTimer; duration: 0 }
         }
 
     ]
