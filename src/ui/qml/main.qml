@@ -38,6 +38,7 @@ Rectangle {
     signal pauseOpacity()
     signal clearPauseOpacity()
     signal pieceFlowIntensityChanged( int volume )
+    signal playRotateAnimationOnQuadrant(int quadrantToRotate, int rotationDirection)
     signal startGumdropAnimation()
     signal pauseGumdropAnimation()
     signal resumeGumdropAnimation()
@@ -72,7 +73,7 @@ Rectangle {
     property int _ROTATION_ANIMATION_DURATION: 800
     property int _OPPONENT_START_ROTATION_DELAY: 300 + _CLAW_OPEN_DURATION + _CLAW_MOVE_DURATION + _CLAW_CAN_ANIMATION_DURATION + 2 //claw animation time...
     property int _QUADRANT_WIDTH: 200
-    property int _QUADRANT_GROWTH: 10
+    property double _QUADRANT_GROWTH: 1.3
     property int _BOARD_HOLE_WIDTH: 65
     property int _VERTICAL_OUTSIDE: 18
     property int _VERTICAL_CENTER: 230
@@ -88,7 +89,7 @@ Rectangle {
     property int _CLAW_MOVE_OUT_OF_CAN_DURATION: _CLAW_MOVE_INTO_CAN_DURATION
     property int _CLAW_PAUSE_OVER_CAN_AFTER_DURATION: _CLAW_PAUSE_OVER_CAN_BEFORE_DURATION
     property int _CLAW_CAN_ANIMATION_DURATION: _CLAW_X_TO_CAN_DURATION + _CLAW_Y_TO_CAN_DURATION + _CLAW_PAUSE_OVER_CAN_BEFORE_DURATION + _CLAW_MOVE_INTO_CAN_DURATION + _CLAW_TIME_IN_CAN_DURATION + _CLAW_MOVE_OUT_OF_CAN_DURATION + _CLAW_PAUSE_OVER_CAN_AFTER_DURATION + 50
-    property int _CLAW_X_HOME: 900//pentagoBoard.width/2 - 58
+    property int _CLAW_X_HOME: 900
     property int _CLAW_Y_HOME: -180
     property int _RIGHT_CAN_X: 815
     property int _CAN_HEIGHT: 160
@@ -157,7 +158,7 @@ Rectangle {
 
         onTriggered:{
                 //console.log("animating opponent rotation." );
-                pentagoBoard.playRotateAnimationOnQuadrant(quadrantToRotate, rotationDirection);
+                playRotateAnimationOnQuadrant(quadrantToRotate, rotationDirection);
                 unlockGuiPiecesTimeout.startTimer();
 
         }
@@ -197,7 +198,7 @@ Rectangle {
         onRotationClicked:{
             if(!menuIsShowing){
                 if (guiPlayerCanClickRotation){
-                    pentagoBoard.playRotateAnimationOnQuadrant( index, direction );
+                    playRotateAnimationOnQuadrant( index, direction );
                     userMoveTimeout.startTimer();
                 }
             }
@@ -294,12 +295,6 @@ Rectangle {
     GameScreen{
         id: gameScreen
         z:1
-        Board{
-            z: parent.z+20
-            id: pentagoBoard
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.horizontalCenter: parent.horizontalCenter
-        }
     }
 
     function getXYOffset(quadrantIndex, pieceIndex){

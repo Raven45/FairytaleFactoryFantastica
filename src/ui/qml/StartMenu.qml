@@ -96,7 +96,6 @@ Rectangle {
                 sendPlayerName( playerNameBox.text );
                 startMenu.state = "INVISIBLE"
                 isNetworkGame = false;
-                pentagoBoard.state = "UNLOCKED";
                 clearBoard();
                 readyToStartOnePersonPlay();
             }

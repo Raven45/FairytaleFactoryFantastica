@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
+import QtQuick.Particles 2.0
 
 Rectangle {
     id: pentagoBoard
@@ -28,6 +29,22 @@ Rectangle {
             quadrant1.resetRotations();
             quadrant2.resetRotations();
             quadrant3.resetRotations();
+        }
+
+        onReadyToStartOnePersonPlay:{
+            state = "UNLOCKED"
+        }
+
+        onPlayRotateAnimationOnQuadrant:{
+
+            switch( parseInt( quadrantToRotate ) ){
+                case 0: quadrant0.rotate(rotationDirection);break;
+                case 1: quadrant1.rotate(rotationDirection);break;
+                case 2: quadrant2.rotate(rotationDirection);break;
+                case 3: quadrant3.rotate(rotationDirection);break;
+                default: console.log( "ERROR! bad quadrantIndex of " + quadrantToRotate + " received.\n" );
+            }
+            boardShake.start();
         }
     }
 
@@ -204,16 +221,7 @@ Rectangle {
         tbar_rotate_angle: 135
     }
 
-    function playRotateAnimationOnQuadrant( quadrantIndex, direction ){
 
-        switch( parseInt( quadrantIndex ) ){
-            case 0: quadrant0.rotate(direction);break;
-            case 1: quadrant1.rotate(direction);break;
-            case 2: quadrant2.rotate(direction);break;
-            case 3: quadrant3.rotate(direction);break;
-            default: console.log( "ERROR! bad quadrantIndex of " + quadrantIndex + " received.\n" );
-        }
-    }
 
 
 
@@ -229,6 +237,19 @@ Rectangle {
         z: 20
     }
 
+
+
+
+    SequentialAnimation {
+        id: boardShake
+        loops: 7
+        PropertyAnimation { easing.type: Easing.InQuad; duration:_ROTATION_ANIMATION_DURATION/28; targets: steel_platform; properties: "rotation"; to: .5 }
+        PropertyAnimation { easing.type: Easing.InQuad; duration:_ROTATION_ANIMATION_DURATION/28; target: steel_platform; properties: "rotation"; to: 0 }
+        PropertyAnimation { easing.type: Easing.InQuad; duration: _ROTATION_ANIMATION_DURATION/28; target: steel_platform; properties: "rotation"; to: -.5 }
+        PropertyAnimation { easing.type: Easing.InQuad; duration:_ROTATION_ANIMATION_DURATION/28; target: steel_platform; properties: "rotation"; to: 0 }
+
+    }
+
     Rectangle {
         id: quads_rec
         width: 410
@@ -237,6 +258,9 @@ Rectangle {
         anchors.centerIn: pentagoBoard
         border.color: "#363666"
         z: 21
+
+
+
         Quadrant{
             id: quadrant0
             anchors.left: parent.left
@@ -266,115 +290,9 @@ Rectangle {
     }
 
 
-
-    Rectangle{
+    ClawHouse {
         id: clawHouse
-        width: 171
-        height: 98
-        color: "transparent"
-
-        z:35
-        x: _CLAW_X_HOME
-        y: _CLAW_Y_HOME + _CLAW_HOUSE_Y_OFFSET
-
-        Image{
-            id: clawHouseImg
-            width: 171
-            height: 98
-
-            z:35
-            anchors.left: parent.left
-            anchors.leftMargin: _CLAW_HOUSE_X_OFFSET
-            source: "clawHouse.png"
-
-
-        }
-
-        Image{
-            id: leftMessyGear
-            z:36
-            source: "messyGear.png"
-            anchors.horizontalCenter: clawHouseImg.horizontalCenter
-            anchors.horizontalCenterOffset: -60 * scale
-            anchors.verticalCenter: clawHouseImg.verticalCenter
-
-        }
-
-        Image{
-            id: rightMessyGear
-            z:36
-            source: "messyGear.png"
-            anchors.horizontalCenter: clawHouseImg.horizontalCenter
-            anchors.horizontalCenterOffset:( 60) * scale
-            anchors.verticalCenter: clawHouseImg.verticalCenter
-        }
-
-        Connections{
-            target: page
-            onClawMovingUp:{
-                gearsPullingClawUp.start()
-            }
-
-            onClawMovingDown:{
-                gearsPullingClawDown.start()
-            }
-
-            onFinishedClawMovingY:{
-                gearsPullingClawDown.stop()
-                gearsPullingClawUp.stop()
-            }
-        }
-
-        ParallelAnimation {
-            id: gearsPullingClawUp
-            loops: Animation.Infinite
-            alwaysRunToEnd: false
-            running: false
-
-            NumberAnimation{
-                target: rightMessyGear;
-                properties: "rotation";
-                from: rotation
-                to: rotation + 360
-                duration: 500
-            }
-
-            NumberAnimation{
-                target: leftMessyGear;
-                properties: "rotation";
-                from: rotation
-                to: rotation - 360
-                duration: 500
-            }
-        }
-
-        ParallelAnimation {
-            id: gearsPullingClawDown
-            loops: Animation.Infinite
-            alwaysRunToEnd: false
-            running: false
-
-            NumberAnimation{
-                target: rightMessyGear;
-                properties: "rotation";
-                from: rotation
-                to: rotation - 360
-                duration: 500
-            }
-
-            NumberAnimation{
-                target: leftMessyGear;
-                properties: "rotation";
-                from: rotation
-                to: rotation + 360
-                duration: 500
-            }
-        }
     }
-
-
-
-
 
     ClawPiece {
         type: "PURPLE"
