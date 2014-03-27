@@ -11,6 +11,14 @@ Rectangle {
     z: 0
 
     property int _MIDDLE_TUBE_WIDTH: 56
+
+    Board{
+        z: parent.z+20
+        id: pentagoBoard
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+    }
+
     SoundEffect {
             id: playSound
             source: "ButtonClick2.wav"

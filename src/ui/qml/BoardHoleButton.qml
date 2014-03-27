@@ -9,6 +9,7 @@ Rectangle {
     property int pieceIndex
     property int quadrantIndex
     property bool isLocked
+    //scale: parent.scale
     SoundEffect {
             id: playSound
             source: "ButtonClick2.wav"
@@ -45,7 +46,8 @@ Rectangle {
         visible: false
         source: page.guiPlayerIsWhite ? "teal-gumdrop.png" : "purp-gumdrop.png"
     }
-    state: "EMPTY" //...property binding didn't work but should have?
+
+    state: "EMPTY"
 
 
     Connections{
@@ -77,6 +79,11 @@ Rectangle {
             state = "EMPTY";
         }
 
+        onShowPiece:{
+            if( qIndex == quadrantIndex && pIndex == pieceIndex ){
+                showPieceTimer.startTimer();
+            }
+        }
 
         onRotationAnimationFinished:{
 
@@ -153,15 +160,6 @@ Rectangle {
 
             if( isGuiPlayersTurn ){
                 unlockQuadrantRotation();
-            }
-        }
-    }
-
-    Connections{
-        target: page
-        onShowPiece:{
-            if( qIndex == quadrantIndex && pIndex == pieceIndex ){
-                showPieceTimer.startTimer();
             }
         }
     }
@@ -278,8 +276,6 @@ Rectangle {
         }
     ]
 
-
-
     transitions: [
 
 
@@ -357,7 +353,6 @@ Rectangle {
         property string playerColor
         duration: _CLAW_CAN_ANIMATION_DURATION
         onTriggered:{
-
             console.log( "timer triggered, changing state to " + playerColor )
             parent.state = playerColor;
         }

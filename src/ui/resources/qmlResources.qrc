@@ -31,5 +31,7 @@
 		<file alias="RightAnimationGumdrop.qml" >../qml/RightAnimationGumdrop.qml</file>
 		<file alias="Oven.qml" >../qml/Oven.qml</file>
 		<file alias="Flame.qml" >../qml/Flame.qml</file>
+		<file alias="ClawHouse.qml" >../qml/ClawHouse.qml</file>
+		<file alias="QuadrantRotationAnimation.qml" >../qml/QuadrantRotationAnimation.qml</file>
     </qresource>
 </RCC>

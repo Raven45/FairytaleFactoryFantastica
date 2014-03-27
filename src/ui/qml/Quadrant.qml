@@ -24,16 +24,8 @@ Image {
     function rotate( direction ){
 
         rotationSound.play()
-
-        if( parseInt(direction) === 0 ){
-
-            rightRotation.start()
-            turnCogs( myIndex, "RIGHT")
-        }
-        else{
-            leftRotation.start()
-            turnCogs( myIndex, "LEFT")
-        }
+        rotationAnimation.animationDirection = direction;
+        rotationAnimation.start();
 
         if(bhb0.state == "EMPTY")
             bhb0.rotation += (direction === 0)? -90 : 90;
@@ -80,86 +72,31 @@ Image {
     }
 
 
-    SequentialAnimation {
-        id: rightRotation
-        property int animationDirection: 0
-        onStarted:{
-            //console.log("in rotationAnimation onStarted. myIndex = " + myIndex );
-            root.z++;
-        }
-        onStopped:{
-            root.z--;
-            rotationAnimationFinished( myIndex, animationDirection );
-            //console.log("in rotationAnimation onStopped. myIndex = " + myIndex );
+    Item{
+        property int animationDirection
+        id: rotationAnimation
+
+        function start(){
+            if( animationDirection == 0 ){
+                rightRotation.start();
+            }
+            else{
+                leftRotation.start();
+            }
         }
 
-        NumberAnimation {
-          target: root
-          properties: "width,height"
-          from: _QUADRANT_WIDTH
-          to: _QUADRANT_WIDTH + _QUADRANT_GROWTH
-          duration: 100
+        QuadrantRotationAnimation{
+            id: rightRotation
+            animationDirection: 0
         }
 
-        NumberAnimation {
-            target: root
-            properties: "rotation"
-            duration: _ROTATION_ANIMATION_DURATION - 200
-            //easing {type: Easing.InElastic}
-            running: false
-            from: rotation
-            to: rotation + 90
-            property int animationDirection: 0
-        }
-        NumberAnimation {
-          target: root
-          properties: "width,height"
-          from: _QUADRANT_WIDTH + _QUADRANT_GROWTH
-          to: _QUADRANT_WIDTH
-          duration: 100
+        QuadrantRotationAnimation{
+            id: leftRotation
+            animationDirection: 1
         }
     }
 
-    SequentialAnimation {
-        id: leftRotation
-        property int animationDirection: 1
-        onStarted:{
-            //console.log("in rotationAnimation onStarted. myIndex = " + myIndex );
-            root.z++;
-        }
-        onStopped:{
-            root.z--;
-            rotationAnimationFinished( myIndex, animationDirection );
-            //console.log("in rotationAnimation onStopped. myIndex = " + myIndex );
-        }
 
-
-        NumberAnimation {
-          target: root
-          properties: "width,height"
-          from: _QUADRANT_WIDTH
-          to: _QUADRANT_WIDTH + _QUADRANT_GROWTH
-          duration: 100
-        }
-
-        NumberAnimation {
-            target: root
-            properties: "rotation"
-            duration: _ROTATION_ANIMATION_DURATION - 200
-            //easing {type: Easing.InElastic}
-            running: false
-            from: rotation
-            to: rotation - 90
-            property int animationDirection: 0
-        }
-        NumberAnimation {
-          target: root
-          properties: "width,height"
-          from: _QUADRANT_WIDTH + _QUADRANT_GROWTH
-          to: _QUADRANT_WIDTH
-          duration: 100
-        }
-    }
 
     BoardHoleButton{
         id: bhb0
