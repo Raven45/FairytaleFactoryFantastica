@@ -505,23 +505,42 @@ Rectangle {
      }
 
     Image{
+        id: hiringSign
+        source: "HiringSign.png"
+        anchors.left: main_gate.left
+        anchors.leftMargin: -97
+        anchors.verticalCenter: main_gate.verticalCenter
+        anchors.verticalCenterOffset: 100
+        z:11
+        scale: .3
+    }
+
+    Image{
         id: sign
         source: "Sign.png"
         anchors.bottom: parent.bottom
+        anchors.bottomMargin: -110
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.horizontalCenterOffset: -130
+        anchors.horizontalCenterOffset: -185
         z: 16
-        width: 320
-        height: 400
+        scale: .9
 
         Image{
             id: enterButton
             source: "EnterButton.png"
             z: 17
             anchors.left: parent.left
-            anchors.leftMargin: 50
+            anchors.leftMargin: 85
             anchors.top: parent.top
-            anchors.topMargin: 60
+            anchors.topMargin: 90
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked:{
+                    gate_lDoorSprite.jumpTo("opening_gate");
+                    gateOpened();
+                }
+            }
         }
 
         Image{
@@ -529,8 +548,9 @@ Rectangle {
             source: "ExitLever.png"
             z: 17
             anchors.right: parent.right
+            anchors.rightMargin: 30
             anchors.top: parent.top
-            anchors.topMargin: 45
+            anchors.topMargin: 70
 
             Image{
                 id: lever
@@ -538,19 +558,17 @@ Rectangle {
                 z: 17
                 anchors.right: parent.left
                 anchors.top: parent.top
-                anchors.rightMargin: -85
+                anchors.rightMargin: -95
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    readyToExitGame()
+                }
             }
 
         }
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked:{
-                gate_lDoorSprite.jumpTo("opening_gate");
-                gateOpened();
-            }
-        }
-
     }
 
 
