@@ -36,5 +36,8 @@
 		<file alias="RightWall.png">../media/Final_RightWall.png</file>
 		<file alias="LeftWall.png">../media/Left_Wall.png</file>
 		<file alias="HiringSign.png">../media/Hiring_Sign.png</file>
+                <file alias="ExitLever.png">../media/Exit_Lever.png</file>
+                <file alias="EnterButton.png">../media/EnterButton.png</file>
+                <file alias="Lever.png">../media/Lever.png</file>
     </qresource>
 </RCC>

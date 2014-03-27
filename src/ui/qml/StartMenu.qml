@@ -514,6 +514,35 @@ Rectangle {
         width: 320
         height: 400
 
+        Image{
+            id: enterButton
+            source: "EnterButton.png"
+            z: 17
+            anchors.left: parent.left
+            anchors.leftMargin: 50
+            anchors.top: parent.top
+            anchors.topMargin: 60
+        }
+
+        Image{
+            id: exitLever
+            source: "ExitLever.png"
+            z: 17
+            anchors.right: parent.right
+            anchors.top: parent.top
+            anchors.topMargin: 45
+
+            Image{
+                id: lever
+                source: "Lever.png"
+                z: 17
+                anchors.right: parent.left
+                anchors.top: parent.top
+                anchors.rightMargin: -85
+            }
+
+        }
+
         MouseArea {
             anchors.fill: parent
             onClicked:{
