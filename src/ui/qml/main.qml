@@ -8,7 +8,6 @@ import QtQuick.Controls.Styles 1.1
 
 Rectangle {
     id: page
-
     color: "#333333"
 
     signal readyToStartOnePersonPlay()
@@ -58,6 +57,7 @@ Rectangle {
     signal opponentDisconnected()
     signal opponentReconnected()
     signal startPieceAnimations()
+    signal spreadIcing(int qIndex, int pIndex)
 
     property alias main: page
     property bool guiPlayerIsWhite: false
@@ -70,6 +70,7 @@ Rectangle {
     property bool isNetworkGame: false
     property bool piecesHaveStartedAnimating: false
 
+    property int _SPREAD_DURATION: 800
     property int _ROTATION_ANIMATION_DURATION: 800
     property int _OPPONENT_START_ROTATION_DELAY: 300 + _CLAW_OPEN_DURATION + _CLAW_MOVE_DURATION + _CLAW_CAN_ANIMATION_DURATION + 2 //claw animation time...
     property int _QUADRANT_WIDTH: 200
@@ -100,6 +101,8 @@ Rectangle {
     property int _CLAW_SPRITE_WIDTH: 131
     property int _CLAW_HOUSE_X_OFFSET: -23
     property int _CLAW_HOUSE_X_MOVE_WHEN_SHRINKING: 27
+    property int _SPELL_X_OFFSET: 60
+    property int _SPELL_Y_OFFSET: 110
 
     function lockBoardPieces(){
         guiPlayerCanClickBoardHoleButton = false;
@@ -280,13 +283,14 @@ Rectangle {
         }
     }
 
-    SplashScreen {
+    /*SplashScreen {
         id: splash
-    }
+    }*/
 
     StartMenu{
         id:startMenu
         anchors.centerIn: parent
+        state: "VISIBLE"
     }
     GameOverMenu {
           id: gameOverMenu

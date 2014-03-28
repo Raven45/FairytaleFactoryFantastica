@@ -48,6 +48,54 @@ Rectangle {
         }
     }
 
+   ParticleSystem{
+
+    anchors.fill: parent
+    z: 50
+    ImageParticle {
+        groups: ["spell"]
+        source: "qrc:///particleresources/glowdot.png"
+        color: "#11111111"
+        colorVariation: 1
+    }
+
+
+
+    Emitter {
+        id: spellCaster
+        group: "spell"
+        emitRate: 400
+        lifeSpan: 2700
+        lifeSpanVariation:100
+        size: 30
+        endSize: 300
+        sizeVariation: 10
+        enabled: false
+        acceleration: PointDirection {y: 0; yVariation: 150; x: 0; xVariation: 150;}
+        velocity:
+            AngleDirection { id: spellAngle; angle: 0; magnitude: 250; angleVariation:30; magnitudeVariation: 100}
+        NumberAnimation { id: angleAnimation; target: spellAngle ; loops: 1; running: false; property: "angle"; duration: _SPREAD_DURATION; from: 360; to: 0;
+
+            onStopped: {
+                spellCaster.enabled = false;
+            }
+        }
+
+        Connections{
+            target: page;
+            onSpreadIcing:{
+                    var goTo = getXYOffset(qIndex,pIndex);
+                    spellCaster.x = goTo.x + _SPELL_X_OFFSET;
+                    spellCaster.y = goTo.y + _SPELL_Y_OFFSET;
+                    angleAnimation.start();
+                    spellCaster.enabled = true;
+                }
+            }
+        }
+    }
+
+
+
 
     states: [
         State{

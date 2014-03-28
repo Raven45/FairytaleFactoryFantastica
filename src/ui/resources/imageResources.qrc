@@ -37,5 +37,8 @@
 		<file alias="exitButtonHover.png">../media/exitButtonHover.png</file>
 		<file alias="clawHouse.png">../media/clawHouse.png</file>
 		<file alias="messyGear.png">../media/messyGear.png</file>
+		<file alias="icingSpread.png">../media/icingSpread.png</file>
+		<file alias="tealIcingSinkSprite.png">../media/tealIcingSinkSprite.png</file>
+		<file alias="purpleIcingSinkSprite.png">../media/purpleIcingSinkSprite.png</file>
     </qresource>
 </RCC>
