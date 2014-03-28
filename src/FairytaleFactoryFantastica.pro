@@ -87,7 +87,8 @@ OTHER_FILES += \
     ui/qml/GumdropKnob.qml \
     ui/qml/Flame.qml \
     ui/qml/ClawHouse.qml \
-    ui/qml/QuadrantRotationAnimation.qml
+    ui/qml/QuadrantRotationAnimation.qml \
+    ui/qml/HelpScreen.qml
 
 HEADERS += \
     backend/networking/Barrager.h \

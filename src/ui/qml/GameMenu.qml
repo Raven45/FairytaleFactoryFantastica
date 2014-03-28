@@ -57,8 +57,8 @@ Rectangle {
             onPressed: { playSound.play()
                 console.log("played sound")}
             onClicked:{
-            	resumeGumdropAnimation();
-            	gameMenu.state = "INVISIBLE"
+                resumeGumdropAnimation();
+                gameMenu.state = "INVISIBLE"
             }
         }
     }
@@ -111,7 +111,27 @@ Rectangle {
         }
     }
 
+    HelpScreen {
+        id: help
+        width: parent.parent.width
+//        width: parent.parent.width + gameMenu.width + 25
+        height: parent.parent.height
+        anchors.centerIn: parent.parent
+        z: parent.z+1
+
+        MouseArea {
+            anchors.fill: parent
+            onPressed: { playSound.play()
+                console.log("played sound")}
+            onClicked: {
+                help.state = "HIDE_HELP";
+                gameMenu.state = "VISIBLE";
+            }
+        }
+    }
+
     GUIButton {
+        id: helpButton
         source_string: "help-button.png"
         anchors.bottom: parent.bottom
         anchors.bottomMargin: ((parent.height - 30)/4) - 30
@@ -120,8 +140,14 @@ Rectangle {
         z: parent.z+1
         MouseArea{
             anchors.fill: parent
-            onPressed: { playSound.play()
-                console.log("played sound")}
+            onPressed: { playSound.play() }
+            onClicked: {
+                gameMenu.state = "INVISIBLE";
+                help.state = "SHOW_HELP";
+
+                pauseOpacity.state = "OPAQUE"
+                pentagoBoard.state = "LOCKED"
+            }
         }
     }
 
