@@ -47,19 +47,145 @@ Rectangle {
         source: page.guiPlayerIsWhite ? "teal-gumdrop.png" : "purp-gumdrop.png"
     }
 
+    SpriteSequence{
+        id: icingSprite
+        height: 100
+        width: 100
+        anchors.centerIn: parent
+        visible: false
+
+        //max 14
+        property int sinkFrameDepth: 14
+
+        sprites:[
+            Sprite{
+                name: "teal_sink"
+                frameHeight: 150
+                frameWidth: 150
+                source: "tealIcingSinkSprite.png"
+                frameCount: icingSprite.sinkFrameDepth
+                frameX: 150
+                frameY: 0
+                frameDuration: 30
+
+                to:{
+                    "teal_sunk" : 1
+                }
+
+            },
+
+            Sprite{
+                name: "teal_sunk"
+                frameHeight: 150
+                frameWidth: 150
+                source: "tealIcingSinkSprite.png"
+                frameCount: 1
+                frameX: 150 * icingSprite.sinkFrameDepth + 1
+                frameY: 0
+                frameDuration: 0
+
+            },
+
+            Sprite{
+                name: "teal_start"
+                frameHeight: 150
+                frameWidth: 150
+                source: "tealIcingSinkSprite.png"
+                frameCount: 1
+                frameX: 150
+                frameY: 0
+                frameDuration: 40
+                to:{
+                    "teal_sink":1
+                }
+            },
+
+            Sprite{
+                name: "purple_sink"
+                frameHeight: 150
+                frameWidth: 150
+                source: "purpleIcingSinkSprite.png"
+                frameCount: icingSprite.sinkFrameDepth
+                frameX: 150
+                frameY: 0
+                frameDuration: 30
+
+                to:{
+                    "purple_sunk" : 1
+                }
+
+            },
+
+            Sprite{
+                name: "purple_sunk"
+                frameHeight: 150
+                frameWidth: 150
+                source: "purpleIcingSinkSprite.png"
+                frameCount: 1
+                frameX: 150 * icingSprite.sinkFrameDepth + 1
+                frameY: 0
+                frameDuration: 0
+
+            },
+
+            Sprite{
+                name: "purple_start"
+                frameHeight: 150
+                frameWidth: 150
+                source: "purpleIcingSinkSprite.png"
+                frameCount: 1
+                frameX: 150
+                frameY: 0
+                frameDuration: 40
+                to:{
+                    "purple_sink":1
+                }
+            },
+
+            Sprite{
+                name: "spread"
+                frameHeight: 150
+                frameWidth: 150
+                source: "icingSpread.png"
+                frameCount: 1
+                frameX: 0
+                frameY: 0
+                frameDuration: 0
+            }
+        ]
+
+    }
+
+    NumberAnimation{
+        id: spreadIcingAnimation
+        target: icingSprite
+        properties: "scale"
+        from: 0; to: 1
+        duration: _SPREAD_DURATION
+
+        onStarted:{
+            spreadIcing( quadrantIndex, pieceIndex );
+        }
+    }
+
+
     state: "EMPTY"
 
 
-    Connections{
+    Connections {
 
         target: page
 
         onPlaceOpponentsPiece: {
-            if( qIndex === quadrantIndex && pIndex === pieceIndex ){
+            if( qIndex === quadrantIndex && pIndex === pieceIndex ) {
 
                 console.log("placing opponents piece at " + quadrantIndex + ", " + pieceIndex);
 
-                //state = page.guiPlayerIsWhite? "PURPLE" : "WHITE"
+                icingSprite.visible = true;
+                spreadIcingAnimation.start()
+                icingSprite.jumpTo("spread");
+
+
                 if( page.guiPlayerIsWhite ){
                     getFromCan( "PURPLE" );
                     stateChangeTimer.playerColor = "BLACK";
@@ -70,6 +196,7 @@ Rectangle {
                     stateChangeTimer.playerColor = "WHITE";
                 }
 
+
                 stateChangeTimer.startTimer();
 
             }
@@ -77,6 +204,7 @@ Rectangle {
 
         onClearBoard:{
             state = "EMPTY";
+            icingSprite.visible = false;
         }
 
         onShowPiece:{
@@ -156,7 +284,17 @@ Rectangle {
         id: showPieceTimer
         duration: _CLAW_OPEN_DURATION
         onTriggered: {
-            backgroundImage.visible = true;
+            icingSprite.visible = true;
+
+            if( parent.state == "BLACK" ){
+                icingSprite.jumpTo( "purple_start" );
+            }
+            else if( parent.state == "WHITE" ){
+                icingSprite.jumpTo( "teal_start" );
+            }
+
+
+
 
             if( isGuiPlayersTurn ){
                 unlockQuadrantRotation();
@@ -355,6 +493,8 @@ Rectangle {
         onTriggered:{
             console.log( "timer triggered, changing state to " + playerColor )
             parent.state = playerColor;
+
+
         }
     }
 
@@ -385,13 +525,17 @@ Rectangle {
                 if( boardHoleButton.state == "EMPTY" ){
                     boardHole_glowEffect.visible = false;
 
-                    if(guiPlayerIsWhite){
+                    icingSprite.visible = true;
+                    spreadIcingAnimation.start()
+                    icingSprite.jumpTo( "spread" );
+
+                    if( guiPlayerIsWhite ) {
                          //boardHoleButton.state = "WHITE";
                         console.log( "calling getFromCan( TEAL )" );
                         getFromCan( "TEAL" );
                         stateChangeTimer.playerColor = "WHITE";
                      }
-                     else{
+                     else {
                         //boardHoleButton.state = "BLACK";
                         console.log( "calling getFromCan( BLACK )" );
                         getFromCan( "PURPLE" );
