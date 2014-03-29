@@ -21,6 +21,11 @@ Rectangle {
         source: "magic-chime.wav"
     }
 
+    SoundEffect {
+        id: failSound
+        source: "deep-pong.wav"
+    }
+
     Glow {
        id: boardHole_glowEffect
        anchors.fill: backgroundImage
@@ -571,7 +576,8 @@ Rectangle {
                     lockBoardPieces();
                 }
                 else{
-                   page.gameMessage = "This place is taken!";
+                    if(_SOUND_CHECK_FLAG) failSound.play();
+                    page.gameMessage = "This place is taken!";
                 }
            }
        }
