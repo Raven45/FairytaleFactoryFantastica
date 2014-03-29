@@ -210,8 +210,77 @@ Rectangle {
         }
 
 
+
+
     }
 
+
+    Image {
+        id: exitSign
+        width: 1056 / 9
+        height: 587 / 9
+        source: "exitSignDim.png"
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.topMargin: 15
+        z: 10
+
+        MouseArea {
+            anchors.fill: parent
+            hoverEnabled: true
+
+            onEntered:{
+                exitSign.source = "exitSignLit.png"//"exitSignHover.png"
+            }
+
+            onExited:{
+                exitSign.source = "exitSignDim.png"//"exitSignHover.png"
+            }
+
+            onClicked: {
+                readyToExitGame()
+            }
+        }
+
+    }
+
+    /*Timer{
+        id: exitFlickerLongTimer
+        interval: 4500
+        running: true
+        repeat: true
+
+        onTriggered:{
+            exitFlickerShortTimer.start()
+        }
+    }
+
+    Timer{
+        id: exitFlickerShortTimer
+        interval: 50
+        running: false
+        property bool isLit: false
+        property int flickerCount: 0
+        onTriggered:{
+            if( flickerCount >= 8 ){
+                ++flickerCount;
+
+                if( isLit ){
+                    exitSign.source = "exitSignLit.png";
+                }
+                else{
+                    exitSign.source = "exitSignDim.png";
+                }
+
+                isLit = !isLit;
+                exitFlickerShortTimer.start();
+            }
+            else{
+                flickerCount = 0;
+                exitFlickerLongTimer.start();
+            }
+        }
+    }*/
 
 
 

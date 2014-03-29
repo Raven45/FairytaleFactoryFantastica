@@ -8,5 +8,8 @@
         <file alias="Tires_Grey.png">../media/Tires_Grey.png</file>
         <file alias="CardboardBox.png">../media/CardboardBox.png</file>
         <file alias="WideCardboardBox.png">../media/WideCardboardBox.png</file>
+		<file alias="exitSignLit.png">../media/exitSignLit.png</file>
+		<file alias="exitSignDim.png">../media/exitSignDim.png</file>
+		<file alias="exitSignHover.png">../media/exitSignHover.png</file>
     </qresource>
 </RCC>
