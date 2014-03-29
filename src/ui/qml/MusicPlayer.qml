@@ -5,6 +5,12 @@ Item {
     Audio {
         id: playMonkeysSpinningMonkeys
         source: "MonkeysSpinningMonkeys.mp3"
+        onStatusChanged: {
+            if (playMonkeysSpinningMonkeys.status == Audio.EndOfMedia){
+                playMonkeysSpinningMonkeys.stop();
+                playMonkeysSpinningMonkeys.play();
+            }
+        }
     }
 
     function togglePlayback(){
@@ -13,5 +19,9 @@ Item {
         }
         else
             playMonkeysSpinningMonkeys.play();
+    }
+
+    function changeVolume(volumeLevel){
+        playMonkeysSpinningMonkeys.volume = volumeLevel;
     }
 }
