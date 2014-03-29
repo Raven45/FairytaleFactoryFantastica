@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtMultimedia 5.0
 
 Item {
     id: gumdropknob
@@ -15,6 +16,17 @@ Item {
     anchors.topMargin: 63
     anchors.left: parent.left
     anchors.leftMargin: parent.width/2 - (gumdropknob.width/2) - 3
+
+    SoundEffect {
+        id: volUpSound
+        source: "gumdrop-vol-up.wav"
+    }
+
+    SoundEffect {
+        id: volDownSound
+        source: "gumdrop-vol-down.wav"
+    }
+
     Image {
         id: base_knob
         width: 85; height: 85; z: top_tubes.z + 1
@@ -40,6 +52,15 @@ Item {
                 id: volume_knob_mouseArea
                 anchors.fill: volume_knob
                 acceptedButtons: Qt.LeftButton | Qt.RightButton
+
+                onPressed: {
+                    if (_SOUND_CHECK_FLAG && mouse.button == Qt.RightButton) {
+                        volDownSound.play();
+                    } else if (_SOUND_CHECK_FLAG && mouse.button == Qt.LeftButton) {
+                        volUpSound.play();
+                    }
+                }
+
                 onClicked: {
                     if (mouse.button == Qt.RightButton) {
                         if(gumdropknob.volume_level > 1) {
