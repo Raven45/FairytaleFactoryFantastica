@@ -117,6 +117,8 @@ Rectangle {
             source: "Fork.png"
         }
 
+
+
         Image {
             id: box1
             x: 668
@@ -146,6 +148,51 @@ Rectangle {
                         isNetworkGame = false;
                         clearBoard();
                         readyToStartOnePersonPlay();
+                    }
+                }
+            }
+
+            GUIButton {
+
+                property int buttonColor
+
+                id: colorSelection
+                source_string: "purp-button.png"
+                anchors.centerIn: parent
+                anchors.horizontalCenterOffset: 75
+                z: 3
+
+                state: "BLACK"
+                buttonColor: 1
+
+                states: [
+                    State{
+                        name: "WHITE"
+                        PropertyChanges{ target: colorSelection; buttonColor: 0 }
+                    },
+                    State{
+                        name: "BLACK"
+                        PropertyChanges{ target: colorSelection; buttonColor: 1 }
+                    }
+                ]
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        if(colorSelection.state == "BLACK")
+                        {
+                            colorSelection.source_string = "teal-button.png"
+                            colorSelection.state = "WHITE"
+                            page.guiPlayerIsWhite = true;
+                            changeGuiPlayerColor(colorSelection.buttonColor);
+                        }
+                        else
+                        {
+                            colorSelection.source_string = "purp-button.png"
+                            colorSelection.state = "BLACK"
+                            page.guiPlayerIsWhite = false;
+                            changeGuiPlayerColor(colorSelection.buttonColor);
+                        }
                     }
                 }
             }
@@ -288,52 +335,7 @@ Rectangle {
 
 
 /*
-    GUIButton {
 
-        property int buttonColor
-
-        id: colorSelection
-        source_string: "purp-button.png"
-        anchors.top: parent.top
-        anchors.topMargin: parent.height/2
-        anchors.left: parent.left
-        anchors.leftMargin: parent.width/2
-        z: 3
-
-        state: "BLACK"
-        buttonColor: 1
-
-        states: [
-            State{
-                name: "WHITE"
-                PropertyChanges{ target: colorSelection; buttonColor: 0 }
-            },
-            State{
-                name: "BLACK"
-                PropertyChanges{ target: colorSelection; buttonColor: 1 }
-            }
-        ]
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                if(colorSelection.state == "BLACK")
-                {
-                    colorSelection.source_string = "teal-button.png"
-                    colorSelection.state = "WHITE"
-                    page.guiPlayerIsWhite = true;
-                    changeGuiPlayerColor(colorSelection.buttonColor);
-                }
-                else
-                {
-                    colorSelection.source_string = "purp-button.png"
-                    colorSelection.state = "BLACK"
-                    page.guiPlayerIsWhite = false;
-                    changeGuiPlayerColor(colorSelection.buttonColor);
-                }
-            }
-        }
-    }
 
     GUIButton {
         id: startMenu_soundButton

@@ -209,8 +209,9 @@ public:
                             int opponentsBestMoveWeight = 0;
 
                             //REPEAT FOR OPPONENT... ugly
-                            for( int quadrantIndexOpp = qrand() % 4, quadrantCountOpp = 0;  quadrantCountOpp < NUMBER_OF_QUADRANTS;    quadrantIndexOpp = ((quadrantIndexOpp == 3)? 0 : quadrantIndexOpp + 1), ++quadrantCountOpp ){
-                                for( int pieceIndexOpp = qrand()%9, pieceCountOpp = 0;     pieceCountOpp    < MAX_PIECES_ON_QUADRANT;   pieceIndexOpp  = ((pieceIndexOpp    == 8)? 0 : pieceIndexOpp    + 1), ++pieceCountOpp    ){
+                            bool isTerribleMove = false;
+                            for( int quadrantIndexOpp = qrand() % 4, quadrantCountOpp = 0;  quadrantCountOpp < NUMBER_OF_QUADRANTS && !isTerribleMove;    quadrantIndexOpp = ((quadrantIndexOpp == 3)? 0 : quadrantIndexOpp + 1), ++quadrantCountOpp ){
+                                for( int pieceIndexOpp = qrand()%9, pieceCountOpp = 0;     pieceCountOpp    < MAX_PIECES_ON_QUADRANT && !isTerribleMove;   pieceIndexOpp  = ((pieceIndexOpp    == 8)? 0 : pieceIndexOpp    + 1), ++pieceCountOpp    ){
 
                                     if( test.holeIsEmpty( quadrantIndexOpp, pieceIndexOpp )){
 
@@ -222,7 +223,7 @@ public:
                                         //loop through all 8 possible rotations
                                         int rotationCountOpp = 0;
                                         RotationConfig rotationConfigOpp;
-                                        for( rotationConfigOpp.randomize(); rotationCountOpp < NUMBER_OF_POSSIBLE_ROTATIONS; ++rotationCountOpp, ++rotationConfigOpp ){
+                                        for( rotationConfigOpp.randomize(); rotationCountOpp < NUMBER_OF_POSSIBLE_ROTATIONS && !isTerribleMove; ++rotationCountOpp, ++rotationConfigOpp ){
 
                                             BitBoard boardToRotateOpp = tryPieceHereOpp;
                                             boardToRotateOpp.rotate( rotationConfigOpp.quadrantIndex, rotationConfigOpp.direction );
@@ -230,6 +231,15 @@ public:
                                             opponentsBoardOpp.rotate( rotationConfigOpp.quadrantIndex, rotationConfigOpp.direction );
 
                                             int checkWeightOpp = evaluateBitBoard( boardToRotateOpp, opponentsBoardOpp, opponentsBoard );
+
+                                            Board test(boardToRotateOpp,opponentsBoardOpp, myColor );
+
+                                            if( test.checkWin().winner == opponentColor ){
+                                                isTerribleMove = true;
+                                                checkWeight = INT_MIN / 4 - 1;
+                                                opponentsBestMoveWeight = INT_MAX / 4 - 1;
+                                                break;
+                                            }
 
                                             if( checkWeightOpp > opponentsBestMoveWeight ){
                                                opponentsBestMoveWeight = checkWeightOpp;
