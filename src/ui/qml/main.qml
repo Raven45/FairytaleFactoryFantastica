@@ -314,7 +314,7 @@ Rectangle {
         }
 
         Timer{
-            interval: 10000
+            interval: 4000
             repeat: false
             running: true
 
