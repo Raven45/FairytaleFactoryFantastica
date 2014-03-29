@@ -1,5 +1,6 @@
 import QtQuick 2.0
 
+
 SpriteSequence {
 
     property bool reverseBelt: false
@@ -8,7 +9,7 @@ SpriteSequence {
     height: 150
     scale: 0.65
     running: true
-    rotation: reverseBelt? -15 : 15
+
     //interpolate: true
 
     sprites:[

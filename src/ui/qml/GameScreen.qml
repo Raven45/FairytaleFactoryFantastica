@@ -72,7 +72,7 @@ Rectangle {
     Image {
         id: left_can_back
         width: 152; height: 256; z: 2
-        source: "can-back-rusty.png"
+        source: "can-back.png"
         scale: 0.65
         fillMode: Image.PreserveAspectFit
         visible: true
@@ -88,7 +88,7 @@ Rectangle {
     Image {
         id: left_can_front
         width: 152; height: 256 ; z: pauseOpacity.z - 10
-        source: "can-front-rusty.png"
+        source: "can-front.png"
         scale: 0.65
         fillMode: Image.PreserveAspectFit
         visible: true
@@ -113,7 +113,7 @@ Rectangle {
     Image {
         id: right_can_back
         width: 152; height: 256; z: 2
-        source: "can-back-rusty.png"
+        source: "can-back.png"
         scale: 0.65
         fillMode: Image.PreserveAspectFit
         visible: true
@@ -125,9 +125,28 @@ Rectangle {
     }
 
     Image {
+        id: witchPlatform
+        source: "platformCombinedSmall.png"
+        y: 750
+        x: parent.width - 125 - width
+        scale: 0.7
+        z: 60
+    }
+
+    Image {
+        id: kidsPlatform
+        source: "platformCombinedSmall.png"
+        y: 750
+        x: 125
+        scale: 0.7
+        z: 60
+
+    }
+
+    Image {
         id: right_can_front
         width: 152; height: 256; z: pauseOpacity.z - 10
-        source: "can-front-rusty.png"
+        source: "can-front.png"
         scale: 0.65
         fillMode: Image.PreserveAspectFit
         visible: true
@@ -166,6 +185,7 @@ Rectangle {
 
     ConveyorBelt {
         reverseBelt: true
+        rotation: -15
         anchors.right: top_tubes.left
         anchors.rightMargin: -55
         anchors.top: top_tubes.top
@@ -175,6 +195,7 @@ Rectangle {
 
     ConveyorBelt {
         reverseBelt: false
+        rotation: 15
         anchors.left: top_tubes.right
         anchors.leftMargin: -55
         anchors.top: top_tubes.top

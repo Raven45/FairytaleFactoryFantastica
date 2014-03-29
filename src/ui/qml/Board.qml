@@ -53,10 +53,32 @@ Rectangle {
     anchors.fill: parent
     z: 50
     ImageParticle {
+        id: spellParticle
         groups: ["spell"]
         source: "qrc:///particleresources/glowdot.png"
-        color: "#11111111"
-        colorVariation: 1
+        colorVariation: 0.45
+
+        state: "TEAL"
+        states:[
+            State{
+                name: "TEAL"
+                PropertyChanges{
+                    target: spellParticle
+                    color: "#150C421C"
+                }
+            },
+            State{
+                name: "PURPLE"
+                PropertyChanges{
+                    target: spellParticle
+                    color: "#1542002F"
+                }
+            }
+
+        ]
+
+
+
     }
 
 
@@ -64,16 +86,16 @@ Rectangle {
     Emitter {
         id: spellCaster
         group: "spell"
-        emitRate: 400
-        lifeSpan: 2700
+        emitRate: 350
+        lifeSpan: 2800
         lifeSpanVariation:100
-        size: 30
-        endSize: 300
+        size: 40
+        endSize: 350
         sizeVariation: 10
         enabled: false
-        acceleration: PointDirection {y: 0; yVariation: 150; x: 0; xVariation: 150;}
+        acceleration: PointDirection {y: 0; yVariation: 300; x: 0; xVariation: 300;}
         velocity:
-            AngleDirection { id: spellAngle; angle: 0; magnitude: 250; angleVariation:30; magnitudeVariation: 100}
+            AngleDirection { id: spellAngle; angle: 0; magnitude: 200; angleVariation:30; magnitudeVariation: 40}
         NumberAnimation { id: angleAnimation; target: spellAngle ; loops: 1; running: false; property: "angle"; duration: _SPREAD_DURATION; from: 360; to: 0;
 
             onStopped: {
@@ -84,6 +106,20 @@ Rectangle {
         Connections{
             target: page;
             onSpreadIcing:{
+
+                    if( isGuiPlayersTurn && guiPlayerIsWhite ){
+                        spellParticle.state = "TEAL";
+                    }
+                    else if( isGuiPlayersTurn ){
+                        spellParticle.state = "PURPLE";
+                    }
+                    else if( guiPlayerIsWhite ){
+                        spellParticle.state = "PURPLE";
+                    }
+                    else{
+                        spellParticle.state = "TEAL";
+                    }
+
                     var goTo = getXYOffset(qIndex,pIndex);
                     spellCaster.x = goTo.x + _SPELL_X_OFFSET;
                     spellCaster.y = goTo.y + _SPELL_Y_OFFSET;

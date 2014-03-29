@@ -20,9 +20,6 @@ GuiGameController::GuiGameController( QGuiApplication* mainApp ) {
 
     isNetworkGame = false;
 
-    //pMusicThread = new QThread(this);
-    //musicPlayer.moveToThread(pMusicThread);
-
     //change this URL path
     musicPlayer.setMedia(QUrl("qrc:/MonkeysSpinningMonkeys.mp3"));
     //musicPlayer.setMedia(QUrl("qrc:/CalltoAdventure.mp3"));
