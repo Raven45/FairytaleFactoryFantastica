@@ -1,5 +1,7 @@
 <RCC>
     <qresource>
+		<file alias="small-servo.wav">../media/small-servo.wav</file>
+		<file alias="large-servo.wav">../media/large-servo.wav</file>
 		<file alias="deep-pong.wav">../media/deep-pong.wav</file>
 		<file alias="magic-chime.wav">../media/magic-chime.wav</file>
 		<file alias="gumdrop-vol-up.wav">../media/gumdrop-vol-up.wav</file>

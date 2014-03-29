@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtMultimedia 5.0
 
 Item {
 
@@ -24,6 +25,10 @@ Item {
     }
 
 
+    SoundEffect {
+        id: clawSound
+        source: "small-servo.wav"
+    }
 
 
     Connections{
@@ -56,6 +61,7 @@ Item {
         to: type == "PURPLE"? _RIGHT_CAN_X : _LEFT_CAN_X
         duration: _CLAW_X_TO_CAN_DURATION
         running: false
+        onStarted: if(_SOUND_CHECK_FLAG) clawSound.play()
         onStopped: {
             x = to;
 
@@ -70,6 +76,7 @@ Item {
         to: ( type == "PURPLE"? _RIGHT_CAN_Y : _LEFT_CAN_Y ) - _CAN_HEIGHT
         duration: _CLAW_Y_TO_CAN_DURATION
         running: false
+        onStarted: if(_SOUND_CHECK_FLAG) clawSound.play()
         onStopped: {
             y = to;
             finishedClawMovingY();
@@ -101,7 +108,7 @@ Item {
             duration: _CLAW_PAUSE_OVER_CAN_BEFORE_DURATION
 
         }
-
+        onStarted: if(_SOUND_CHECK_FLAG) clawSound.play()
         onStopped:{
             console.log( "moving into can")
             clawMovingDown();
@@ -117,6 +124,7 @@ Item {
         to: type == "PURPLE"? _RIGHT_CAN_Y : _LEFT_CAN_Y
         duration: _CLAW_MOVE_INTO_CAN_DURATION
         running: false
+        onStarted: if(_SOUND_CHECK_FLAG) clawSound.play()
         onStopped: {
             y = to;
             console.log( "waiting in can")
@@ -141,6 +149,7 @@ Item {
         id: moveOutOfCan
         to: (type == "PURPLE"? _RIGHT_CAN_Y : _LEFT_CAN_Y) - _CAN_HEIGHT
         duration: _CLAW_MOVE_OUT_OF_CAN_DURATION
+        onStarted: if(_SOUND_CHECK_FLAG) clawSound.play()
         onStopped: {
             console.log( "done moving out of can (boardHoleButton's timer is about to trigger)")
             y = to;
@@ -210,7 +219,7 @@ Item {
         id: moveYToHome
         to: _CLAW_Y_HOME
         duration: _CLAW_MOVE_DURATION / 4
-
+        onStarted: if(_SOUND_CHECK_FLAG) clawSound.play()
         onStopped: {
             finishedClawMovingY();
             y = to;
