@@ -107,8 +107,8 @@ Rectangle {
             anchors.fill: parent
             onPressed: { if(_SOUND_CHECK_FLAG) playSound.play() }
             onClicked: {
-                changeSoundCheckFlag();
                 changeSoundState();
+                changeSoundCheckFlag();
             }
         }
     }
