@@ -30,7 +30,14 @@ Rectangle {
             PropertyChanges { target: pauseOpacity; state: "OPAQUE" }
             PropertyChanges { target: pentagoBoard; state: "LOCKED" }
             PropertyChanges { target: gameMenu; anchors.leftMargin: 0 }
+        },
+        State{
+            name:"MINIMIZE" //for help screen
+            PropertyChanges { target: pauseOpacity; state: "OPAQUE" }
+            PropertyChanges { target: pentagoBoard; state: "LOCKED" }
+            PropertyChanges { target: gameMenu; anchors.leftMargin: -width + 25 }
         }
+
     ]
 
     transitions: [
@@ -111,24 +118,7 @@ Rectangle {
         }
     }
 
-    HelpScreen {
-        id: help
-        width: parent.parent.width
-//        width: parent.parent.width + gameMenu.width + 25
-        height: parent.parent.height
-        anchors.centerIn: parent.parent
-        z: parent.z+1
 
-        MouseArea {
-            anchors.fill: parent
-            onPressed: { playSound.play()
-                console.log("played sound")}
-            onClicked: {
-                help.state = "HIDE_HELP";
-                gameMenu.state = "VISIBLE";
-            }
-        }
-    }
 
     GUIButton {
         id: helpButton
@@ -144,9 +134,6 @@ Rectangle {
             onClicked: {
                 gameMenu.state = "INVISIBLE";
                 help.state = "SHOW_HELP";
-
-                pauseOpacity.state = "OPAQUE"
-                pentagoBoard.state = "LOCKED"
             }
         }
     }

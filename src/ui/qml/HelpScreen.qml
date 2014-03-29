@@ -1,8 +1,9 @@
 import QtQuick 2.0
-Item {
+Rectangle {
     id: helpScreen
-    visible: false
 
+    visible: false
+    color:"transparent"
     states: [
         State{
             name: "SHOW_HELP"
@@ -14,16 +15,25 @@ Item {
         }
     ]
 
+    MouseArea {
+        anchors.fill: parent
+        onPressed: { playSound.play()
+            console.log("played sound")}
+        onClicked: {
+            help.state = "HIDE_HELP";
+        }
+    }
+
     Image {
         id: image1
         width: 100; height: 100; z: parent.z+1
 
         source: "exitButton.png"
-        anchors.centerIn: parent
+        anchors.centerIn: helpScreen
         MouseArea{
             anchors.fill: image1;
             onClicked: {
-                ;
+
             }
         }
     }
