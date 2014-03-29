@@ -371,7 +371,8 @@ Rectangle {
 		height: page.height
 		anchors.centerIn: page
 		z: 900
-		color: "#88000000"
+        color: "#88000000"
+        //color: "black"
     }
 	
     function getXYOffset(quadrantIndex, pieceIndex){
