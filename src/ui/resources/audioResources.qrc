@@ -1,5 +1,6 @@
 <RCC>
     <qresource>
+		<file alias="metal-gate.wav">../media/metal-gate.wav</file>
 		<file alias="small-servo.wav">../media/small-servo.wav</file>
 		<file alias="large-servo.wav">../media/large-servo.wav</file>
 		<file alias="deep-pong.wav">../media/deep-pong.wav</file>

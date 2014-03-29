@@ -18,12 +18,7 @@ Item {
     Audio {
         id: playMonkeysSpinningMonkeys
         source: "MonkeysSpinningMonkeys.mp3"
-        onStatusChanged: {
-            if (playMonkeysSpinningMonkeys.status == Audio.EndOfMedia){
-                playMonkeysSpinningMonkeys.stop();
-                playMonkeysSpinningMonkeys.play();
-            }
-        }
+        loops: Audio.Infinite
     }
 
     function togglePlayback(){
