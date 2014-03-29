@@ -1,5 +1,7 @@
 <RCC>
     <qresource>
+		<file alias="gumdrop-vol-up.wav">../media/gumdrop-vol-up.wav</file>
+		<file alias="gumdrop-vol-down.wav">../media/gumdrop-vol-down.wav</file>
         <file alias="GearWind.mp3">../media/science_fiction_steampunk_gear_wind.mp3</file>
         <file alias="ButtonClick1.mp3">../media/multimedia_button_click_029.mp3</file>
         <file alias="BigDrum1.wav">../media/114588__herbertboland__bigdrum1.wav</file>
