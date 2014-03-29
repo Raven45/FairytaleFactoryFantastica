@@ -10,6 +10,9 @@
 		<file alias="knob-3.png">../media/knob-3.png</file>
 		<file alias="knob-4.png">../media/knob-4.png</file>
 		<file alias="knob-5.png">../media/knob-5.png</file>
+                <file alias="step1.png">../media/step 1.png</file>
+                <file alias="step2.png">../media/step 2.png</file>
+                <file alias="step3.png">../media/step 3.png</file>
 		<file alias="cogs-2nd-spritesheet.png">../media/cogs-2nd-spritesheet.png</file>
 		<file alias="bar.png">../media/bar.png</file>
 		<file alias="grahm-quad.png">../media/grahm-quad.png</file>
