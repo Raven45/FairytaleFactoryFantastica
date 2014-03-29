@@ -13,7 +13,7 @@ Rectangle {
 
     signal readyToStartOnePersonPlay()
     signal readyToStartTwoPersonPlay()
-
+    signal load()
     signal changeSoundState()
     signal changeGuiPlayerColor(int color)
     signal clickedRandomMove()
@@ -76,6 +76,10 @@ Rectangle {
         z: 600
         color: "black"
         opacity: 0;
+
+        Behavior on opacity{
+            NumberAnimation { duration: 1800 }
+        }
     }
 
     function lockBoardPieces(){
@@ -257,14 +261,50 @@ Rectangle {
         }
     }
 
+    Rectangle{
+        id: loadingScreen
+        visible: true
+        z: 999
+        anchors.fill: parent
+        color: "black"
+
+        Text{
+
+            anchors.centerIn: parent
+            font.pointSize: 40
+            color: "white"
+            text: "Loading..."
+        }
+
+        Timer{
+            interval: 4000
+            repeat: false
+            running: true
+
+            onTriggered:{
+                splash.visible = true;
+                loadingScreen.visible = false;
+                load()
+            }
+        }
+    }
+
     SplashScreen {
         id: splash
     }
 
-    StartMenu{
-        id:startMenu
+    StartScreen{
+        id:startScreen
         anchors.centerIn: parent
     }
+
+    ForkliftMenu{
+        id:startMenu
+        anchors.centerIn: parent
+        z: 100
+    }
+
+
     GameOverMenu {
           id: gameOverMenu
           anchors.centerIn: page

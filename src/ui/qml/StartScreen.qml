@@ -5,7 +5,6 @@ import QtQuick.Particles 2.0
 
 Rectangle {
 
-    id: startMenu
     width: parent.width
     height: parent.height
     z: 100
@@ -179,6 +178,8 @@ Rectangle {
                     onStopped: {
                         thickFog.enabled = false;
                         thickFog2.enabled = false;
+                        startScreen.state = "INVISIBLE";
+                        startMenu.state = "VISIBLE";
                     }
                 }
 
@@ -345,7 +346,7 @@ Rectangle {
 
     }
 
-    Image{
+    Image {
         id: main_gate
         source: "Gate.png"
         anchors.right: parent.right
@@ -677,7 +678,7 @@ Rectangle {
             PropertyChanges { target: startMenu_witch;  state: "ON" }
             PropertyChanges { target: menuFade; opacity: 0; visible: true; }
             PropertyChanges { target: gretelFrown; visible: false }
-            PropertyChanges { target: startMenu; visible: true }
+            PropertyChanges { target: startScreen; visible: true }
             PropertyChanges { target: gretelBlink; visible: false }
             PropertyChanges { target: gretelBlinkTimer; duration: 5000 }
             StateChangeScript { script: gretelBlinkTimer.startTimer() }
@@ -687,171 +688,13 @@ Rectangle {
             PropertyChanges { target: smokeRectangle; state: "OFF" }
             PropertyChanges { target: startMenu_witch;  state: "OFF" }
             PropertyChanges { target: menuFade; opacity: 0; visible: false; }
-            PropertyChanges { target: startMenu; visible: false }
+            PropertyChanges { target: startScreen; visible: false }
             PropertyChanges { target: gretelFrown; visible: false }
             PropertyChanges { target: gretelBlink; visible: false }
             PropertyChanges { target: gretelBlinkTimer; duration: 0 }
         }
 
     ]
-    /*
 
-    TextArea{
-        id: playerNameBox
-        width: 100
-        height: 25
-        text: "enter a name"
-        anchors.top: parent.top
-        anchors.topMargin: parent.height/2 + 135
-        anchors.left: parent.left
-        anchors.leftMargin: parent.width/2 + 90
-    }
-
-    GUIButton {
-        id: startMenu_startOnePlayer
-        source_string: "singleplayer-button.png"
-        anchors.top: parent.top
-        anchors.topMargin: parent.height/2
-        anchors.left: parent.left
-        anchors.leftMargin: parent.width/2 - 150
-        z: 3
-
-        MouseArea {
-            anchors.fill: parent
-
-            onClicked: {
-
-                if( !piecesHaveStartedAnimating ){
-                    startPieceAnimations();
-                    piecesHaveStartedAnimating = true;
-
-                }
-
-                sendPlayerName( playerNameBox.text );
-                startMenu.state = "INVISIBLE"
-                isNetworkGame = false;
-                pentagoBoard.state = "UNLOCKED";
-                clearBoard();
-                readyToStartOnePersonPlay();
-            }
-        }
-    }
-
-    GUIButton {
-        id: startMenu_startNetworkPlay
-        source_string: "network-button.png"
-        anchors.top: parent.top
-        anchors.topMargin: parent.height/2 + 100
-        anchors.left: parent.left
-        anchors.leftMargin: parent.width/2
-        z: 3
-
-        MouseArea {
-            anchors.fill: parent
-
-            onClicked: {
-
-                if( !piecesHaveStartedAnimating ){
-                    startPieceAnimations();
-                    piecesHaveStartedAnimating = true;
-
-                }
-
-                sendPlayerName( playerNameBox.text );
-                networkLobby.state ="VISIBLE"
-                isNetworkGame = true;
-                clearBoard();
-                enterNetworkLobby();
-            }
-        }
-    }
-
-    GUIButton {
-
-        property int buttonColor
-
-        id: colorSelection
-        source_string: "purp-button.png"
-        anchors.top: parent.top
-        anchors.topMargin: parent.height/2
-        anchors.left: parent.left
-        anchors.leftMargin: parent.width/2
-        z: 3
-
-        state: "BLACK"
-        buttonColor: 1
-
-        states: [
-            State{
-                name: "WHITE"
-                PropertyChanges{ target: colorSelection; buttonColor: 0 }
-            },
-            State{
-                name: "BLACK"
-                PropertyChanges{ target: colorSelection; buttonColor: 1 }
-            }
-        ]
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                if(colorSelection.state == "BLACK")
-                {
-                    colorSelection.source_string = "teal-button.png"
-                    colorSelection.state = "WHITE"
-                    page.guiPlayerIsWhite = true;
-                    changeGuiPlayerColor(colorSelection.buttonColor);
-                }
-                else
-                {
-                    colorSelection.source_string = "purp-button.png"
-                    colorSelection.state = "BLACK"
-                    page.guiPlayerIsWhite = false;
-                    changeGuiPlayerColor(colorSelection.buttonColor);
-                }
-            }
-        }
-    }
-
-    GUIButton {
-        id: startMenu_soundButton
-        source_string: "sound-button.png"
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: ((parent.height - 30)/4) - 30
-        anchors.left: parent.left
-        anchors.leftMargin: 30
-        z: 3
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                if (startMenu_soundButton.source_string === "sound-button.png") {
-                    startMenu_soundButton.source_string = "nosound-button.png"
-                } else {
-                    startMenu_soundButton.source_string = "sound-button.png"
-                }
-                changeSoundState();
-            }
-        }
-    }
-
-    GUIButton {
-        id: startMenu_leaveGame
-        source_string: "leave-button.png"
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.bottomMargin: 15
-        anchors.leftMargin: 30
-        z: 3
-
-        MouseArea {
-            anchors.fill: parent
-
-            onClicked: {
-                readyToExitGame()
-            }
-        }
-    }
-    */
 
 }

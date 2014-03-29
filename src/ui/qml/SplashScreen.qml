@@ -45,7 +45,7 @@ import QtQuick.Window 2.1
 Rectangle {
     id: splash
     width: parent.width; height: parent.height
-    visible: true
+    visible: false
     anchors.fill: parent
     z:100
 
@@ -69,7 +69,7 @@ Rectangle {
 
         SequentialAnimation{
             id: muffinManAnimation
-            running: true
+            running: false
 
             PropertyAnimation {
                 target: muffinMan;
@@ -88,6 +88,16 @@ Rectangle {
             }
 
         }
+
+        Connections{
+            target: page
+            onLoad:{
+                muffinManAnimation.start();
+                splashTimer.start();
+
+            }
+        }
+
      }
 
     Image {
@@ -97,13 +107,19 @@ Rectangle {
         anchors.centerIn: splash
 
     }
+
+
+
+
+
     //! [timer]
     Timer {
-        interval: timeoutInterval; running: true; repeat: false
+        id: splashTimer
+        interval: timeoutInterval; running: false; repeat: false
         onTriggered: {
             visible = false
             splash.timeout()
-            startMenu.state = "VISIBLE";
+            startScreen.state = "VISIBLE";
             muffinManAnimation.running = false;
         }
     }

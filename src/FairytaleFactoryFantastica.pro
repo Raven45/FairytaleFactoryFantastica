@@ -24,7 +24,8 @@ RESOURCES += \
     ui/resources/menuResources.qrc \
     ui/resources/audioResources.qrc \
     ui/resources/MonkeysSpinningMonkeys.qrc \
-    ui/resources/gateSprites.qrc
+    ui/resources/gateSprites.qrc \
+    ui/resources/forkliftResources.qrc
 
 INCLUDEPATH += \
     backend \
@@ -68,7 +69,6 @@ OTHER_FILES += \
     ui/qml/QmlTimer.qml \
     ui/qml/Quadrant.qml \
     ui/qml/SentChallengePopup.qml \
-    ui/qml/StartMenu.qml \
     ui/qml/ClawPiece.qml \
     ui/qml/GUIButton.qml \
     ui/qml/RedRotateButton.qml \
@@ -83,7 +83,9 @@ OTHER_FILES += \
     ui/qml/GenericText.qml \
     ui/qml/GameScreen.qml \
     ui/qml/ConveyorBelt.qml \
-    ui/qml/LeftAnimationGumdrop.qml
+    ui/qml/LeftAnimationGumdrop.qml \
+    ui/qml/StartScreen.qml \
+    ui/qml/ForkliftMenu.qml
 
 HEADERS += \
     backend/networking/Barrager.h \

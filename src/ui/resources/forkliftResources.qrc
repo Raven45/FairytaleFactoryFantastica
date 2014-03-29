@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="LoadingDockWithDoor.png">../media/LoadingDockWithDoor.png</file>
+        <file alias="WitchOnForks.png">../media/WitchOnForks.png</file>
+        <file alias="ForkLift.png">../media/ForkLift.png</file>
+        <file alias="Fork.png">../media/Fork.png</file>
+        <file alias="ForkTruck.png">../media/ForkTruck.png</file>
+        <file alias="Tires_Grey.png">../media/Tires_Grey.png</file>
+        <file alias="CardboardBox.png">../media/CardboardBox.png</file>
+        <file alias="WideCardboardBox.png">../media/WideCardboardBox.png</file>
+    </qresource>
+</RCC>
