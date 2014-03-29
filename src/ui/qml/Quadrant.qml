@@ -14,16 +14,17 @@ Image {
     source: "grahm-quad.png"
 
     SoundEffect {
-            id: rotationSound
-            source: "ChainCrank1.wav"
-        }
+        id: rotationSound
+        source: "ChainCrank1.wav"
+    }
+
     property int myIndex
     property int xCenter
     property int yCenter
 
     function rotate( direction ){
 
-        rotationSound.play()
+        if(_SOUND_CHECK_FLAG) rotationSound.play();
         rotationAnimation.animationDirection = direction;
         rotationAnimation.start();
 

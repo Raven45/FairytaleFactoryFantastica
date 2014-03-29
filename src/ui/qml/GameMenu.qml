@@ -8,10 +8,12 @@ Rectangle {
     width: 250; height: parent.height
 
     state: "VISIBLE"
+
     SoundEffect {
-            id: playSound
-            source: "ButtonClick2.wav"
-        }
+        id: playSound
+        source: "ButtonClick2.wav"
+    }
+
     Image {
         width: parent.width; height: parent.height
         source: "ingame-menu.png"
@@ -61,8 +63,7 @@ Rectangle {
 
         MouseArea {
             anchors.fill: parent
-            onPressed: { playSound.play()
-                console.log("played sound")}
+            onPressed: { if(_SOUND_CHECK_FLAG) playSound.play() }
             onClicked:{
                 resumeGumdropAnimation();
                 gameMenu.state = "INVISIBLE"
@@ -82,8 +83,7 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
 
-            onPressed: { playSound.play()
-                console.log("played sound")}
+            onPressed: { if(_SOUND_CHECK_FLAG) playSound.play() }
             onClicked: {
                 clearBoard();
                 gameMenu.state = "INVISIBLE";
@@ -96,7 +96,7 @@ Rectangle {
 
     GUIButton {
         id: soundButton
-        source_string: "sound-button.png"
+        source_string: _SOUND_CHECK_FLAG ? "sound-button.png" : "nosound-button.png"
         anchors.top: parent.top
         anchors.topMargin: (parent.height/2) - 30
         anchors.left: parent.left
@@ -105,14 +105,9 @@ Rectangle {
 
         MouseArea {
             anchors.fill: parent
-            onPressed: { playSound.play()
-                console.log("played sound")}
+            onPressed: { if(_SOUND_CHECK_FLAG) playSound.play() }
             onClicked: {
-                if (soundButton.source_string === "sound-button.png") {
-                    soundButton.source_string = "nosound-button.png"
-                } else {
-                    soundButton.source_string = "sound-button.png"
-                }
+                changeSoundCheckFlag();
                 changeSoundState();
             }
         }
@@ -130,7 +125,7 @@ Rectangle {
         z: parent.z+1
         MouseArea{
             anchors.fill: parent
-            onPressed: { playSound.play() }
+            onPressed: { if(_SOUND_CHECK_FLAG) playSound.play() }
             onClicked: {
                 gameMenu.state = "INVISIBLE";
                 help.state = "SHOW_HELP";
@@ -160,8 +155,7 @@ Rectangle {
             }
 
             anchors.fill: parent
-            onPressed: { playSound.play()
-                console.log("played sound")}
+            onPressed: { if(_SOUND_CHECK_FLAG) playSound.play() }
             onClicked: {
 
                 if( isNetworkGame ){

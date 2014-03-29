@@ -733,7 +733,7 @@ Rectangle {
 
         MouseArea {
             anchors.fill: parent
-            onPressed: { playSound.play() }
+            onPressed: { if(_SOUND_CHECK_FLAG) playSound.play() }
             onClicked: {
             	myGameMenu.state = "VISIBLE"
             	pauseGumdropAnimation();

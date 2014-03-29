@@ -73,6 +73,8 @@ Rectangle {
     property bool isNetworkGame: false
     property bool piecesHaveStartedAnimating: false
 
+    property bool _SOUND_CHECK_FLAG: true
+
     property int _SPREAD_DURATION: 800
     property int _ROTATION_ANIMATION_DURATION: 800
     property int _OPPONENT_START_ROTATION_DELAY: 300 + _CLAW_OPEN_DURATION + _CLAW_MOVE_DURATION + _CLAW_CAN_ANIMATION_DURATION + 2 //claw animation time...
@@ -116,6 +118,14 @@ Rectangle {
 
         Behavior on opacity{
             NumberAnimation { duration: 1800 }
+        }
+    }
+
+    function changeSoundCheckFlag() {
+        if( _SOUND_CHECK_FLAG ) {
+            _SOUND_CHECK_FLAG = false;
+        } else {
+            _SOUND_CHECK_FLAG = true;
         }
     }
     
