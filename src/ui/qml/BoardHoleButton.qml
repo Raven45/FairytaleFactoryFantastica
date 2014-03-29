@@ -156,17 +156,30 @@ Rectangle {
 
     }
 
-    NumberAnimation{
+    ParallelAnimation{
         id: spreadIcingAnimation
-        target: icingSprite
-        properties: "scale"
-        from: 0; to: 1
-        duration: _SPREAD_DURATION
+        running: false
 
         onStarted:{
             spreadIcing( quadrantIndex, pieceIndex );
         }
+
+        NumberAnimation{
+            target: icingSprite
+            properties: "scale"
+            from: 0; to: 1
+            duration: _SPREAD_DURATION
+        }
+        RotationAnimation{
+            target: icingSprite
+            from: 360
+            to: 0
+            duration: _SPREAD_DURATION
+        }
+
     }
+
+
 
 
     state: "EMPTY"
