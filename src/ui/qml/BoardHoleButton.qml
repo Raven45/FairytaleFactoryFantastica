@@ -10,10 +10,12 @@ Rectangle {
     property int quadrantIndex
     property bool isLocked
     //scale: parent.scale
+
     SoundEffect {
-            id: playSound
-            source: "ButtonClick2.wav"
-        }
+        id: playSound
+        source: "ButtonClick2.wav"
+    }
+
     Glow {
        id: boardHole_glowEffect
        anchors.fill: backgroundImage
@@ -561,7 +563,7 @@ Rectangle {
                     page.gameMessage = "Choose a rotation.";
                     lockBoardPieces();
 
-                    playSound.play()
+                    if(_SOUND_CHECK_FLAG) playSound.play();
                 }
                 else{
                    page.gameMessage = "This place is taken!";

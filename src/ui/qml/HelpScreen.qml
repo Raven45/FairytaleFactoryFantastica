@@ -17,8 +17,7 @@ Rectangle {
 
     MouseArea {
         anchors.fill: parent
-        onPressed: { playSound.play()
-            console.log("played sound")}
+        onPressed: { playSound.play() }
         onClicked: {
             help.state = "HIDE_HELP";
         }
