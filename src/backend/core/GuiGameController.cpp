@@ -21,9 +21,9 @@ GuiGameController::GuiGameController( QGuiApplication* mainApp ) {
     isNetworkGame = false;
 
     //change this URL path
-    musicPlayer.setMedia(QUrl("qrc:/MonkeysSpinningMonkeys.mp3"));
-    //musicPlayer.setMedia(QUrl("qrc:/CalltoAdventure.mp3"));
-    musicPlayer.play();
+//    musicPlayer.setMedia(QUrl("qrc:/MonkeysSpinningMonkeys.mp3"));
+//    //musicPlayer.setMedia(QUrl("qrc:/CalltoAdventure.mp3"));
+//    musicPlayer.play();
 
     app = mainApp;
 }
