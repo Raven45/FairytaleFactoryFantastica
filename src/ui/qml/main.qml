@@ -314,16 +314,21 @@ Rectangle {
         }
 
         Timer{
-            interval: 4000
+            interval: 10000
             repeat: false
             running: true
 
             onTriggered:{
+                musicPlayer.togglePlayback();
                 splash.visible = true;
                 loadingScreen.visible = false;
                 load()
             }
         }
+    }
+
+    MusicPlayer{
+        id: musicPlayer
     }
 
     SplashScreen {

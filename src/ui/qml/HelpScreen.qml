@@ -33,9 +33,11 @@ Rectangle {
         anchors.centerIn: helpScreen
         MouseArea{
             anchors.fill: image1;
+            onPressed: { playSound.play()
+                console.log("played sound")}
             onClicked: {
-                visible = false;
-//                step1.visible = true;
+                image1.visible = false;
+                step1.visible = true;
             }
         }
     }

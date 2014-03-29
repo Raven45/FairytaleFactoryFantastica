@@ -12,6 +12,7 @@
         <file alias="GUIButton.qml">../qml/GUIButton.qml</file>
         <file alias="Arrow.qml">../qml/Arrow.qml</file>
         <file alias="HelpScreen.qml">../qml/HelpScreen.qml</file>
+        <file alias="MusicPlayer.qml">../qml/MusicPlayer.qml</file>
 		<file alias="LobbyRow.qml">../qml/LobbyRow.qml</file>
 		<file alias="Board.qml">../qml/Board.qml</file>
 		<file alias="BoardHoleButton.qml">../qml/BoardHoleButton.qml</file>
