@@ -13,6 +13,12 @@ Rectangle {
 
     state: "INVISIBLE"
 
+    Item {
+        anchors.fill: parent
+        focus: true
+        Keys.onEscapePressed: readyToExitGame();
+    }
+
     Image {
         id: main_background
         width: parent.width; height: parent.height; z: 0

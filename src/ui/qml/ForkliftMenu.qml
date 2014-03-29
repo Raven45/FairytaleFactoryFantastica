@@ -35,6 +35,12 @@ Rectangle {
         }
     ]
 
+    Item {
+        anchors.fill: parent
+        focus: true
+        Keys.onEscapePressed: readyToExitGame();
+    }
+
     Image{
         anchors.fill: parent
         id: brickWall
@@ -260,7 +266,6 @@ Rectangle {
 
 
     }
-
 
     Image {
         id: exitSign

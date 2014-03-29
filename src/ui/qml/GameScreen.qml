@@ -12,7 +12,13 @@ Rectangle {
 
     property int _MIDDLE_TUBE_WIDTH: 56
 
-    Board{
+    Item {
+        anchors.fill: parent
+        focus: true
+        Keys.onEscapePressed: readyToExitGame();
+    }
+
+    Board {
         z: parent.z+20
         id: pentagoBoard
         anchors.verticalCenter: parent.verticalCenter
@@ -24,7 +30,7 @@ Rectangle {
             source: "ButtonClick2.wav"
     }
         
-    Oven{
+    Oven {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.leftMargin: -75
         anchors.bottom: parent.bottom
