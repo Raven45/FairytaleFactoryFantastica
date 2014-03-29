@@ -2,6 +2,8 @@
     <qresource prefix="/">
         <file alias="top_tubes.png">../media/top_tubes.png</file>
         <file alias="left-cogs-spritesheet.png">../media/left-cogs-spritesheet.png</file>
+        <file alias="purp-claw-spritesheet-75.png">../media/purp-claw-spritesheet-75.png</file>
+        <file alias="teal-claw-spritesheet-75.png">../media/teal-claw-spritesheet-75.png</file>
         <file alias="ingame-menu.png">../media/ingame-menu.png</file>
         <file alias="game-background.png">../media/game-background.png</file>
         <file alias="tbar.png">../media/tbar.png</file>
@@ -12,5 +14,32 @@
         <file alias="TheWitch.png">../media/TheWitch.png</file>
         <file alias="Logo.png">../media/Logo.png</file>
         <file alias="MuffinMan.png">../media/MuffinMan.png</file>
+		<file alias="MuffinLogo.png">../media/MuffinLogo.png</file>
+        <file alias="HomeMenu.png">../media/SkyandGround.png</file>
+		<file alias="Gretel.png">../media/Grettle.png</file>
+		<file alias="Hansel.png">../media/Hansel.png</file>
+		<file alias="Tree1.png">../media/Tree1.png</file>
+		<file alias="Tree2.png">../media/Tree2.png</file>
+		<file alias="Tree3.png">../media/Tree3.png</file>
+		<file alias="Tree4.png">../media/Tree4.png</file>
+		<file alias="Tree5.png">../media/Tree5.png</file>
+		<file alias="Tree6.png">../media/Tree6.png</file>
+		<file alias="Tree7.png">../media/Tree7.png</file>
+		<file alias="Gate.png">../media/Gate.png</file>
+		<file alias="GatePart1.png">../media/GatePart1.png</file>
+		<file alias="GatePart2.png">../media/GatePart2.png</file>
+		<file alias="Bread.png">../media/Bread.png</file>
+		<file alias="FootPrints.png">../media/FootPrints.png</file>
+		<file alias="Factory.png">../media/Factory.png</file>
+		<file alias="Wolf.png">../media/Wolf.png</file>
+		<file alias="Sign.png">../media/sign.png</file>
+		<file alias="RightWall.png">../media/Final_RightWall.png</file>
+		<file alias="LeftWall.png">../media/Left_Wall.png</file>
+		<file alias="HiringSign.png">../media/Hiring_Sign.png</file>
+		<file alias="ExitLever.png">../media/Exit_Lever.png</file>
+		<file alias="EnterButton.png">../media/EnterButton.png</file>
+		<file alias="Lever.png">../media/Lever.png</file>
+		<file alias="gretelBlink.png">../media/gretelBlink.png</file>
+		<file alias="gretelFrown.png">../media/GretelFrown.png</file>
     </qresource>
 </RCC>

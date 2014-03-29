@@ -23,7 +23,9 @@ RESOURCES += \
     ui/resources/guiButtonsResources.qrc \
     ui/resources/menuResources.qrc \
     ui/resources/audioResources.qrc \
-    ui/resources/MonkeysSpinningMonkeys.qrc
+    ui/resources/MonkeysSpinningMonkeys.qrc \
+    ui/resources/forkliftResources.qrc \
+    ui/resources/gateSprites.qrc
 
 INCLUDEPATH += \
     backend \
@@ -88,7 +90,9 @@ OTHER_FILES += \
     ui/qml/Flame.qml \
     ui/qml/ClawHouse.qml \
     ui/qml/QuadrantRotationAnimation.qml \
-    ui/qml/HelpScreen.qml
+    ui/qml/HelpScreen.qml \
+    ui/qml/ForkliftMenu.qml \
+    ui/qml/StartScreen.qml
 
 HEADERS += \
     backend/networking/Barrager.h \

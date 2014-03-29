@@ -12,6 +12,7 @@ Rectangle {
 
     signal readyToStartOnePersonPlay()
     signal readyToStartTwoPersonPlay()
+    signal load()
 
 
     signal clawMovingUp()
@@ -58,6 +59,8 @@ Rectangle {
     signal opponentReconnected()
     signal startPieceAnimations()
     signal spreadIcing(int qIndex, int pIndex)
+    signal gateOpened()
+
 
     property alias main: page
     property bool guiPlayerIsWhite: false
@@ -104,6 +107,18 @@ Rectangle {
     property int _SPELL_X_OFFSET: 60
     property int _SPELL_Y_OFFSET: 110
 
+    Rectangle{
+        id: menuFade
+        anchors.fill: parent
+        z: 600
+        color: "black"
+        opacity: 0;
+
+        Behavior on opacity{
+            NumberAnimation { duration: 1800 }
+        }
+    }
+    
     function lockBoardPieces(){
         guiPlayerCanClickBoardHoleButton = false;
     }
@@ -283,14 +298,47 @@ Rectangle {
         }
     }
 
-    /*SplashScreen {
-        id: splash
-    }*/
+    Rectangle{
+        id: loadingScreen
+        visible: true
+        z: 999
+        anchors.fill: parent
+        color: "black"
 
-    StartMenu{
+        Text{
+
+            anchors.centerIn: parent
+            font.pointSize: 40
+            color: "white"
+            text: "Loading..."
+        }
+
+        Timer{
+            interval: 4000
+            repeat: false
+            running: true
+
+            onTriggered:{
+                splash.visible = true;
+                loadingScreen.visible = false;
+                load()
+            }
+        }
+    }
+
+    SplashScreen {
+        id: splash
+    }
+
+    StartScreen{
+        id:startScreen
+        anchors.centerIn: parent
+    }
+
+    ForkliftMenu{
         id:startMenu
         anchors.centerIn: parent
-        state: "VISIBLE"
+        z: 100
     }
     GameOverMenu {
           id: gameOverMenu

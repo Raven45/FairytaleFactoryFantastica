@@ -22,7 +22,7 @@
         <file alias="QmlTimer.qml">../qml/QmlTimer.qml</file>
         <file alias="Quadrant.qml">../qml/Quadrant.qml</file>
         <file alias="SentChallengePopup.qml" >../qml/SentChallengePopup.qml</file>
-        <file alias="StartMenu.qml" >../qml/StartMenu.qml</file>
+        <file alias="StartScreen.qml" >../qml/StartScreen.qml</file>
 		<file alias="ClawPiece.qml" >../qml/ClawPiece.qml</file>
 		<file alias="GenericPopup.qml" >../qml/GenericPopup.qml</file>
 		<file alias="GenericButton.qml" >../qml/GenericButton.qml</file>
@@ -34,5 +34,6 @@
 		<file alias="Flame.qml" >../qml/Flame.qml</file>
 		<file alias="ClawHouse.qml" >../qml/ClawHouse.qml</file>
 		<file alias="QuadrantRotationAnimation.qml" >../qml/QuadrantRotationAnimation.qml</file>
+		<file alias="ForkliftMenu.qml" >../qml/ForkliftMenu.qml</file>
     </qresource>
 </RCC>
