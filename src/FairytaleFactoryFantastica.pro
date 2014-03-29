@@ -92,7 +92,8 @@ OTHER_FILES += \
     ui/qml/QuadrantRotationAnimation.qml \
     ui/qml/HelpScreen.qml \
     ui/qml/ForkliftMenu.qml \
-    ui/qml/StartScreen.qml
+    ui/qml/StartScreen.qml \
+    ui/qml/MusicPlayer.qml
 
 HEADERS += \
     backend/networking/Barrager.h \

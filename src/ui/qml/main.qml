@@ -329,11 +329,16 @@ Rectangle {
             running: true
 
             onTriggered:{
+                musicPlayer.togglePlayback();
                 splash.visible = true;
                 loadingScreen.visible = false;
                 load()
             }
         }
+    }
+
+    MusicPlayer{
+        id: musicPlayer
     }
 
     SplashScreen {
