@@ -16,6 +16,11 @@ Rectangle {
         source: "ButtonClick2.wav"
     }
 
+    SoundEffect {
+        id: magicSound
+        source: "magic-chime.wav"
+    }
+
     Glow {
        id: boardHole_glowEffect
        anchors.fill: backgroundImage
@@ -199,6 +204,7 @@ Rectangle {
                 icingSprite.visible = true;
                 spreadIcingAnimation.start()
                 icingSprite.jumpTo("spread");
+                if(_SOUND_CHECK_FLAG) magicSound.play();
 
 
                 if( page.guiPlayerIsWhite ){
@@ -541,8 +547,9 @@ Rectangle {
                     boardHole_glowEffect.visible = false;
 
                     icingSprite.visible = true;
-                    spreadIcingAnimation.start()
+                    spreadIcingAnimation.start();
                     icingSprite.jumpTo( "spread" );
+                    if(_SOUND_CHECK_FLAG) magicSound.play();
 
                     if( guiPlayerIsWhite ) {
                          //boardHoleButton.state = "WHITE";
@@ -562,8 +569,6 @@ Rectangle {
                     gameController.setGuiTurnHole( quadrantIndex, pieceIndex);
                     page.gameMessage = "Choose a rotation.";
                     lockBoardPieces();
-
-                    if(_SOUND_CHECK_FLAG) playSound.play();
                 }
                 else{
                    page.gameMessage = "This place is taken!";
