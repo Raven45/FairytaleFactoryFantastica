@@ -5,7 +5,7 @@ import QtQuick.Particles 2.0
 import QtMultimedia 5.0
 
 Rectangle {
-
+    id: startScreen
     width: parent.width
     height: parent.height
     z: 100
@@ -611,7 +611,7 @@ Rectangle {
 
         MouseArea {
             id: wolfMouseArea
-            anchors.fill: wolf
+            anchors.fill: parent
             onPressed: if(_SOUND_CHECK_FLAG) wolfSound.play()
         }
     }

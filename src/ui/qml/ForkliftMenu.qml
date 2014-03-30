@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
+import QtMultimedia 5.0
 
 Rectangle {
     width: 1440
@@ -113,6 +114,17 @@ Rectangle {
             x: 192
             y: 60
             source: "WitchOnForks.png"
+
+            SoundEffect {
+                id: witchSound
+                source: "witch-laugh.wav"
+            }
+
+            MouseArea {
+                id: witchMouseArea
+                anchors.fill: parent
+                onPressed: if(_SOUND_CHECK_FLAG) witchSound.play()
+            }
         }
 
         Image {
