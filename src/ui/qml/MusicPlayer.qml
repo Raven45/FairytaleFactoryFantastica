@@ -2,6 +2,19 @@ import QtQuick 2.0
 import QtMultimedia 5.0
 
 Item {
+
+    Connections{
+        target: page
+        onChangeSoundState: {
+            if(_SOUND_CHECK_FLAG) {
+                changeVolume(0);
+            } else {
+                changeVolume(1);
+            }
+        }
+    }
+
+
     Audio {
         id: playMonkeysSpinningMonkeys
         source: "MonkeysSpinningMonkeys.mp3"

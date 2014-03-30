@@ -191,7 +191,7 @@ Rectangle {
 
          anchors.left: parent.left
          anchors.leftMargin: 20
-     }
+    }
 
     Cogs {
          id: leftLowCog
@@ -200,7 +200,7 @@ Rectangle {
          anchors.topMargin: 190 + _QUADRANT_WIDTH/2 + 30
 
          anchors.left: parent.left
-        anchors.leftMargin: 20
+         anchors.leftMargin: 20
      }
 
      Cogs {
@@ -213,6 +213,7 @@ Rectangle {
          anchors.left: parent.left
          anchors.leftMargin: 385  - _QUADRANT_WIDTH/2 - 30
      }
+
      Cogs {
          id:topRightCog
          quadrantToOperateOn: 1
@@ -270,9 +271,6 @@ Rectangle {
      }
 
 
-
-
-
     Tbar {
         anchors.top: parent.top
         anchors.left: parent.left
@@ -306,11 +304,6 @@ Rectangle {
     }
 
 
-
-
-
-
-
     Image{
         id: steel_platform
         fillMode: Image.PreserveAspectFit
@@ -322,15 +315,13 @@ Rectangle {
     }
 
 
-
-
     SequentialAnimation {
         id: boardShake
         loops: 7
-        PropertyAnimation { easing.type: Easing.InQuad; duration:_ROTATION_ANIMATION_DURATION/28; targets: steel_platform; properties: "rotation"; to: .5 }
-        PropertyAnimation { easing.type: Easing.InQuad; duration:_ROTATION_ANIMATION_DURATION/28; target: steel_platform; properties: "rotation"; to: 0 }
-        PropertyAnimation { easing.type: Easing.InQuad; duration: _ROTATION_ANIMATION_DURATION/28; target: steel_platform; properties: "rotation"; to: -.5 }
-        PropertyAnimation { easing.type: Easing.InQuad; duration:_ROTATION_ANIMATION_DURATION/28; target: steel_platform; properties: "rotation"; to: 0 }
+        PropertyAnimation { easing.type: Easing.InQuad; duration:_ROTATION_ANIMATION_DURATION/28; target: steel_platform; properties: "rotation"; to:  0.5 }
+        PropertyAnimation { easing.type: Easing.InQuad; duration:_ROTATION_ANIMATION_DURATION/28; target: steel_platform; properties: "rotation"; to:  0   }
+        PropertyAnimation { easing.type: Easing.InQuad; duration:_ROTATION_ANIMATION_DURATION/28; target: steel_platform; properties: "rotation"; to: -0.5 }
+        PropertyAnimation { easing.type: Easing.InQuad; duration:_ROTATION_ANIMATION_DURATION/28; target: steel_platform; properties: "rotation"; to:  0   }
 
     }
 
@@ -342,8 +333,6 @@ Rectangle {
         anchors.centerIn: pentagoBoard
         border.color: "#363666"
         z: 21
-
-
 
         Quadrant{
             id: quadrant0

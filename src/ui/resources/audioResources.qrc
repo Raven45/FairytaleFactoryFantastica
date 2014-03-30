@@ -1,5 +1,10 @@
 <RCC>
     <qresource>
+		<file alias="metal-gate.wav">../media/metal-gate.wav</file>
+		<file alias="small-servo.wav">../media/small-servo.wav</file>
+		<file alias="large-servo.wav">../media/large-servo.wav</file>
+		<file alias="deep-pong.wav">../media/deep-pong.wav</file>
+		<file alias="magic-chime.wav">../media/magic-chime.wav</file>
 		<file alias="gumdrop-vol-up.wav">../media/gumdrop-vol-up.wav</file>
 		<file alias="gumdrop-vol-down.wav">../media/gumdrop-vol-down.wav</file>
         <file alias="GearWind.mp3">../media/science_fiction_steampunk_gear_wind.mp3</file>

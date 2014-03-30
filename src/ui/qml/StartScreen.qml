@@ -2,6 +2,7 @@ import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
 import QtQuick.Particles 2.0
+import QtMultimedia 5.0
 
 Rectangle {
 
@@ -12,6 +13,17 @@ Rectangle {
     visible: false
 
     state: "INVISIBLE"
+
+    SoundEffect {
+        id: gateSound
+        source: "metal-gate.wav"
+    }
+
+    Item {
+        anchors.fill: parent
+        focus: true
+        Keys.onEscapePressed: readyToExitGame();
+    }
 
     Image {
         id: main_background
@@ -170,6 +182,7 @@ Rectangle {
                         flame2.enabled = false;
                         fadeTimer.startTimer();
                         frownTimer.startTimer();
+                        if(_SOUND_CHECK_FLAG) gateSound.play();
                     }
                 }
 
