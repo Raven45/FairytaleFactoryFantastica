@@ -19,6 +19,11 @@ Rectangle {
         source: "metal-gate.wav"
     }
 
+    SoundEffect {
+        id: wolfSound
+        source: "wolf-growl.wav"
+    }
+
     Item {
         anchors.fill: parent
         focus: true
@@ -603,6 +608,12 @@ Rectangle {
         anchors.leftMargin: -50
         anchors.bottom: footprints.top
         z: 13
+
+        MouseArea {
+            id: wolfMouseArea
+            anchors.fill: wolf
+            onPressed: if(_SOUND_CHECK_FLAG) wolfSound.play()
+        }
     }
 
     Image{
