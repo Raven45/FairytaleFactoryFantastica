@@ -14,20 +14,7 @@ Rectangle {
         z: parent.z
     }
 
-    Image{
-        source: "oven_front.png"
-        height:parent.height
-        width: parent.width
-        mirror: true
-        z: parent.z + 3
-    }
 
-    Flame{
-        anchors.centerIn: parent
-        anchors.verticalCenterOffset: 22
-        anchors.horizontalCenterOffset: 18
-        z: parent.z + 1
-    }
 /*
     SpriteSequence{
         id: leftFireSprites

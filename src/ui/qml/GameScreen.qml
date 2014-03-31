@@ -31,11 +31,28 @@ Rectangle {
     }
         
     Oven {
+        id: oven
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.leftMargin: -75
         anchors.bottom: parent.bottom
         anchors.bottomMargin: -100
-        z: 35
+        z: 71
+    }
+
+    Image{
+        source: "oven_front.png"
+        height:oven.height
+        width: oven.width
+        mirror: true
+        z: 75
+        anchors.centerIn: oven
+    }
+
+    Flame{
+        anchors.centerIn: oven
+        anchors.verticalCenterOffset: 22
+        anchors.horizontalCenterOffset: 18
+        z: 74
     }
 
         
@@ -93,7 +110,7 @@ Rectangle {
 
     Image {
         id: left_can_front
-        width: 152; height: 256 ; z: pauseOpacity.z - 10
+        width: 152; height: 256 ; z: 69
         source: "can-front.png"
         scale: 0.65
         fillMode: Image.PreserveAspectFit
@@ -136,7 +153,7 @@ Rectangle {
         y: 750
         x: parent.width - 125 - width
         scale: 0.7
-        z: 60
+        z: 69
     }
 
     Image {
@@ -145,13 +162,30 @@ Rectangle {
         y: 750
         x: 125
         scale: 0.7
-        z: 60
+        z: 69
+    }
 
+    HanselClaw {
+        id: hanselClaw
+        z: 73
+        anchors.centerIn: platformHansel
+        anchors.verticalCenterOffset: -700
+        anchors.horizontalCenterOffset: 1000
+    }
+
+    Hansel{
+        id: platformHansel
+        //x: kidsPlatform.x + 20
+        //y: kidsPlatform.x - height
+        y: kidsPlatform.y - 300
+        x: kidsPlatform.x + 50
+        z: 72
+        scale: 0.14
     }
 
     Image {
         id: right_can_front
-        width: 152; height: 256; z: pauseOpacity.z - 10
+        width: 152; height: 256; z: 69
         source: "can-front.png"
         scale: 0.65
         fillMode: Image.PreserveAspectFit
@@ -169,7 +203,7 @@ Rectangle {
                 right_can_front.z = 10;
             }
             onResetRightCan:{
-                right_can_front.z = pauseOpacity.z - 10;
+                right_can_front.z = 69;
             }
         }
     }
@@ -657,9 +691,7 @@ Rectangle {
 
                     target: pauseOpacity
                     opacity: 0
-                }
-                PropertyChanges{
-                    target: pauseOpacity
+                    z: 85
                     visible: false
                 }
             },
@@ -669,15 +701,24 @@ Rectangle {
                 name: "OPAQUE"
 
                 PropertyChanges {
-
                     target: pauseOpacity
                     opacity: 0.75
-                }
-                PropertyChanges{
-                    target: pauseOpacity
                     visible: true
+                    z: 85
+                }
+            },
+            State{
+
+                name: "EXECUTION"
+
+                PropertyChanges {
+                    target: pauseOpacity
+                    opacity: 0.6
+                    visible: true
+                    z: 70
                 }
             }
+
 
         ]
 
@@ -717,6 +758,14 @@ Rectangle {
                     properties: "visible"
                     to: false
                     duration: 300
+                }
+            },
+            Transition{
+                from: "CLEAR"
+                to: "EXECUTION"
+                NumberAnimation{
+                    properties: "opacity"
+                    duration: 1000
                 }
             }
 

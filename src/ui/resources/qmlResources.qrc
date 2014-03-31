@@ -36,5 +36,7 @@
 		<file alias="ClawHouse.qml" >../qml/ClawHouse.qml</file>
 		<file alias="QuadrantRotationAnimation.qml" >../qml/QuadrantRotationAnimation.qml</file>
 		<file alias="ForkliftMenu.qml" >../qml/ForkliftMenu.qml</file>
+		<file alias="Hansel.qml" >../qml/Hansel.qml</file>
+		<file alias="HanselClaw.qml" >../qml/HanselClaw.qml</file>
     </qresource>
 </RCC>

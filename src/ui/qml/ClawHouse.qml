@@ -1,6 +1,8 @@
 import QtQuick 2.0
 
 Rectangle {
+    id: house
+
 
     width: 171
     height: 98

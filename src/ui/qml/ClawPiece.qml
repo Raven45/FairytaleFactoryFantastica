@@ -94,7 +94,7 @@ Item {
         NumberAnimation {
             targets: [root, clawHouse]
             properties: "scale"
-
+            easing.type: Easing.OutSine
             to: 0.65
             duration: _CLAW_PAUSE_OVER_CAN_BEFORE_DURATION
             running: false
@@ -104,6 +104,7 @@ Item {
         NumberAnimation{
             target: clawHouse
             properties: "x"
+            easing.type: Easing.OutSine
             to: clawHouse.x - _CLAW_HOUSE_X_MOVE_WHEN_SHRINKING
             duration: _CLAW_PAUSE_OVER_CAN_BEFORE_DURATION
 
@@ -124,6 +125,7 @@ Item {
         to: type == "PURPLE"? _RIGHT_CAN_Y : _LEFT_CAN_Y
         duration: _CLAW_MOVE_INTO_CAN_DURATION
         running: false
+        easing.type: Easing.OutSine
         onStarted: if(_SOUND_CHECK_FLAG) clawSound.play()
         onStopped: {
             y = to;
@@ -147,6 +149,7 @@ Item {
 
     NumberAnimation on y{
         id: moveOutOfCan
+        easing.type: Easing.OutSine
         to: (type == "PURPLE"? _RIGHT_CAN_Y : _LEFT_CAN_Y) - _CAN_HEIGHT
         duration: _CLAW_MOVE_OUT_OF_CAN_DURATION
         onStarted: if(_SOUND_CHECK_FLAG) clawSound.play()
@@ -165,7 +168,7 @@ Item {
         NumberAnimation {
             targets: [root, clawHouse]
             properties: "scale"
-
+            easing.type: Easing.OutSine
             to: 1
             duration: _CLAW_PAUSE_OVER_CAN_AFTER_DURATION
             running: false
@@ -173,6 +176,7 @@ Item {
 
         NumberAnimation{
             target: clawHouse
+            easing.type: Easing.OutSine
             properties: "x"
             to: clawHouse.x + _CLAW_HOUSE_X_MOVE_WHEN_SHRINKING
             duration: _CLAW_PAUSE_OVER_CAN_AFTER_DURATION
@@ -205,7 +209,7 @@ Item {
         id: moveToHome
         to: _CLAW_X_HOME
         duration: _CLAW_MOVE_DURATION * 3 / 4
-
+        easing.type: Easing.OutSine
         onStopped: {
             root.x = to;
             clawHouse.x = to;
@@ -219,6 +223,7 @@ Item {
         id: moveYToHome
         to: _CLAW_Y_HOME
         duration: _CLAW_MOVE_DURATION / 4
+        easing.type: Easing.OutSine
         onStarted: if(_SOUND_CHECK_FLAG) clawSound.play()
         onStopped: {
             finishedClawMovingY();
@@ -341,22 +346,6 @@ Item {
 
 
     }
-
-    /*AnimatedSprite {
-        id: clawSprite
-        width: 131
-        height: 131
-        source: parent.source
-        frameCount: 72
-        //frameDuration: _CLAW_OPEN_DURATION
-        frameWidth: 200
-        frameHeight: 200
-        currentFrame: 1
-        //loops: 1
-        running: false
-        z: 410
-    }*/
-
 
     Image {
         id: clawPipe

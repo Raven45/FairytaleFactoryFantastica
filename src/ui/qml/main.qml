@@ -10,11 +10,14 @@ Rectangle {
     id: page
     color: "#333333"
 
+    property bool _SKIP_INTROS
+
     signal readyToStartOnePersonPlay()
     signal readyToStartTwoPersonPlay()
     signal load()
-
-
+    signal hanselIsOverOven()
+    signal startPickUpHansel()
+    signal clawHasHansel()
     signal clawMovingUp()
     signal clawMovingDown()
     signal finishedClawMovingY()
@@ -73,7 +76,7 @@ Rectangle {
     property bool isNetworkGame: false
     property bool piecesHaveStartedAnimating: false
 
-    property bool _SOUND_CHECK_FLAG: true
+    property bool _SOUND_CHECK_FLAG: false
 
     property int _SPREAD_DURATION: 800
     property int _ROTATION_ANIMATION_DURATION: 800
@@ -330,6 +333,7 @@ Rectangle {
 
             onTriggered:{
                 musicPlayer.togglePlayback();
+                _SOUND_CHECK_FLAG = true;
                 splash.visible = true;
                 loadingScreen.visible = false;
                 load()

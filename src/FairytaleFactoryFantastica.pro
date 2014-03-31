@@ -18,14 +18,15 @@ LIBS += -fopenmp
 QMAKE_CXXFLAGS += -Ofast -fopenmp
 
 RESOURCES += \
-    ui/resources/qmlResources.qrc \
     ui/resources/imageResources.qrc \
     ui/resources/guiButtonsResources.qrc \
     ui/resources/menuResources.qrc \
     ui/resources/audioResources.qrc \
     ui/resources/MonkeysSpinningMonkeys.qrc \
     ui/resources/forkliftResources.qrc \
-    ui/resources/gateSprites.qrc
+    ui/resources/gateSprites.qrc \
+    ui/resources/kidResources.qrc \
+    ui/resources/qmlResources.qrc
 
 INCLUDEPATH += \
     backend \
@@ -93,7 +94,9 @@ OTHER_FILES += \
     ui/qml/HelpScreen.qml \
     ui/qml/ForkliftMenu.qml \
     ui/qml/StartScreen.qml \
-    ui/qml/MusicPlayer.qml
+    ui/qml/MusicPlayer.qml \
+    ui/qml/Hansel.qml \
+    ui/qml/HanselClaw.qml
 
 HEADERS += \
     backend/networking/Barrager.h \

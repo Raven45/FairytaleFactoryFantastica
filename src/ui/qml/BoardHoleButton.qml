@@ -452,6 +452,7 @@ Rectangle {
 
                 NumberAnimation {
                     targets: [tealClawPiece, clawHouse]
+                    easing.type: Easing.OutSine
                     property: "x"
                     duration: _CLAW_MOVE_DURATION / 2
                 }
@@ -463,6 +464,7 @@ Rectangle {
                 NumberAnimation
                 {
                     target: tealClawPiece;
+                    easing.type: Easing.OutSine
                     property: "y"
                     duration: _CLAW_MOVE_DURATION / 2
                 }
@@ -485,6 +487,7 @@ Rectangle {
             SequentialAnimation{
 
                 NumberAnimation {
+                    easing.type: Easing.OutSine
                     targets: [purpleClawPiece, clawHouse]
                     property: "x"
                     duration: _CLAW_MOVE_DURATION / 2
@@ -496,6 +499,7 @@ Rectangle {
                 }
 
                 NumberAnimation {
+                    easing.type: Easing.OutSine
                     target: purpleClawPiece;
                     property: "y"
                     duration: _CLAW_MOVE_DURATION / 2
