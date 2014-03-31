@@ -95,6 +95,11 @@ Item {
 
         ParallelAnimation {
             NumberAnimation { target: platformHansel; property: "y"; duration: 1000; to: y+ 200; easing.type: Easing.InQuad }
+            ScriptAction {
+                script: {
+                    droppedSomethingInOven()
+                }
+            }
             NumberAnimation {
 
                 target: hanselClaw.anchors
@@ -105,11 +110,7 @@ Item {
             }
         }
         NumberAnimation { target: hanselClaw.anchors; property: "horizontalCenterOffset"; to: 1200; duration: 1800; easing.type: Easing.OutSine }
-        ScriptAction {
-            script: {
 
-            }
-        }
     }
 
     SpriteSequence{

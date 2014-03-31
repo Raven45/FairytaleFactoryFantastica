@@ -7,6 +7,8 @@ Rectangle {
     color: "transparent"
     id: root
 
+
+
     ParticleSystem {
         height: 40
         width: 150
@@ -21,6 +23,7 @@ Rectangle {
         }
 
         Emitter {
+            id: fire
             anchors.fill: parent
             anchors.verticalCenterOffset: 200
             group: "flame"
@@ -33,6 +36,71 @@ Rectangle {
             sizeVariation: 5
             acceleration: PointDirection {y: -70; yVariation: 20; x: 0; xVariation: 20;}
             velocity: AngleDirection { angle: 270; magnitude: 10; angleVariation:50; magnitudeVariation: 10 }
+
+            Connections{
+                target: page
+                onDroppedSomethingInOven:{
+
+                    startFirePlume.start()
+                   calmFlameTimer.start()
+                }
+            }
+
+
+            SequentialAnimation{
+                id: startFirePlume
+                property int startDuration: 400
+
+                NumberAnimation{ target: dummy; properties: "opacity"; to: 0; duration: 400 }
+
+                ParallelAnimation{
+                    NumberAnimation{ target: fire.velocity; properties: "magnitude"; to: 1000; duration: startDuration }
+                    NumberAnimation{ target: fire.velocity; properties: "magnitudeVariation"; to: 200; duration: startDuration }
+                    NumberAnimation{ target: fire.velocity; properties: "angleVariation"; to: 20; duration: startDuration }
+                    NumberAnimation{ target: fire.acceleration; properties: "y"; to: 900; duration: 100 }
+                    NumberAnimation{ target: fire.acceleration; properties: "yVariation"; to: 100; duration: startDuration }
+                    NumberAnimation{ target: fire.acceleration; properties: "xVariation"; to: 400; duration: startDuration }
+                    NumberAnimation{ target: fire; properties: "size"; to: 65; duration: startDuration }
+                }
+            }
+
+            SequentialAnimation{
+                id: endFirePlume
+                property int startDuration: 400
+
+                //NumberAnimation{ target: dummy; properties: "opacity"; to: 0; duration: 1000 }
+                NumberAnimation{ target: fire.velocity; properties: "magnitude"; to: 10; duration: 200 }
+
+                ParallelAnimation{
+
+
+                    NumberAnimation{ target: fire.velocity; properties: "magnitudeVariation"; to: 10; duration: startDuration }
+                    NumberAnimation{ target: fire.velocity; properties: "angleVariation"; to: 50; duration: startDuration }
+
+                    NumberAnimation{ target: fire.acceleration; properties: "yVariation"; to: 20; duration: startDuration }
+                    NumberAnimation{ target: fire.acceleration; properties: "xVariation"; to: 20; duration: startDuration }
+
+                }
+
+                NumberAnimation{ target: fire; properties: "size"; to: 10; duration: startDuration }
+                NumberAnimation{ target: fire.acceleration; properties: "y"; to: -70; duration: startDuration }
+             }
+
+             Rectangle{id: dummy; color:"transparent"; visible: false; }
+
+
+
+            Timer{
+                id: calmFlameTimer
+                interval: 1200
+                running: false
+                repeat: false
+
+                onTriggered:{
+                    endFirePlume.start()
+                }
+            }
+
         }
     }
 }

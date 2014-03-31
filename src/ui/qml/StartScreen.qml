@@ -12,7 +12,7 @@ Rectangle {
     color: "#00FFFF"
     visible: false
 
-    state: "INVISIBLE"
+    state: _SKIP_INTROS? "VISIBLE" : "INVISIBLE"
 
     SoundEffect {
         id: gateSound

@@ -46,6 +46,13 @@ Rectangle {
         mirror: true
         z: 75
         anchors.centerIn: oven
+
+        MouseArea{
+            anchors.fill: parent
+            onClicked:{
+                droppedSomethingInOven()
+            }
+        }
     }
 
     Flame{
