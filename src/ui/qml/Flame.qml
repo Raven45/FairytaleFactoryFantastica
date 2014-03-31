@@ -42,30 +42,33 @@ Rectangle {
                 onDroppedSomethingInOven:{
 
                     startFirePlume.start()
-                   calmFlameTimer.start()
                 }
             }
 
-
             SequentialAnimation{
                 id: startFirePlume
+                running: true
                 property int startDuration: 400
 
-                NumberAnimation{ target: dummy; properties: "opacity"; to: 0; duration: 400 }
 
+                ScriptAction { script:calmFlameTimer.start() }
+                NumberAnimation{ target: dummy; properties: "opacity"; to: 0; duration: 400 }
                 ParallelAnimation{
                     NumberAnimation{ target: fire.velocity; properties: "magnitude"; to: 1000; duration: startDuration }
                     NumberAnimation{ target: fire.velocity; properties: "magnitudeVariation"; to: 200; duration: startDuration }
                     NumberAnimation{ target: fire.velocity; properties: "angleVariation"; to: 20; duration: startDuration }
                     NumberAnimation{ target: fire.acceleration; properties: "y"; to: 900; duration: 100 }
                     NumberAnimation{ target: fire.acceleration; properties: "yVariation"; to: 100; duration: startDuration }
-                    NumberAnimation{ target: fire.acceleration; properties: "xVariation"; to: 400; duration: startDuration }
-                    NumberAnimation{ target: fire; properties: "size"; to: 65; duration: startDuration }
+                    //NumberAnimation{ target: fire.acceleration; properties: "xVariation"; to: 400; duration: startDuration }
+                    NumberAnimation{ target: fire; properties: "size"; to: 65; duration: 400 }
+                    NumberAnimation{ target: fire; properties: "lifeSpan"; to: 2000; duration: startDuration }
                 }
+
             }
 
             SequentialAnimation{
                 id: endFirePlume
+                running: false
                 property int startDuration: 400
 
                 //NumberAnimation{ target: dummy; properties: "opacity"; to: 0; duration: 1000 }
@@ -78,12 +81,13 @@ Rectangle {
                     NumberAnimation{ target: fire.velocity; properties: "angleVariation"; to: 50; duration: startDuration }
 
                     NumberAnimation{ target: fire.acceleration; properties: "yVariation"; to: 20; duration: startDuration }
-                    NumberAnimation{ target: fire.acceleration; properties: "xVariation"; to: 20; duration: startDuration }
+                    //NumberAnimation{ target: fire.acceleration; properties: "xVariation"; to: 20; duration: startDuration }
 
                 }
-
-                NumberAnimation{ target: fire; properties: "size"; to: 10; duration: startDuration }
                 NumberAnimation{ target: fire.acceleration; properties: "y"; to: -70; duration: startDuration }
+                NumberAnimation{ target: fire; properties: "size"; to: 10; duration: startDuration }
+                NumberAnimation{ target: fire; properties: "lifeSpan"; to: 1600; duration: startDuration }
+
              }
 
              Rectangle{id: dummy; color:"transparent"; visible: false; }

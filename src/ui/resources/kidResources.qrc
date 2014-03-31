@@ -9,6 +9,15 @@
 		<file alias="Hansel_Body.png">../media/Hansel_Body.png</file>
 		<file alias="Hansel_Happy_Head.png">../media/Hansel_Happy_Head.png</file>
 		<file alias="Hansel_Pants.png">../media/Hansel_Pants.png</file>
+		<file alias="G_Left_Arm.png">../media/G_Left_Arm.png</file>
+		<file alias="G_Left_Foot.png">../media/G_Left_Foot.png</file>
+		<file alias="G_Left_Hand.png">../media/G_Left_Hand.png</file>
+        <file alias="G_Right_Arm.png">../media/G_Right_Arm.png</file>
+		<file alias="G_Right_Foot.png">../media/G_Right_Foot.png</file>
+		<file alias="G_Right_Hand.png">../media/G_Right_Hand.png</file>
+                <file alias="Gretel_Torso.png">../media/Gretel_Torso.png</file>
+		<file alias="Gretel_Happy_Head.png">../media/Gretel_Happy_Head.png</file>
+		<file alias="Gretel_Pants.png">../media/Gretel_Pants.png</file>
 
     </qresource>
 </RCC>

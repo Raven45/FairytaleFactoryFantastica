@@ -179,13 +179,30 @@ Rectangle {
         anchors.verticalCenterOffset: -700
         anchors.horizontalCenterOffset: 1000
     }
+    GretelClaw {
+        id: gretelClaw
+        z: 73
+        anchors.centerIn: platformGretel
+        anchors.verticalCenterOffset: -700
+        anchors.horizontalCenterOffset: 1000
+    }
 
     Hansel{
         id: platformHansel
         //x: kidsPlatform.x + 20
         //y: kidsPlatform.x - height
         y: kidsPlatform.y - 300
-        x: kidsPlatform.x + 50
+        x: kidsPlatform.x + 10
+        z: 72
+        scale: 0.14
+    }
+
+    Gretel{
+        id: platformGretel
+        //x: kidsPlatform.x + 20
+        //y: kidsPlatform.x - height
+        y: kidsPlatform.y - 300
+        x: kidsPlatform.x - 80
         z: 72
         scale: 0.14
     }

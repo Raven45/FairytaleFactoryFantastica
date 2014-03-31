@@ -9,16 +9,16 @@ Rectangle {
     MouseArea{
         anchors.fill: parent
         onClicked:{
-            startPickUpHansel()
+            startPickUpGretel()
         }
     }
 
     Connections{
         target: page
-        onClawHasHansel:{
+        onClawHasGretel:{
             swingBodyTimer.start()
         }
-        onHanselIsOverOven:{
+        onGretelIsOverOven:{
             flail.start()
         }
     }
@@ -34,19 +34,20 @@ Rectangle {
     }
 
 
+
     Image{
         id:head
         z: 3
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
-        source: "Hansel_Happy_Head.png"
+        source: "Gretel_Happy_Head.png"
     }
 
     Rectangle{
         id:body
-        x: 81
-        anchors.horizontalCenterOffset: 6
-        anchors.topMargin: -369
+        x: 93
+        anchors.horizontalCenterOffset: 18
+        anchors.topMargin: -787
         anchors.top: head.bottom
         anchors.horizontalCenter: head.horizontalCenter
         height: 720
@@ -59,29 +60,29 @@ Rectangle {
             width: 300
             anchors.bottom: parent.bottom
 
-            source: "Hansel_Body.png"
+            source: "Gretel_Torso.png"
 
             Rectangle{
                 id: leftArm
-                x: 27
-                y: 195
+                x: 4
+                y: 169
                 width: 150
                 height: 150
                 color: "transparent"
                 z: -1
-                rotation: -90
+                rotation: -103
 
 
                 Image{
                     mirror: true
                     width: 100
                     height: 100
-                    anchors.leftMargin: -20
-                    anchors.topMargin: 17
+                    anchors.leftMargin: 1
+                    anchors.topMargin: 9
                     rotation: 180
                     anchors.left: parent.left
                     anchors.top: parent.top
-                    source: "H_Left_Arm.png"
+                    source: "G_Left_Arm.png"
 
                     Rectangle{
                         id: leftHand
@@ -90,9 +91,9 @@ Rectangle {
                         anchors.left: parent.left
                         anchors.top: parent.top
                         color: "transparent"
-                        anchors.leftMargin: -16
-                        anchors.topMargin: -15
-                        rotation: 4
+                        anchors.leftMargin: -14
+                        anchors.topMargin: -84
+                        rotation: -17
                         z: -1
 
 
@@ -107,15 +108,15 @@ Rectangle {
                             anchors.top: parent.top
                             anchors.left: parent.left
                             z: 1
-                            source: "H_Left_Hand.png"
+                            source: "G_Left_Hand.png"
                         }
                         SequentialAnimation{
                             id: waveLeftHand
                             running: flail.running
                             loops: Animation.Infinite
                             alwaysRunToEnd: true
-                            NumberAnimation {target: leftHand; property: "rotation"; from: 5; to:-35; duration: 70; easing.type: Easing.Linear;}
-                            NumberAnimation {target: leftHand; property: "rotation"; from: -35; to: 5; duration: 70; easing.type: Easing.Linear;}
+                            NumberAnimation {target: leftHand; property: "rotation"; from: 5; to:-17; duration: 70; easing.type: Easing.Linear;}
+                            NumberAnimation {target: leftHand; property: "rotation"; from: -17; to: 5; duration: 70; easing.type: Easing.Linear;}
                         }
                     }
                 }
@@ -123,14 +124,14 @@ Rectangle {
 
             Rectangle{
                 id: rightArm
-                x: 95
-                y: 238
+                x: 81
+                y: 205
                 width: 200
                 height: 100
                 color: "transparent"
                 z: -1
 
-                rotation: 31
+                rotation: -2
 
                 Image{
                     x: 20
@@ -139,26 +140,29 @@ Rectangle {
                     rotation: 0
                     anchors.right: parent.right
                     anchors.top: parent.top
-                    source: "H_Right_Arm.png"
+                    source: "G_Right_Arm.png"
 
                     Rectangle {
                         id: rightHand
                         x: -107
-                        y: 51
+                        y: 25
                         color:"transparent"
                         z: -1
-                        rotation: -29
+                        rotation: 29
                         height: 100
                         width: 300
 
                         Image{
-                            x: 150
+                            x: 137
                             height: 100
-                            rotation: 0
+                            anchors.rightMargin: 13
+                            anchors.topMargin: 0
+                            rotation: 270
+                            mirror: true
                             width: 150
                             anchors.right: parent.right
                             anchors.top: parent.top
-                            source: "H_Right_Hand.png"
+                            source: "G_Right_Hand.png"
                         }
                     }
 
@@ -167,8 +171,8 @@ Rectangle {
                         running: flail.running
                         loops: Animation.Infinite
                         alwaysRunToEnd: true
-                        NumberAnimation {target: rightHand; property: "rotation"; from: 10; to: -29; duration: 70; easing.type: Easing.Linear;}
-                        NumberAnimation {target: rightHand; property: "rotation"; from: -29; to: 10; duration: 70; easing.type: Easing.Linear;}
+                        NumberAnimation {target: rightHand; property: "rotation"; from: 29; to: -19; duration: 70; easing.type: Easing.Linear;}
+                        NumberAnimation {target: rightHand; property: "rotation"; from: -19; to: 29; duration: 70; easing.type: Easing.Linear;}
                     }
                 }
             }
@@ -176,31 +180,31 @@ Rectangle {
 
         Image {
             id: pants
-            x: 52
-            y: 339
+            x: -12
+            y: 58
             z: -1
-            source: "Hansel_Pants.png"
+            source: "Gretel_Pants.png"
 
             Image{
                 id: leftFoot
                 x: 0
-                y: 316
+                y: 579
                 z:-1
-                anchors.verticalCenterOffset: 198
-                anchors.horizontalCenterOffset: -60
+                anchors.verticalCenterOffset: 304
+                anchors.horizontalCenterOffset: -100
                 anchors.centerIn: parent
-                source: "H_Left_Foot.png"
+                source: "G_Left_Foot.png"
             }
 
             Image {
                 id: rightFoot
-                x: 130
-                y: 316
+                x: 178
+                y: 579
                 z:-1
-                anchors.verticalCenterOffset: 198
-                anchors.horizontalCenterOffset: 70
+                anchors.verticalCenterOffset: 304
+                anchors.horizontalCenterOffset: 78
                 anchors.centerIn: parent
-                source: "H_Right_Foot.png"
+                source: "G_Right_Foot.png"
             }
         }
 
@@ -242,16 +246,16 @@ Rectangle {
             SequentialAnimation {
                 id: flailLeftArm
                 alwaysRunToEnd: true
-                NumberAnimation {target: leftArm; property: "rotation"; from: -90; to: 10; duration: 300; easing.type: Easing.Linear;}
-                NumberAnimation {target: leftArm; property: "rotation"; from: 10; to: -90; duration: 300; easing.type: Easing.Linear;}
+                NumberAnimation {target: leftArm; property: "rotation"; from: -103; to: -19; duration: 300; easing.type: Easing.Linear;}
+                NumberAnimation {target: leftArm; property: "rotation"; from: -19; to: -103; duration: 300; easing.type: Easing.Linear;}
 
             }
 
             SequentialAnimation {
                 id: flailRightArm
                 alwaysRunToEnd: true
-                NumberAnimation {target: rightArm; property: "rotation"; from: 31; to: -74; duration: 300; easing.type: Easing.Linear;}
-                NumberAnimation {target: rightArm; property: "rotation"; from: -74; to: 31; duration: 300; easing.type: Easing.Linear;}
+                NumberAnimation {target: rightArm; property: "rotation"; from: 19; to: -41; duration: 300; easing.type: Easing.Linear;}
+                NumberAnimation {target: rightArm; property: "rotation"; from: -41; to: 19; duration: 300; easing.type: Easing.Linear;}
             }
         }
     }

@@ -1,46 +1,46 @@
 import QtQuick 2.0
 
 Item {
-    id: hanselClaw
+    id: gretelClaw
 
     Connections{
         target: page
-        onStartPickUpHansel:{
-            takeHanselsHead.start()
+        onStartPickUpGretel:{
+            takeGretelsHead.start()
         }
 
-        onClawHasHansel:{
-            liftHanselTimer.start()
+        onClawHasGretel:{
+            liftGretelTimer.start()
         }
 
-        onHanselIsOverOven:{
-            killHanselTimer.start()
+        onGretelIsOverOven:{
+            killGretelTimer.start()
         }
     }
 
 
 
     SequentialAnimation{
-        id: takeHanselsHead
+        id: takeGretelsHead
         running: false
 
         NumberAnimation{
-            target: hanselClaw.anchors
+            target: gretelClaw.anchors
             properties:"horizontalCenterOffset"
-            to: -66
+            to: -64
             duration: 800
             easing.type: Easing.OutSine
         }
 
         ScriptAction {
             script: {
-                hanselClawSprite.jumpTo("openEmptyClawSprite")
+                gretelClawSprite.jumpTo("openEmptyClawSprite")
                 pauseOpacity.state = "EXECUTION";
             }
         }
 
         NumberAnimation{
-            target: hanselClaw.anchors
+            target: gretelClaw.anchors
             properties:"verticalCenterOffset"
             to: -136
             duration: 800
@@ -48,53 +48,53 @@ Item {
         }
         ScriptAction{
             script: {
-                hanselClawSprite.jumpTo("closeEmptyClawSprite")
-                clawHasHansel();
+                gretelClawSprite.jumpTo("closeEmptyClawSprite")
+                clawHasGretel();
             }
         }
 
     }
 
     Timer{
-        id: liftHanselTimer
+        id: liftGretelTimer
         running: false
         repeat: false
         interval: 300
         onTriggered:{
-            moveHanselToOven.start()
+            moveGretelToOven.start()
         }
     }
 
     Timer{
-        id: killHanselTimer
+        id: killGretelTimer
 
         interval: 2000
         running: false
         repeat: false
         onTriggered:{
-            burnHanselToDeath.start()
+            burnGretelToDeath.start()
         }
     }
 
     SequentialAnimation {
-        id: moveHanselToOven
+        id: moveGretelToOven
         running: false
 
-        NumberAnimation { target: platformHansel; property: "y"; to: platformHansel.y - 100; duration: 400; easing.type: Easing.OutSine }
-        NumberAnimation { target: platformHansel; property: "x"; to: gameScreen.width/2 - platformHansel.width/2; duration: 1200; easing.type: Easing.OutSine }
+        NumberAnimation { target: platformGretel; property: "y"; to: platformGretel.y - 125; duration: 400; easing.type: Easing.OutSine }
+        NumberAnimation { target: platformGretel; property: "x"; to: gameScreen.width/2 - platformGretel.width/2; duration: 1200; easing.type: Easing.OutSine }
         ScriptAction {
             script: {
-                hanselIsOverOven();
+                gretelIsOverOven();
             }
         }
     }
 
     SequentialAnimation {
-        id: burnHanselToDeath
+        id: burnGretelToDeath
         running: false
 
         ParallelAnimation {
-            NumberAnimation { target: platformHansel; property: "y"; duration: 1000; to: y+ 200; easing.type: Easing.InQuad }
+            NumberAnimation { target: platformGretel; property: "y"; duration: 1000; to: y+ 200; easing.type: Easing.InQuad }
             ScriptAction {
                 script: {
                     droppedSomethingInOven()
@@ -102,29 +102,29 @@ Item {
             }
             NumberAnimation {
 
-                target: hanselClaw.anchors
+                target: gretelClaw.anchors
                 properties:"verticalCenterOffset"
                 to: -1100
                 duration: 1000
                 easing.type:Easing.Linear
             }
         }
-        NumberAnimation { target: hanselClaw.anchors; property: "horizontalCenterOffset"; to: 1200; duration: 1800; easing.type: Easing.OutSine }
+        NumberAnimation { target: gretelClaw.anchors; property: "horizontalCenterOffset"; to: 1200; duration: 1800; easing.type: Easing.OutSine }
 
     }
 
     SpriteSequence{
-        id: hanselClawSprite
+        id: gretelClawSprite
         width: _CLAW_SPRITE_WIDTH
         height: _CLAW_SPRITE_WIDTH
 
         property string reverseSource: "teal-claw-reverse-spritesheet.png"
         sprites:[
 
-            Sprite {
+            Sprite{
                 name: "closeEmptyClawSprite"
                 source: "teal-claw-spritesheet.png"
-                frameCount: 14
+                frameCount: 8
                 frameX: 800
                 frameY: 800
                 frameDuration: 10
@@ -147,8 +147,8 @@ Item {
 
             Sprite{
                 name: "openEmptyClawSprite"
-                source: hanselClawSprite.reverseSource
-                frameCount: 14
+                source: gretelClawSprite.reverseSource
+                frameCount: 8
                 frameX: 0
                 frameY: 1400
                 frameDuration: 1000/24
@@ -162,7 +162,7 @@ Item {
 
             Sprite{
                 name: "stillEmptyOpenClawSprite"
-                source: hanselClawSprite.reverseSource
+                source: gretelClawSprite.reverseSource
                 frameCount: 1
                 frameX: 1200
                 frameY: 1600
@@ -178,12 +178,13 @@ Item {
 
         width: 40
         height: 700
-        anchors.bottom: hanselClawSprite.top
+        anchors.bottom: gretelClawSprite.top
         anchors.bottomMargin: -41
-        anchors.horizontalCenter: hanselClawSprite.horizontalCenter
+        anchors.horizontalCenter: gretelClawSprite.horizontalCenter
         anchors.horizontalCenterOffset: -2
         z: 30
     }
 
 
 }
+

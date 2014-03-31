@@ -10,15 +10,17 @@ Rectangle {
     id: page
     color: "#333333"
 
-    property bool _SKIP_INTROS: false
-
     signal droppedSomethingInOven()
     signal readyToStartOnePersonPlay()
     signal readyToStartTwoPersonPlay()
     signal load()
     signal hanselIsOverOven()
+    signal gretelIsOverOven()
     signal startPickUpHansel()
+    signal startPickUpGretel()
     signal clawHasHansel()
+    signal clawHasGretel()
+
     signal clawMovingUp()
     signal clawMovingDown()
     signal finishedClawMovingY()
@@ -314,7 +316,7 @@ Rectangle {
 
     Rectangle{
         id: loadingScreen
-        visible: !_SKIP_INTROS
+        visible: true
         z: 999
         anchors.fill: parent
         color: "black"
@@ -330,7 +332,7 @@ Rectangle {
         Timer{
             interval: 4000
             repeat: false
-            running: !_SKIP_INTROS
+            running: true
 
             onTriggered:{
                 musicPlayer.togglePlayback();

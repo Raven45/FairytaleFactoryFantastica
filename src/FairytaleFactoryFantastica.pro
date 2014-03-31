@@ -96,7 +96,8 @@ OTHER_FILES += \
     ui/qml/StartScreen.qml \
     ui/qml/MusicPlayer.qml \
     ui/qml/Hansel.qml \
-    ui/qml/HanselClaw.qml
+    ui/qml/HanselClaw.qml \
+    ui/qml/GretelClaw.qml
 
 HEADERS += \
     backend/networking/Barrager.h \
