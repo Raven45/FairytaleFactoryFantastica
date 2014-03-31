@@ -155,7 +155,7 @@ Rectangle {
     }
 
     Image {
-        id: witchPlatform
+        id: rightPlatform
         source: "platformCombinedSmall.png"
         y: 750
         x: parent.width - 125 - width
@@ -164,7 +164,7 @@ Rectangle {
     }
 
     Image {
-        id: kidsPlatform
+        id: leftPlatform
         source: "platformCombinedSmall.png"
         y: 750
         x: 125
@@ -172,27 +172,33 @@ Rectangle {
         z: 69
     }
 
+    NumberAnimation { id: moveLeftPlatformUp; target: leftPlatform; property: "y"; to: 400; duration: 800; easing.type: Easing.OutSine }
+    NumberAnimation { id: moveRightPlatformUp; target: rightPlatform; property: "y"; to: 400; duration: 800; easing.type: Easing.OutSine }
+    NumberAnimation { id: moveLeftPlatformDown; target: leftPlatform; property: "y"; to: 750; duration: 800; easing.type: Easing.OutSine }
+    NumberAnimation { id: moveRightPlatformDown; target: rightPlatform; property: "y"; to: 750; duration: 800; easing.type: Easing.OutSine }
+
     HanselClaw {
         id: hanselClaw
         z: 73
         anchors.centerIn: platformHansel
-        anchors.verticalCenterOffset: -700
-        anchors.horizontalCenterOffset: 1000
+        anchors.verticalCenterOffset: -700// _CLAW_Y_HOME - platformHansel.y + platformHansel.height/2
+        anchors.horizontalCenterOffset: 1100// _CLAW_X_HOME - platformHansel.x - platformHansel.width/2
     }
+
     GretelClaw {
         id: gretelClaw
         z: 73
         anchors.centerIn: platformGretel
-        anchors.verticalCenterOffset: -700
-        anchors.horizontalCenterOffset: 1000
+        anchors.verticalCenterOffset: -700//_CLAW_Y_HOME - platformGretel.y + platformHansel.height/2
+        anchors.horizontalCenterOffset: 1100// _CLAW_X_HOME - platformGretel.x - platformHansel.width/2
     }
 
     Hansel{
         id: platformHansel
         //x: kidsPlatform.x + 20
         //y: kidsPlatform.x - height
-        y: kidsPlatform.y - 300
-        x: kidsPlatform.x + 10
+        y: leftPlatform.y - 300
+        x: leftPlatform.x + 10
         z: 72
         scale: 0.14
     }
@@ -201,8 +207,8 @@ Rectangle {
         id: platformGretel
         //x: kidsPlatform.x + 20
         //y: kidsPlatform.x - height
-        y: kidsPlatform.y - 300
-        x: kidsPlatform.x - 80
+        y: rightPlatform.y - 300
+        x: rightPlatform.x - 80
         z: 72
         scale: 0.14
     }
