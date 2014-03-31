@@ -10,7 +10,7 @@ Rectangle {
     id: page
     color: "#333333"
 
-    property bool _SKIP_INTROS: true
+    property bool _SKIP_INTROS: false
 
     signal droppedSomethingInOven()
     signal readyToStartOnePersonPlay()
