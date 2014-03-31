@@ -1,5 +1,7 @@
 <RCC>
     <qresource>
+		<file alias="small-fireball.wav">../media/small-fireball.wav</file>
+		<file alias="crackling-fire.wav">../media/crackling-fire.wav</file>
 		<file alias="witch-laugh.wav">../media/witch-laugh.wav</file>
 		<file alias="wolf-growl.wav">../media/wolf-growl.wav</file>
 		<file alias="metal-gate.wav">../media/metal-gate.wav</file>
