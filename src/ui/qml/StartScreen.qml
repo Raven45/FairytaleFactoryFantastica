@@ -5,7 +5,7 @@ import QtQuick.Particles 2.0
 import QtMultimedia 5.0
 
 Rectangle {
-
+    id: startScreen
     width: parent.width
     height: parent.height
     z: 100
@@ -17,6 +17,11 @@ Rectangle {
     SoundEffect {
         id: gateSound
         source: "metal-gate.wav"
+    }
+
+    SoundEffect {
+        id: wolfSound
+        source: "wolf-growl.wav"
     }
 
     Item {
@@ -603,6 +608,12 @@ Rectangle {
         anchors.leftMargin: -50
         anchors.bottom: footprints.top
         z: 13
+
+        MouseArea {
+            id: wolfMouseArea
+            anchors.fill: parent
+            onPressed: if(_SOUND_CHECK_FLAG) wolfSound.play()
+        }
     }
 
     Image{
