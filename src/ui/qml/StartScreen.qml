@@ -3,6 +3,7 @@ import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
 import QtQuick.Particles 2.0
 import QtMultimedia 5.0
+import QtGraphicalEffects 1.0
 
 Rectangle {
     id: startScreen
@@ -22,6 +23,21 @@ Rectangle {
     SoundEffect {
         id: wolfSound
         source: "wolf-growl.wav"
+    }
+
+    SoundEffect {
+        id: buzzerSound
+        source: "buzzer.wav"
+    }
+
+    SoundEffect {
+        id: swooshSound
+        source: "swoosh.wav"
+    }
+
+    SoundEffect {
+        id: scarySound
+        source: "scary.wav"
     }
 
     Item {
@@ -521,7 +537,21 @@ Rectangle {
         anchors.top: gretel.bottom
         anchors.topMargin: -20
         z: 11
-     }
+    }
+
+    Glow {
+       id: hiringSign_glowEffect
+       anchors.fill: hiringSign
+       radius: 12
+       samples: 24
+       spread: 0.5
+       color: "#ffea00"
+       source: hiringSign
+       visible: false
+       fast: true
+       cached: true
+       z: hiringSign.z + 1
+    }
 
     Image{
         id: hiringSign
@@ -530,8 +560,26 @@ Rectangle {
         anchors.leftMargin: -97
         anchors.verticalCenter: main_gate.verticalCenter
         anchors.verticalCenterOffset: 100
-        z:11
+        z:50
         scale: .3
+
+        MouseArea {
+            id: hiringSign_mouseArea
+            anchors.fill: parent
+            hoverEnabled: true
+
+            onEntered: {
+                if(hiringSign_glowEffect.visible == false && hiringSign_mouseArea.containsMouse){
+                    hiringSign_glowEffect.visible = true;
+                }
+            }
+            onExited: {
+                if(hiringSign_glowEffect.visible == true){
+                    hiringSign_glowEffect.visible = false;
+                }
+            }
+            onPressed: if(_SOUND_CHECK_FLAG) scarySound.play()
+        }
     }
 
     Image{
@@ -544,22 +592,62 @@ Rectangle {
         z: 16
         scale: .9
 
+        Glow {
+           id: enterButton_glowEffect
+           anchors.fill: enterButton_image
+           radius: 16
+           samples: 24
+           spread: 0.8
+           color: "#941a1a"
+           source: enterButton_image
+           visible: false
+           fast: true
+           cached: true
+        }
+
         Image{
-            id: enterButton
+            id: enterButton_image
             source: "EnterButton.png"
-            z: 17
+            z: 50
             anchors.left: parent.left
             anchors.leftMargin: 85
             anchors.top: parent.top
             anchors.topMargin: 90
 
             MouseArea {
+                id: enterButton_mouseArea
                 anchors.fill: parent
+                hoverEnabled: true
+
+                onEntered: {
+                    if(enterButton_glowEffect.visible == false && enterButton_mouseArea.containsMouse){
+                        enterButton_glowEffect.visible = true;
+                    }
+                }
+                onExited: {
+                    if(enterButton_glowEffect.visible == true){
+                        enterButton_glowEffect.visible = false;
+                    }
+                }
+                onPressed: if(_SOUND_CHECK_FLAG) buzzerSound.play()
                 onClicked:{
                     gate_lDoorSprite.jumpTo("opening_gate");
                     gateOpened();
                 }
             }
+        }
+
+        Glow {
+           id: exitLever_glowEffect
+           anchors.fill: leverHandle
+           radius: 16
+           samples: 24
+           spread: 0.8
+           color: "#941a1a"
+           source: leverHandle
+           visible: false
+           fast: true
+           cached: true
         }
 
         Image{
@@ -578,7 +666,21 @@ Rectangle {
             }
 
             MouseArea {
+                id: exitLever_mouseArea
                 anchors.fill: parent
+                hoverEnabled: true
+
+                onEntered: {
+                    if(exitLever_glowEffect.visible == false && exitLever_mouseArea.containsMouse){
+                        exitLever_glowEffect.visible = true;
+                    }
+                }
+                onExited: {
+                    if(exitLever_glowEffect.visible == true){
+                        exitLever_glowEffect.visible = false;
+                    }
+                }
+                onPressed: if(_SOUND_CHECK_FLAG) swooshSound.play()
                 onClicked: {
                     moveLever.start();
                     exitTimer.start();
@@ -600,9 +702,9 @@ Rectangle {
             id: leverHandle
             source: "Lever.png"
             z: 17
-            anchors.left: enterButton.right
+            anchors.left: enterButton_image.right
             anchors.leftMargin: -10
-            anchors.top: enterButton.top
+            anchors.top: enterButton_image.top
             anchors.topMargin: -20
         }
     }
@@ -618,18 +720,48 @@ Rectangle {
         z: 5
     }
 
-    Image{
+    Item {
         id: wolf
-        source: "Wolf.png"
+        width: wolf_image.width; height: wolf_image.height
+        z: 13
+        anchors.bottom: footprints.top
         anchors.left: footprints.right
         anchors.leftMargin: -50
-        anchors.bottom: footprints.top
-        z: 13
 
-        MouseArea {
-            id: wolfMouseArea
-            anchors.fill: parent
-            onPressed: if(_SOUND_CHECK_FLAG) wolfSound.play()
+        Glow {
+           id: wolf_glowEffect
+           anchors.fill: wolf_image
+           radius: 24
+           samples: 12
+           spread: 0.4
+           color: "#190c22"
+           source: wolf_image
+           visible: false
+           fast: true
+           cached: true
+        }
+
+        Image{
+            id: wolf_image
+            source: "Wolf.png"
+            z: 13
+
+            MouseArea {
+                id: wolf_mouseArea
+                anchors.fill: parent
+                hoverEnabled: true
+                onPressed: if(_SOUND_CHECK_FLAG) wolfSound.play()
+                onEntered: {
+                    if(wolf_glowEffect.visible == false && wolf_mouseArea.containsMouse){
+                        wolf_glowEffect.visible = true;
+                    }
+                }
+                onExited: {
+                    if(wolf_glowEffect.visible == true){
+                        wolf_glowEffect.visible = false;
+                    }
+                }
+            }
         }
     }
 
