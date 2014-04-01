@@ -565,28 +565,50 @@ Rectangle {
         Image{
             id: exitLever
             source: "ExitLever.png"
-            z: 17
-            anchors.right: parent.right
-            anchors.rightMargin: 30
-            anchors.top: parent.top
-            anchors.topMargin: 70
+           // z: 17
+            z:500
+            x: 179
+            y: 65
+            //anchors.right: parent.right
+           // anchors.rightMargin: 30
+           // anchors.top: parent.top
+           // anchors.topMargin: 70
 
-            Image{
-                id: lever
-                source: "Lever.png"
-                z: 17
-                anchors.right: parent.left
-                anchors.top: parent.top
-                anchors.rightMargin: -95
+            PropertyAnimation{
+                id: moveLever
+                target: exitLever
+                properties: "y"
+                to: 115
+                duration: 700
             }
 
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    readyToExitGame()
+                    moveLever.start();
+                    exitTimer.start();
+                    //readyToExitGame();
+                }
+            }
+            Item{
+                Timer{
+                    id: exitTimer
+                    interval: 710
+                    running: false
+                    onTriggered: readyToExitGame()
                 }
             }
 
+        }
+
+        Image{
+            id: leverHandle
+            source: "Lever.png"
+            z: 17
+            anchors.left: enterButton.right
+            anchors.leftMargin: -10
+            anchors.top: enterButton.top
+            anchors.topMargin: -20
         }
     }
 
