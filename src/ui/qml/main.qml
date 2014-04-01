@@ -14,7 +14,7 @@ Rectangle {
     color: "#333333"
 
     signal droppedSomethingInOven()
-    signal readyToStartOnePersonPlay()
+    signal readyToStartOnePersonPlay( int aiLevel )
     signal readyToStartTwoPersonPlay()
     signal load()
     signal hanselIsOverOven()

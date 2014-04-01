@@ -202,7 +202,8 @@ Rectangle {
                         startMenu.state = "INVISIBLE"
                         isNetworkGame = false;
                         clearBoard();
-                        readyToStartOnePersonPlay();
+
+                        readyToStartOnePersonPlay( 1 );
                     }
                 }
             }

@@ -71,29 +71,6 @@ Rectangle {
         }
     }
 
-
-    GUIButton {
-        source_string: "restart-button.png"
-        anchors.top: parent.top
-        anchors.topMargin: (parent.height - 30)/4
-        anchors.left: parent.left
-        anchors.leftMargin: 30
-        z: parent.z+1
-
-        MouseArea {
-            anchors.fill: parent
-
-            onPressed: { if(_SOUND_CHECK_FLAG) playSound.play() }
-            onClicked: {
-                clearBoard();
-                gameMenu.state = "INVISIBLE";
-                changeGuiPlayerColor( guiPlayerIsWhite? 0 : 1 );
-                readyToStartOnePersonPlay();
-                resetGumdropAnimation();
-            }
-        }
-    }
-
     GUIButton {
         id: soundButton
         source_string: _SOUND_CHECK_FLAG ? "sound-button.png" : "nosound-button.png"

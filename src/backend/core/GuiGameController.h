@@ -31,7 +31,7 @@ public:
 signals:
 
     //qml proxy
-    void readyToStartOnePersonPlay();
+    void readyToStartOnePersonPlay(int);
     void readyToStartTwoPersonPlay();
     void changeSoundState();
     void changeGuiPlayerColor(int color);
@@ -75,6 +75,15 @@ protected:
 
     //player1 is in the Gui; his turn is too specialized to force into the player class
     Player* player2;
+
+    typedef SmarterPlayer2 EasyAIPlayer;
+    typedef SmarterPlayer2 MediumAIPlayer;
+    typedef SmarterPlayer2 HardAIPlayer;
+
+    EasyAIPlayer easyAi;
+    MediumAIPlayer mediumAi;
+    HardAIPlayer hardAi;
+
 
     PlayerColor guiPlayerColor;
     QString guiPlayerName;
@@ -124,7 +133,7 @@ public slots:
     void setGuiPlayerColor( int menuSelectedColor );
     void setFirstMovingPlayerColor( PlayerColor playerToMoveFirst );
     void setPlayer2( Player* );
-    void startOnePersonPlay();
+    void startOnePersonPlay(int);
     void startTwoPersonPlay();
     void enterNetworkLobby();
     void togglePlayback();
@@ -170,7 +179,7 @@ public:
         core = c;
 
         qDebug() << "connecting gui proxy signals";
-        connect( gui,   SIGNAL( readyToStartOnePersonPlay() ),                      this,   SIGNAL( readyToStartOnePersonPlay() ));
+        connect( gui,   SIGNAL( readyToStartOnePersonPlay( int ) ),                 this,   SIGNAL( readyToStartOnePersonPlay( int ) ));
         connect( gui,   SIGNAL( readyToStartTwoPersonPlay() ),                      this,   SIGNAL( readyToStartTwoPersonPlay() ));
         connect( gui,   SIGNAL( sendPlayerName( QVariant ) ) ,                      this,   SIGNAL( sendPlayerName( QVariant )  ));
         connect( gui,   SIGNAL( enterNetworkLobby() ),                              this,   SIGNAL( enterNetworkLobby() ));

@@ -69,14 +69,14 @@ void GuiGameController::setWindow(Proxy* g){
     gui = g;
 
     qDebug() << "connecting window signals";
-    connect(gui, SIGNAL( readyToStartOnePersonPlay() ), this, SLOT( startOnePersonPlay() ),     Qt::QueuedConnection  );
-    connect(gui, SIGNAL( readyToStartTwoPersonPlay() ), this, SLOT( startTwoPersonPlay() ),     Qt::QueuedConnection  );
-    connect(gui, SIGNAL( sendPlayerName( QVariant ) ) , this, SLOT( setPlayerName( QVariant ) ),Qt::QueuedConnection  );
-    connect(gui, SIGNAL( enterNetworkLobby() ),         this, SLOT( enterNetworkLobby() ),      Qt::QueuedConnection  );
-    connect(gui, SIGNAL( changeSoundState() ),          this, SLOT( togglePlayback() ),         Qt::QueuedConnection  );
-    connect(gui, SIGNAL( changeGuiPlayerColor( int )),  this, SLOT( setGuiPlayerColor( int ) ), Qt::QueuedConnection  );
-    connect(gui, SIGNAL( readyToExitGame() ),           this, SLOT( exitGame() ),               Qt::QueuedConnection  );
-    connect(gui, SIGNAL( backToMainMenu() ),            this, SLOT( backToMainMenu() ),         Qt::QueuedConnection  );
+    connect(gui, SIGNAL( readyToStartOnePersonPlay( int )), this, SLOT( startOnePersonPlay( int ) ),Qt::QueuedConnection  );
+    connect(gui, SIGNAL( readyToStartTwoPersonPlay() ),     this, SLOT( startTwoPersonPlay() ),     Qt::QueuedConnection  );
+    connect(gui, SIGNAL( sendPlayerName( QVariant ) ) ,     this, SLOT( setPlayerName( QVariant ) ),Qt::QueuedConnection  );
+    connect(gui, SIGNAL( enterNetworkLobby() ),             this, SLOT( enterNetworkLobby() ),      Qt::QueuedConnection  );
+    connect(gui, SIGNAL( changeSoundState() ),              this, SLOT( togglePlayback() ),         Qt::QueuedConnection  );
+    connect(gui, SIGNAL( changeGuiPlayerColor( int )),      this, SLOT( setGuiPlayerColor( int ) ), Qt::QueuedConnection  );
+    connect(gui, SIGNAL( readyToExitGame() ),               this, SLOT( exitGame() ),               Qt::QueuedConnection  );
+    connect(gui, SIGNAL( backToMainMenu() ),                this, SLOT( backToMainMenu() ),         Qt::QueuedConnection  );
 
 }
 
@@ -92,7 +92,6 @@ void GuiGameController::setPlayerName(QVariant name){
 void GuiGameController::initialize(){
     qsrand(QTime::currentTime().msec());
     setNetworkInterface();
-    setAIPlayer( new DefaultAIPlayer );
 }
 
 //must be called after setWindow
@@ -204,7 +203,19 @@ void GuiGameController::networkTurnReceivedFromNetwork( int quadrantIndex, int p
 }
 
 
-void GuiGameController::startOnePersonPlay() {
+void GuiGameController::startOnePersonPlay( int aiLevel ) {
+
+    assert (aiLevel == 1 || aiLevel == 2 || aiLevel == 3);
+
+    if ( aiLevel == 1 ){
+        setAIPlayer(&easyAi);
+    }
+    else if ( aiLevel == 2 ) {
+        setAIPlayer(&mediumAi);
+    }
+    else {
+        setAIPlayer(&hardAi);
+    }
 
     GameCore::startNewGame();
 
