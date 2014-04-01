@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtMultimedia 5.0
 
 Item {
     id: gretelClaw
@@ -18,7 +19,10 @@ Item {
         }
     }
 
-
+    SoundEffect {
+        id: fireSound
+        source: "crackling-fire.wav"
+    }
 
     SequentialAnimation{
         id: takeGretelsHead
@@ -36,6 +40,7 @@ Item {
             script: {
                 gretelClawSprite.jumpTo("openEmptyClawSprite")
                 pauseOpacity.state = "EXECUTION";
+                if(_SOUND_CHECK_FLAG) fireSound.play()
             }
         }
 

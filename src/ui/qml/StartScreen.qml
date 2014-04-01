@@ -12,7 +12,7 @@ Rectangle {
     color: "#00FFFF"
     visible: false
 
-    state: "INVISIBLE"
+    state: _SKIP_INTROS? "VISIBLE" : "INVISIBLE"
 
     SoundEffect {
         id: gateSound
@@ -565,14 +565,9 @@ Rectangle {
         Image{
             id: exitLever
             source: "ExitLever.png"
-           // z: 17
-            z:500
+            z: 17
             x: 179
             y: 65
-            //anchors.right: parent.right
-           // anchors.rightMargin: 30
-           // anchors.top: parent.top
-           // anchors.topMargin: 70
 
             PropertyAnimation{
                 id: moveLever

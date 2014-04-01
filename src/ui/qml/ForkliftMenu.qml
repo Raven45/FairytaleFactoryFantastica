@@ -4,6 +4,7 @@ import QtQuick.Controls.Styles 1.1
 import QtMultimedia 5.0
 
 Rectangle {
+    id: forkliftMenu
     width: 1440
     height: 900
     color: "black"
@@ -42,6 +43,22 @@ Rectangle {
         Keys.onEscapePressed: readyToExitGame();
     }
 
+    Rectangle {
+        id: loadingBayDoor
+        //source: "loading-bay-door.png"
+        //width: 1260; //height: loadingBayDoor.width;
+        //fillMode: Image.PreserveAspectFit
+        z: brickWall + 5
+
+        width: 750; height: 800
+
+        anchors.top: forkliftMenu.top
+        anchors.topMargin: 100
+        anchors.right: forkliftMenu.right
+        anchors.rightMargin: 51
+
+    }
+
     Image{
         anchors.fill: parent
         id: brickWall
@@ -53,13 +70,13 @@ Rectangle {
         id: moveForklift
         target: forklift.anchors
         properties: "leftMargin"
-        duration: 3000
+        duration: 1500
         from: -700
-        to: 8
+        to: -175
 
     }
 
-    Rectangle{
+    Rectangle {
         id: forklift
         y: 248
         color: "transparent"
@@ -69,6 +86,7 @@ Rectangle {
         anchors.bottom: parent.bottom
         width: 700
         height: 700
+        scale: 0.75
         z: 10
 
         Image{
@@ -141,17 +159,36 @@ Rectangle {
             id: box1
             x: 668
             y: -350
-            z: 1
+            z: 3
             source: "WideCardboardBox.png"
 
-            GUIButton {
+            Image {
                 id: startMenu_startOnePlayer
-                source_string: "singleplayer-button.png"
-                anchors.centerIn: parent
-                z: 3
+                source: source_string
+                anchors.left: box1.left
+                anchors.leftMargin: 20
+                anchors.top: box1.top
+                width: 375; height: 375; scale: 1
+                z: box1.z + 1
+
+                property string source_string: "single-player-stencil.png"
 
                 MouseArea {
+                    id: singlePlayer_mouseArea
                     anchors.fill: parent
+                    hoverEnabled: true
+
+                    onEntered: {
+                        if( singlePlayer_mouseArea.containsMouse && startMenu_startOnePlayer.source_string === "single-player-stencil.png"){
+                            startMenu_startOnePlayer.source_string = "single-player-stencil-selected.png";
+                        }
+                    }
+
+                    onExited: {
+                        if( startMenu_startOnePlayer.source_string === "single-player-stencil-selected.png"){
+                            startMenu_startOnePlayer.source_string = "single-player-stencil.png"
+                        }
+                    }
 
                     onClicked: {
 
@@ -170,6 +207,34 @@ Rectangle {
                 }
             }
 
+            /*
+            GUIButton {
+                id: startMenu_startOnePlayer
+                source_string: "singleplayer-button.png"
+                anchors.centerIn: parent
+                z: 3
+
+                MouseArea {
+                    anchors.fill: parent
+
+                    onClicked: {
+
+                        if( !piecesHaveStartedAnimating ){
+                            startPieceAnimations();
+                            piecesHaveStartedAnimating = true;
+
+                        }
+
+                        sendPlayerName( "TODO: FIX MEEEE" //playerNameBox.text );
+                        startMenu.state = "INVISIBLE"
+                        isNetworkGame = false;
+                        clearBoard();
+                        readyToStartOnePersonPlay();
+                    }
+                }
+            }
+            */
+
             GUIButton {
 
                 property int buttonColor
@@ -178,7 +243,7 @@ Rectangle {
                 source_string: "purp-button.png"
                 anchors.centerIn: parent
                 anchors.horizontalCenterOffset: 75
-                z: 3
+                z: startMenu_startOnePlayer.z + 1
 
                 state: "BLACK"
                 buttonColor: 1
@@ -219,21 +284,84 @@ Rectangle {
 
         Image {
             id: box2
+            x: 642
+            y: -74
+            source: "WideCardboardBox.png"
+            z: box1.z - 1
+
+            Image {
+                id: startMenu_startPlayerVsPlayer
+                source: pvp_source_string
+                anchors.left: box2.left
+                anchors.leftMargin: 15
+                anchors.top: box2.top
+                anchors.topMargin: 85
+                width: 375; height: 375; scale: 1
+                z: box2.z + 1
+
+
+                property string pvp_source_string: "player-vs-player-stencil.png"
+
+                MouseArea {
+                    id: pvp_mouseArea
+                    anchors.fill: parent
+                    hoverEnabled: true
+
+                    onEntered: {
+                        if( pvp_mouseArea.containsMouse && startMenu_startPlayerVsPlayer.pvp_source_string === "player-vs-player-stencil.png"){
+                            startMenu_startPlayerVsPlayer.pvp_source_string = "player-vs-player-stencil-selected.png";
+                        }
+                    }
+
+                    onExited: {
+                        if( startMenu_startPlayerVsPlayer.pvp_source_string === "player-vs-player-stencil-selected.png"){
+                            startMenu_startPlayerVsPlayer.pvp_source_string = "player-vs-player-stencil.png"
+                        }
+                    }
+
+                    onClicked: {/*TODO*/}
+                }
+            }
+        }
+
+        Image {
+            id: box3
             x: 616
             y: 186
             source: "WideCardboardBox.png"
+            z: box2.z - 1
 
-            GUIButton {
-                id: startMenu_startNetworkPlay
-                source_string: "network-button.png"
-                anchors.centerIn: parent
-                z: 3
+            Image {
+                id: startMenu_startNetwork
+                source: net_source_string
+                anchors.left: box3.left
+                anchors.leftMargin: 15
+                anchors.top: box3.top
+                anchors.topMargin: 85
+                width: 375; height: 375; scale: 1
+                z: box3.z + 1
+
+
+                property string net_source_string: "network-game-stencil.png"
 
                 MouseArea {
+                    id: network_mouseArea
                     anchors.fill: parent
+                    hoverEnabled: true
+
+                    onEntered: {
+                        if( network_mouseArea.containsMouse && startMenu_startNetwork.net_source_string === "network-game-stencil.png"){
+                            startMenu_startNetwork.net_source_string = "network-game-stencil-selected.png";
+                        }
+                    }
+
+                    onExited: {
+                        if( startMenu_startNetwork.net_source_string === "network-game-stencil-selected.png"){
+                            startMenu_startNetwork.net_source_string = "network-game-stencil.png"
+                        }
+                    }
 
                     onClicked: {
-
                         if( !piecesHaveStartedAnimating ){
                             startPieceAnimations();
                             piecesHaveStartedAnimating = true;
@@ -248,16 +376,8 @@ Rectangle {
                     }
                 }
             }
+
         }
-
-        Image {
-            id: box3
-            x: 642
-            y: -74
-            source: "WideCardboardBox.png"
-        }
-
-
 
         TextArea {
 
@@ -345,55 +465,5 @@ Rectangle {
             }
         }
     }*/
-
-
-
-
-
-
-/*
-
-
-    GUIButton {
-        id: startMenu_soundButton
-        source_string: "sound-button.png"
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: ((parent.height - 30)/4) - 30
-        anchors.left: parent.left
-        anchors.leftMargin: 30
-        z: 3
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                if (startMenu_soundButton.source_string === "sound-button.png") {
-                    startMenu_soundButton.source_string = "nosound-button.png"
-                } else {
-                    startMenu_soundButton.source_string = "sound-button.png"
-                }
-                changeSoundState();
-            }
-        }
-    }
-
-    GUIButton {
-        id: startMenu_leaveGame
-        source_string: "leave-button.png"
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.bottomMargin: 15
-        anchors.leftMargin: 30
-        z: 3
-
-        MouseArea {
-            anchors.fill: parent
-
-            onClicked: {
-                readyToExitGame()
-            }
-        }
-    }
-    */
 }
-
 

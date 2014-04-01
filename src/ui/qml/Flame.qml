@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Particles 2.0
+import QtMultimedia 5.0
 
 Rectangle {
     height: 60
@@ -7,7 +8,10 @@ Rectangle {
     color: "transparent"
     id: root
 
-
+    SoundEffect {
+         id: flameSound
+         source: "small-fireball.wav"
+    }
 
     ParticleSystem {
         height: 40
@@ -40,7 +44,7 @@ Rectangle {
             Connections{
                 target: page
                 onDroppedSomethingInOven:{
-
+                    startSoundTimer.start()
                     startFirePlume.start()
                 }
             }
@@ -103,6 +107,14 @@ Rectangle {
                 onTriggered:{
                     endFirePlume.start()
                 }
+            }
+
+            Timer {
+                 id: startSoundTimer
+                 interval: 400
+                 running: false
+                 repeat: false
+                 onTriggered: if(_SOUND_CHECK_FLAG) flameSound.play()
             }
 
         }

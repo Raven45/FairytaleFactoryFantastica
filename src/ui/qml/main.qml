@@ -8,6 +8,9 @@ import QtQuick.Controls.Styles 1.1
 
 Rectangle {
     id: page
+    height: 900
+    width:1440
+
     color: "#333333"
 
     signal droppedSomethingInOven()

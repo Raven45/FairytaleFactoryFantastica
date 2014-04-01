@@ -8,8 +8,15 @@
         <file alias="Tires_Grey.png">../media/Tires_Grey.png</file>
         <file alias="CardboardBox.png">../media/CardboardBox.png</file>
         <file alias="WideCardboardBox.png">../media/WideCardboardBox.png</file>
-		<file alias="exitSignLit.png">../media/exitSignLit.png</file>
-		<file alias="exitSignDim.png">../media/exitSignDim.png</file>
-		<file alias="exitSignHover.png">../media/exitSignHover.png</file>
+        <file alias="exitSignLit.png">../media/exitSignLit.png</file>
+        <file alias="exitSignDim.png">../media/exitSignDim.png</file>
+        <file alias="exitSignHover.png">../media/exitSignHover.png</file>
+        <file alias="network-game-stencil-selected.png">../media/network-game-stencil-selected.png</file>
+        <file alias="network-game-stencil.png">../media/network-game-stencil.png</file>
+        <file alias="player-vs-player-stencil.png">../media/player-vs-player-stencil.png</file>
+        <file alias="player-vs-player-stencil-selected.png">../media/player-vs-player-stencil-selected.png</file>
+        <file alias="single-player-stencil-selected.png">../media/single-player-stencil-selected.png</file>
+        <file alias="single-player-stencil.png">../media/single-player-stencil.png</file>
+        <file alias="loading-bay-door.png">../media/loading-bay-door.png</file>
     </qresource>
 </RCC>
