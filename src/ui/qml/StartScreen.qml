@@ -214,6 +214,8 @@ Rectangle {
                         thickFog2.enabled = false;
                         startScreen.state = "INVISIBLE";
                         startMenu.state = "VISIBLE";
+
+                        musicPlayer.switchAudioFile();
                     }
                 }
 
@@ -633,7 +635,6 @@ Rectangle {
                 onClicked:{
                     gate_lDoorSprite.jumpTo("opening_gate");
                     gateOpened();
-                    musicPlayer.switchAudioFile();
                 }
             }
         }
