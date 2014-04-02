@@ -127,18 +127,6 @@ void GuiGameController::setNetworkInterface(){
 
 }
 
-void GuiGameController::setAIPlayer(Player* newAIPlayer){
-
-    /*if ( player2 == nullptr ) {
-        setPlayer2(newAIPlayer);
-    }
-    else{
-        delete player2;
-        player2 = nullptr;
-        setPlayer2( newAIPlayer );
-    }*/
-}
-
 void GuiGameController::backToMainMenu(){
     qDebug() << "gameController, going back to main menu";
     if( isNetworkGame ){
@@ -295,11 +283,6 @@ void GuiGameController::setGuiPlayerColor( int menuSelectedColor ){
 }
 
 void GuiGameController::exitGame() {
-
-    if( player2 != nullptr ){
-        delete player2;
-        player2 = nullptr;
-    }
 
     if( net != nullptr ){
         delete net;

@@ -153,7 +153,6 @@ public slots:
     void networkTurnReceivedFromNetwork( int, int, int, int );
     void initialize();
     void setNetworkInterface();
-    void setAIPlayer(Player*);
     void backToMainMenu();
 };
 
