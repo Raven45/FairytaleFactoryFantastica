@@ -29,5 +29,16 @@
         <file alias="start-stencil.png">../media/start-stencil.png</file>
         <file alias="start-stencil-selected.png">../media/start-stencil-selected.png</file>
         <file alias="forkliftMenu-handle.png">../media/forkliftMenu-handle.png</file>
+        <file alias="enter-lobby-stencil.png">../media/enter-lobby-stencil.png</file>
+        <file alias="enter-lobby-stencil-selected.png">../media/enter-lobby-stencil-selected.png</file>
+        <file alias="first-text.png">../media/first-text.png</file>
+        <file alias="second-text.png">../media/second-text.png</file>
+        <file alias="easy-text.png">../media/easy-text.png</file>
+        <file alias="medium-text.png">../media/medium-text.png</file>
+        <file alias="hard-text.png">../media/hard-text.png</file>
+        <file alias="purp-text.png">../media/purp-text.png</file>
+        <file alias="teal-text.png">../media/teal-text.png</file>
+        <file alias="hansel-text.png">../media/hansel-text.png</file>
+        <file alias="gretel-text.png">../media/gretel-text.png</file>
     </qresource>
 </RCC>

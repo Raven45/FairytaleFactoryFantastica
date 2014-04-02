@@ -562,7 +562,7 @@ Rectangle {
         anchors.leftMargin: -97
         anchors.verticalCenter: main_gate.verticalCenter
         anchors.verticalCenterOffset: 100
-        z:50
+        z:19
         scale: .3
 
         MouseArea {

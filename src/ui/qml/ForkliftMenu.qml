@@ -54,7 +54,7 @@ Rectangle {
     Doors{
         id: doors
         z: brickWall + 5
-        width: 750;
+        width: 700;
         height: 800;
         color: "#b4b4b4"
         anchors.top: forkliftMenu.top
@@ -199,9 +199,12 @@ Rectangle {
             Image {
                 id: startMenu_startOnePlayer
                 source: source_string
+
                 anchors.left: box1.left
-                anchors.leftMargin: 20
+                anchors.leftMargin: 15
                 anchors.top: box1.top
+                anchors.topMargin: 85
+
                 width: 375; height: 375; scale: 1
                 z: box1.z + 1
 
@@ -223,8 +226,8 @@ Rectangle {
                             startMenu_startOnePlayer.source_string = "single-player-stencil.png"
                         }
                     }
-
                     onClicked: {
+
                         doors.state = "SINGLE_PLAYER";
                     }
                 }

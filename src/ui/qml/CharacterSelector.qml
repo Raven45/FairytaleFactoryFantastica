@@ -25,6 +25,18 @@ Rectangle {
     }
 
     Image{
+        id: characterSelectorText
+        width: 300; height: 40
+        z: characterFace.z
+        scale: 0.65
+        source: character_selector_string == "hansel" ? "hansel-text.png" : "gretel-text.png"
+
+        anchors.top: characterFace.bottom
+        anchors.topMargin: -95
+        anchors.horizontalCenter: characterSelector.horizontalCenter
+    }
+
+    Image{
         id: characterFace
         width: 325; height: 325
         z: characterSelector.z + 1

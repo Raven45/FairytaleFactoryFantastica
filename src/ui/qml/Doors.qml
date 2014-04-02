@@ -1,4 +1,6 @@
 import QtQuick 2.0
+import QtQuick.Controls 1.1
+import QtQuick.Controls.Styles 1.1
 
 Rectangle {
 
@@ -121,9 +123,12 @@ transitions:[
         anchors.verticalCenterOffset: 0 - doorsRectangle.height * 2
     }
 
+    //------singlePlayerDoor Selectors-----------------------------------------
+
     CharacterSelector{
         id: singlePlayerCharacterSelector
         anchors.top: singlePlayerDoor.top
+        anchors.topMargin: -50
         anchors.horizontalCenter: singlePlayerDoor.horizontalCenter
     }
 
@@ -141,19 +146,69 @@ transitions:[
         anchors.horizontalCenter: singlePlayerDoor.horizontalCenter
     }
 
+    //------versusDoor Selectors-----------------------------------------------
+
+    CharacterSelector{
+        id: pvpPlayer1CharacterSelector
+        anchors.top: versusDoor.top
+        anchors.topMargin: -50
+        anchors.horizontalCenter: versusDoor.horizontalCenter
+    }
+
+    CharacterSelector{
+        id: pvpPlayer2CharacterSelector
+        anchors.top: pvpPlayer1CharacterSelector.bottom
+        anchors.topMargin: -75
+        anchors.horizontalCenter: versusDoor.horizontalCenter
+        character_selector_string: "gretel"
+    }
+
+    //------networkDoor TextArea------------------------------------------------
+
+    TextArea{
+            id: playerNameBox
+            width: 100; height: 25
+            text: "enter a name"
+            textColor: "#474747"
+            anchors.verticalCenter: networkDoor.verticalCenter
+            anchors.horizontalCenter: networkDoor.horizontalCenter
+    }
+
+    //-------------------------------------------------------------------------
+
     Rectangle{
         id: singlePlayerStartButton
-        width: 100
-        height: 50
-        color: "green"
+        width: 200; height: 75
+        z: singlePlayerDoor.z + 10
+        color: "transparent"
 
-        anchors.top: difficultySelector.bottom
-        anchors.topMargin: -150
+        anchors.bottom: singlePlayerDoor.bottom
+        anchors.bottomMargin: 125
         anchors.horizontalCenter: singlePlayerDoor.horizontalCenter
 
         MouseArea{
-            anchors.fill: parent
+            id: startHandle_mouseArea
+            anchors.fill: singlePlayerStartButton
+            hoverEnabled: true
+
+            onEntered:{
+                if(startHandle_mouseArea.containsMouse){
+                    startStencil_img.source = "start-stencil-selected.png";
+                }
+            }
+            onExited: { startStencil_img.source = "start-stencil.png"; }
+            onPressed:{ if(_SOUND_CHECK_FLAG) tankSound.play() }
             onClicked:{
+                    if( !piecesHaveStartedAnimating ){
+                        startPieceAnimations();
+                        piecesHaveStartedAnimating = true;
+
+                    }
+
+                    sendPlayerName( "TODO: FIX MEEEE" /*playerNameBox.text*/ );
+                    startMenu.state = "INVISIBLE"
+                    isNetworkGame = false;
+                    clearBoard();
 
                 var menuSelectedColor;
                 if(singlePlayerGumdropSelector.gumdrop_selector_string == "teal")
@@ -205,6 +260,113 @@ transitions:[
                 }
 
             }
+        }
+
+        Image{
+            id: startHandle
+            width: singlePlayerStartButton.width
+            height: singlePlayerStartButton.height
+            z: singlePlayerStartButton.z + 1
+            source: "forkliftMenu-handle.png"
+            anchors.centerIn: singlePlayerStartButton
+        }
+
+        Image{
+            id: startStencil_img
+            width: singlePlayerStartButton.width
+            height: singlePlayerStartButton.height
+            anchors.centerIn: singlePlayerStartButton
+            z: startHandle.z + 1
+            source: "start-stencil.png"
+        }
+    }
+    Rectangle{
+        id: pvpStartButton
+        width: 200; height: 75
+        z: versusDoor.z + 10
+        color: "transparent"
+
+        anchors.bottom: versusDoor.bottom
+        anchors.bottomMargin: 125
+        anchors.horizontalCenter: versusDoor.horizontalCenter
+
+        MouseArea{
+            id: pvpHandle_mouseArea
+            anchors.fill: pvpStartButton
+            hoverEnabled: true
+
+            onEntered:{
+                if(pvpHandle_mouseArea.containsMouse){
+                    pvpStencil_img.source = "start-stencil-selected.png";
+                }
+            }
+            onExited: { pvpStencil_img.source = "start-stencil.png"; }
+            onPressed:{ if(_SOUND_CHECK_FLAG) tankSound.play() }
+            //onClicked://TODO: LOGIC!
+        }
+
+        Image{
+            id: pvpHandle
+            width: pvpStartButton.width
+            height: pvpStartButton.height
+            z: pvpStartButton.z + 1
+            source: "forkliftMenu-handle.png"
+            anchors.centerIn: pvpStartButton
+        }
+
+        Image{
+            id: pvpStencil_img
+            width: pvpStartButton.width
+            height: pvpStartButton.height
+            anchors.centerIn: pvpStartButton
+            z: pvpHandle.z + 1
+            source: "start-stencil.png"
+        }
+    }
+
+    Rectangle{
+        id: networkingStartButton
+        width: 200; height: 75
+        z: networkDoor.z + 10
+        color: "transparent"
+
+        anchors.bottom: networkDoor.bottom
+        anchors.bottomMargin: 125
+        anchors.horizontalCenter: networkDoor.horizontalCenter
+
+        MouseArea{
+            id: networkingHandle_mouseArea
+            anchors.fill: networkingStartButton
+            hoverEnabled: true
+
+            onEntered:{
+                if(networkingHandle_mouseArea.containsMouse){
+                    networkingStencil_img.source = "enter-lobby-stencil-selected.png";
+                }
+            }
+            onExited: { networkingStencil_img.source = "enter-lobby-stencil.png"; }
+            onPressed:{ if(_SOUND_CHECK_FLAG) tankSound.play() }
+            //onClicked://TODO: LOGIC!
+        }
+
+        Image{
+            id: netHandle
+            width: networkingStartButton.width
+            height: networkingStartButton.height
+            z: networkingStartButton.z + 1
+            source: "forkliftMenu-handle.png"
+            anchors.centerIn: networkingStartButton
+        }
+
+        Image{
+            id: networkingStencil_img
+            width: networkingStartButton.width
+            height: networkingStartButton.height
+            anchors.horizontalCenter: networkingStartButton.horizontalCenter
+            anchors.verticalCenter: networkingStartButton.verticalCenter
+            anchors.verticalCenterOffset: -5
+            z: netHandle.z + 1
+            source: "enter-lobby-stencil.png"
         }
     }
 }
