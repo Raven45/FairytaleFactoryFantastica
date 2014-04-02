@@ -17,6 +17,7 @@ Rectangle {
             PropertyChanges { target: menuFade; opacity: 0; visible: true; }
             PropertyChanges { target: startMenu; visible: true }
             StateChangeScript{ name: "moveForklift"; script: moveForklift.start(); }
+            StateChangeScript{ name: "playTankSound"; script: if(_SOUND_CHECK_FLAG) tankSound.play(); }
         },
         State{
             name: "INVISIBLE"
@@ -43,21 +44,29 @@ Rectangle {
         Keys.onEscapePressed: readyToExitGame();
     }
 
-    Rectangle {
-        id: loadingBayDoor
-        //source: "loading-bay-door.png"
-        //width: 1260; //height: loadingBayDoor.width;
-        //fillMode: Image.PreserveAspectFit
+    SoundEffect {
+        id: tankSound
+        source: "tank.wav"
+    }
+
+    property int _FORKLIFT_MENU_DOORS_TOP_MARGIN: 100
+
+    Doors{
+        id: doors
         z: brickWall + 5
-
-        width: 750; height: 800
-
+        width: 750;
+        height: 800;
+        color: "#b4b4b4"
         anchors.top: forkliftMenu.top
-        anchors.topMargin: 100
+        anchors.topMargin: _FORKLIFT_MENU_DOORS_TOP_MARGIN
         anchors.right: forkliftMenu.right
         anchors.rightMargin: 51
 
+        //source: "loading-bay-door.png"
+        //width: 1260; //height: loadingBayDoor.width;
+        //fillMode: Image.PreserveAspectFit
     }
+
 
     Image{
         anchors.fill: parent
@@ -66,14 +75,39 @@ Rectangle {
         z: 5
     }
 
-    NumberAnimation{
+    ParallelAnimation{
         id: moveForklift
-        target: forklift.anchors
-        properties: "leftMargin"
-        duration: 1500
-        from: -700
-        to: -175
 
+        NumberAnimation{
+            id: moveForkliftFromLeft
+            target: forklift.anchors
+            properties: "leftMargin"
+            duration: 1500
+            from: -700
+            to: -175
+        }
+        RotationAnimation{
+            id: rotateFrontTire
+            target: frontTire
+            duration: 1500
+            direction: RotationAnimation.Clockwise
+            from: 0
+            to: 200
+        }
+        RotationAnimation{
+            id: rotateRearTire
+            target: rearTire
+            duration: 1500
+            direction: RotationAnimation.Clockwise
+            from: 0
+            to: 200
+        }
+
+        onStopped:{
+            if(tankSound.playing) {
+                tankSound.stop();
+            }
+        }
     }
 
     Rectangle {
@@ -192,18 +226,19 @@ Rectangle {
 
                     onClicked: {
 
-                        if( !piecesHaveStartedAnimating ){
+                        /*if( !piecesHaveStartedAnimating ){
                             startPieceAnimations();
                             piecesHaveStartedAnimating = true;
 
-                        }
+                        }*/
 
-                        sendPlayerName( "TODO: FIX MEEEE" /*playerNameBox.text*/ );
-                        startMenu.state = "INVISIBLE"
-                        isNetworkGame = false;
-                        clearBoard();
+                        //sendPlayerName( "TODO: FIX MEEEE" /*playerNameBox.text*/ );
+                        //startMenu.state = "INVISIBLE"
+                        //isNetworkGame = false;
+                        //clearBoard();
+                        //readyToStartOnePersonPlay();
 
-                        readyToStartOnePersonPlay( 1 );
+                        doors.state = "SINGLE_PLAYER";
                     }
                 }
             }
@@ -236,7 +271,7 @@ Rectangle {
             }
             */
 
-            GUIButton {
+            /*GUIButton {
 
                 property int buttonColor
 
@@ -279,7 +314,7 @@ Rectangle {
                         }
                     }
                 }
-            }
+            }*/
 
         }
 
@@ -320,7 +355,9 @@ Rectangle {
                         }
                     }
 
-                    onClicked: {/*TODO*/}
+                    onClicked: {
+                        doors.state = "VERSUS"
+                    }
                 }
             }
         }
@@ -363,17 +400,19 @@ Rectangle {
                     }
 
                     onClicked: {
-                        if( !piecesHaveStartedAnimating ){
+                        /*if( !piecesHaveStartedAnimating ){
                             startPieceAnimations();
                             piecesHaveStartedAnimating = true;
 
-                        }
+                        }*/
 
-                        sendPlayerName( "TODO: FIX MEEEE" /*playerNameBox.text*/ );
-                        networkLobby.state ="VISIBLE"
-                        isNetworkGame = true;
-                        clearBoard();
-                        enterNetworkLobby();
+                        //sendPlayerName( "TODO: FIX MEEEE" /*playerNameBox.text*/ );
+                       // networkLobby.state ="VISIBLE"
+                        //isNetworkGame = true;
+                        //clearBoard();
+                        //enterNetworkLobby();
+
+                        doors.state = "NETWORK";
                     }
                 }
             }

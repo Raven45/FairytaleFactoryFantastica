@@ -129,14 +129,14 @@ void GuiGameController::setNetworkInterface(){
 
 void GuiGameController::setAIPlayer(Player* newAIPlayer){
 
-    if ( player2 == nullptr ) {
+    /*if ( player2 == nullptr ) {
         setPlayer2(newAIPlayer);
     }
     else{
         delete player2;
         player2 = nullptr;
         setPlayer2( newAIPlayer );
-    }
+    }*/
 }
 
 void GuiGameController::backToMainMenu(){
@@ -208,13 +208,13 @@ void GuiGameController::startOnePersonPlay( int aiLevel ) {
     assert (aiLevel == 1 || aiLevel == 2 || aiLevel == 3);
 
     if ( aiLevel == 1 ){
-        setAIPlayer(&easyAi);
+        setPlayer2(&easyAi);
     }
     else if ( aiLevel == 2 ) {
-        setAIPlayer(&mediumAi);
+        setPlayer2(&mediumAi);
     }
     else {
-        setAIPlayer(&hardAi);
+        setPlayer2(&hardAi);
     }
 
     GameCore::startNewGame();

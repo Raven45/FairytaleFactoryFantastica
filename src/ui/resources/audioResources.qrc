@@ -20,5 +20,6 @@
         <file alias="BigDrum2.wav">../media/114591__herbertboland__bigdrum4.wav</file>
         <file alias="ChainCrank1.wav">../media/climb4.wav</file>
         <file alias="ButtonClick2.wav">../media/two_tone_nav.wav</file>
+        <file alias="tank.wav">../media/tank.wav</file>
     </qresource>
 </RCC>

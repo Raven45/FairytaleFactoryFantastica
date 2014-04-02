@@ -19,5 +19,15 @@
         <file alias="single-player-stencil.png">../media/single-player-stencil.png</file>
         <file alias="loading-bay-door.png">../media/loading-bay-door.png</file>
         <file alias="Angry_Witch.png">../media/Angry_Witch.png</file>
+        <file alias="hansel-head.png">../media/hansel-head.png</file>
+        <file alias="gretel-head.png">../media/gretel-head.png</file>
+        <file alias="witch-head-easy.png">../media/witch-head-easy.png</file>
+        <file alias="witch-head-med.png">../media/witch-head-med.png</file>
+        <file alias="witch-head-hard.png">../media/witch-head-hard.png</file>
+        <file alias="right-selector.png">../media/right-selector.png</file>
+        <file alias="left-selector.png">../media/left-selector.png</file>
+        <file alias="start-stencil.png">../media/start-stencil.png</file>
+        <file alias="start-stencil-selected.png">../media/start-stencil-selected.png</file>
+        <file alias="forkliftMenu-handle.png">../media/forkliftMenu-handle.png</file>
     </qresource>
 </RCC>

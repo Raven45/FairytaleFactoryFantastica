@@ -42,5 +42,9 @@
                 <file alias="GretelClaw.qml" >../qml/GretelClaw.qml</file>
                 <file alias="GameScreenWitch.qml" >../qml/GameScreenWitch.qml</file>
                 <file alias="WitchClaw.qml" >../qml/WitchClaw.qml</file>
+                <file alias="Doors.qml" >../qml/Doors.qml</file>
+                <file alias="GumdropSelector.qml" >../qml/GumdropSelector.qml</file>
+                <file alias="CharacterSelector.qml" >../qml/CharacterSelector.qml</file>
+                <file alias="DifficultySelector.qml" >../qml/DifficultySelector.qml</file>
     </qresource>
 </RCC>
