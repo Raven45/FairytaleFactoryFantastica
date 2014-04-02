@@ -41,5 +41,10 @@
 		<file alias="Lever.png">../media/Lever.png</file>
 		<file alias="gretelBlink.png">../media/gretelBlink.png</file>
 		<file alias="gretelFrown.png">../media/GretelFrown.png</file>
+		<file alias="hanselFrown.png">../media/hanselFrown.png</file>
+		<file alias="hanselBlink.png">../media/hanselBlink.png</file>
+		<file alias="hanselFrown2.png">../media/hanselFrown2.png</file>
+		<file alias="hanselBlink2.png">../media/hanselBlink2.png</file>
+		
     </qresource>
 </RCC>

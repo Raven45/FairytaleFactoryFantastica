@@ -44,5 +44,6 @@
 		<file alias="tealIcingSinkSprite.png">../media/tealIcingSinkSprite.png</file>
 		<file alias="purpleIcingSinkSprite.png">../media/purpleIcingSinkSprite.png</file>
 		<file alias="platformCombinedSmall.png">../media/platformCombinedSmall.png</file>
+	
     </qresource>
 </RCC>
