@@ -47,12 +47,12 @@ Rectangle {
         z: 75
         anchors.centerIn: oven
 
-        MouseArea{
+        /*MouseArea{
             anchors.fill: parent
             onClicked:{
                 droppedSomethingInOven()
             }
-        }
+        }*/
     }
 
 
