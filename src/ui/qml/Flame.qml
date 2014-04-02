@@ -20,10 +20,43 @@ Rectangle {
         anchors.bottom: parent.bottom
 
         ImageParticle {
+            id: fireParticle
             groups: ["flame"]
             source: "qrc:///particleresources/glowdot.png"
-            color: "#11ff400f"
+            state: "NORMAL"
             redVariation: .3
+
+            states:[
+                State{
+                    name: "NORMAL"
+                    PropertyChanges{
+                        target: fireParticle
+                        color: "#11ff400f"
+                        redVariation: .3
+                    }
+                },
+                State{
+                    name: "WITCH_FIRE"
+                    PropertyChanges{
+                        target: fireParticle
+                        color: "#880E8200"
+                    }
+                }
+
+            ]
+
+            transitions:[
+                Transition{
+                    from: "NORMAL"
+                    to: "WITCH_FIRE"
+                    ColorAnimation{ duration: 700 }
+                },
+                Transition{
+                    from: "WITCH_FIRE"
+                    to: "NORMAL"
+                    ColorAnimation{ duration: 1900 }
+                }
+            ]
         }
 
         Emitter {
@@ -41,8 +74,23 @@ Rectangle {
             acceleration: PointDirection {y: -70; yVariation: 20; x: 0; xVariation: 20;}
             velocity: AngleDirection { angle: 270; magnitude: 10; angleVariation:50; magnitudeVariation: 10 }
 
+            Timer{
+                id: witchFireTimer
+                interval: 1800
+                running: false
+                repeat: false
+                onTriggered:{
+                    fireParticle.state = "WITCH_FIRE";
+                }
+            }
+
             Connections{
                 target: page
+
+                onWitchIsOverOven:{
+                    witchFireTimer.start()
+                }
+
                 onDroppedSomethingInOven:{
                     startSoundTimer.start()
                     startFirePlume.start()
@@ -91,6 +139,7 @@ Rectangle {
                 NumberAnimation{ target: fire.acceleration; properties: "y"; to: -70; duration: startDuration }
                 NumberAnimation{ target: fire; properties: "size"; to: 10; duration: startDuration }
                 NumberAnimation{ target: fire; properties: "lifeSpan"; to: 1600; duration: startDuration }
+                ScriptAction{ script: fireParticle.state = "NORMAL" }
 
              }
 

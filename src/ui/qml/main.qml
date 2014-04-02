@@ -19,10 +19,13 @@ Rectangle {
     signal load()
     signal hanselIsOverOven()
     signal gretelIsOverOven()
+    signal witchIsOverOven()
     signal startPickUpHansel()
     signal startPickUpGretel()
+    signal startPickUpWitch()
     signal clawHasHansel()
     signal clawHasGretel()
+    signal clawHasWitch()
 
     signal clawMovingUp()
     signal clawMovingDown()

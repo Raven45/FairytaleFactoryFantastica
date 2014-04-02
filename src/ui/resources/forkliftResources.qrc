@@ -18,5 +18,6 @@
         <file alias="single-player-stencil-selected.png">../media/single-player-stencil-selected.png</file>
         <file alias="single-player-stencil.png">../media/single-player-stencil.png</file>
         <file alias="loading-bay-door.png">../media/loading-bay-door.png</file>
+        <file alias="Angry_Witch.png">../media/Angry_Witch.png</file>
     </qresource>
 </RCC>

@@ -21,6 +21,11 @@ Rectangle {
         onHanselIsOverOven:{
             flail.start()
         }
+        onClearBoard:{
+            head.source = "Hansel_Happy_Head.png";
+            flail.stop();
+            swingBody.stop();
+        }
     }
 
     Timer{
