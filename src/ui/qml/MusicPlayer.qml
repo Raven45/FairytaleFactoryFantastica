@@ -16,20 +16,37 @@ Item {
 
 
     Audio {
-        id: playMonkeysSpinningMonkeys
-        source: "MonkeysSpinningMonkeys.mp3"
+        id: musicFile
+        source: "OppressiveGloom.mp3"
         loops: Audio.Infinite
     }
 
+//    Audio {
+//        id: musicFile
+//        source: "MonkeysSpinningMonkeys.mp3"
+//        loops: Audio.Infinite
+//    }
+
+    function switchAudioFile(){
+        musicFile.stop();
+        if (musicFile.source == "OppressiveGloom.mp3"){
+            musicFile.source = "MonkeysSpinningMonkeys.mp3"
+        }
+        else{
+            musicFile.source = "MonkeysSpinningMonkeys.mp3"
+        }
+        musicFile.play();
+    }
+
     function togglePlayback(){
-        if (playMonkeysSpinningMonkeys.playbackState == playMonkeysSpinningMonkeys.PlayingState){
-            playMonkeysSpinningMonkeys.pause();
+        if (musicFile.playbackState == musicFile.PlayingState){
+            musicFile.pause();
         }
         else
-            playMonkeysSpinningMonkeys.play();
+            musicFile.play();
     }
 
     function changeVolume(volumeLevel){
-        playMonkeysSpinningMonkeys.volume = volumeLevel;
+        musicFile.volume = volumeLevel;
     }
 }

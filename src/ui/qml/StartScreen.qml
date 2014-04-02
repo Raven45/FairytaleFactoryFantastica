@@ -633,6 +633,7 @@ Rectangle {
                 onClicked:{
                     gate_lDoorSprite.jumpTo("opening_gate");
                     gateOpened();
+                    musicPlayer.switchAudioFile();
                 }
             }
         }

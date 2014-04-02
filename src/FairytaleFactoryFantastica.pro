@@ -26,7 +26,8 @@ RESOURCES += \
     ui/resources/forkliftResources.qrc \
     ui/resources/gateSprites.qrc \
     ui/resources/kidResources.qrc \
-    ui/resources/qmlResources.qrc
+    ui/resources/qmlResources.qrc \
+    ui/resources/SpookyMusic.qrc
 
 INCLUDEPATH += \
     backend \
