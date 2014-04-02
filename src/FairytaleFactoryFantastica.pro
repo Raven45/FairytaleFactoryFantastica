@@ -77,7 +77,6 @@ OTHER_FILES += \
     ui/qml/Smoke.qml \
     ui/qml/SplashScreen.qml \
     ui/qml/Tbar.qml \
-    ui/qml/Witch.qml \
     ui/qml/Cogs.qml \
     ui/qml/GameMenu.qml \
     ui/qml/GenericPopup.qml \
@@ -97,7 +96,9 @@ OTHER_FILES += \
     ui/qml/MusicPlayer.qml \
     ui/qml/Hansel.qml \
     ui/qml/HanselClaw.qml \
-    ui/qml/GretelClaw.qml
+    ui/qml/GretelClaw.qml \
+    ui/qml/GameScreenWitch.qml \
+    ui/qml/WitchClaw.qml
 
 HEADERS += \
     backend/networking/Barrager.h \
