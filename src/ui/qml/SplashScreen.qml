@@ -110,8 +110,6 @@ Rectangle {
 
 
 
-
-
     //! [timer]
     Timer {
         id: splashTimer
@@ -124,4 +122,15 @@ Rectangle {
         }
     }
     //! [timer]
+
+
+    Keys.onPressed: {
+            if (event.key === Qt.Key_Space) {
+                event.accepted = true;
+                splashTimer.stop();
+                splash.visible = false;
+                startScreen.visible = true;
+            }
+    }
+
 }
