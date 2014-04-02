@@ -123,14 +123,18 @@ Rectangle {
     }
     //! [timer]
 
+    Item{
+        anchors.fill: parent
+        focus: true
 
-    Keys.onPressed: {
-            if (event.key === Qt.Key_Space) {
-                event.accepted = true;
-                splashTimer.stop();
-                splash.visible = false;
-                startScreen.state = "VISIBLE";
-            }
+        Keys.onSpacePressed: {
+            splashTimer.stop();
+            splash.visible = false;
+            muffinManAnimation.running = false;
+            startScreen.state = "VISIBLE";
+        }
     }
+
+
 
 }
