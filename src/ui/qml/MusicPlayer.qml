@@ -16,37 +16,53 @@ Item {
 
 
     Audio {
-        id: musicFile
+        id: scaryMusic
         source: "OppressiveGloom.mp3"
         loops: Audio.Infinite
     }
 
-//    Audio {
-//        id: musicFile
-//        source: "MonkeysSpinningMonkeys.mp3"
-//        loops: Audio.Infinite
-//    }
+    property bool isScary: true
+
+    Audio {
+        id: happyMusic
+        source: "MonkeysSpinningMonkeys.mp3"
+        loops: Audio.Infinite
+    }
 
     function switchAudioFile(){
-        musicFile.stop();
-        if (musicFile.source == "OppressiveGloom.mp3"){
-            musicFile.source = "MonkeysSpinningMonkeys.mp3"
+        if( isScary ){
+            scaryMusic.stop();
+            happyMusic.play();
+            isScary = false;
         }
         else{
-            musicFile.source = "MonkeysSpinningMonkeys.mp3"
+            happyMusic.stop();
+            scaryMusic.play();
+            isScary = true;
         }
-        musicFile.play();
     }
 
     function togglePlayback(){
-        if (musicFile.playbackState == musicFile.PlayingState){
-            musicFile.pause();
+
+        if( isScary ){
+            if (scaryMusic.playbackState == scaryMusic.PlayingState){
+                scaryMusic.pause();
+            }
+            else {
+                scaryMusic.play();
+            }
         }
-        else
-            musicFile.play();
+        else{
+            if (happyMusic.playbackState == happyMusic.PlayingState){
+                happyMusic.pause();
+            }
+            else {
+                happyMusic.play();
+            }
+        }
     }
 
-    function changeVolume(volumeLevel){
+    /*function changeVolume(volumeLevel){
         musicFile.volume = volumeLevel;
-    }
+    }*/
 }

@@ -154,36 +154,44 @@ transitions:[
         MouseArea{
             anchors.fill: parent
             onClicked:{
+
+                var menuSelectedColor;
+                if(singlePlayerGumdropSelector.gumdrop_selector_string == "teal")
+                {
+                    guiPlayerIsWhite = true;
+                    menuSelectedColor = 0;
+                }
+                else if(singlePlayerGumdropSelector.gumdrop_selector_string == "purp")
+                {
+                    guiPlayerIsWhite = false;
+                    menuSelectedColor = 1;
+                }
+                else{
+                    console.log("logic error with gumdrop selector")
+                }
+
                 if( !piecesHaveStartedAnimating ){
                     startPieceAnimations();
                     piecesHaveStartedAnimating = true;
-
                 }
+
 
                 sendPlayerName( "TODO: FIX MEEEE" /*playerNameBox.text*/ );
                 startMenu.state = "INVISIBLE"
                 isNetworkGame = false;
                 clearBoard();
 
-                if(singlePlayerGumdropSelector.gumdrop_selector_string == "teal")
-                {
-                    guiPlayerIsWhite = true;
-                    changeGuiPlayerColor(0);
-                }
-                else if(singlePlayerGumdropSelector.gumdrop_selector_string == "purp")
-                {
-                    guiPlayerIsWhite = false;
-                    changeGuiPlayerColor(1);
-                }
-
                 if( difficultySelector.difficulty_selector_string == "easy" ){
-                    readyToStartOnePersonPlay(1);
+                    readyToStartOnePersonPlay(1, menuSelectedColor);
                 }
                 else if( difficultySelector.difficulty_selector_string == "med" ) {
-                    readyToStartOnePersonPlay(2);
+                    readyToStartOnePersonPlay(2, menuSelectedColor);
                 }
                 else if( difficultySelector.difficulty_selector_string == "hard" ) {
-                    readyToStartOnePersonPlay(3);
+                    readyToStartOnePersonPlay(3, menuSelectedColor);
+                }
+                else{
+                    console.log("logic error with difficulty selector")
                 }
 
             }

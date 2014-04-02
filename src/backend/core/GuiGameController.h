@@ -33,7 +33,7 @@ public:
 signals:
 
     //qml proxy
-    void readyToStartOnePersonPlay(int);
+    void readyToStartOnePersonPlay( int aiLevel, int menuSelectedColor );
     void readyToStartTwoPersonPlay();
     void changeSoundState();
     void changeGuiPlayerColor(int color);
@@ -132,10 +132,9 @@ public slots:
 
 
     //connected to Gui buttons
-    void setGuiPlayerColor( int menuSelectedColor );
     void setFirstMovingPlayerColor( PlayerColor playerToMoveFirst );
     void setPlayer2( Player* );
-    void startOnePersonPlay(int);
+    void startOnePersonPlay( int aiLevel, int menuSelectedColor );
     void startTwoPersonPlay();
     void enterNetworkLobby();
     void togglePlayback();
@@ -180,7 +179,7 @@ public:
         core = c;
 
         qDebug() << "connecting gui proxy signals";
-        connect( gui,   SIGNAL( readyToStartOnePersonPlay( int ) ),                 this,   SIGNAL( readyToStartOnePersonPlay( int ) ));
+        connect( gui,   SIGNAL( readyToStartOnePersonPlay( int,int ) ),             this,   SIGNAL( readyToStartOnePersonPlay( int,int ) ));
         connect( gui,   SIGNAL( readyToStartTwoPersonPlay() ),                      this,   SIGNAL( readyToStartTwoPersonPlay() ));
         connect( gui,   SIGNAL( sendPlayerName( QVariant ) ) ,                      this,   SIGNAL( sendPlayerName( QVariant )  ));
         connect( gui,   SIGNAL( enterNetworkLobby() ),                              this,   SIGNAL( enterNetworkLobby() ));

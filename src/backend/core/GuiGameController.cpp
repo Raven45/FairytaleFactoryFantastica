@@ -69,12 +69,11 @@ void GuiGameController::setWindow(Proxy* g){
     gui = g;
 
     qDebug() << "connecting window signals";
-    connect(gui, SIGNAL( readyToStartOnePersonPlay( int )), this, SLOT( startOnePersonPlay( int ) ),Qt::QueuedConnection  );
+    connect(gui, SIGNAL( readyToStartOnePersonPlay( int,int )), this, SLOT( startOnePersonPlay( int,int ) ),Qt::QueuedConnection  );
     connect(gui, SIGNAL( readyToStartTwoPersonPlay() ),     this, SLOT( startTwoPersonPlay() ),     Qt::QueuedConnection  );
     connect(gui, SIGNAL( sendPlayerName( QVariant ) ) ,     this, SLOT( setPlayerName( QVariant ) ),Qt::QueuedConnection  );
     connect(gui, SIGNAL( enterNetworkLobby() ),             this, SLOT( enterNetworkLobby() ),      Qt::QueuedConnection  );
     connect(gui, SIGNAL( changeSoundState() ),              this, SLOT( togglePlayback() ),         Qt::QueuedConnection  );
-    connect(gui, SIGNAL( changeGuiPlayerColor( int )),      this, SLOT( setGuiPlayerColor( int ) ), Qt::QueuedConnection  );
     connect(gui, SIGNAL( readyToExitGame() ),               this, SLOT( exitGame() ),               Qt::QueuedConnection  );
     connect(gui, SIGNAL( backToMainMenu() ),                this, SLOT( backToMainMenu() ),         Qt::QueuedConnection  );
 
@@ -191,34 +190,38 @@ void GuiGameController::networkTurnReceivedFromNetwork( int quadrantIndex, int p
 }
 
 
-void GuiGameController::startOnePersonPlay( int aiLevel ) {
+void GuiGameController::startOnePersonPlay( int aiLevel, int menuSelectedColor ) {
+
+    qDebug() << "in startOnePersonPlay, aiLevel is " << aiLevel << " and menuSelectedColor is " << menuSelectedColor;
 
     assert (aiLevel == 1 || aiLevel == 2 || aiLevel == 3);
-
     if ( aiLevel == 1 ){
-        setPlayer2(&easyAi);
+        setPlayer2(&hardAi);
     }
     else if ( aiLevel == 2 ) {
-        setPlayer2(&mediumAi);
+        setPlayer2(&hardAi);
     }
     else {
         setPlayer2(&hardAi);
     }
+
+    assert( menuSelectedColor == 0 or menuSelectedColor == 1 );
+
+    guiPlayerColor = static_cast<PlayerColor>(menuSelectedColor);
+    player2 -> setColor(util.opposite(guiPlayerColor));
+    qDebug() << "player colors are set";
 
     GameCore::startNewGame();
 
     qGuiTurn.setPieceColor( guiPlayerColor );
 
     if( guiPlayerColor != firstMover ){
-
         registerOpponentsTurnWithBoard ( player2 -> getMove( copyCurrentBoard() ) );
         emit readyForGuiMove();
     }
 
     //default to gui move
     emit readyForGuiMove();
-
-
 }
 
 void GuiGameController::startTwoPersonPlay() {
@@ -264,24 +267,6 @@ void GuiGameController::togglePlayback(){
         musicPlayer.play();
 }
 
-void GuiGameController::setGuiPlayerColor( int menuSelectedColor ){
-
-        qDebug() << "in setGuiPlayerColor";
-
-        guiPlayerColor = static_cast<PlayerColor>(menuSelectedColor);
-
-        qDebug() << "guiPlayerColor is set";
-
-        if(menuSelectedColor == 0)
-        {
-            player2 -> setColor(PlayerColor::BLACK);
-        }
-        else if (menuSelectedColor == 1)
-        {
-            player2 -> setColor(PlayerColor::WHITE);
-        }
-}
-
 void GuiGameController::exitGame() {
 
     if( net != nullptr ){
@@ -300,7 +285,6 @@ void GuiGameController::exitGame() {
 
 void GuiGameController::setPlayer2( Player* p ){
     player2 = p;
-    player2 -> setColor(PlayerColor::WHITE);
 }
 
 //this function oversees the sequence of gameplay
