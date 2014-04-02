@@ -55,7 +55,8 @@ Rectangle {
         }
     }
 
-    Flame{
+
+    Flame {
         anchors.centerIn: oven
         anchors.verticalCenterOffset: 22
         anchors.horizontalCenterOffset: 18
@@ -193,10 +194,17 @@ Rectangle {
         anchors.horizontalCenterOffset: 1100// _CLAW_X_HOME - platformGretel.x - platformHansel.width/2
     }
 
+    WitchClaw {
+        id: witchClaw
+        z: 73
+        anchors.centerIn: platformWitch
+        anchors.verticalCenterOffset: -700//_CLAW_Y_HOME - platformGretel.y + platformHansel.height/2
+        anchors.horizontalCenterOffset: 1100// _CLAW_X_HOME - platformGretel.x - platformHansel.width/2
+    }
+
+
     Hansel{
         id: platformHansel
-        //x: kidsPlatform.x + 20
-        //y: kidsPlatform.x - height
         y: leftPlatform.y - 300
         x: leftPlatform.x + 10
         z: 72
@@ -204,13 +212,21 @@ Rectangle {
     }
 
     Gretel{
+        visible: false
         id: platformGretel
-        //x: kidsPlatform.x + 20
-        //y: kidsPlatform.x - height
         y: rightPlatform.y - 300
         x: rightPlatform.x - 80
         z: 72
         scale: 0.14
+    }
+
+    GameScreenWitch {
+        id: platformWitch
+
+        y: rightPlatform.y - 290
+        x: rightPlatform.x - 80
+        z: 72
+        scale: 0.41
     }
 
     Image {
