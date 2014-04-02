@@ -13,6 +13,7 @@ Rectangle {
 
     color: "#333333"
 
+    signal doneWithFireAnimation()
     signal placeCharacterOnPlatform( string character, string platform );
     signal droppedSomethingInOven()
     signal readyToStartOnePersonPlay( int aiLevel, int menuSelectedColor )

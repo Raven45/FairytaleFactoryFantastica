@@ -61,7 +61,7 @@ GenericPopup {
                     gameOverTimeout.startTimer();
                 }
 
-                gameOverMenu.message ="Green Wins!";
+                gameOverMenu.message = tealPlatformCharacter + " wins!";
                 break;
             case 1:
 
@@ -73,7 +73,7 @@ GenericPopup {
                     gameOverTimeout.loser = tealPlatformCharacter;
                     gameOverTimeout.startTimer();
                 }
-                gameOverMenu.message = "Purple Wins!";
+                gameOverMenu.message = purplePlatformCharacter + " wins!";
                 break;
             }
 
