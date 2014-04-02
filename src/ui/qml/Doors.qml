@@ -160,6 +160,7 @@ transitions:[
                 {
                     guiPlayerIsWhite = true;
                     menuSelectedColor = 0;
+
                 }
                 else if(singlePlayerGumdropSelector.gumdrop_selector_string == "purp")
                 {
@@ -170,11 +171,20 @@ transitions:[
                     console.log("logic error with gumdrop selector")
                 }
 
+                placeCharacterOnPlatform(singlePlayerCharacterSelector.character_selector_string, singlePlayerGumdropSelector.gumdrop_selector_string );
+
+                if( singlePlayerGumdropSelector.gumdrop_selector_string == "teal" ){
+                    placeCharacterOnPlatform("witch", "purple");
+                }
+                else{
+                    placeCharacterOnPlatform("witch", "teal");
+                }
+
+
                 if( !piecesHaveStartedAnimating ){
                     startPieceAnimations();
                     piecesHaveStartedAnimating = true;
                 }
-
 
                 sendPlayerName( "TODO: FIX MEEEE" /*playerNameBox.text*/ );
                 startMenu.state = "INVISIBLE"

@@ -156,7 +156,7 @@ Rectangle {
     }
 
     Image {
-        id: rightPlatform
+        id: purplePlatform
         source: "platformCombinedSmall.png"
         y: 750
         x: parent.width - 125 - width
@@ -165,7 +165,7 @@ Rectangle {
     }
 
     Image {
-        id: leftPlatform
+        id: tealPlatform
         source: "platformCombinedSmall.png"
         y: 750
         x: 125
@@ -173,16 +173,16 @@ Rectangle {
         z: 69
     }
 
-    NumberAnimation { id: moveLeftPlatformUp; target: leftPlatform; property: "y"; to: 400; duration: 800; easing.type: Easing.OutSine }
-    NumberAnimation { id: moveRightPlatformUp; target: rightPlatform; property: "y"; to: 400; duration: 800; easing.type: Easing.OutSine }
-    NumberAnimation { id: moveLeftPlatformDown; target: leftPlatform; property: "y"; to: 750; duration: 800; easing.type: Easing.OutSine }
-    NumberAnimation { id: moveRightPlatformDown; target: rightPlatform; property: "y"; to: 750; duration: 800; easing.type: Easing.OutSine }
+    NumberAnimation { id: moveTealPlatformUp; target: tealPlatform; property: "y"; to: 400; duration: 800; easing.type: Easing.OutSine }
+    NumberAnimation { id: movePurplePlatformUp; target: purplePlatform; property: "y"; to: 400; duration: 800; easing.type: Easing.OutSine }
+    NumberAnimation { id: moveTealPlatformDown; target: tealPlatform; property: "y"; to: 750; duration: 800; easing.type: Easing.OutSine }
+    NumberAnimation { id: movePurplePlatformDown; target: purplePlatform; property: "y"; to: 750; duration: 800; easing.type: Easing.OutSine }
 
     HanselClaw {
         id: hanselClaw
         z: 73
         anchors.centerIn: platformHansel
-        anchors.verticalCenterOffset: -700// _CLAW_Y_HOME - platformHansel.y + platformHansel.height/2
+        anchors.verticalCenterOffset: -900// _CLAW_Y_HOME - platformHansel.y + platformHansel.height/2
         anchors.horizontalCenterOffset: 1100// _CLAW_X_HOME - platformHansel.x - platformHansel.width/2
     }
 
@@ -190,7 +190,7 @@ Rectangle {
         id: gretelClaw
         z: 73
         anchors.centerIn: platformGretel
-        anchors.verticalCenterOffset: -700//_CLAW_Y_HOME - platformGretel.y + platformHansel.height/2
+        anchors.verticalCenterOffset: -900//_CLAW_Y_HOME - platformGretel.y + platformHansel.height/2
         anchors.horizontalCenterOffset: 1100// _CLAW_X_HOME - platformGretel.x - platformHansel.width/2
     }
 
@@ -198,15 +198,77 @@ Rectangle {
         id: witchClaw
         z: 73
         anchors.centerIn: platformWitch
-        anchors.verticalCenterOffset: -700//_CLAW_Y_HOME - platformGretel.y + platformHansel.height/2
+        anchors.verticalCenterOffset: -900//_CLAW_Y_HOME - platformGretel.y + platformHansel.height/2
         anchors.horizontalCenterOffset: 1100// _CLAW_X_HOME - platformGretel.x - platformHansel.width/2
     }
 
+    property int _PLATFORM_CHARACTER_X_OFFSET: -80;
+    property int _PLATFORM_CHARACTER_Y_OFFSET: -300;
+
+
+    Connections{
+        target: page
+
+        onPlaceCharacterOnPlatform:{
+
+            console.log( "placing " + character + " on " + platform + " platform ");
+
+            if( platform == "teal" ){
+                tealPlatformCharacter = character;
+            }
+            else{
+                purplePlatformCharacter = character;
+            }
+
+            if( character == "hansel" ){
+
+                if( platform == "teal" ){
+                    platformHansel.x = tealPlatform.x + _PLATFORM_CHARACTER_X_OFFSET;
+                    platformHansel.y = tealPlatform.y + _PLATFORM_CHARACTER_Y_OFFSET;
+                }
+                else{
+                    platformHansel.x = purplePlatform.x + _PLATFORM_CHARACTER_X_OFFSET;
+                    platformHansel.y = purplePlatform.y + _PLATFORM_CHARACTER_Y_OFFSET;
+                }
+
+                platformHansel.visible = true;
+            }
+            else if( character == "gretel" ){
+                if( platform == "teal" ){
+                    platformGretel.x = tealPlatform.x + _PLATFORM_CHARACTER_X_OFFSET;
+                    platformGretel.y = tealPlatform.y + _PLATFORM_CHARACTER_Y_OFFSET;
+                }
+                else{
+                    platformGretel.x = purplePlatform.x + _PLATFORM_CHARACTER_X_OFFSET;
+                    platformGretel.y = purplePlatform.y + _PLATFORM_CHARACTER_Y_OFFSET;
+                }
+
+                platformGretel.visible = true;
+            }
+            else if( character == "witch" ){
+                if( platform == "teal" ){
+                    platformWitch.x = tealPlatform.x + _PLATFORM_CHARACTER_X_OFFSET;
+                    platformWitch.y = tealPlatform.y + _PLATFORM_CHARACTER_Y_OFFSET + 10;
+                }
+                else{
+                    platformWitch.x = purplePlatform.x + _PLATFORM_CHARACTER_X_OFFSET;
+                    platformWitch.y = purplePlatform.y + _PLATFORM_CHARACTER_Y_OFFSET + 10;
+                }
+
+                platformWitch.visible = true;
+            }
+        }
+
+        onBackToMainMenu: {
+            platformHansel.visible = false;
+            platformGretel.visible = false;
+            platformWitch.visible = false;
+        }
+    }
 
     Hansel{
+        visible: false
         id: platformHansel
-        y: leftPlatform.y - 300
-        x: leftPlatform.x + 10
         z: 72
         scale: 0.14
     }
@@ -214,17 +276,13 @@ Rectangle {
     Gretel{
         visible: false
         id: platformGretel
-        y: rightPlatform.y - 300
-        x: rightPlatform.x - 80
         z: 72
         scale: 0.14
     }
 
     GameScreenWitch {
+        visible: false
         id: platformWitch
-
-        y: rightPlatform.y - 290
-        x: rightPlatform.x - 80
         z: 72
         scale: 0.41
     }

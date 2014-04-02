@@ -6,14 +6,14 @@ Rectangle {
     height: 700
     color: "transparent"
 
-    MouseArea{
+    /*MouseArea{
         anchors.fill: parent
         onClicked:{
             startPickUpWitch()
         }
-    }
+    }*/
 
-    Connections{
+    Connections {
         target: page
         onClawHasWitch:{
             swingBodyTimer.start();

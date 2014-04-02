@@ -225,19 +225,6 @@ Rectangle {
                     }
 
                     onClicked: {
-
-                        /*if( !piecesHaveStartedAnimating ){
-                            startPieceAnimations();
-                            piecesHaveStartedAnimating = true;
-
-                        }*/
-
-                        //sendPlayerName( "TODO: FIX MEEEE" /*playerNameBox.text*/ );
-                        //startMenu.state = "INVISIBLE"
-                        //isNetworkGame = false;
-                        //clearBoard();
-                        //readyToStartOnePersonPlay();
-
                         doors.state = "SINGLE_PLAYER";
                     }
                 }

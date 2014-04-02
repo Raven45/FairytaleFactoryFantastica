@@ -6,12 +6,12 @@ Rectangle {
     height: 700
     color: "transparent"
 
-    MouseArea{
+    /*MouseArea{
         anchors.fill: parent
         onClicked:{
             startPickUpHansel()
         }
-    }
+    }*/
 
     Connections{
         target: page
