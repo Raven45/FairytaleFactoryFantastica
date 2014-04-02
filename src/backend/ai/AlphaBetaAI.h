@@ -6,7 +6,7 @@
 #define NUMBER_OF_POSSIBLE_ROTATIONS 8
 #define NUMBER_OF_QUADRANTS 4
 #define MAX_DEPTH_LEVEL 3
-#define NUMBER_GAMES_TO_PLAY 1000
+#define NUMBER_GAMES_TO_PLAY 1
 
 #include <iostream>
 using std::cout;

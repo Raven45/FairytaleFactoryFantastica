@@ -137,10 +137,7 @@ Rectangle {
         visible: true
         text: "The Objective:
 Place 5 magic gumdrops
-in a row in any direction
-
-Counts for either before
-or after a rotation"
+in a row in any direction"
     }
 
     Text{
@@ -175,15 +172,14 @@ highlighted"
         anchors.left: helpScreen.left
         anchors.leftMargin: 50
         visible: false
-        text: "After a piece is
-placed, select a
-90 degree rotation
-from one of the 4
-levers
+        text: "Select a 90
+degree rotation
+from one of the 8
+rotation buttons
 
-This will turn the
-corresponding game
-block"
+This will turn
+the corresponding
+gingerbread square"
     }
 
     Rectangle{

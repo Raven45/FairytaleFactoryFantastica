@@ -75,7 +75,7 @@ Rectangle {
         id: soundButton
         source_string: _SOUND_CHECK_FLAG ? "sound-button.png" : "nosound-button.png"
         anchors.top: parent.top
-        anchors.topMargin: (parent.height/2) - 30
+        anchors.topMargin: ((parent.height - 100)/3) + 15
         anchors.left: parent.left
         anchors.leftMargin: 30
         z: parent.z+1
@@ -90,13 +90,11 @@ Rectangle {
         }
     }
 
-
-
     GUIButton {
         id: helpButton
         source_string: "help-button.png"
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: ((parent.height - 30)/4) - 30
+        anchors.top: parent.top
+        anchors.topMargin: (2 * ((parent.height - 100) / 3) ) + 15
         anchors.left: parent.left
         anchors.leftMargin: 30
         z: parent.z+1

@@ -14,6 +14,8 @@
 //#include "MonteCarloParallelAI.h"
 #include "NetworkInterface.h"
 #include "SmarterPlayer2.h"
+#include "MonteCarloParallelAI.h"
+#include "AlphaBetaAI.h"
 //#include "SmarterPlayer4.h"
 
 typedef SmarterPlayer2 DefaultAIPlayer;
@@ -76,8 +78,8 @@ protected:
     //player1 is in the Gui; his turn is too specialized to force into the player class
     Player* player2;
 
-    typedef SmarterPlayer2 EasyAIPlayer;
-    typedef SmarterPlayer2 MediumAIPlayer;
+    typedef AlphaBetaAI EasyAIPlayer;
+    typedef MonteCarloParallelAI MediumAIPlayer;
     typedef SmarterPlayer2 HardAIPlayer;
 
     EasyAIPlayer easyAi;
