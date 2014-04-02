@@ -129,7 +129,7 @@ Rectangle {
                 event.accepted = true;
                 splashTimer.stop();
                 splash.visible = false;
-                startScreen.visible = true;
+                startScreen.state = "VISIBLE";
             }
     }
 
