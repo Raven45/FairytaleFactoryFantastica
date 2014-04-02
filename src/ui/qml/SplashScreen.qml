@@ -122,7 +122,15 @@ Rectangle {
         }
     }
     //! [timer]
-
+Text{
+    anchors.horizontalCenter: splash.horizontalCenter
+    anchors.bottom: splash.bottom
+    anchors.bottomMargin: 10
+    font.pointSize: 14
+    color: '#6B6B6B'
+    text: '(Spacebar to Skip)'
+    z: parent.z + 1
+}
     Item{
         anchors.fill: parent
         focus: true
