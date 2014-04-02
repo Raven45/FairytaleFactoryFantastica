@@ -13,6 +13,7 @@ Rectangle {
 
     color: "#333333"
 
+    signal placeCharacterOnPlatform( string character, string platform );
     signal droppedSomethingInOven()
     signal readyToStartOnePersonPlay( int aiLevel, int menuSelectedColor )
     signal readyToStartTwoPersonPlay()
@@ -26,7 +27,6 @@ Rectangle {
     signal clawHasHansel()
     signal clawHasGretel()
     signal clawHasWitch()
-
     signal clawMovingUp()
     signal clawMovingDown()
     signal finishedClawMovingY()
@@ -77,6 +77,8 @@ Rectangle {
     property alias main: page
     property bool guiPlayerIsWhite: false
     property bool isGuiPlayersTurn: false
+    property string tealPlatformCharacter: "NONE"
+    property string purplePlatformCharacter: "NONE"
     property bool guiPlayerCanClickBoardHoleButton: false
     property bool guiPlayerCanClickRotation: false
     property bool menuIsShowing: false
@@ -143,6 +145,21 @@ Rectangle {
     
     function lockBoardPieces(){
         guiPlayerCanClickBoardHoleButton = false;
+    }
+
+    function killCharacter( character ){
+        if( character == "witch" ){
+            startPickUpWitch();
+        }
+        else if ( character == "hansel" ){
+            startPickUpHansel();
+        }
+        else if ( character == "gretel" ){
+            startPickUpGretel();
+        }
+        else{
+            console.log("in main.qml function killCharacter: invalid parameter");
+        }
     }
 
     function unlockBoardPieces(){
