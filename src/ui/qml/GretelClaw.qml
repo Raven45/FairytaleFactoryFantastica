@@ -17,6 +17,16 @@ Item {
         onGretelIsOverOven:{
             killGretelTimer.start()
         }
+
+        onBackToMainMenu:{
+            takeGretelsHead.stop()
+            liftGretelTimer.stop()
+            killGretelTimer.stop()
+            moveGretelToOven.stop()
+            burnGretelToDeath.stop()
+            gretelClaw.anchors.horizontalCenterOffset = -64;
+            gretelClaw.anchors.verticalCenterOffset = -1100;
+        }
     }
 
     SoundEffect {
@@ -27,14 +37,6 @@ Item {
     SequentialAnimation{
         id: takeGretelsHead
         running: false
-
-        NumberAnimation{
-            target: gretelClaw.anchors
-            properties:"horizontalCenterOffset"
-            to: -64
-            duration: 800
-            easing.type: Easing.OutSine
-        }
 
         ScriptAction {
             script: {
@@ -114,8 +116,6 @@ Item {
                 easing.type:Easing.Linear
             }
         }
-        NumberAnimation { target: gretelClaw.anchors; property: "horizontalCenterOffset"; to: 1200; duration: 1800; easing.type: Easing.OutSine }
-
     }
 
     SpriteSequence{

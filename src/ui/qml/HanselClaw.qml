@@ -17,6 +17,16 @@ Item {
         onHanselIsOverOven:{
             killHanselTimer.start()
         }
+
+        onBackToMainMenu:{
+            takeHanselsHead.stop()
+            liftHanselTimer.stop()
+            killHanselTimer.stop()
+            moveHanselToOven.stop()
+            burnHanselToDeath.stop()
+            hanselClaw.anchors.horizontalCenterOffset = -66;
+            hanselClaw.anchors.verticalCenterOffset = -1100;
+        }
     }
 
     SoundEffect {
@@ -29,14 +39,6 @@ Item {
     SequentialAnimation{
         id: takeHanselsHead
         running: false
-
-        NumberAnimation{
-            target: hanselClaw.anchors
-            properties:"horizontalCenterOffset"
-            to: -66
-            duration: 800
-            easing.type: Easing.OutSine
-        }
 
         ScriptAction {
             script: {
@@ -116,8 +118,6 @@ Item {
                 easing.type:Easing.Linear
             }
         }
-        NumberAnimation { target: hanselClaw.anchors; property: "horizontalCenterOffset"; to: 1200; duration: 1800; easing.type: Easing.OutSine }
-
     }
 
     SpriteSequence{

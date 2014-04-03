@@ -17,6 +17,16 @@ Item {
         onWitchIsOverOven:{
             killWitchTimer.start()
         }
+
+        onBackToMainMenu:{
+            takeWitchsHead.stop()
+            liftWitchTimer.stop()
+            killWitchTimer.stop()
+            moveWitchToOven.stop()
+            burnWitchToDeath.stop()
+            witchClaw.anchors.horizontalCenterOffset = -64;
+            witchClaw.anchors.verticalCenterOffset = -1100;
+        }
     }
 
     SoundEffect {
@@ -27,14 +37,6 @@ Item {
     SequentialAnimation{
         id: takeWitchsHead
         running: false
-
-        NumberAnimation{
-            target: witchClaw.anchors
-            properties:"horizontalCenterOffset"
-            to: -64
-            duration: 800
-            easing.type: Easing.OutSine
-        }
 
         ScriptAction {
             script: {
@@ -114,8 +116,6 @@ Item {
                 easing.type:Easing.Linear
             }
         }
-        NumberAnimation { target: witchClaw.anchors; property: "horizontalCenterOffset"; to: 1200; duration: 1800; easing.type: Easing.OutSine }
-
     }
 
     SpriteSequence{

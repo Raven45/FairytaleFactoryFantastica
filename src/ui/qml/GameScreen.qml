@@ -182,24 +182,24 @@ Rectangle {
         id: hanselClaw
         z: 73
         anchors.centerIn: platformHansel
-        anchors.verticalCenterOffset: -900// _CLAW_Y_HOME - platformHansel.y + platformHansel.height/2
-        anchors.horizontalCenterOffset: 1100// _CLAW_X_HOME - platformHansel.x - platformHansel.width/2
+        anchors.verticalCenterOffset: -1100// _CLAW_Y_HOME - platformHansel.y + platformHansel.height/2
+        anchors.horizontalCenterOffset: -66// _CLAW_X_HOME - platformHansel.x - platformHansel.width/2
     }
 
     GretelClaw {
         id: gretelClaw
         z: 73
         anchors.centerIn: platformGretel
-        anchors.verticalCenterOffset: -900//_CLAW_Y_HOME - platformGretel.y + platformHansel.height/2
-        anchors.horizontalCenterOffset: 1100// _CLAW_X_HOME - platformGretel.x - platformHansel.width/2
+        anchors.verticalCenterOffset: -1100//_CLAW_Y_HOME - platformGretel.y + platformHansel.height/2
+        anchors.horizontalCenterOffset: -64// _CLAW_X_HOME - platformGretel.x - platformHansel.width/2
     }
 
     WitchClaw {
         id: witchClaw
         z: 73
         anchors.centerIn: platformWitch
-        anchors.verticalCenterOffset: -900//_CLAW_Y_HOME - platformGretel.y + platformHansel.height/2
-        anchors.horizontalCenterOffset: 1100// _CLAW_X_HOME - platformGretel.x - platformHansel.width/2
+        anchors.verticalCenterOffset: -1100//_CLAW_Y_HOME - platformGretel.y + platformHansel.height/2
+        anchors.horizontalCenterOffset: -64// _CLAW_X_HOME - platformGretel.x - platformHansel.width/2
     }
 
     property int _PLATFORM_CHARACTER_X_OFFSET: -80;
@@ -896,7 +896,7 @@ Rectangle {
             onClicked: {
             	myGameMenu.state = "VISIBLE"
             	pauseGumdropAnimation();
-	    }
+            }
         }
     }
 }
