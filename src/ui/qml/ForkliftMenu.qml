@@ -79,6 +79,18 @@ Rectangle {
         z: 5
     }
 
+    Image{
+        id: sound_Text
+        width: 85; height: 85
+        source: "sound-stencil.png"
+        z: brickWall.z + 1
+
+        anchors.right: forkliftMenu.right
+        anchors.rightMargin: 12
+        anchors.top: forkliftMenu.top
+        anchors.topMargin: 217
+    }
+
     Item{
         id: helpBox
         width: helpBox_img.width
@@ -254,21 +266,53 @@ Rectangle {
             z: 13
         }
 
-        Image {
+        Item {
             id: forkWitch
             x: 192
             y: 60
-            source: "WitchOnForks.png"
+            width: forkWitch_img.width
+            height: forkWitch_img.height
 
-            SoundEffect {
-                id: witchSound
-                source: "witch-laugh.wav"
+            Glow {
+               id: forkWitch_glowEffect
+               anchors.fill: forkWitch_img
+               radius: 24
+               samples: 12
+               spread: 0.4
+               color: "#880E8200"
+               source: forkWitch_img
+               visible: false
+               fast: true
+               cached: true
             }
 
-            MouseArea {
-                id: witchMouseArea
-                anchors.fill: parent
-                onPressed: if(_SOUND_CHECK_FLAG) witchSound.play()
+            Image {
+                id: forkWitch_img
+                anchors.centerIn: forkWitch
+                source: "WitchOnForks.png"
+
+                SoundEffect {
+                    id: witchSound
+                    source: "witch-laugh.wav"
+                }
+
+                MouseArea {
+                    id: witch_mouseArea
+                    anchors.fill: parent
+                    hoverEnabled: true
+
+                    onEntered: {
+                        if(forkWitch_glowEffect.visible == false && witch_mouseArea.containsMouse){
+                            forkWitch_glowEffect.visible = true;
+                        }
+                    }
+                    onExited: {
+                        if(forkWitch_glowEffect.visible == true){
+                            forkWitch_glowEffect.visible = false;
+                        }
+                    }
+                    onPressed: if(_SOUND_CHECK_FLAG) witchSound.play()
+                }
             }
         }
 
