@@ -47,5 +47,8 @@
         <file alias="teal-text.png">../media/teal-text.png</file>
         <file alias="hansel-text.png">../media/hansel-text.png</file>
         <file alias="gretel-text.png">../media/gretel-text.png</file>
+        <file alias="sound-forkliftMenu.png">../media/sound-forkliftMenu.png</file>
+        <file alias="nosound-forkliftMenu.png">../media/nosound-forkliftMenu.png</file>
+        <file alias="fx3-50opacity.png">../media/fx3-50opacity.png</file>
     </qresource>
 </RCC>

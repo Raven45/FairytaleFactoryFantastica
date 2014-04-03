@@ -72,7 +72,19 @@ Rectangle {
         //fillMode: Image.PreserveAspectFit
     }
 
-    Image {
+    Image{
+        id: fx3_logo
+        width: 600; height: 200
+        source: "fx3-50opacity.png"
+        z: brickWall.z + 1
+        rotation: -15
+        scale: 0.75
+        anchors.left: forkliftMenu.left
+        anchors.leftMargin: -75
+        anchors.top: forkliftMenu.top
+    }
+
+    Image{
         anchors.fill: parent
         id: brickWall
         source: "LoadingDockWithDoor.png"
@@ -89,6 +101,142 @@ Rectangle {
         anchors.rightMargin: 12
         anchors.top: forkliftMenu.top
         anchors.topMargin: 217
+    }
+
+    Item {
+        id: nosound_forkliftMenu
+        width: nosound_forkliftMenu_rec.width
+        height: nosound_forkliftMenu_rec.height
+        z: nosound_forkliftMenu_rec.z
+
+        anchors.top: forkliftMenu.top
+        anchors.topMargin: 285
+        anchors.right: forkliftMenu.right
+        anchors.rightMargin: 30
+
+        RectangularGlow {
+           id: nosound_forkliftMenu_glowEffect
+           anchors.fill: nosound_forkliftMenu_rec
+           cornerRadius: 50
+           glowRadius: 20
+           spread: 0.0
+           color: "red"
+           visible: false
+           cached: true
+        }
+
+        Rectangle{
+            id: nosound_forkliftMenu_rec
+            color: "transparent"
+            width: 50; height: 50
+            visible: true
+            radius: 25
+            z: brickWall.z + 1
+
+            anchors.centerIn: nosound_forkliftMenu
+
+            Image{
+                id: nosound_forklifeMenu_img
+                width: nosound_forkliftMenu_rec.width
+                height: nosound_forkliftMenu_rec.height
+                z: nosound_forkliftMenu_rec.z + 1
+                scale: 0.7
+                visible: !_SOUND_CHECK_FLAG
+                source: "nosound-forkliftMenu.png"
+
+                anchors.centerIn: nosound_forkliftMenu_rec
+            }
+
+            MouseArea {
+                id: nosound_forkliftMenu_mouseArea
+                anchors.fill: nosound_forkliftMenu_rec
+                hoverEnabled: true
+
+                onEntered: {
+                    if(nosound_forkliftMenu_glowEffect.visible == false && nosound_forkliftMenu_mouseArea.containsMouse){
+                        nosound_forkliftMenu_glowEffect.visible = true;
+                    }
+                }
+                onExited: {
+                    if(nosound_forkliftMenu_glowEffect.visible == true){
+                        nosound_forkliftMenu_glowEffect.visible = false;
+                    }
+                }
+                onPressed: { if(_SOUND_CHECK_FLAG) pressButtonSound.play() }
+                onClicked: {
+                    changeSoundState();
+                    changeSoundCheckFlag();
+                }
+            }
+        }
+    }
+
+    Item {
+        id: sound_forkliftMenu
+        width: sound_forkliftMenu_rec.width
+        height: sound_forkliftMenu_rec.height
+        z: sound_forkliftMenu_rec.z
+
+        anchors.top: forkliftMenu.top
+        anchors.topMargin: 353
+        anchors.right: forkliftMenu.right
+        anchors.rightMargin: 30
+
+        RectangularGlow {
+           id: sound_forkliftMenu_glowEffect
+           anchors.fill: sound_forkliftMenu_rec
+           cornerRadius: 50
+           glowRadius: 20
+           spread: 0.0
+           color: "green"
+           visible: false
+           cached: true
+        }
+
+        Rectangle{
+            id: sound_forkliftMenu_rec
+            color: "transparent"
+            width: 50; height: 50
+            visible: true
+            radius: 25
+            z: brickWall.z + 1
+
+            anchors.centerIn: sound_forkliftMenu
+
+            Image{
+                id: sound_forklifeMenu_img
+                width: sound_forkliftMenu_rec.width
+                height: sound_forkliftMenu_rec.height
+                z: sound_forkliftMenu_rec.z + 1
+                scale: 0.7
+                visible: _SOUND_CHECK_FLAG
+                source: "sound-forkliftMenu.png"
+
+                anchors.centerIn: sound_forkliftMenu_rec
+            }
+
+            MouseArea {
+                id: sound_forkliftMenu_mouseArea
+                anchors.fill: sound_forkliftMenu_rec
+                hoverEnabled: true
+
+                onEntered: {
+                    if(sound_forkliftMenu_glowEffect.visible == false && sound_forkliftMenu_mouseArea.containsMouse){
+                        sound_forkliftMenu_glowEffect.visible = true;
+                    }
+                }
+                onExited: {
+                    if(sound_forkliftMenu_glowEffect.visible == true){
+                        sound_forkliftMenu_glowEffect.visible = false;
+                    }
+                }
+                onPressed: { if(!_SOUND_CHECK_FLAG) pressButtonSound.play() }
+                onClicked: {
+                    changeSoundState();
+                    changeSoundCheckFlag();
+                }
+            }
+        }
     }
 
     Item{
@@ -291,7 +439,10 @@ Rectangle {
                 anchors.centerIn: forkWitch
                 source: "WitchOnForks.png"
 
-
+                SoundEffect {
+                    id: witchSound
+                    source: "witch-laugh.wav"
+                }
 
                 MouseArea {
                     id: witch_mouseArea
@@ -682,4 +833,3 @@ Rectangle {
         }
     }
 }
-
