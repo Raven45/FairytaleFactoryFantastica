@@ -96,7 +96,11 @@ transitions:[
         height: parent.height
         anchors.centerIn: parent
 
-        color: "#123456"
+        Image {
+            id: defaultPlayerDoor_img
+            width: parent.width; height: parent.height
+            source: "forkliftDoor2.png"
+        }
     }
 
     Rectangle {
@@ -105,6 +109,12 @@ transitions:[
         height: parent.height
         anchors.centerIn: parent
         anchors.verticalCenterOffset: 0 - doorsRectangle.height * 2
+
+        Image {
+            id: singlePlayerDoor_img
+            width: parent.width; height: parent.height
+            source: "forkliftDoor2.png"
+        }
     }
 
     Rectangle {
@@ -113,6 +123,12 @@ transitions:[
         height: parent.height
         anchors.centerIn: parent
         anchors.verticalCenterOffset: 0 - doorsRectangle.height * 2
+
+        Image {
+            id: versusPlayerDoor_img
+            width: parent.width; height: parent.height
+            source: "forkliftDoor2.png"
+        }
     }
 
     Rectangle {
@@ -121,6 +137,12 @@ transitions:[
         height: parent.height
         anchors.centerIn: parent
         anchors.verticalCenterOffset: 0 - doorsRectangle.height * 2
+
+        Image {
+            id: networkDoor_img
+            width: parent.width; height: parent.height
+            source: "forkliftDoor2.png"
+        }
     }
 
     //------singlePlayerDoor Selectors-----------------------------------------

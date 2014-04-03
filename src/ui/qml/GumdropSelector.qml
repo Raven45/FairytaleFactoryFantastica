@@ -44,6 +44,14 @@ Rectangle {
 
         anchors.horizontalCenter: gumdropSelector.horizontalCenter
         anchors.verticalCenter: gumdropSelector.verticalCenter
+
+        MouseArea {
+            id: gumdropSelectorImage_mouseArea
+            anchors.fill: parent
+
+            onPressed: { if(_SOUND_CHECK_FLAG) gumdropSelectorSound.play() }
+            onClicked: { changeGumdrop(); }
+        }
     }
 
     Item{

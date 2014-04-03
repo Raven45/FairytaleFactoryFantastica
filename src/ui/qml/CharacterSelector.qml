@@ -45,6 +45,14 @@ Rectangle {
 
         anchors.horizontalCenter: characterSelector.horizontalCenter
         anchors.verticalCenter: characterSelector.verticalCenter
+
+        MouseArea {
+            id: characterFace_mouseArea
+            anchors.fill: parent
+
+            onPressed: { if(_SOUND_CHECK_FLAG) selectorSound.play() }
+            onClicked: { changeCharacter(); }
+        }
     }
 
     Item{
