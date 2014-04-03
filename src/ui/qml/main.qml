@@ -3,6 +3,7 @@ import QtWebKit 3.0
 import QtQuick.XmlListModel 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
+import QtMultimedia 5.0
 
 //import GUIPlayer 1.0
 
@@ -158,9 +159,11 @@ Rectangle {
         }
         else if ( character == "hansel" ){
             startPickUpHansel();
+            witchSound.play();
         }
         else if ( character == "gretel" ){
             startPickUpGretel();
+            witchSound.play();
         }
         else{
             console.log("in main.qml function killCharacter: invalid parameter");
@@ -172,7 +175,6 @@ Rectangle {
         lockQuadrantRotation();
         isGuiPlayersTurn = true;
         guiPlayerCanClickBoardHoleButton = true;
-
     }
 
     function lockQuadrantRotation(){
@@ -210,6 +212,11 @@ Rectangle {
             //console.log("guiPlayers turn is over.");
             isGuiPlayersTurn = false;
         }
+    }
+
+    SoundEffect {
+        id: witchSound
+        source: "witch-laugh.wav"
     }
 
     QmlTimer{
@@ -390,10 +397,7 @@ Rectangle {
         anchors.centerIn: parent
         z: 100
     }
-    GameOverMenu {
-          id: gameOverMenu
-          anchors.centerIn: page
-    }
+
     GameScreen{
         id: gameScreen
         z:1

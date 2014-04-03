@@ -313,7 +313,7 @@ Rectangle {
 
     QmlTimer {
         id: showPieceTimer
-        duration: _CLAW_OPEN_DURATION
+        duration: _CLAW_OPEN_DURATION - 30
         onTriggered: {
             icingSprite.visible = true;
 

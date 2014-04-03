@@ -12,6 +12,10 @@ Rectangle {
 
     property int _MIDDLE_TUBE_WIDTH: 56
 
+    GameOverMenu {
+          id: gameOverMenu
+    }
+
     Item {
         anchors.fill: parent
         focus: true

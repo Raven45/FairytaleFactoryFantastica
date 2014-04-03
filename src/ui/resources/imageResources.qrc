@@ -13,7 +13,6 @@
                 <file alias="step1.png">../media/step 1.png</file>
                 <file alias="step2.png">../media/step 2.png</file>
                 <file alias="step3.png">../media/step 3.png</file>
-		<file alias="cogs-2nd-spritesheet.png">../media/cogs-2nd-spritesheet.png</file>
 		<file alias="bar.png">../media/bar.png</file>
 		<file alias="grahm-quad.png">../media/grahm-quad.png</file>
 		<file alias="pentago-quad.png">../media/pentago-quad.png</file>
@@ -44,6 +43,5 @@
 		<file alias="tealIcingSinkSprite.png">../media/tealIcingSinkSprite.png</file>
 		<file alias="purpleIcingSinkSprite.png">../media/purpleIcingSinkSprite.png</file>
 		<file alias="platformCombinedSmall.png">../media/platformCombinedSmall.png</file>
-	
     </qresource>
 </RCC>

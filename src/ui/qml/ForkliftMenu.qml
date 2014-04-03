@@ -72,7 +72,7 @@ Rectangle {
         //fillMode: Image.PreserveAspectFit
     }
 
-    Image{
+    Image {
         anchors.fill: parent
         id: brickWall
         source: "LoadingDockWithDoor.png"
@@ -291,10 +291,7 @@ Rectangle {
                 anchors.centerIn: forkWitch
                 source: "WitchOnForks.png"
 
-                SoundEffect {
-                    id: witchSound
-                    source: "witch-laugh.wav"
-                }
+
 
                 MouseArea {
                     id: witch_mouseArea

@@ -26,5 +26,10 @@
                 <file alias="Witch_Head.png">../media/Witch_Head.png</file>
                 <file alias="Witch_Boots.png">../media/Witch_Boots.png</file>
                 <file alias="Angry_Witch_Scared.png">../media/Angry_Witch_Scared.png</file>
+                <file alias="gameOverPlate.png">../media/gameOverPlate.png</file>
+                <file alias="witchWins.png">../media/witchWins.png</file>
+                <file alias="hanselWins.png">../media/hanselWins.png</file>
+                <file alias="gretelWins.png">../media/gretelWins.png</file>
+                <file alias="tieText.png">../media/tieText.png</file>
     </qresource>
 </RCC>
