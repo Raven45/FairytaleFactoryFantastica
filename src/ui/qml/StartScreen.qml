@@ -77,6 +77,16 @@ Rectangle {
 
         }
 
+        }
+
+    QmlTimer{
+        id: hanselBlinkTimer
+        duration: 5000
+        onTriggered: {
+            hanselBlink.visible = true;
+            showHanselBlinkTimer.startTimer();
+        }
+
         QmlTimer{
             id: showGretelBlinkTimer
             duration: 150
@@ -87,7 +97,14 @@ Rectangle {
         }
     }
 
-
+    QmlTimer{
+        id: showHanselBlinkTimer
+        duration: 150
+        onTriggered: {
+            hanselBlink.visible = false;
+            hanselBlinkTimer.startTimer();
+        }
+    }
 
     Rectangle {
         id: smokeRectangle
@@ -224,6 +241,7 @@ Rectangle {
                     duration: 360
                     onTriggered: {
                         gretelFrown.visible = true;
+                        hanselFrown.visible = true;
                     }
                 }
 
@@ -530,6 +548,27 @@ Rectangle {
         visible: false
     }
 
+    Image{
+        id: hanselFrown
+        source: "hanselFrown2.png"
+        anchors.centerIn: hansel
+        z: 12
+        height: 240
+        width: 160
+        fillMode: Image.PreserveAspectFit
+        visible: false
+    }
+
+    Image{
+        id: hanselBlink
+        source: "hanselBlink2.png"
+        anchors.centerIn: hansel
+        z: 12
+        height: 240
+        width: 160
+        fillMode: Image.PreserveAspectFit
+        visible: false
+    }
 
     Image{
         id: breadcrumbs
@@ -853,9 +892,13 @@ Rectangle {
             PropertyChanges { target: startMenu_witch;  state: "ON" }
             PropertyChanges { target: menuFade; opacity: 0; visible: true; }
             PropertyChanges { target: gretelFrown; visible: false }
+            PropertyChanges { target: hanselFrown; visible: false }
             PropertyChanges { target: startScreen; visible: true }
             PropertyChanges { target: gretelBlink; visible: false }
+            PropertyChanges { target: hanselBlink; visible: false }
             PropertyChanges { target: gretelBlinkTimer; duration: 5000 }
+            PropertyChanges { target: hanselBlinkTimer; duration: 5000 }
+            StateChangeScript { script: hanselBlinkTimer.startTimer() }
             StateChangeScript { script: gretelBlinkTimer.startTimer() }
         },
         State{
@@ -865,8 +908,11 @@ Rectangle {
             PropertyChanges { target: menuFade; opacity: 0; visible: false; }
             PropertyChanges { target: startScreen; visible: false }
             PropertyChanges { target: gretelFrown; visible: false }
+            PropertyChanges { target: hanselFrown; visible: false }
             PropertyChanges { target: gretelBlink; visible: false }
+            PropertyChanges { target: hanselBlink; visible: false }
             PropertyChanges { target: gretelBlinkTimer; duration: 0 }
+            PropertyChanges { target: hanslBlinkTimer; duration: 0 }
         }
 
     ]
