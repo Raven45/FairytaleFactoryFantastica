@@ -637,15 +637,14 @@ Rectangle {
 
     }
 
-    Timer{
-
-        Connections{
-            target: page
-            onBackToMainMenu:{
-                exitFlickerLongTimer.start();
-            }
+    Connections{
+        target: page
+        onBackToMainMenu:{
+            exitFlickerLongTimer.start();
         }
+    }
 
+    Timer{
         id: exitFlickerLongTimer
         interval: 4500
         running: true
