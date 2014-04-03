@@ -73,6 +73,18 @@ Rectangle {
     }
 
     Image{
+        id: fx3_logo
+        width: 600; height: 200
+        source: "fx3-50opacity.png"
+        z: brickWall.z + 1
+        rotation: -15
+        scale: 0.75
+        anchors.left: forkliftMenu.left
+        anchors.leftMargin: -75
+        anchors.top: forkliftMenu.top
+    }
+
+    Image{
         anchors.fill: parent
         id: brickWall
         source: "LoadingDockWithDoor.png"
