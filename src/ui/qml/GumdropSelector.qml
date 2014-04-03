@@ -64,9 +64,9 @@ Rectangle {
         Glow {
            id: gumdrop_leftSelector_glowEffect
            anchors.fill: gumdrop_leftSelector_img
-           radius: 16
+           radius: 8
            samples: 24
-           spread: 0.8
+           spread: 0.5
            color: "#58d6ff"
            source: gumdrop_leftSelector_img
            visible: false
@@ -110,9 +110,9 @@ Rectangle {
         Glow {
            id: gumdrop_rightSelector_glowEffect
            anchors.fill: gumdrop_rightSelector_img
-           radius: 16
+           radius: 8
            samples: 24
-           spread: 0.8
+           spread: 0.5
            color: "#58d6ff"
            source: gumdrop_rightSelector_img
            visible: false

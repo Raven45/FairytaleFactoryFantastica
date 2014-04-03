@@ -2,6 +2,7 @@ import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
 import QtMultimedia 5.0
+import QtGraphicalEffects 1.0
 
 Rectangle {
     id: forkliftMenu
@@ -48,6 +49,11 @@ Rectangle {
         source: "sliding-sound.wav"
     }
 
+    SoundEffect {
+            id: pressButtonSound
+            source: "ButtonClick2.wav"
+    }
+
     property int _FORKLIFT_MENU_DOORS_TOP_MARGIN: 100
 
     Doors{
@@ -66,12 +72,112 @@ Rectangle {
         //fillMode: Image.PreserveAspectFit
     }
 
-
     Image{
         anchors.fill: parent
         id: brickWall
         source: "LoadingDockWithDoor.png"
         z: 5
+    }
+
+    Image{
+        id: sound_Text
+        width: 85; height: 85
+        source: "sound-stencil.png"
+        z: brickWall.z + 1
+
+        anchors.right: forkliftMenu.right
+        anchors.rightMargin: 12
+        anchors.top: forkliftMenu.top
+        anchors.topMargin: 217
+    }
+
+    Item{
+        id: helpBox
+        width: helpBox_img.width
+        height: helpBox_img.height
+        z: forklift.z + 1
+        anchors.bottom: forkliftMenu.bottom
+        anchors.right: forkliftMenu.right
+        anchors.rightMargin: 15
+
+        Rectangle{
+            id:dummy_helpBox_rec
+            width: 75; height: 75
+            color: "transparent"
+            z: helpBox.z - 1
+            anchors.centerIn: helpBox
+        }
+
+        RectangularGlow {
+           id: helpBox_glowEffect
+           anchors.fill: dummy_helpBox_rec
+           cornerRadius: 5
+           glowRadius: 0
+           spread: 0.2
+           color: "#f9f2a6"
+           visible: true
+           cached: true
+        }
+
+        SequentialAnimation{
+            id: pulse_helpBox_glowEffect
+            running: true
+            loops: Animation.Infinite
+
+            ParallelAnimation {
+                NumberAnimation { target: helpBox_glowEffect; property: "glowRadius"; to: 80; duration: 2000; easing.type: Easing.InOutQuad }
+                NumberAnimation { target: helpBox_glowEffect; property: "spread"; to: 0.0; duration: 2000; easing.type: Easing.InOutQuad }
+            }
+            ParallelAnimation {
+                NumberAnimation { target: helpBox_glowEffect; property: "glowRadius"; to:  0; duration: 2000; easing.type: Easing.InOutQuad }
+                NumberAnimation { target: helpBox_glowEffect; property: "spread"; to: 0.0; duration: 2000; easing.type: Easing.InOutQuad }
+            }
+
+        }
+
+        Image {
+            id: helpBox_img
+            width: 150; height: 150
+            z: helpBox.z + 1
+            anchors.centerIn: helpBox
+
+            source: "smaller-cardboard-box.png"
+
+            Image {
+                id: helpbox_text
+                source: help_source_string
+
+                anchors.left: helpBox_img.left
+                anchors.leftMargin: -15
+                anchors.top: helpBox_img.top
+                anchors.topMargin: 8
+
+                width: helpBox_img.width
+                height: helpBox_img.height
+                z: helpBox_img.z + 1
+
+                property string help_source_string: "how-to-play-stencil.png"
+
+                MouseArea {
+                    id: helpBox_mouseArea
+                    anchors.fill: parent
+                    hoverEnabled: true
+
+                    onEntered: {
+                        if( helpBox_mouseArea.containsMouse && helpbox_text.help_source_string === "how-to-play-stencil.png"){
+                            helpbox_text.help_source_string = "how-to-play-stencil-selected.png";
+                        }
+                    }
+                    onExited: {
+                        if( helpbox_text.help_source_string === "how-to-play-stencil-selected.png"){
+                            helpbox_text.help_source_string = "how-to-play-stencil.png";
+                        }
+                    }
+                    onPressed: { if(_SOUND_CHECK_FLAG) pressButtonSound.play(); }
+                    onClicked: { help.state = "SHOW_HELP"; }
+                }
+            }
+        }
     }
 
     ParallelAnimation{
@@ -160,21 +266,53 @@ Rectangle {
             z: 13
         }
 
-        Image {
+        Item {
             id: forkWitch
             x: 192
             y: 60
-            source: "WitchOnForks.png"
+            width: forkWitch_img.width
+            height: forkWitch_img.height
 
-            SoundEffect {
-                id: witchSound
-                source: "witch-laugh.wav"
+            Glow {
+               id: forkWitch_glowEffect
+               anchors.fill: forkWitch_img
+               radius: 24
+               samples: 12
+               spread: 0.4
+               color: "#880E8200"
+               source: forkWitch_img
+               visible: false
+               fast: true
+               cached: true
             }
 
-            MouseArea {
-                id: witchMouseArea
-                anchors.fill: parent
-                onPressed: if(_SOUND_CHECK_FLAG) witchSound.play()
+            Image {
+                id: forkWitch_img
+                anchors.centerIn: forkWitch
+                source: "WitchOnForks.png"
+
+                SoundEffect {
+                    id: witchSound
+                    source: "witch-laugh.wav"
+                }
+
+                MouseArea {
+                    id: witch_mouseArea
+                    anchors.fill: parent
+                    hoverEnabled: true
+
+                    onEntered: {
+                        if(forkWitch_glowEffect.visible == false && witch_mouseArea.containsMouse){
+                            forkWitch_glowEffect.visible = true;
+                        }
+                    }
+                    onExited: {
+                        if(forkWitch_glowEffect.visible == true){
+                            forkWitch_glowEffect.visible = false;
+                        }
+                    }
+                    onPressed: if(_SOUND_CHECK_FLAG) witchSound.play()
+                }
             }
         }
 

@@ -65,9 +65,9 @@ Rectangle {
         Glow {
            id: leftSelector_glowEffect
            anchors.fill: leftSelector_img
-           radius: 16
+           radius: 8
            samples: 24
-           spread: 0.8
+           spread: 0.5
            color: "#58d6ff"
            source: leftSelector_img
            visible: false
@@ -111,9 +111,9 @@ Rectangle {
         Glow {
            id: rightSelector_glowEffect
            anchors.fill: rightSelector_img
-           radius: 16
+           radius: 8
            samples: 24
-           spread: 0.8
+           spread: 0.5
            color: "#58d6ff"
            source: rightSelector_img
            visible: false

@@ -86,9 +86,9 @@ Rectangle {
         Glow {
            id: difficulty_leftSelector_glowEffect
            anchors.fill: difficulty_leftSelector_img
-           radius: 16
+           radius: 8
            samples: 24
-           spread: 0.8
+           spread: 0.5
            color: "#58d6ff"
            source: difficulty_leftSelector_img
            visible: false
@@ -132,9 +132,9 @@ Rectangle {
         Glow {
            id: difficulty_rightSelector_glowEffect
            anchors.fill: difficulty_rightSelector_img
-           radius: 16
+           radius: 8
            samples: 24
-           spread: 0.8
+           spread: 0.5
            color: "#58d6ff"
            source: difficulty_rightSelector_img
            visible: false

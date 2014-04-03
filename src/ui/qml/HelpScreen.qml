@@ -1,4 +1,7 @@
 import QtQuick 2.0
+import QtMultimedia 5.0
+import QtGraphicalEffects 1.0
+
 Rectangle {
     id: helpScreen
 
@@ -22,6 +25,12 @@ Rectangle {
             help.state = "HIDE_HELP";
         }
     }
+
+    SoundEffect {
+            id: leftOrRightSound
+            source: "ButtonClick2.wav"
+    }
+
     Image {
         id: step1
         width: 550; height: 550; z: parent.z+1
@@ -182,71 +191,137 @@ the corresponding
 gingerbread square"
     }
 
-    Rectangle{
+    Item{
         id: left
-        color: "white"
-        width: 100; height: 100;
         z: parent.z + 1
         anchors.right: infoAboutIndex.left
         anchors.verticalCenter: infoAboutIndex.verticalCenter
         anchors.rightMargin: 20
-        visible: true
-        MouseArea {
-            anchors.fill: parent
-            onClicked:{
-                if (step1.visible == true){
-                    makePage1Invisible();
-                    makePage3Visible();
+        width: left_img.width; height: left_img.height
+
+        Glow {
+           id: leftHelpSelector_glowEffect
+           anchors.fill: left_img
+           radius: 8
+           samples: 24
+           spread: 0.5
+           color: "#58d6ff"
+           source: left_img
+           visible: false
+           fast: true
+           cached: true
+        }
+
+        Image{
+            id: left_img
+            source: "left-selector.png"
+            width: 50; height: 50;
+            visible: true
+
+            MouseArea {
+                id: leftHelpSelector_mouseArea
+                anchors.fill: parent
+                hoverEnabled: true
+
+                onEntered: {
+                    if(leftHelpSelector_glowEffect.visible == false && leftHelpSelector_mouseArea.containsMouse){
+                        leftHelpSelector_glowEffect.visible = true;
+                    }
                 }
-                else if (step2.visible == true){
-                    makePage2Invisible();
-                    makePage1Visible();
+                onExited: {
+                    if(leftHelpSelector_glowEffect.visible == true){
+                        leftHelpSelector_glowEffect.visible = false;
+                    }
                 }
-                else if (step3.visible == true){
-                    makePage3Invisible();
-                    makePage2Visible();
-                }
-                else{
-                    infoAboutIndex.text = "error"
+                onPressed: { if(_SOUND_CHECK_FLAG) leftOrRightSound.play() }
+                onClicked:{
+                    if (step1.visible == true){
+                        makePage1Invisible();
+                        makePage3Visible();
+                    }
+                    else if (step2.visible == true){
+                        makePage2Invisible();
+                        makePage1Visible();
+                    }
+                    else if (step3.visible == true){
+                        makePage3Invisible();
+                        makePage2Visible();
+                    }
+                    else{
+                        infoAboutIndex.text = "error"
+                    }
                 }
             }
         }
     }
 
-    Rectangle{
+    Item{
         id: right
-        color: "white"
-        width: 100; height: 100;
         z: parent.z + 1
         anchors.left: infoAboutIndex.right
         anchors.verticalCenter: infoAboutIndex.verticalCenter
         anchors.leftMargin: 20
-        visible: true
-        MouseArea {
-            anchors.fill: parent
-            onClicked:{
-                if (step1.visible == true){
-                    makePage1Invisible();
-                    makePage2Visible();
+        width: right_img.width; height: right_img.height
+
+        Glow {
+           id: rightHelpSelector_glowEffect
+           anchors.fill: right_img
+           radius: 8
+           samples: 24
+           spread: 0.5
+           color: "#58d6ff"
+           source: right_img
+           visible: false
+           fast: true
+           cached: true
+        }
+
+        Image{
+            id: right_img
+            source: "right-selector.png"
+            width: 50; height: 50;
+            visible: true
+
+            MouseArea {
+                id: rightHelpSelector_mouseArea
+                anchors.fill: parent
+                hoverEnabled: true
+
+                onEntered: {
+                    if(rightHelpSelector_glowEffect.visible == false && rightHelpSelector_mouseArea.containsMouse){
+                        rightHelpSelector_glowEffect.visible = true;
+                    }
                 }
-                else if (step2.visible == true){
-                    makePage2Invisible();
-                    makePage3Visible();
+                onExited: {
+                    if(rightHelpSelector_glowEffect.visible == true){
+                        rightHelpSelector_glowEffect.visible = false;
+                    }
                 }
-                else if (step3.visible == true){
-                    makePage3Invisible();
-                    makePage1Visible();
-                }
-                else{
-                    infoAboutIndex.text = "error reading the page"
+                onPressed: { if(_SOUND_CHECK_FLAG) leftOrRightSound.play() }
+                onClicked:{
+                    if (step1.visible == true){
+                        makePage1Invisible();
+                        makePage2Visible();
+                    }
+                    else if (step2.visible == true){
+                        makePage2Invisible();
+                        makePage3Visible();
+                    }
+                    else if (step3.visible == true){
+                        makePage3Invisible();
+                        makePage1Visible();
+                    }
+                    else{
+                        infoAboutIndex.text = "error reading the page"
+                    }
                 }
             }
         }
     }
 
-    Rectangle {
+    Image {
         id: exitHelp
-        color: "white"
+        source: "exitButton.png"
         width: 100; height: 100;
         z: parent.z + 1
         anchors.left: helpScreen.left
