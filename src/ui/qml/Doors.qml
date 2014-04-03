@@ -271,6 +271,8 @@ transitions:[
                 isNetworkGame = false;
                 clearBoard();
 
+                exitFlickerLongTimer.stop();
+                exitFlickerShortTimer.stop();
 
                 if( difficultySelector.difficulty_selector_string == "easy" ){
                     readyToStartOnePersonPlay(1, menuSelectedColor);

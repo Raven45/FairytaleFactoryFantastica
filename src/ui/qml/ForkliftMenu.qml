@@ -614,16 +614,20 @@ Rectangle {
         anchors.topMargin: 15
         z: 10
 
+        property bool isHovered:false
+
         MouseArea {
             anchors.fill: parent
             hoverEnabled: true
 
             onEntered:{
-                exitSign.source = "exitSignLit.png"//"exitSignHover.png"
+                exitSign.isHovered = true;
+                exitSign.source = "exitSignHover.png"
             }
 
             onExited:{
-                exitSign.source = "exitSignDim.png"//"exitSignHover.png"
+                exitSign.isHovered = false;
+                exitSign.source = "exitSignDim.png"
             }
 
             onClicked: {
@@ -634,6 +638,14 @@ Rectangle {
     }
 
     Timer{
+
+        Connections{
+            target: page
+            onBackToMainMenu:{
+                exitFlickerLongTimer.start();
+            }
+        }
+
         id: exitFlickerLongTimer
         interval: 4500
         running: true
@@ -646,23 +658,25 @@ Rectangle {
 
     Timer{
         id: exitFlickerShortTimer
-        interval: 10
+        interval: 50
         running: false
         repeat: false
         property bool isLit: false
         property int flickerCount: 0
         onTriggered:{
-            if( flickerCount < 26 ){
+            if( flickerCount <= 26 ){
                 ++flickerCount;
 
-                if( isLit ){
-                    exitSign.source = "exitSignLit.png";
-                }
-                else{
-                    exitSign.source = "exitSignDim.png";
-                }
+                if( !exitSign.isHovered ){
+                    if( isLit ){
+                        exitSign.source = "exitSignLit.png";
+                    }
+                    else{
+                        exitSign.source = "exitSignDim.png";
+                    }
 
-                isLit = !isLit;
+                    isLit = !isLit;
+                }
                 exitFlickerShortTimer.start();
             }
             else{
