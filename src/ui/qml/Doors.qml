@@ -240,11 +240,15 @@ transitions:[
                     startPieceAnimations();
                     piecesHaveStartedAnimating = true;
                 }
+                else{
+                    resumeGumdropAnimation();
+                }
 
                 sendPlayerName( "TODO: FIX MEEEE" /*playerNameBox.text*/ );
                 startMenu.state = "INVISIBLE"
                 isNetworkGame = false;
                 clearBoard();
+
 
                 if( difficultySelector.difficulty_selector_string == "easy" ){
                     readyToStartOnePersonPlay(1, menuSelectedColor);
