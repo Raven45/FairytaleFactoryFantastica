@@ -633,7 +633,7 @@ Rectangle {
 
     }
 
-    /*Timer{
+    Timer{
         id: exitFlickerLongTimer
         interval: 4500
         running: true
@@ -646,12 +646,13 @@ Rectangle {
 
     Timer{
         id: exitFlickerShortTimer
-        interval: 50
+        interval: 10
         running: false
+        repeat: false
         property bool isLit: false
         property int flickerCount: 0
         onTriggered:{
-            if( flickerCount >= 8 ){
+            if( flickerCount < 26 ){
                 ++flickerCount;
 
                 if( isLit ){
@@ -669,6 +670,6 @@ Rectangle {
                 exitFlickerLongTimer.start();
             }
         }
-    }*/
+    }
 }
 
