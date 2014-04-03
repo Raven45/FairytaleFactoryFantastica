@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
+		<file alias="sound-forkliftMenu.png">../media/sound-forkliftMenu.png</file>
+		<file alias="nosound-forkliftMenu.png">../media/nosound-forkliftMenu.png</file>
 		<file alias="fx3-50opacity.png">../media/fx3-50opacity.png</file>
 		<file alias="sound-stencil.png">../media/sound-stencil.png</file>
 		<file alias="smaller-cardboard-box.png">../media/smaller-cardboard-box.png</file>
