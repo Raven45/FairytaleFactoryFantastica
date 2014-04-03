@@ -103,7 +103,7 @@ class MainBoard {
         bool blackWon = blackBoard.didWin();
 
         //both won or board is full
-        result.isDraw = ( blackWon && whiteWon ) || (blackBoard & whiteBoard) == FULL_BOARD;
+        result.isDraw = ( blackWon && whiteWon ) || ((BoardInt)(blackBoard | whiteBoard) == FULL_BOARD);
 
         result.winner = NONE;
 
