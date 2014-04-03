@@ -180,6 +180,10 @@ public:
 
                 if( mainBoard.holeIsEmpty( quadrantIndex, pieceIndex )){
 
+                    if( bestMove.isEmpty() ){
+                        bestMove = Turn( quadrantIndex, pieceIndex, 0, Direction::LEFT, myColor );
+                    }
+
                     //place the piece
                     BitBoard tryPieceHere = myOriginalBoard;
                     tryPieceHere.placePiece(quadrantIndex, pieceIndex);
