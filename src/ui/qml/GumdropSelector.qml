@@ -25,6 +25,18 @@ Rectangle {
     }
 
     Image{
+        id: gumdropSelectorText
+        width: 300; height: 40
+        z: gumdropSelectorImage.z
+        scale: 0.65
+        source: gumdrop_selector_string == "purp" ? "second-text.png" : "first-text.png"
+
+        anchors.top: gumdropSelectorImage.bottom
+        anchors.topMargin: -35
+        anchors.horizontalCenter: gumdropSelector.horizontalCenter
+    }
+
+    Image{
         id: gumdropSelectorImage
         width: 150; height: 150
         z: gumdropSelector.z + 1

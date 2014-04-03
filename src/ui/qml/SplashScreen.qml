@@ -117,6 +117,8 @@ Rectangle {
         onTriggered: {
             visible = false
             splash.timeout()
+            splashKeySkip.focus = false;
+            escKeyQuit.focus = true;
             startScreen.state = "VISIBLE";
             muffinManAnimation.running = false;
         }
@@ -132,6 +134,7 @@ Text{
     z: parent.z + 1
 }
     Item{
+        id: splashKeySkip
         anchors.fill: parent
         focus: true
 
@@ -139,10 +142,17 @@ Text{
             splashTimer.stop();
             splash.visible = false;
             muffinManAnimation.running = false;
+            splashKeySkip.focus = false;
+            escKeyQuit.focus = true;
             startScreen.state = "VISIBLE";
         }
     }
 
-
+    Item {
+        id: escKeyQuit
+        anchors.fill: parent
+        focus: true
+        Keys.onEscapePressed: readyToExitGame();
+    }
 
 }

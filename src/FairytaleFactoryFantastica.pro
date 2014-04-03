@@ -99,7 +99,11 @@ OTHER_FILES += \
     ui/qml/HanselClaw.qml \
     ui/qml/GretelClaw.qml \
     ui/qml/GameScreenWitch.qml \
-    ui/qml/WitchClaw.qml
+    ui/qml/WitchClaw.qml \
+    ui/qml/CharacterSelector.qml \
+    ui/qml/DifficultySelector.qml \
+    ui/qml/Doors.qml \
+    ui/qml/GumdropSelector.qml
 
 HEADERS += \
     backend/networking/Barrager.h \

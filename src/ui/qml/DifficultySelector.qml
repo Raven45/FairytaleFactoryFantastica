@@ -38,6 +38,26 @@ Rectangle {
     }
 
     Image{
+        id: difficultySelectorText
+        width: 300; height: 40
+        z: witchFace.z
+        scale: 0.65
+        source: {
+            if(difficulty_selector_string == "easy") {
+                "easy-text.png"
+            } else if (difficulty_selector_string == "med"){
+                "medium-text.png"
+            } else {
+                "hard-text.png"
+            }
+        }
+
+        anchors.top: witchFace.bottom
+        anchors.topMargin: -80
+        anchors.horizontalCenter: difficultySelector.horizontalCenter
+    }
+
+    Image{
         id: witchFace
         width: 325; height: 325
         z: difficultySelector.z + 1

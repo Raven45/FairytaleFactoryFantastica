@@ -38,12 +38,6 @@ Rectangle {
         }
     ]
 
-    Item {
-        anchors.fill: parent
-        focus: true
-        Keys.onEscapePressed: readyToExitGame();
-    }
-
     SoundEffect {
         id: tankSound
         source: "tank.wav"
