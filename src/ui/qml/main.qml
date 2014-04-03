@@ -90,6 +90,10 @@ Rectangle {
 
     property bool _SOUND_CHECK_FLAG: false
 
+    property bool startOnePlayer_currently_selected: false
+    property bool pvp_currently_selected: false
+    property bool net_currently_selected: false
+
     property int _SPREAD_DURATION: 800
     property int _ROTATION_ANIMATION_DURATION: 800
     property int _OPPONENT_START_ROTATION_DELAY: 300 + _CLAW_OPEN_DURATION + _CLAW_MOVE_DURATION + _CLAW_CAN_ANIMATION_DURATION + 2 //claw animation time...

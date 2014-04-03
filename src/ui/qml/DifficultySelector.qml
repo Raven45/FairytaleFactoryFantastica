@@ -66,6 +66,14 @@ Rectangle {
 
         anchors.horizontalCenter: difficultySelector.horizontalCenter
         anchors.verticalCenter: difficultySelector.verticalCenter
+
+        MouseArea {
+            id: witchFace_mouseArea
+            anchors.fill: parent
+
+            onPressed: { if(_SOUND_CHECK_FLAG) difficultySelectorSound.play(); }
+            onClicked: { increaseDifficulty(); }
+        }
     }
 
     Item{

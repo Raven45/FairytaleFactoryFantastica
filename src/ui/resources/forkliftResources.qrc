@@ -1,5 +1,8 @@
 <RCC>
     <qresource prefix="/">
+		<file alias="sliding-sound.wav">../media/sliding-sound.wav</file>
+		<file alias="forkliftDoor2.png">../media/forkliftDoor2.png</file>
+		<file alias="forkliftDoor.png">../media/forkliftDoor.png</file>
         <file alias="LoadingDockWithDoor.png">../media/LoadingDockWithDoor.png</file>
         <file alias="WitchOnForks.png">../media/WitchOnForks.png</file>
         <file alias="ForkLift.png">../media/ForkLift.png</file>

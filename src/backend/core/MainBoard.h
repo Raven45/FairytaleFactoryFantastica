@@ -190,6 +190,7 @@ class MainBoard {
         bool moveIsValid = copy != ref;
 
         if(!(movingPlayersColor == color && moveIsValid)){
+                qDebug() << "movingPlayersColor: " << color << " && " << "moveIsValid: " << moveIsValid;
                 assert(false);
         }
 
