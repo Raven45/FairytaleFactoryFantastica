@@ -35,16 +35,18 @@ Item {
             happyMusic.play();
             isScary = false;
         }
-        else{
-            happyMusic.stop();
-            scaryMusic.play();
+        else {
+            scaryMusic.stop();
+            happyMusic.play();
             isScary = true;
         }
     }
 
-    function togglePlayback(){
+    function togglePlayback() {
 
-        if( isScary ){
+        console.log("in togglePlayback, isScary = " + isScary );
+
+        if( isScary ) {
             if (scaryMusic.playbackState == scaryMusic.PlayingState){
                 scaryMusic.pause();
             }
@@ -62,7 +64,8 @@ Item {
         }
     }
 
-    /*function changeVolume(volumeLevel){
-        musicFile.volume = volumeLevel;
-    }*/
+    function changeVolume(volumeLevel){
+        scaryMusic.volume = volumeLevel;
+        happyMusic.volume = volumeLevel;
+    }
 }

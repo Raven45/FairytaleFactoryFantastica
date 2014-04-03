@@ -233,6 +233,11 @@ Rectangle {
             icingSprite.visible = false;
         }
 
+        onBackToMainMenu:{
+            state = "EMPTY";
+            icingSprite.visible = false;
+        }
+
         onShowPiece:{
             if( qIndex == quadrantIndex && pIndex == pieceIndex ){
                 showPieceTimer.startTimer();

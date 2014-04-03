@@ -81,7 +81,7 @@ Rectangle {
 
     QmlTimer{
         id: hanselBlinkTimer
-        duration: 5000
+        duration: 3800
         onTriggered: {
             hanselBlink.visible = true;
             showHanselBlinkTimer.startTimer();
@@ -897,7 +897,7 @@ Rectangle {
             PropertyChanges { target: gretelBlink; visible: false }
             PropertyChanges { target: hanselBlink; visible: false }
             PropertyChanges { target: gretelBlinkTimer; duration: 5000 }
-            PropertyChanges { target: hanselBlinkTimer; duration: 5000 }
+            PropertyChanges { target: hanselBlinkTimer; duration: 3800 }
             StateChangeScript { script: hanselBlinkTimer.startTimer() }
             StateChangeScript { script: gretelBlinkTimer.startTimer() }
         },
