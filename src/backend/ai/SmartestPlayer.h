@@ -58,11 +58,11 @@ class SmartestPlayer : public Player {
     bool isFirstMove;
     Turn lastMove;
 
-    static constexpr long double WIN_WEIGHT = 3119769;
+    static constexpr long double WIN_WEIGHT = 119769;
     static constexpr long double FOUR_WEIGHT = 19961.5;
-    static constexpr long double THREE_WEIGHT = 600;
-    static constexpr long double TWO_WEIGHT = 2;
-    static constexpr long double DEFAULT_WEIGHT = 1.35996;
+    static constexpr long double THREE_WEIGHT = 300;
+    static constexpr long double TWO_WEIGHT = 1.02;
+    static constexpr long double DEFAULT_WEIGHT = 1;
 
     /*static constexpr long double WIN_WEIGHT = INT_MAX;
     static constexpr long double FOUR_WEIGHT = INT_MAX/288;
@@ -395,11 +395,12 @@ public:
 
         long double resultWeight = DEFAULT_WEIGHT;
 
-        for(BitBoard winningBoard : WINS){
+        for(unsigned int winIndex = 32; winIndex--;){
+            const BitBoard winningBoard = WINS[winIndex];
             if( boardToCheck.hasPattern(winningBoard) && !winningBoard.overlapsPattern( opponentsBoard ) ){
+
                 resultWeight += WIN_WEIGHT;
             }
-
             //account for opponents board! Important new feature!!
             else if( EVAL_DEFENSE_FACTOR != 0 && opponentsBoard.hasPattern(winningBoard) && !winningBoard.overlapsPattern( boardToCheck ) ){
                 resultWeight -= (WIN_WEIGHT*EVAL_DEFENSE_FACTOR);
@@ -634,6 +635,7 @@ public:
 
 
     Turn getMove(const Board& mainBoard) override{
+        clock_t begin = clock();
 
         //qDebug() << "calculating move with SmarterPlayer2, moveCount = " << moveCount;
         BitBoard myOriginalBoard = mainBoard.getBoardOfPlayer(myColor);
@@ -692,6 +694,9 @@ public:
 
 
 
+        clock_t end = clock();
+        double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+        std::cout << "time elapsed: " << elapsed_secs;
 
         return bestMove;
 
