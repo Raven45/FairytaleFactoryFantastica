@@ -43,86 +43,43 @@ import QtQuick.Window 2.1
 
 //! [splash-properties]
 Rectangle {
-    id: splash
+    id: introScreen
     width: parent.width; height: parent.height
+    color: "#FF0000"
     visible: false
     anchors.fill: parent
     z:100
 
-    property int timeoutInterval: 3500
+    property int timeoutInterval: 10000
     signal timeout
-//! [splash-properties]
-//! [screen-properties]
-  //  x: (Screen.width - splashImage.width) / 2
-    //y: (Screen.height - splashImage.height) / 2
-
-//! [screen-properties]
-
-    Image {
-        id: muffinMan
-        width: 300
-        height: 300
-        source: "MuffinMan.png"
-        x: 550
-        y: 200
 
 
-        SequentialAnimation{
-            id: muffinManAnimation
-            running: false
+    states: [
+        State{
+            name: "VISIBLE"
+            PropertyChanges { target: introKeySkip; focus: true }
+            PropertyChanges{target: escKeyQuit; focus: false}
+            PropertyChanges{target: introScreen; visible: true}
 
-            PropertyAnimation {
-                target: muffinMan;
-                property: "y";
-                easing.type: Easing.InBounce
-                to: 20;
-                duration: 1250;
-            }
-            ScriptAction{ script: muffinMan.z = 200; }
-            PropertyAnimation {
-                target: muffinMan;
-                property: "y";
-                easing.type: Easing.InExpo;
-                to: 200;
-                duration: 300;
-            }
+
+        },
+        State{
+            name: "INVISIBLE"
+            PropertyChanges{target: introKeySkip; focus: false}
+            PropertyChanges{target: escKeyQuit; focus: true}
+            PropertyChanges{target: introScreen; visible: false}
 
         }
+    ]
 
-        Connections{
-            target: page
-            onLoad:{
-                muffinManAnimation.start();
-                splashTimer.start();
-
-            }
-        }
-
-     }
-
-    Image {
-        id: splashImage
-        source: "MuffinLogo.png"
-        width: 700; height: 700
-        anchors.centerIn: splash
-
-    }
-
-
-    //! [timer]
     Timer {
-        id: splashTimer
-        interval: timeoutInterval; running: false; repeat: false
+        id: introTimer
+        interval: 10000; running: false; repeat: false
         onTriggered: {
-            visible = false;
-            splash.timeout();
-            splashKeySkip.focus = false;
-            muffinManAnimation.running = false;
-            introScreen.state = "VISIBLE";
+            introScreen.state = "INVISIBLE";
+            startScreen.state = "VISIBLE";
         }
     }
-    //! [timer]
-
 
     Text{
         anchors.horizontalCenter: splash.horizontalCenter
@@ -134,20 +91,19 @@ Rectangle {
         z: parent.z + 1
     }
 
-
     Item{
-        id: splashKeySkip
+        id: introKeySkip
         anchors.fill: parent
         focus: true
 
         Keys.onSpacePressed: {
-            splashTimer.stop();
-            visible = false;
-            muffinManAnimation.running = false;
-            splashKeySkip.focus = false;
-            introScreen.state = "VISIBLE";
+            introScreen.state = "INVISIBLE";
+            startScreen.state = "VISIBLE";
         }
     }
+
+
+
 
     Item {
         id: escKeyQuit
