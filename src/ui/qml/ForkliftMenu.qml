@@ -6,8 +6,9 @@ import QtGraphicalEffects 1.0
 
 Rectangle {
     id: forkliftMenu
-    width: 1440
-    height: 900
+    width: parent.width
+    height: parent.height
+    anchors.fill: parent
     color: "black"
 
     state: "INVISIBLE"
