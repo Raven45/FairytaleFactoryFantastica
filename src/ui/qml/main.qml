@@ -9,8 +9,8 @@ import QtMultimedia 5.0
 
 Rectangle {
     id: page
-    height: 900
-    width:1440
+    //height: 900
+    //width:1440
 
     color: "#333333"
 
