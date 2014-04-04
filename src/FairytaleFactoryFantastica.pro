@@ -14,8 +14,8 @@ CONFIG += c++11 release #static release link_prl
 QMAKE_CXXFLAGS -= -O1 -O2 -O3
 
 
-LIBS += -fopenmp
-QMAKE_CXXFLAGS += -Ofast -fopenmp
+#LIBS += -fopenmp
+#QMAKE_CXXFLAGS += -Ofast -fopenmp
 
 RESOURCES += \
     ui/resources/imageResources.qrc \
@@ -27,7 +27,8 @@ RESOURCES += \
     ui/resources/gateSprites.qrc \
     ui/resources/kidResources.qrc \
     ui/resources/qmlResources.qrc \
-    ui/resources/SpookyMusic.qrc
+    ui/resources/SpookyMusic.qrc \
+    ui/resources/qmlResources2.qrc
 
 INCLUDEPATH += \
     backend \
@@ -103,7 +104,8 @@ OTHER_FILES += \
     ui/qml/CharacterSelector.qml \
     ui/qml/DifficultySelector.qml \
     ui/qml/Doors.qml \
-    ui/qml/GumdropSelector.qml
+    ui/qml/GumdropSelector.qml \
+    ui/qml/IntroScreen.qml
 
 HEADERS += \
     backend/networking/Barrager.h \

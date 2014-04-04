@@ -392,6 +392,11 @@ Rectangle {
         anchors.centerIn: parent
     }
 
+    IntroScreen{
+        id: introScreen
+        anchors.centerIn: parent
+    }
+
     ForkliftMenu{
         id:startMenu
         anchors.centerIn: parent
