@@ -274,6 +274,10 @@ transitions:[
                 exitFlickerLongTimer.stop();
                 exitFlickerShortTimer.stop();
 
+                //Stop How-to-Play box
+                helpBox_glowEffect.visible = false;
+                pulse_helpBox_glowEffect.running = false;
+
                 if( difficultySelector.difficulty_selector_string == "easy" ){
                     readyToStartOnePersonPlay(1, menuSelectedColor);
                 }
