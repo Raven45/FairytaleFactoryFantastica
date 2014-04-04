@@ -79,7 +79,7 @@ protected:
 
     typedef AlphaBetaAI EasyAIPlayer;
     typedef SmarterPlayer2 MediumAIPlayer;
-    typedef SmartestPlayer HardAIPlayer;
+    typedef ConcurrentSmartestPlayer HardAIPlayer;
 
     EasyAIPlayer easyAi;
     MediumAIPlayer mediumAi;
