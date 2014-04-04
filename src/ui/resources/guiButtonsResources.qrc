@@ -1,5 +1,10 @@
 <RCC>
     <qresource>
+	<file alias="blue-pause-stencil.png">../guiButtons/blue-pause-stencil.png</file>
+	<file alias="blue-resume-stencil.png">../guiButtons/blue-resume-stencil.png</file>
+	<file alias="blue-sound-stencil.png">../guiButtons/blue-sound-stencil.png</file>
+	<file alias="blue-help-stencil.png">../guiButtons/blue-help-stencil.png</file>
+	<file alias="blue-exit-stencil.png">../guiButtons/blue-exit-stencil.png</file>
 	<file alias="network-button.png">../guiButtons/network-button.png</file>
 	<file alias="inverse-network-button.png">../guiButtons/inverse-network-button.png</file>
 	<file alias="singleplayer-button.png">../guiButtons/singleplayer-button.png</file>

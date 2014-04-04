@@ -888,6 +888,7 @@ Rectangle {
 
     GUIButton {
         source_string: "pause-button.png"
+        stencil_string: "blue-pause-stencil.png"
         anchors.top: gameScreen.top
         anchors.left: gameScreen.left
         anchors.topMargin: 15

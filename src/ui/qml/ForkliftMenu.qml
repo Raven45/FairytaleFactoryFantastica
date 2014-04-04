@@ -6,8 +6,9 @@ import QtGraphicalEffects 1.0
 
 Rectangle {
     id: forkliftMenu
-    width: 1440
-    height: 900
+    width: parent.width
+    height: parent.height
+    anchors.fill: parent
     color: "black"
 
     state: "INVISIBLE"
@@ -263,13 +264,13 @@ Rectangle {
            glowRadius: 0
            spread: 0.2
            color: "#f9f2a6"
-           visible: true
+           visible: false
            cached: true
         }
 
         SequentialAnimation{
             id: pulse_helpBox_glowEffect
-            running: true
+            running: false
             loops: Animation.Infinite
 
             ParallelAnimation {
@@ -360,6 +361,8 @@ Rectangle {
             if(tankSound.playing) {
                 tankSound.stop();
             }
+            helpBox_glowEffect.visible = true;
+            pulse_helpBox_glowEffect.running = true;
         }
     }
 

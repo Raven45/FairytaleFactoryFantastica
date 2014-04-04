@@ -142,7 +142,7 @@ Rectangle {
 
         Keys.onSpacePressed: {
             splashTimer.stop();
-            visible = false;
+            splash.visible = false;
             muffinManAnimation.running = false;
             splashKeySkip.focus = false;
             introScreen.state = "VISIBLE";

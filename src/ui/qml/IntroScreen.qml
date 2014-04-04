@@ -76,14 +76,15 @@ Rectangle {
         id: introTimer
         interval: 10000; running: false; repeat: false
         onTriggered: {
+            introTimer.timeout();
             introScreen.state = "INVISIBLE";
             startScreen.state = "VISIBLE";
         }
     }
 
     Text{
-        anchors.horizontalCenter: splash.horizontalCenter
-        anchors.bottom: splash.bottom
+        anchors.horizontalCenter: introScreen.horizontalCenter
+        anchors.bottom: introScreen.bottom
         anchors.bottomMargin: 10
         font.pointSize: 14
         color: '#6B6B6B'
@@ -97,6 +98,7 @@ Rectangle {
         focus: true
 
         Keys.onSpacePressed: {
+            introTimer.stop();
             introScreen.state = "INVISIBLE";
             startScreen.state = "VISIBLE";
         }
