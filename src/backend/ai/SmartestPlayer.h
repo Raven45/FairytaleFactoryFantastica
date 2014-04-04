@@ -314,9 +314,6 @@ public:
                     BitBoard movingPlayersNewBoard = movingPlayersBoardBeforeTurn;
                     movingPlayersNewBoard.placePiece(quadrantIndex, pieceIndex);
 
-                    //loop through all 8 possible rotations
-                    int rotationCount = 0;
-
                     for( unsigned char rotationIndex = 4; rotationIndex--;){
 
                         BitBoard newBoardCopy = movingPlayersNewBoard;
@@ -402,9 +399,8 @@ public:
     static inline std::pair<Turn, long double> getMoveRightRotations (const Board& mainBoard, const PlayerColor myColor, const PlayerColor opponentColor ){
          //qDebug() << "calculating move with SmarterPlayer2, moveCount = " << moveCount;
          BitBoard myOriginalBoard = mainBoard.getBoardOfPlayer(myColor);
-         BitBoard opponentsBoardBeforeTurn = mainBoard.getBoardOfPlayer( opponentColor );
 
-         long double bestMoveWeight;
+         long double bestMoveWeight = INT_MIN;
          bool beenThroughOnce = false;
          Turn bestMove;
 
@@ -421,9 +417,6 @@ public:
                      //place the piece
                      BitBoard myNewBoard = myOriginalBoard;
                      myNewBoard.placePiece(quadrantIndex, pieceIndex);
-
-                     //loop through all 8 possible rotations
-                     int rotationCount = 0;
 
                      for( unsigned char rotationIndex = 4; rotationIndex--;){
 
@@ -465,9 +458,7 @@ public:
    static inline std::pair<Turn, long double> getMoveLeftRotations (const Board& mainBoard, const PlayerColor myColor, const PlayerColor opponentColor ){
         //qDebug() << "calculating move with SmarterPlayer2, moveCount = " << moveCount;
         BitBoard myOriginalBoard = mainBoard.getBoardOfPlayer(myColor);
-        BitBoard opponentsBoardBeforeTurn = mainBoard.getBoardOfPlayer( opponentColor );
-
-        long double bestMoveWeight;
+        long double bestMoveWeight = INT_MIN;
         bool beenThroughOnce = false;
         Turn bestMove;
 
@@ -484,9 +475,6 @@ public:
                     //place the piece
                     BitBoard myNewBoard = myOriginalBoard;
                     myNewBoard.placePiece(quadrantIndex, pieceIndex);
-
-                    //loop through all 8 possible rotations
-                    int rotationCount = 0;
 
                     for( unsigned char rotationIndex = 4; rotationIndex--;){
 
@@ -528,10 +516,6 @@ public:
 
     Turn getMove(const Board& mainBoard) override{
         clock_t begin = clock();
-
-        //qDebug() << "calculating move with SmarterPlayer2, moveCount = " << moveCount;
-        BitBoard myOriginalBoard = mainBoard.getBoardOfPlayer(myColor);
-        BitBoard opponentsBoardBeforeTurn = mainBoard.getBoardOfPlayer( opponentColor );
 
         Turn bestMove;
 
