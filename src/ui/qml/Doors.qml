@@ -5,6 +5,8 @@ import QtQuick.Controls.Styles 1.1
 Rectangle {
 
     id: doorsRectangle
+    color: "transparent"
+
     state: "DEFAULT"
 
     states:[
@@ -25,6 +27,25 @@ Rectangle {
             PropertyChanges{
                 target:defaultDoor.anchors
                 verticalCenterOffset: 0
+            }
+        },
+        State{
+            name: "UP"
+            PropertyChanges{
+                target:singlePlayerDoor.anchors
+                verticalCenterOffset: 0 - doorsRectangle.height * 2
+            }
+            PropertyChanges{
+                target:versusDoor.anchors
+                verticalCenterOffset: 0 - doorsRectangle.height * 2
+            }
+            PropertyChanges{
+                target:networkDoor.anchors
+                verticalCenterOffset: 0 - doorsRectangle.height * 2
+            }
+            PropertyChanges{
+                target:defaultDoor.anchors
+                verticalCenterOffset: 0 - doorsRectangle.height * 2
             }
         },
         State{
@@ -84,11 +105,34 @@ transitions:[
         networkDoorUp.start();
         singlePlayerDoorDown.start();
     }}}
+    ,
+    Transition{from: "SINGLE_PLAYER"; to: "UP"; ScriptAction{script: {
+        singlePlayerDoorUp.start();
+    }}},
+    Transition{from: "VERSUS"; to: "UP"; ScriptAction{script: {
+        versusDoorUp.start();
+    }}},
+    Transition{from: "NETWORK"; to: "UP"; ScriptAction{script: {
+        networkDoorUp.start();
+    }}}
 ]
 
+    Timer{
+        id: moveForklift_IntoGameScreen_Timer
+        interval: 350
+        running: false
+        repeat: false
+        onTriggered: {
+            moveForklift_IntoGameScreen.start();
+        }
+    }
 
-
-
+    function allThatWitch_IntoGameScreen(){
+        helpBox_glowEffect.visible = false;
+        pulse_helpBox_glowEffect.running = false;
+        doorsRectangle.state = "UP";
+        moveForklift_IntoGameScreen_Timer.start();
+    }
 
     Rectangle{
         id: defaultDoor
@@ -275,8 +319,8 @@ transitions:[
                 exitFlickerShortTimer.stop();
 
                 //Stop How-to-Play box
-                helpBox_glowEffect.visible = false;
-                pulse_helpBox_glowEffect.running = false;
+                //helpBox_glowEffect.visible = false;
+                //pulse_helpBox_glowEffect.running = false;
 
                 if( difficultySelector.difficulty_selector_string == "easy" ){
                     readyToStartOnePersonPlay(1, menuSelectedColor);
@@ -334,7 +378,10 @@ transitions:[
             }
             onExited: { pvpStencil_img.source = "start-stencil.png"; }
             onPressed:{ if(_SOUND_CHECK_FLAG) tankSound.play() }
-            //onClicked://TODO: LOGIC!
+            onClicked:{
+                allThatWitch_IntoGameScreen();
+                //blackout. initialize and start game.
+            }
         }
 
         Image{

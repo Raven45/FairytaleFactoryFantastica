@@ -62,7 +62,7 @@ Rectangle {
         z: brickWall + 5
         width: 700;
         height: 800;
-        color: "#b4b4b4"
+        color: "black"
         anchors.top: forkliftMenu.top
         anchors.topMargin: _FORKLIFT_MENU_DOORS_TOP_MARGIN
         anchors.right: forkliftMenu.right
@@ -92,16 +92,34 @@ Rectangle {
         z: 5
     }
 
+    NumberAnimation{
+        id: fadeForkliftMenu; target: menuFade; properties: "opacity"; to: 1; duration: 1800;
+        onStopped: {
+            //THIS IS IT!
+        }
+    }
+
+    Image{
+        id: brickWall_rightSide
+        width: 134; height: parent.height
+        source: "LoadingDockRightSide.png"
+        fillMode: Image.PreserveAspectFit
+        anchors.right: parent.right
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.verticalCenterOffset: 14
+        z: forklift.z + 1
+    }
+
     Image{
         id: sound_Text
         width: 85; height: 85
         source: "sound-stencil.png"
-        z: brickWall.z + 1
+        z: brickWall_rightSide.z + 1
 
         anchors.right: forkliftMenu.right
         anchors.rightMargin: 12
         anchors.top: forkliftMenu.top
-        anchors.topMargin: 217
+        anchors.topMargin: 235
     }
 
     Item {
@@ -111,7 +129,7 @@ Rectangle {
         z: nosound_forkliftMenu_rec.z
 
         anchors.top: forkliftMenu.top
-        anchors.topMargin: 285
+        anchors.topMargin: 303
         anchors.right: forkliftMenu.right
         anchors.rightMargin: 30
 
@@ -132,7 +150,7 @@ Rectangle {
             width: 50; height: 50
             visible: true
             radius: 25
-            z: brickWall.z + 1
+            z: brickWall_rightSide.z + 1
 
             anchors.centerIn: nosound_forkliftMenu
 
@@ -179,7 +197,7 @@ Rectangle {
         z: sound_forkliftMenu_rec.z
 
         anchors.top: forkliftMenu.top
-        anchors.topMargin: 353
+        anchors.topMargin: 371
         anchors.right: forkliftMenu.right
         anchors.rightMargin: 30
 
@@ -200,7 +218,7 @@ Rectangle {
             width: 50; height: 50
             visible: true
             radius: 25
-            z: brickWall.z + 1
+            z: brickWall_rightSide.z + 1//brickWall.z + 1
 
             anchors.centerIn: sound_forkliftMenu
 
@@ -332,6 +350,8 @@ Rectangle {
     ParallelAnimation{
         id: moveForklift
 
+        onStarted: forklift.visible = true
+
         NumberAnimation{
             id: moveForkliftFromLeft
             target: forklift.anchors
@@ -361,8 +381,70 @@ Rectangle {
             if(tankSound.playing) {
                 tankSound.stop();
             }
+
+            forklift.anchors.leftMargin = -175
+            frontTire.rotation = 200
+            rearTire.rotation = 200
+
             helpBox_glowEffect.visible = true;
             pulse_helpBox_glowEffect.running = true;
+        }
+    }
+
+    Timer{
+        id: fadeForkliftMenu_timer
+        interval: 1200
+        onTriggered: {
+            fadeForkliftMenu.start()
+        }
+    }
+
+    ParallelAnimation{
+        id: moveForklift_IntoGameScreen
+
+        onStarted: {
+            //TODO: lockDownForkliftMenu()
+            fadeForkliftMenu_timer.start()
+        }
+
+        NumberAnimation{
+            id: moveForkliftFromLeft_IntoGameScreen
+            target: forklift.anchors
+            properties: "leftMargin"
+            duration: 3000
+            from: -175
+            to: 1200
+        }
+        RotationAnimation{
+            id: rotateFrontTire_IntoGameScreen
+            target: frontTire
+            duration: 3000
+            direction: RotationAnimation.Clockwise
+            from: 200
+            to: 600
+        }
+        RotationAnimation{
+            id: rotateRearTire_IntoGameScreen
+            target: rearTire
+            duration: 3000
+            direction: RotationAnimation.Clockwise
+            from: 200
+            to: 600
+        }
+
+        onStopped:{
+            if(tankSound.playing) {
+                tankSound.stop();
+            }
+
+            forklift.visible = false
+            forklift.anchors.leftMargin = -700
+            frontTire.rotation = 0
+            rearTire.rotation = 0
+
+            //Turn Off Fade
+            menuFade.opacity =  0;
+            menuFade.visible = false;
         }
     }
 
@@ -763,7 +845,7 @@ Rectangle {
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.topMargin: 15
-        z: 10
+        z: brickWall_rightSide.z + 1
 
         property bool isHovered:false
 
