@@ -15,7 +15,7 @@ QMAKE_CXXFLAGS -= -O1 -O2 -O3
 
 
 #LIBS += -fopenmp
-#QMAKE_CXXFLAGS += -Ofast -fopenmp
+QMAKE_CXXFLAGS += -Ofast #-fopenmp
 
 RESOURCES += \
     ui/resources/imageResources.qrc \

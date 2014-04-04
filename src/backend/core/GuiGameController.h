@@ -14,11 +14,10 @@
 //#include "MonteCarloParallelAI.h"
 #include "NetworkInterface.h"
 #include "SmarterPlayer2.h"
+#include "SmartestPlayer.h"
 #include "MonteCarloParallelAI.h"
 #include "AlphaBetaAI.h"
 #include "SmartPlayer.h"
-
-typedef SmartPlayer DefaultAIPlayer;
 
 
 class Proxy : public QObject {
@@ -79,8 +78,8 @@ protected:
     Player* player2;
 
     typedef AlphaBetaAI EasyAIPlayer;
-    typedef AlphaBetaAI MediumAIPlayer;
-    typedef SmarterPlayer2 HardAIPlayer;
+    typedef SmarterPlayer2 MediumAIPlayer;
+    typedef SmartestPlayer HardAIPlayer;
 
     EasyAIPlayer easyAi;
     MediumAIPlayer mediumAi;

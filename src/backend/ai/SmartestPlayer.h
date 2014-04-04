@@ -23,6 +23,9 @@ class SmartestPlayer : public Player {
 
     //GameCore* const gameCore;
 
+    template<typename T, size_t N>
+    constexpr size_t countof(T (&)[N]) { return N; }
+
     struct RotationConfig{
         Direction direction;
         short quadrantIndex;
@@ -112,7 +115,8 @@ public:
 
         long double resultWeight = DEFAULT_WEIGHT;
 
-        for(BitBoard winningBoard : WINS){
+        for(unsigned int winIndex = 32; winIndex--;){
+            const BitBoard winningBoard = WINS[winIndex];
             if( boardToCheck.hasPattern(winningBoard) && !winningBoard.overlapsPattern( opponentsBoard ) ){
 
                 resultWeight += WIN_WEIGHT;
@@ -559,12 +563,12 @@ public:
 
         PlayerColor movingPlayersColor = b.turnColor();
         BitBoard movingPlayersBoardBeforeTurn = b.getBoardOfPlayer(movingPlayersColor);
-        BitBoard opponentsBoardBeforeTurn = b.getBoardOfPlayer( util.opposite(movingPlayersColor) );
+        //BitBoard opponentsBoardBeforeTurn = b.getBoardOfPlayer( util.opposite(movingPlayersColor) );
 
         long double bestMoveWeight = INT_MIN;
         bool beenThroughOnce = false;
-        for( int quadrantIndex =  qrand()% 4, quadrantCount = 0;  quadrantCount < NUMBER_OF_QUADRANTS;    quadrantIndex = ((quadrantIndex == 3)? 0 : quadrantIndex + 1), ++quadrantCount ){
-            for( int pieceIndex = qrand()%9, pieceCount = 0;     pieceCount    < MAX_PIECES_ON_QUADRANT;   pieceIndex  = ((pieceIndex    == 8)? 0 : pieceIndex    + 1), ++pieceCount    ){
+        for( int quadrantIndex =  4; quadrantIndex--;){
+            for( int pieceIndex = 9; pieceIndex--;){
 
                 if( b.holeIsEmpty( quadrantIndex, pieceIndex )){
 
