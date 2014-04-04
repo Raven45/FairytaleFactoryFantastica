@@ -55,6 +55,7 @@ Rectangle {
 
     GUIButton {
         source_string: "play-button.png"
+        stencil_string: "blue-resume-stencil.png"
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.topMargin: 15
@@ -74,6 +75,7 @@ Rectangle {
     GUIButton {
         id: soundButton
         source_string: _SOUND_CHECK_FLAG ? "sound-button.png" : "nosound-button.png"
+        stencil_string: "blue-sound-stencil.png"
         anchors.top: parent.top
         anchors.topMargin: ((parent.height - 100)/3) + 15
         anchors.left: parent.left
@@ -93,6 +95,7 @@ Rectangle {
     GUIButton {
         id: helpButton
         source_string: "help-button.png"
+        stencil_string: "blue-help-stencil.png"
         anchors.top: parent.top
         anchors.topMargin: (2 * ((parent.height - 100) / 3) ) + 15
         anchors.left: parent.left

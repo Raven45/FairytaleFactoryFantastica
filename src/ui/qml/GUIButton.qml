@@ -4,7 +4,20 @@ Rectangle {
     color: "transparent"
 
     property var source_string
+    property string stencil_string
     property bool hasInverse: true
+
+    Image {
+        id: stencil_text
+        width: 200; height: 40
+        scale: 0.5
+        source: stencil_string
+        opacity: 0
+        anchors.top: parent.bottom
+        anchors.topMargin: -22
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.horizontalCenterOffset: 1
+    }
 
     Image {
         id: normal
@@ -26,6 +39,7 @@ Rectangle {
                 when: mouseArea.containsMouse && hasInverse;
                 PropertyChanges { target: normal; opacity: 0}
                 PropertyChanges { target: inverse; opacity: 1}
+                PropertyChanges { target: stencil_text; opacity: 1}
         }
 
         transitions: Transition {
