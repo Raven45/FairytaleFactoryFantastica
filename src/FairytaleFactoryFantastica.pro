@@ -17,6 +17,8 @@ QMAKE_CXXFLAGS -= -O1 -O2 -O3
 #LIBS += -fopenmp
 QMAKE_CXXFLAGS += -Ofast #-fopenmp
 
+#QMAKE_LFLAGS += -Wl,-enable-auto-import
+
 RESOURCES += \
     ui/resources/imageResources.qrc \
     ui/resources/guiButtonsResources.qrc \

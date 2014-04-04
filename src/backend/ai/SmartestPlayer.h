@@ -100,7 +100,7 @@ public:
 
     ConcurrentSmartestPlayer():moveCount(0),isFirstMove(true){
 
-
+        longest_time = 0;
 
         std::cout << "WIN_WEIGHT: " << WIN_WEIGHT;
         std::cout << "\nFOUR_WEIGHT: " << FOUR_WEIGHT;
@@ -545,7 +545,6 @@ public:
     }
 
 };
-double ConcurrentSmartestPlayer::longest_time = 0;
 
 
 #endif // CONCURRENTSMARTESTPLAYER_H
