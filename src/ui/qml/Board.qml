@@ -272,35 +272,217 @@ Rectangle {
 
 
     Tbar {
+        id: tbarTopLeft
         anchors.top: parent.top
+        anchors.topMargin: 80
         anchors.left: parent.left
+        anchors.leftMargin: 80
 
         pentago_quad: 0
         tbar_rotate_angle: -45
     }
 
     Tbar {
+        id: tbarTopRight
         anchors.top: parent.top
+        anchors.topMargin: 80
         anchors.right: parent.right
+        anchors.rightMargin: 80
 
         pentago_quad: 1
         tbar_rotate_angle: 45
     }
 
     Tbar {
+        id: tbarBottomLeft
         anchors.bottom: parent.bottom
+        anchors.bottomMargin: 80
         anchors.left: parent.left
+        anchors.leftMargin: 80
 
         pentago_quad: 2
         tbar_rotate_angle: -135
     }
 
     Tbar {
+        id: tbarBottomRight
         anchors.bottom: parent.bottom
+        anchors.bottomMargin: 80
         anchors.right: parent.right
+        anchors.rightMargin: 80
 
         pentago_quad: 3
         tbar_rotate_angle: 135
+    }
+
+    ParallelAnimation{
+        id: animateTbarsIn
+        ParallelAnimation{
+            NumberAnimation {
+                target: tbarTopLeft
+                property: "anchors.topMargin"
+                from: 0
+                to: 80
+                duration: 500
+                easing.type: Easing.OutBack
+            }
+            NumberAnimation {
+                target: tbarTopLeft
+                property: "anchors.leftMargin"
+                from: 0
+                to: 80
+                duration: 500
+                easing.type: Easing.OutBack
+            }
+        }
+        ParallelAnimation{
+            NumberAnimation {
+                target: tbarTopRight
+                property: "anchors.topMargin"
+                from: 0
+                to: 80
+                duration: 500
+                easing.type: Easing.OutBack
+            }
+            NumberAnimation {
+                target: tbarTopRight
+                property: "anchors.rightMargin"
+                from: 0
+                to: 80
+                duration: 500
+                easing.type: Easing.OutBack
+            }
+        }
+        ParallelAnimation{
+            NumberAnimation {
+                target: tbarBottomLeft
+                property: "anchors.bottomMargin"
+                from: 0
+                to: 80
+                duration: 500
+                easing.type: Easing.OutBack
+            }
+            NumberAnimation {
+                target: tbarBottomLeft
+                property: "anchors.leftMargin"
+                from: 0
+                to: 80
+                duration: 500
+                easing.type: Easing.OutBack
+            }
+        }
+        ParallelAnimation{
+            NumberAnimation {
+                target: tbarBottomRight
+                property: "anchors.bottomMargin"
+                from: 0
+                to: 80
+                duration: 500
+                easing.type: Easing.OutBack
+            }
+            NumberAnimation {
+                target: tbarBottomRight
+                property: "anchors.rightMargin"
+                from: 0
+                to: 80
+                duration: 500
+                easing.type: Easing.OutBack
+            }
+        }
+    }
+
+    ParallelAnimation{
+        id: animateTbarsOut
+        ParallelAnimation{
+            NumberAnimation {
+                target: tbarTopLeft
+                property: "anchors.topMargin"
+                from: 50
+                to: 0
+                duration: 500
+                easing.type: Easing.OutBack
+            }
+            NumberAnimation {
+                target: tbarTopLeft
+                property: "anchors.leftMargin"
+                from: 80
+                to: 0
+                duration: 500
+                easing.type: Easing.OutBack
+            }
+        }
+        ParallelAnimation{
+            NumberAnimation {
+                target: tbarTopRight
+                property: "anchors.topMargin"
+                from: 80
+                to: 0
+                duration: 500
+                easing.type: Easing.OutBack
+            }
+            NumberAnimation {
+                target: tbarTopRight
+                property: "anchors.rightMargin"
+                from: 80
+                to: 0
+                duration: 500
+                easing.type: Easing.OutBack
+            }
+        }
+        ParallelAnimation{
+            NumberAnimation {
+                target: tbarBottomLeft
+                property: "anchors.bottomMargin"
+                from: 80
+                to: 0
+                duration: 500
+                easing.type: Easing.OutBack
+            }
+            NumberAnimation {
+                target: tbarBottomLeft
+                property: "anchors.leftMargin"
+                from: 80
+                to: 0
+                duration: 500
+                easing.type: Easing.OutBack
+            }
+        }
+        ParallelAnimation{
+            NumberAnimation {
+                target: tbarBottomRight
+                property: "anchors.bottomMargin"
+                from: 80
+                to: 0
+                duration: 500
+                easing.type: Easing.OutBack
+            }
+            NumberAnimation {
+                target: tbarBottomRight
+                property: "anchors.rightMargin"
+                from: 80
+                to: 0
+                duration: 500
+                easing.type: Easing.OutBack
+            }
+        }
+    }
+
+    Connections{
+        target: page
+        onReadyForRotation:{
+            if(guiPlayerCanClickRotation && !menuIsShowing){
+                animateTbarsOut.start();
+            }
+        }
+    }
+
+    Connections{
+        target: page
+        onRotationClicked:{
+            if (!menuIsShowing){
+                animateTbarsIn.start();
+            }
+        }
     }
 
 
