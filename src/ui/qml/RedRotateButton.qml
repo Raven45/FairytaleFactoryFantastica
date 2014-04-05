@@ -5,7 +5,7 @@ Item {
     property int quadToRo
     property int roDir
     property var direction_string
-    Glow {
+    /*Glow {
        id: red_rotate_glowEffect
        anchors.fill: red_rotate_button
        radius: 16
@@ -16,7 +16,7 @@ Item {
        visible: false
        fast: true
        cached: true
-    }
+    }*/
     Image {
         id: red_rotate_button
         source: "red-rotate-" + direction_string + ".png"
@@ -24,37 +24,33 @@ Item {
         z: 19
         rotation: -(parent.rotation)
 
-        Connections{
+        /*Connections{
             target: page
             onReadyForRotation:{
-                if(guiPlayerCanClickRotation && !menuIsShowing){
+                if(guiPlayerCanClickRotation){
                     red_rotate_glowEffect.visible = true;
-                }
-            }
-        }
-
-        Connections{
-            target: page
-            onRotationClicked:{
-                if (!menuIsShowing){
-                    red_rotate_glowEffect.visible = false;
                 }
             }
         }
 
        function turnOffGlow(){
             red_rotate_glowEffect.color = "black"
-       }
+       }*/
 
         MouseArea {
             anchors.fill: red_rotate_button
             onClicked:{
 
-                console.log("clicked to rotate direction " + roDir );
 
-                gameController.setGuiTurnRotation( quadToRo , roDir );
-                rotationClicked(quadToRo, roDir);
 
+                if( guiPlayerCanClickRotation && !menuIsShowing ){
+                    console.log("clicked to rotate direction " + roDir );
+                    lockQuadrantRotation();
+                    animateTbarsIn.start();
+                    //red_rotate_glowEffect.visible = false;
+                    gameController.setGuiTurnRotation( quadToRo , roDir );
+                    rotationClicked(quadToRo, roDir);
+                }
 
             }
 

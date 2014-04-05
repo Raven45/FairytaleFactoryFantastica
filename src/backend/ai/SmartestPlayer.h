@@ -58,7 +58,7 @@ class ConcurrentSmartestPlayer : public Player {
     int moveCount;
     bool isFirstMove;
     Turn lastMove;
-    static double longest_time;
+    double my_longest_time;
 
     /*static constexpr long double WIN_WEIGHT = 119769;
     static constexpr long double FOUR_WEIGHT = 19961.5;
@@ -80,16 +80,16 @@ class ConcurrentSmartestPlayer : public Player {
     static constexpr long double TWO_WEIGHT = 2.07002;
     static constexpr long double DEFAULT_WEIGHT = 1;*/
 
-    static constexpr long double WIN_WEIGHT = 500000;
-    static constexpr long double FOUR_WEIGHT = 1000;
-    static constexpr long double THREE_WEIGHT =100;
-    static constexpr long double TWO_WEIGHT = 10;
+    static constexpr long double WIN_WEIGHT = 27972500;
+    static constexpr long double FOUR_WEIGHT = 98342.8;
+    static constexpr long double THREE_WEIGHT =345.744;
+    static constexpr long double TWO_WEIGHT = 1.001;
     static constexpr long double DEFAULT_WEIGHT = 1;
 
     //2,2,1,2 = good
     //1.5,2,1,2 = better
-    static constexpr long double DEFENSE_FACTOR = 1.5;
-    static constexpr long double EVAL_DEFENSE_FACTOR = 2;
+    static constexpr long double DEFENSE_FACTOR = 4.72411;
+    static constexpr long double EVAL_DEFENSE_FACTOR = 1.4386;
     static constexpr long double LEVEL_FACTOR = 1;
     static constexpr int MAX_EXTRA_LEVELS = 2;
 
@@ -100,7 +100,7 @@ public:
 
     ConcurrentSmartestPlayer():moveCount(0),isFirstMove(true){
 
-        longest_time = 0;
+        my_longest_time = 0;
 
         std::cout << "WIN_WEIGHT: " << WIN_WEIGHT;
         std::cout << "\nFOUR_WEIGHT: " << FOUR_WEIGHT;
@@ -534,9 +534,9 @@ public:
 
         clock_t end = clock();
         double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
-        if( elapsed_secs > longest_time ){
+        if( elapsed_secs > my_longest_time ){
             std::cout << "\nnew longest time: " << elapsed_secs << " seconds\n";
-            longest_time = elapsed_secs;
+            my_longest_time = elapsed_secs;
 
         }
 

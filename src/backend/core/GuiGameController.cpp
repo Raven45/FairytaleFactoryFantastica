@@ -268,12 +268,7 @@ void GuiGameController::togglePlayback(){
 }
 
 void GuiGameController::exitGame() {
-
-    if( net != nullptr ){
-        delete net;
-        net = nullptr;
-    }
-
+    net -> deleteLater();
     QThread* coreThread = this -> thread();
     moveToThread(QGuiApplication::instance()->thread());
 

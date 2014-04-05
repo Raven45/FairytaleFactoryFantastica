@@ -5,7 +5,7 @@
 
 QT += multimedia core network concurrent quick
 
-CONFIG += c++11 release #static release link_prl
+CONFIG += c++11 debug #static release link_prl
 #CONFIG -= qt
 
 #CONFIG(release, debug|release): LIBS += -L$$PWD/../../QtSDK-x86_64 - static/lib/ -lQt5Core -lQt5Gui -lQt5Quick -lQt5Multimedia -lQt5Network -lQt5Qml
@@ -17,7 +17,7 @@ QMAKE_CXXFLAGS -= -O1 -O2 -O3
 #LIBS += -fopenmp
 QMAKE_CXXFLAGS += -Ofast #-fopenmp
 
-#QMAKE_LFLAGS += -Wl,-enable-auto-import
+QMAKE_LFLAGS += -Wl,-enable-auto-import
 
 RESOURCES += \
     ui/resources/imageResources.qrc \
@@ -63,7 +63,6 @@ include(qtquick2applicationviewer/qtquick2applicationviewer.pri)
 qtcAddDeployment()
 
 OTHER_FILES += \
-    ui/qml/Arrow.qml \
     ui/qml/Board.qml \
     ui/qml/BoardHoleButton.qml \
     ui/qml/ChallengePopup.qml \

@@ -393,6 +393,11 @@ Rectangle {
 
     ParallelAnimation{
         id: animateTbarsOut
+
+        onStopped: {
+            unlockQuadrantRotation();
+        }
+
         ParallelAnimation{
             NumberAnimation {
                 target: tbarTopLeft
@@ -470,17 +475,8 @@ Rectangle {
     Connections{
         target: page
         onReadyForRotation:{
-            if(guiPlayerCanClickRotation && !menuIsShowing){
+            if(!guiPlayerCanClickRotation && !menuIsShowing){
                 animateTbarsOut.start();
-            }
-        }
-    }
-
-    Connections{
-        target: page
-        onRotationClicked:{
-            if (!menuIsShowing){
-                animateTbarsIn.start();
             }
         }
     }

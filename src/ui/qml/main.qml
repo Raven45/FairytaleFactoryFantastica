@@ -208,7 +208,6 @@ Rectangle {
         onTriggered:{
             //console.log("registering guiPlayer's move... ");
             gameController.registerGuiTurnWithBoard();
-            lockQuadrantRotation();
             //console.log("guiPlayers turn is over.");
             isGuiPlayersTurn = false;
         }
@@ -266,10 +265,8 @@ Rectangle {
     Connections{
         onRotationClicked:{
             if(!menuIsShowing){
-                if (guiPlayerCanClickRotation){
-                    playRotateAnimationOnQuadrant( index, direction );
-                    userMoveTimeout.startTimer();
-                }
+                playRotateAnimationOnQuadrant( index, direction );
+                userMoveTimeout.startTimer();
             }
         }
 

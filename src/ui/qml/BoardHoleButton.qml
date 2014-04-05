@@ -323,13 +323,6 @@ Rectangle {
             else if( parent.state == "WHITE" ){
                 icingSprite.jumpTo( "teal_start" );
             }
-
-
-
-
-            if( isGuiPlayersTurn ){
-                unlockQuadrantRotation();
-            }
         }
     }
 
