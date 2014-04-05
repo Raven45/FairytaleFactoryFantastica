@@ -88,8 +88,8 @@ class ConcurrentSmartestPlayer : public Player {
 
     //2,2,1,2 = good
     //1.5,2,1,2 = better
-    static constexpr long double DEFENSE_FACTOR = 4.72411;
-    static constexpr long double EVAL_DEFENSE_FACTOR = 1.4386;
+    static constexpr long double DEFENSE_FACTOR = 1;
+    static constexpr long double EVAL_DEFENSE_FACTOR = 1.1;
     static constexpr long double LEVEL_FACTOR = 1;
     static constexpr int MAX_EXTRA_LEVELS = 2;
 
@@ -125,7 +125,7 @@ public:
             }
             //account for opponents board! Important new feature!!
             else if( opponentsBoard.hasPattern(winningBoard) && !winningBoard.overlapsPattern( boardToCheck ) ){
-                resultWeight -= (WIN_WEIGHT*EVAL_DEFENSE_FACTOR);
+                resultWeight -= (WIN_WEIGHT);
             }
         }
 

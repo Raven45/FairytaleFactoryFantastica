@@ -5,7 +5,7 @@
 
 QT += multimedia core network concurrent quick
 
-CONFIG += c++11 debug #static release link_prl
+CONFIG += c++11 release #static release link_prl
 #CONFIG -= qt
 
 #CONFIG(release, debug|release): LIBS += -L$$PWD/../../QtSDK-x86_64 - static/lib/ -lQt5Core -lQt5Gui -lQt5Quick -lQt5Multimedia -lQt5Network -lQt5Qml
