@@ -196,10 +196,10 @@ void GuiGameController::startOnePersonPlay( int aiLevel, int menuSelectedColor )
 
     assert (aiLevel == 1 || aiLevel == 2 || aiLevel == 3);
     if ( aiLevel == 1 ){
-        setPlayer2(&hardAi);
+        setPlayer2(&easyAi);
     }
     else if ( aiLevel == 2 ) {
-        setPlayer2(&hardAi);
+        setPlayer2(&mediumAi);
     }
     else {
         setPlayer2(&hardAi);
@@ -226,7 +226,6 @@ void GuiGameController::startOnePersonPlay( int aiLevel, int menuSelectedColor )
 
 void GuiGameController::startTwoPersonPlay() {
     GameCore::startNewGame();
-
 }
 
 void GuiGameController::enterNetworkLobby() {
@@ -268,11 +267,12 @@ void GuiGameController::togglePlayback(){
 }
 
 void GuiGameController::exitGame() {
-    net -> deleteLater();
+
     QThread* coreThread = this -> thread();
     moveToThread(QGuiApplication::instance()->thread());
 
-    coreThread -> exit();
+    net -> deleteLater();
+    connect( net, SIGNAL(destroyed()), coreThread, SLOT(quit()) );
     connect( coreThread, SIGNAL(finished()), app, SLOT(quit()) );
 
 }

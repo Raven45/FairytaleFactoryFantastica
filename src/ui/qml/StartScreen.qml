@@ -912,7 +912,7 @@ Rectangle {
             PropertyChanges { target: gretelBlink; visible: false }
             PropertyChanges { target: hanselBlink; visible: false }
             PropertyChanges { target: gretelBlinkTimer; duration: 0 }
-            PropertyChanges { target: hanslBlinkTimer; duration: 0 }
+            PropertyChanges { target: hanselBlinkTimer; duration: 0 }
         }
 
     ]
