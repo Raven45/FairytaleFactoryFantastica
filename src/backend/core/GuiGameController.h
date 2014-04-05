@@ -54,6 +54,7 @@ signals:
 
     //GuiGameController proxy
     void readyForGuiMove();
+    void readyForVersusMove();
     void gameIsOver();
     void registerGuiTurnWithBoard();
     void setGuiTurnRotation( int quadrantToRotate, int rotationDirection );
@@ -91,6 +92,7 @@ protected:
     PlayerColor firstMover;
     bool isGuiPlayersTurn;
     bool isNetworkGame;
+    bool isVersusGame;
     QList<int> qOpponentsLastTurn;
     Turn qGuiTurn;
 
@@ -121,6 +123,7 @@ signals:
     void badMoveFromGui();
     void gameIsOver();
     void readyForGuiMove();
+    void readyForVersusMove();
     void waitingForOpponentsMove();
     void challengeReceived();
     void challengeAccepted();
@@ -199,6 +202,7 @@ public:
 
         qDebug() << "connecting core proxy signals";
         connect( core,  SIGNAL( readyForGuiMove() ),                                this,   SIGNAL(readyForGuiMove()),          Qt::QueuedConnection );
+        connect( core,  SIGNAL( readyForVersusMove() ),                                this,   SIGNAL(readyForVersusMove()),    Qt::QueuedConnection );
         connect( core,  SIGNAL( gameIsOver() ),                                     this,   SIGNAL(gameIsOver()),               Qt::QueuedConnection );
         connect( this,  SIGNAL( registerGuiTurnWithBoard()),                        core,   SLOT( registerGuiTurnWithBoard()),  Qt::QueuedConnection );
         connect( this,  SIGNAL(setGuiTurnRotation(int, int)),                       core,   SLOT(setGuiTurnRotation(int,int)),  Qt::QueuedConnection );

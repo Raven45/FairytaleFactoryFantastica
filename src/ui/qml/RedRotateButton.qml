@@ -41,13 +41,13 @@ Item {
 
 
 
-                if( guiPlayerCanClickRotation && !menuIsShowing ){
+                if( guiPlayerCanClickRotation && !allGameScreenButtonsAreLocked ){
                     console.log("clicked to rotate direction " + roDir );
                     lockQuadrantRotation();
                     animateTbarsIn.start();
                     //red_rotate_glowEffect.visible = false;
                     gameController.setGuiTurnRotation( quadToRo , roDir );
-                    rotationClicked(quadToRo, roDir);
+                    rotationLegallyClicked(quadToRo, roDir);
                 }
 
             }

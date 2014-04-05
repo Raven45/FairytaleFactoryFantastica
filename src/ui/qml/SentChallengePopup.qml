@@ -28,9 +28,9 @@ GenericPopup {
             //challenger does not move first
             isFirstMoveOfGame = false;
 
-            //we need to save it so we can put it back later, fixes a bug where returning to main menu at starting a game and the guiPlayerIsWhite is wrong
-            guiPlayerIsWhiteAtEnter = guiPlayerIsWhite;
-            guiPlayerIsWhite = false;
+            movingPlayerIsNetworkOrAI = true;
+            networkOrAIIsTeal = true;
+            movingPlayerIsTeal = true;
 
             lockBoardPieces();
             lockQuadrantRotation();

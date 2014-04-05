@@ -269,26 +269,31 @@ transitions:[
                         startPieceAnimations();
                         piecesHaveStartedAnimating = true;
 
+                    } else{
+                        resumeGumdropAnimation();
                     }
 
-                    sendPlayerName( "TODO: FIX MEEEE" /*playerNameBox.text*/ );
+                    sendPlayerName( "TODO: FIX MEEEE" );
                     startMenu.state = "INVISIBLE"
                     isNetworkGame = false;
+                    isVersusGame = false;
+                    isSinglePlayerGame = true;
                     clearBoard();
 
                 var menuSelectedColor;
                 if(singlePlayerGumdropSelector.gumdrop_selector_string == "teal")
                 {
-                    guiPlayerIsWhite = true;
+                    networkOrAIIsTeal = false;
                     menuSelectedColor = 0;
 
                 }
                 else if(singlePlayerGumdropSelector.gumdrop_selector_string == "purp")
                 {
-                    guiPlayerIsWhite = false;
+                    networkOrAIIsTeal = true;
                     menuSelectedColor = 1;
                 }
                 else{
+
                     console.log("logic error with gumdrop selector")
                 }
 
@@ -379,8 +384,48 @@ transitions:[
             onExited: { pvpStencil_img.source = "start-stencil.png"; }
             onPressed:{ if(_SOUND_CHECK_FLAG) tankSound.play() }
             onClicked:{
-                allThatWitch_IntoGameScreen();
-                //blackout. initialize and start game.
+
+                //allThatWitch_IntoGameScreen();
+
+                if( !piecesHaveStartedAnimating ){
+                    startPieceAnimations();
+                    piecesHaveStartedAnimating = true;
+
+                } else{
+                    resumeGumdropAnimation();
+                }
+
+                sendPlayerName( "TODO: FIX MEEEE" );
+                startMenu.state = "INVISIBLE"
+                isNetworkGame = false;
+                isVersusGame = true;
+                isSinglePlayerGame = false;
+                clearBoard();
+
+
+                placeCharacterOnPlatform(pvpPlayer1CharacterSelector.character_selector_string, "teal" );
+                placeCharacterOnPlatform(pvpPlayer2CharacterSelector.character_selector_string, "purple" );
+
+                if( !piecesHaveStartedAnimating ){
+                    startPieceAnimations();
+                    piecesHaveStartedAnimating = true;
+                }
+                else{
+                    resumeGumdropAnimation();
+                }
+
+                sendPlayerName( "TODO: FIX MEEEE" /*playerNameBox.text*/ );
+
+                startMenu.state = "INVISIBLE"
+
+                exitFlickerLongTimer.stop();
+                exitFlickerShortTimer.stop();
+
+                //Stop How-to-Play box
+                //helpBox_glowEffect.visible = false;
+                //pulse_helpBox_glowEffect.running = false;
+
+                readyToStartTwoPersonPlay();
             }
         }
 
@@ -425,7 +470,28 @@ transitions:[
             }
             onExited: { networkingStencil_img.source = "enter-lobby-stencil.png"; }
             onPressed:{ if(_SOUND_CHECK_FLAG) tankSound.play() }
-            //onClicked://TODO: LOGIC!
+            onClicked: {
+                if( !piecesHaveStartedAnimating ){
+                    startPieceAnimations();
+                    piecesHaveStartedAnimating = true;
+
+                } else{
+                    resumeGumdropAnimation();
+                }
+
+                isNetworkGame = true;
+                isVersusGame = false;
+                isSinglePlayerGame = false;
+
+
+
+                sendPlayerName( playerNameBox.text );
+                networkLobby.state ="VISIBLE"
+                exitFlickerLongTimer.stop();
+                exitFlickerShortTimer.stop();
+                clearBoard();
+                enterNetworkLobby();
+            }
         }
 
         Image{

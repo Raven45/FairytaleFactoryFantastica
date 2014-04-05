@@ -16,11 +16,6 @@ Rectangle {
 
     Connections{
         target: page
-        onReadyForRotation:{
-
-  //          lockBoardPieces();
-    //        unlockQuadrantRotation();
-        }
 
         onClearBoard:{
             tealClawPiece.reset();
@@ -107,17 +102,11 @@ Rectangle {
             target: page;
             onSpreadIcing:{
 
-                    if( isGuiPlayersTurn && guiPlayerIsWhite ){
+                    if( movingPlayerIsTeal ){
                         spellParticle.state = "TEAL";
-                    }
-                    else if( isGuiPlayersTurn ){
-                        spellParticle.state = "PURPLE";
-                    }
-                    else if( guiPlayerIsWhite ){
-                        spellParticle.state = "PURPLE";
                     }
                     else{
-                        spellParticle.state = "TEAL";
+                       spellParticle.state = "PURPLE";
                     }
 
                     var goTo = getXYOffset(qIndex,pIndex);
@@ -144,7 +133,7 @@ Rectangle {
             StateChangeScript {
                 name: "lockGameBoard"
                 script: {
-                    page.menuIsShowing = true;
+                    page.allGameScreenButtonsAreLocked = true;
                 }
             }
 
@@ -159,7 +148,7 @@ Rectangle {
             StateChangeScript {
                 name: "unlockGameBoard"
                 script: {
-                    page.menuIsShowing = false;
+                    page.allGameScreenButtonsAreLocked = false;
                 }
             }
         }
@@ -474,10 +463,9 @@ Rectangle {
 
     Connections{
         target: page
-        onReadyForRotation:{
-            if(!guiPlayerCanClickRotation && !menuIsShowing){
-                animateTbarsOut.start();
-            }
+        onReadyForUserToClickRotation:{
+            console.log("READY FOR ROTATION");
+            animateTbarsOut.start();
         }
     }
 
