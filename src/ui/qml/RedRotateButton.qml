@@ -5,7 +5,7 @@ Item {
     property int quadToRo
     property int roDir
     property var direction_string
-    /*Glow {
+    Glow {
        id: red_rotate_glowEffect
        anchors.fill: red_rotate_button
        radius: 16
@@ -16,7 +16,7 @@ Item {
        visible: false
        fast: true
        cached: true
-    }*/
+    }
     Image {
         id: red_rotate_button
         source: "red-rotate-" + direction_string + ".png"
@@ -24,18 +24,16 @@ Item {
         z: 19
         rotation: -(parent.rotation)
 
-        /*Connections{
+        Connections{
             target: page
-            onReadyForRotation:{
-                if(guiPlayerCanClickRotation){
-                    red_rotate_glowEffect.visible = true;
-                }
+            onTurnRotationGlowOn:{
+                red_rotate_glowEffect.visible = true;
             }
         }
 
        function turnOffGlow(){
             red_rotate_glowEffect.color = "black"
-       }*/
+       }
 
         MouseArea {
             anchors.fill: red_rotate_button

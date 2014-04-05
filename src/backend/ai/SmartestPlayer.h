@@ -83,13 +83,13 @@ class ConcurrentSmartestPlayer : public Player {
     static constexpr long double WIN_WEIGHT = 27972500;
     static constexpr long double FOUR_WEIGHT = 98342.8;
     static constexpr long double THREE_WEIGHT =345.744;
-    static constexpr long double TWO_WEIGHT = 1.001;
+    static constexpr long double TWO_WEIGHT = 5;
     static constexpr long double DEFAULT_WEIGHT = 1;
 
     //2,2,1,2 = good
     //1.5,2,1,2 = better
-    static constexpr long double DEFENSE_FACTOR = 1;
-    static constexpr long double EVAL_DEFENSE_FACTOR = 1.1;
+    static constexpr long double DEFENSE_FACTOR = 1.5;
+    static constexpr long double EVAL_DEFENSE_FACTOR = 2;
     static constexpr long double LEVEL_FACTOR = 1;
     static constexpr int MAX_EXTRA_LEVELS = 2;
 
@@ -125,7 +125,7 @@ public:
             }
             //account for opponents board! Important new feature!!
             else if( opponentsBoard.hasPattern(winningBoard) && !winningBoard.overlapsPattern( boardToCheck ) ){
-                resultWeight -= (WIN_WEIGHT);
+                resultWeight -= WIN_WEIGHT * EVAL_DEFENSE_FACTOR;
             }
         }
 
@@ -328,17 +328,21 @@ public:
                             newMoveWeight = 0 - newMoveWeight;
                         }*/
 
-                        if( newMoveWeight >= WIN_WEIGHT  ){
-                            return newMoveWeight;
-                        }
+
 
                         Board testBoard;// (movingPlayersColor == PlayerColor::WHITE? newBoardCopy:opponentsBoard, movingPlayersColor == PlayerColor::WHITE? opponentsBoard:newBoardCopy, opponentsColor );
+
+
 
                         if( movingPlayersColor == PlayerColor::WHITE ){
                             testBoard = Board(newBoardCopy,opponentsBoard, opponentsColor );
                         }
                         else{
                              testBoard = Board(opponentsBoard,newBoardCopy, opponentsColor );
+                        }
+
+                        if( testBoard.checkWin().winner == movingPlayersColor  ){
+                            return WIN_WEIGHT;
                         }
 
                         if( level < MAX_EXTRA_LEVELS ){
@@ -361,9 +365,7 @@ public:
 
                         newMoveWeight = newEvaluateBitBoard(newBoardCopy, opponentsBoard, movingPlayersBoardBeforeTurn /*, opponentsBoardBeforeTurn */ );
 
-                        if( newMoveWeight >= WIN_WEIGHT  ){
-                            return newMoveWeight;
-                        }
+
 
                         Board testBoard2;
 
@@ -375,6 +377,9 @@ public:
                         }
 
 
+                        if( testBoard2.checkWin().winner == movingPlayersColor  ){
+                            return WIN_WEIGHT;
+                        }
 
                         if( level < MAX_EXTRA_LEVELS ){
                             newMoveWeight -= (getRecursiveWeight( testBoard2, opponentsColor, movingPlayersColor, level + 1 )  * DEFENSE_FACTOR);
@@ -390,7 +395,7 @@ public:
             }
         }
 
-        return bestMoveWeight * LEVEL_FACTOR;
+        return bestMoveWeight;
 
 
     }

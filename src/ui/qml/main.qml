@@ -20,6 +20,7 @@ Rectangle {
     signal readyToStartOnePersonPlay( int aiLevel, int menuSelectedColor )
     signal readyToStartTwoPersonPlay()
     signal load()
+    signal turnRotationGlowOn()
     signal hanselIsOverOven()
     signal gretelIsOverOven()
     signal witchIsOverOven()
@@ -185,6 +186,7 @@ Rectangle {
         if (!guiPlayerCanClickBoardHoleButton)
         {
             guiPlayerCanClickRotation = true;
+            turnRotationGlowOn();
         }
     }
 
