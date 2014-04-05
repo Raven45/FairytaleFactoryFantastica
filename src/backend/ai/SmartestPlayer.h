@@ -80,18 +80,18 @@ class ConcurrentSmartestPlayer : public Player {
     static constexpr long double TWO_WEIGHT = 2.07002;
     static constexpr long double DEFAULT_WEIGHT = 1;*/
 
-    static constexpr long double WIN_WEIGHT = 27972500;
-    static constexpr long double FOUR_WEIGHT = 98342.8;
-    static constexpr long double THREE_WEIGHT =345.744;
-    static constexpr long double TWO_WEIGHT = 5;
+    static constexpr long double WIN_WEIGHT = 27721000;
+    static constexpr long double FOUR_WEIGHT = 91253.4;
+    static constexpr long double THREE_WEIGHT =300.393;
+    static constexpr long double TWO_WEIGHT = 1.001;
     static constexpr long double DEFAULT_WEIGHT = 1;
 
     //2,2,1,2 = good
     //1.5,2,1,2 = better
-    static constexpr long double DEFENSE_FACTOR = 1.5;
-    static constexpr long double EVAL_DEFENSE_FACTOR = 2;
-    static constexpr long double LEVEL_FACTOR = 1;
+    static constexpr long double DEFENSE_FACTOR = 1.27948;
+    static constexpr long double EVAL_DEFENSE_FACTOR = 1.73917;
     static constexpr int MAX_EXTRA_LEVELS = 2;
+    static constexpr long double OPPONENT_LEVEL_FACTOR = 2;
 
     static_assert( THREE_WEIGHT != 0 && FOUR_WEIGHT != 0 && TWO_WEIGHT != 0 && WIN_WEIGHT * WIN_WEIGHT > 0, "dividing too small in AI code" );
 
@@ -278,7 +278,7 @@ public:
 
         }*/
 
-        for( unsigned char twoIndex = countof(TWO_IN_A_ROW); twoIndex--;){
+        for( unsigned char twoIndex = 77 /*countof(TWO_IN_A_ROW)*/; twoIndex--;){
             const BitBoard twoInARowBoard = TWO_IN_A_ROW[twoIndex];
 
             if( boardToCheck.hasPattern(twoInARowBoard) && !opponentsBoard.overlapsPattern(twoInARowBoard) ){
@@ -323,10 +323,9 @@ public:
 
                         long double newMoveWeight = newEvaluateBitBoard(newBoardCopy, opponentsBoard, movingPlayersBoardBeforeTurn /*, opponentsBoardBeforeTurn */ );
 
-                        //if SmartestPlayer's opponent, negate the weight
-                        /*if( level % 2 != 0 ){
-                            newMoveWeight = 0 - newMoveWeight;
-                        }*/
+                        if( level == 1 ){
+                            newMoveWeight *= OPPONENT_LEVEL_FACTOR;
+                        }
 
 
 
@@ -365,7 +364,9 @@ public:
 
                         newMoveWeight = newEvaluateBitBoard(newBoardCopy, opponentsBoard, movingPlayersBoardBeforeTurn /*, opponentsBoardBeforeTurn */ );
 
-
+                        if( level == 1 ){
+                            newMoveWeight *= OPPONENT_LEVEL_FACTOR;
+                        }
 
                         Board testBoard2;
 
@@ -394,6 +395,8 @@ public:
                 }
             }
         }
+
+
 
         return bestMoveWeight;
 
