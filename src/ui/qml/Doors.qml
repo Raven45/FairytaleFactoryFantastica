@@ -432,8 +432,6 @@ transitions:[
 
                 sendPlayerName( playerNameBox.text );
                 networkLobby.state ="VISIBLE";
-                exitFlickerLongTimer.stop();
-                exitFlickerShortTimer.stop();
                 enterNetworkLobby();
             }
         }

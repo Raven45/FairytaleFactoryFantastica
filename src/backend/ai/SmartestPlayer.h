@@ -140,46 +140,7 @@ public:
 
         }
 
-        for( BoardInt pattern : START_PATTERNS1 ){
-            if( boardToCheck == pattern ){
-                resultWeight += PATTERN_WEIGHT1;
-            }
-        }
 
-        for( BoardInt pattern : START_PATTERNS2 ){
-            if( boardToCheck == pattern ){
-                resultWeight += PATTERN_WEIGHT2;
-            }
-            else if( opponentsBoard == pattern ){
-                resultWeight -= PATTERN_WEIGHT2*EVAL_DEFENSE_FACTOR;
-            }
-        }
-
-        if( resultWeight != DEFAULT_WEIGHT ){
-            return resultWeight;
-        }
-
-        for( BoardInt pattern : START_PATTERNS3 ){
-            if( boardToCheck == pattern ){
-                resultWeight += PATTERN_WEIGHT3;
-            }
-            else if( opponentsBoard == pattern ){
-                resultWeight -= PATTERN_WEIGHT3*EVAL_DEFENSE_FACTOR;
-            }
-        }
-
-        if( resultWeight != DEFAULT_WEIGHT ){
-            return resultWeight;
-        }
-
-        for( BoardInt pattern : START_PATTERNS4 ){
-            if( boardToCheck == pattern ){
-                resultWeight += PATTERN_WEIGHT4;
-            }
-            else if( opponentsBoard == pattern ){
-                resultWeight -= PATTERN_WEIGHT4*EVAL_DEFENSE_FACTOR;
-            }
-        }
 
 
         //optimize
@@ -226,6 +187,8 @@ public:
             return resultWeight;
 
         }
+
+
 
         for( unsigned char threeInARowIndex = NUMBER_OF_SIGNIFICANT_THREE_IN_A_ROW_PATTERNS; threeInARowIndex--; ){
             BoardInt threeInARowBoard = THREE_IN_A_ROW[threeInARowIndex];
@@ -307,7 +270,7 @@ public:
             return resultWeight;
         }
 
-        for( unsigned char twoIndex = countof(TWO_IN_A_ROW); twoIndex--;){
+        /*for( unsigned char twoIndex = countof(TWO_IN_A_ROW); twoIndex--;){
             const BitBoard twoInARowBoard = TWO_IN_A_ROW[twoIndex];
 
             if( boardToCheck.hasPattern(twoInARowBoard) && !opponentsBoard.overlapsPattern(twoInARowBoard) ){
@@ -316,6 +279,47 @@ public:
 
             else if( opponentsBoard.hasPattern(twoInARowBoard) && !boardToCheck.overlapsPattern(twoInARowBoard) ){
                 resultWeight -= TWO_WEIGHT*EVAL_DEFENSE_FACTOR;
+            }
+        }*/
+
+        for( BoardInt pattern : START_PATTERNS1 ){
+            if( boardToCheck == pattern ){
+                resultWeight += PATTERN_WEIGHT1;
+            }
+        }
+
+        for( BoardInt pattern : START_PATTERNS2 ){
+            if( boardToCheck == pattern ){
+                resultWeight += PATTERN_WEIGHT2;
+            }
+            else if( opponentsBoard == pattern ){
+                resultWeight -= PATTERN_WEIGHT2*EVAL_DEFENSE_FACTOR;
+            }
+        }
+
+        if( resultWeight != DEFAULT_WEIGHT ){
+            return resultWeight;
+        }
+
+        for( BoardInt pattern : START_PATTERNS3 ){
+            if( boardToCheck == pattern ){
+                resultWeight += PATTERN_WEIGHT3;
+            }
+            else if( opponentsBoard == pattern ){
+                resultWeight -= PATTERN_WEIGHT3*EVAL_DEFENSE_FACTOR;
+            }
+        }
+
+        if( resultWeight != DEFAULT_WEIGHT ){
+            return resultWeight;
+        }
+
+        for( BoardInt pattern : START_PATTERNS4 ){
+            if( boardToCheck == pattern ){
+                resultWeight += PATTERN_WEIGHT4;
+            }
+            else if( opponentsBoard == pattern ){
+                resultWeight -= PATTERN_WEIGHT4*EVAL_DEFENSE_FACTOR;
             }
         }
 

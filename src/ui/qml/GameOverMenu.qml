@@ -138,48 +138,53 @@ Rectangle {
         target: gameController
         onGameIsOver:{
 
-            var winner = gameController.getWinner();
+            //this if fixes an edge case: when you leave a game right before the AI wins, the
+            //end game animations would play when the move was received
+            if( !leftSinglePlayerGameWhileAIWasMoving ){
 
-            leaveGameScreenTimer.start();
+                var winner = gameController.getWinner();
 
-            switch( parseInt(winner) ){
+                leaveGameScreenTimer.start();
 
-            //DRAW
-            case -1:
-                setWinnerText("NONE");
-                break;
+                switch( parseInt(winner) ){
 
-            //TEAL WON
-            case 0:
+                //DRAW
+                case -1:
+                    setWinnerText("NONE");
+                    break;
 
-                setWinnerText(tealPlatformCharacter);
+                //TEAL WON
+                case 0:
 
-                if( isVersusGame || !networkOrAIIsTeal ){
-                    gameOverMenu.state = "VISIBLE";
-                    killCharacter(purplePlatformCharacter);
+                    setWinnerText(tealPlatformCharacter);
+
+                    if( isVersusGame || !networkOrAIIsTeal ){
+                        gameOverMenu.state = "VISIBLE";
+                        killCharacter(purplePlatformCharacter);
+                    }
+                    else{
+                        gameOverTimeout.loser = purplePlatformCharacter;
+                        gameOverTimeout.startTimer();
+                    }
+
+                    break;
+
+                //PURPLE WON
+                case 1:
+
+                    setWinnerText(purplePlatformCharacter);
+
+                    if(  isVersusGame || networkOrAIIsTeal ){
+                        gameOverMenu.state = "VISIBLE";
+                        killCharacter(tealPlatformCharacter);
+                    }
+                    else{
+                        gameOverTimeout.loser = tealPlatformCharacter;
+                        gameOverTimeout.startTimer();
+                    }
+
+                    break;
                 }
-                else{
-                    gameOverTimeout.loser = purplePlatformCharacter;
-                    gameOverTimeout.startTimer();
-                }
-
-                break;
-
-            //PURPLE WON
-            case 1:
-
-                setWinnerText(purplePlatformCharacter);
-
-                if(  isVersusGame || networkOrAIIsTeal ){
-                    gameOverMenu.state = "VISIBLE";
-                    killCharacter(tealPlatformCharacter);
-                }
-                else{
-                    gameOverTimeout.loser = tealPlatformCharacter;
-                    gameOverTimeout.startTimer();
-                }
-
-                break;
             }
         }
     }

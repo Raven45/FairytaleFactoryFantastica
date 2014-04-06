@@ -82,6 +82,7 @@ Rectangle {
     property bool movingPlayerIsTeal: false
     property bool waitingForAISoWeCanExitGame: false
     property bool movingPlayerIsNetworkOrAI: false
+    property bool leftSinglePlayerGameWhileAIWasMoving: false
     property bool networkOrAIIsTeal: false
     property string tealPlatformCharacter: "NONE"
     property string purplePlatformCharacter: "NONE"
@@ -172,6 +173,7 @@ Rectangle {
 
         clearBoard();
         movingPlayerIsTeal = true;
+        leftSinglePlayerGameWhileAIWasMoving = false;
         allGameScreenButtonsAreLocked = false;
         startMenu.state = "INVISIBLE";
     }
@@ -230,9 +232,7 @@ Rectangle {
 
             movingPlayerIsTeal = !movingPlayerIsTeal;
 
-            if( isSinglePlayerGame ){
-                waitingOnNetworkOrAIMove = true;
-            }
+
 
             if( isSinglePlayerGame || isNetworkGame ){
                 movingPlayerIsNetworkOrAI = true;
@@ -290,6 +290,11 @@ Rectangle {
 
     Connections{
         onRotationLegallyClicked:{
+
+            if( isSinglePlayerGame || isNetworkGame ){
+                waitingOnNetworkOrAIMove = true;
+            }
+
             playRotateAnimationOnQuadrant( index, direction );
             userMoveTimeout.startTimer();
         }
@@ -303,7 +308,10 @@ Rectangle {
 
             var aiOrNetworkMove = gameController.getOpponentsTurn();
 
+            console.log( "ready for gui move..." );
+
             if( waitingOnNetworkOrAIMove && !waitingForAISoWeCanExitGame  ){
+
                 console.log("Network/AI move: " + aiOrNetworkMove);
                 placeNetworkOrAIPiece( aiOrNetworkMove[0], aiOrNetworkMove[1] );
                 waitingOnNetworkOrAIMove = false;
@@ -314,6 +322,9 @@ Rectangle {
                     aiOrNetworkMoveTimeout.rotationDirection = aiOrNetworkMove[3];
                     aiOrNetworkMoveTimeout.startTimer();
                 }
+            }
+            else{
+                console.log( "hmm... was not waiting on network or ai move..." );
             }
 
         }
