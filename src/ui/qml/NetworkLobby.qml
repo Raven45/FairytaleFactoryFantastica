@@ -183,6 +183,9 @@ Rectangle {
            if( challengePopupsAreHidden() ){
                loadingScreen.visible = true;
                networkLobby.state = "INVISIBLE";
+
+               //need to allow others in lobby to recognize our leaving so we
+               //can't reconnect quickly
                networkLeaveLoadingTimer.start()
 
             }
