@@ -205,10 +205,10 @@ public slots:
         else if( pTimer -> timerId() != -1 ){
             pTimer -> start( MAX_WAIT_TIME );
         }else{
-            qDebug() << "pTIMER WE HAVE MAKE CATCH YOU NOW!!!!!!";
+            //qDebug() << "pTIMER WE HAVE MAKE CATCH YOU NOW!!!!!!";
+            //start the timer associated with that player
+            pTimer -> start( MAX_WAIT_TIME );
         }
-
-
     }
 
     WaxSeal freshSeal(){
