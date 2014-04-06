@@ -29,6 +29,18 @@ Rectangle {
 
     Connections{
         target: page
+
+        onBackToMainMenu:{
+            row0.clearRow();
+            row1.clearRow();
+            row2.clearRow();
+            row3.clearRow();
+            row4.clearRow();
+            row5.clearRow();
+            row6.clearRow();
+            row7.clearRow();
+        }
+
         onPlayerEnteredLobby: {
             var newPlayer = arrivingPlayerName.toString();
             var playerAddress = addressOfArrivingPlayer.toString();
@@ -173,14 +185,7 @@ Rectangle {
                loadingScreen.visible = true;
                networkLobby.state = "INVISIBLE";
 
-               row0.clearRow();
-               row1.clearRow();
-               row2.clearRow();
-               row3.clearRow();
-               row4.clearRow();
-               row5.clearRow();
-               row6.clearRow();
-               row7.clearRow();
+
 
                //need to allow others in lobby to recognize our leaving so we
                //can't reconnect quickly

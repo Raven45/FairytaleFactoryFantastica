@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtGraphicalEffects 1.0
+import QtQuick.Particles 2.0
 Rectangle {
     color:"transparent"
     property bool isClockwise
@@ -38,6 +39,32 @@ Rectangle {
        visible: false
        fast: true
        cached: true
+    }
+
+    ParticleSystem {
+        width: 1; height: 1
+        anchors.bottom: tbar.bottom
+        anchors.horizontalCenter: tbar.horizontalCenter
+
+        ImageParticle {
+            groups: ["boardSmoke"]
+            source: "qrc:///particleresources/glowdot.png"
+            color: "#28111111"
+            blueVariation: 0.05
+        }
+
+        Emitter {
+            anchors.fill: parent
+            group: "boardSmoke"
+            emitRate: 50
+            lifeSpan: 3000
+            lifeSpanVariation:200
+            size: 20
+            endSize: 150
+            sizeVariation: 5
+            acceleration: PointDirection {y: 0; yVariation: 20; x: 0; xVariation: 20;}
+            velocity: AngleDirection { angle: 0; magnitude: 20; angleVariation:360; magnitudeVariation: 10 }
+        }
     }
 
 

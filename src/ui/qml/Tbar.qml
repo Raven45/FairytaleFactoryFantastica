@@ -11,31 +11,7 @@ Rectangle {
     property int pentago_quad
     property int tbar_rotate_angle
 
-    ParticleSystem {
-        width: 1; height: 1
-        anchors.bottom: tbar.bottom
-        anchors.horizontalCenter: tbar.horizontalCenter
 
-        ImageParticle {
-            groups: ["boardSmoke"]
-            source: "qrc:///particleresources/glowdot.png"
-            color: "#88111111"
-            blueVariation: 0.05
-        }
-
-        Emitter {
-            anchors.fill: parent
-            group: "boardSmoke"
-            emitRate: 500
-            lifeSpan: 400
-            lifeSpanVariation:200
-            size: 20
-            endSize: 2
-            sizeVariation: 5
-            acceleration: PointDirection {y: 500; yVariation: 70; x: 0; xVariation: 0;}
-            velocity: AngleDirection { angle: 270 + tbar_rotate_angle; magnitude: 500; angleVariation:40; magnitudeVariation: 100 }
-        }
-    }
 
 
     Image {
