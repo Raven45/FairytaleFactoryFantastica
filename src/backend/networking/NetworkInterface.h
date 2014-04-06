@@ -430,6 +430,8 @@ public slots:
                     //TODO: handle disconnect/reconnect
                     qDebug() << "disconnectedPlayer was involved in something important!!!!";
                     emit opponentDisconnectedEarly();
+                    terminateConnectionToPlayer();
+                    forgetAllAboutPlayer(disconnectedPlayerInfo);
                 }
             }
         }

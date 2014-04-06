@@ -344,18 +344,18 @@ Rectangle {
 
     GenericPopup{
         id: networkPlayerDisconnectedPopup
-        message: "Connection lost. Waiting for reconnect..."
+        message: "Connection lost."
         hideButton2: true
         anchors.centerIn: page
         z: 400
-        button1Text: "Leave Game"
+        button1Text: "Exit"
 
         QmlTimer{
             id: reconnectSuccessTimer
             duration: 1000
             onTriggered:{
                 networkPlayerDisconnectedPopup.state = "INVISIBLE";
-                networkPlayerDisconnectedPopup.message = "Connection lost. Waiting for reconnect...";
+                networkPlayerDisconnectedPopup.message = "Connection lost.";
                 networkPlayerDisconnectedPopup.enableButton1();
             }
         }
