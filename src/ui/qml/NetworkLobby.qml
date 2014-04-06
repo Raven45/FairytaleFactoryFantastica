@@ -3,9 +3,10 @@ import QtQuick.Controls 1.0
 
 Rectangle {
     id: networkLobby
-    width: 750
-    height: 750
     z: 101
+    height: parent.height
+    width: parent.width
+
     color: "#00FFFF"
     state: "INVISIBLE"
     property int playerCount: 0
