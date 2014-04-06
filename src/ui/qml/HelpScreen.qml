@@ -332,6 +332,7 @@ gingerbread square"
         MouseArea {
             anchors.fill: parent
             onClicked:{
+                resumeGumdropAnimation();
                 helpScreen.state = "HIDE_HELP"
             }
         }

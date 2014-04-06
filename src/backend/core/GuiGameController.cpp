@@ -192,6 +192,9 @@ void GuiGameController::networkTurnReceivedFromNetwork( int quadrantIndex, int p
 
 void GuiGameController::startOnePersonPlay( int aiLevel, int menuSelectedColor ) {
 
+    isVersusGame = false;
+    isNetworkGame = false;
+
     qDebug() << "in startOnePersonPlay, aiLevel is " << aiLevel << " and menuSelectedColor is " << menuSelectedColor;
 
     assert (aiLevel == 1 || aiLevel == 2 || aiLevel == 3);
@@ -217,7 +220,6 @@ void GuiGameController::startOnePersonPlay( int aiLevel, int menuSelectedColor )
 
     if( guiPlayerColor != firstMover ){
         registerOpponentsTurnWithBoard ( player2 -> getMove( copyCurrentBoard() ) );
-        emit readyForGuiMove();
     }
 
     //default to gui move
@@ -226,6 +228,15 @@ void GuiGameController::startOnePersonPlay( int aiLevel, int menuSelectedColor )
 
 void GuiGameController::startTwoPersonPlay() {
     GameCore::startNewGame();
+
+    isVersusGame = true;
+    isNetworkGame = false;
+    qGuiTurn.setPieceColor( PlayerColor::WHITE );
+    firstMover = PlayerColor::WHITE;
+    guiPlayerColor = PlayerColor::WHITE;
+    setMovingPlayerColor(firstMover);
+
+    emit readyForVersusMove();
 }
 
 void GuiGameController::enterNetworkLobby() {
@@ -289,6 +300,7 @@ void GuiGameController::registerGuiTurnWithBoard(){
 
     try{
         registerTurnWithBoard( qGuiTurn );
+
     }
     catch(InvalidMoveException){
         emit badMoveFromGui();
@@ -298,8 +310,13 @@ void GuiGameController::registerGuiTurnWithBoard(){
 
     if( isGameOver() && !isNetworkGame ){
          emit gameIsOver();
-     }
-     else{
+    }
+    else if( isVersusGame ){
+        guiPlayerColor = util.opposite(guiPlayerColor);
+        qGuiTurn.setPieceColor( guiPlayerColor );
+        emit readyForVersusMove();
+    }
+    else{
 
         copyCurrentBoard().print();
 
@@ -341,8 +358,6 @@ void GuiGameController::registerGuiTurnWithBoard(){
      }
  }
 
-//TODO: I think we may need to change this to setWhetherGuiMovesFirst or something,
-//because the GUI colors should be decoupled from the gameController
 void GuiGameController::setFirstMovingPlayerColor( PlayerColor playerToMoveFirst ){
     setMovingPlayerColor(playerToMoveFirst);
 }

@@ -14,13 +14,14 @@ Rectangle {
 
     color: "#333333"
 
+    signal leaveForkliftMenuToGameScreen()
     signal doneWithFireAnimation()
     signal placeCharacterOnPlatform( string character, string platform );
     signal droppedSomethingInOven()
     signal readyToStartOnePersonPlay( int aiLevel, int menuSelectedColor )
     signal readyToStartTwoPersonPlay()
     signal load()
-    signal turnRotationGlowOn()
+    signal startRotationOnRedRotationButtons()
     signal hanselIsOverOven()
     signal gretelIsOverOven()
     signal witchIsOverOven()
@@ -38,10 +39,10 @@ Rectangle {
     signal changeSoundState()
     signal changeGuiPlayerColor(int color)
     signal clickedRandomMove()
-    signal readyForRotation()
-    signal rotationClicked( int index, int direction )
+    signal readyForUserToClickRotation()
+    signal rotationLegallyClicked( int index, int direction )
     signal rotationAnimationFinished(int quadrantRotated, int direction )
-    signal placeOpponentsPiece( int qIndex, int pIndex )
+    signal placeNetworkOrAIPiece( int qIndex, int pIndex )
     signal clearBoard()
     signal readyToExitGame()
     signal backToMainMenu()
@@ -78,18 +79,23 @@ Rectangle {
 
 
     property alias main: page
-    property bool guiPlayerIsWhite: false
-    property bool isGuiPlayersTurn: false
+    property bool movingPlayerIsTeal: false
+    property bool waitingForAISoWeCanExitGame: false
+    property bool movingPlayerIsNetworkOrAI: false
+    property bool networkOrAIIsTeal: false
     property string tealPlatformCharacter: "NONE"
     property string purplePlatformCharacter: "NONE"
     property bool guiPlayerCanClickBoardHoleButton: false
     property bool guiPlayerCanClickRotation: false
-    property bool menuIsShowing: false
+    property bool allGameScreenButtonsAreLocked: false
     property string gameMessage
-    property bool isFirstMoveOfGame: true
-    property bool isNetworkGame: false
-    property bool piecesHaveStartedAnimating: false
 
+    property bool isSinglePlayerGame: false
+    property bool isVersusGame: false
+    property bool isNetworkGame: false
+
+    property bool piecesHaveStartedAnimating: false
+    property bool waitingOnNetworkOrAIMove: false
     property bool _SOUND_CHECK_FLAG: false
 
     property bool startOnePlayer_currently_selected: false
@@ -154,17 +160,33 @@ Rectangle {
         guiPlayerCanClickBoardHoleButton = false;
     }
 
+    onLeaveForkliftMenuToGameScreen:{
+
+        if( !piecesHaveStartedAnimating ){
+            startPieceAnimations();
+            piecesHaveStartedAnimating = true;
+
+        } else{
+            resumeGumdropAnimation();
+        }
+
+        clearBoard();
+        movingPlayerIsTeal = true;
+        allGameScreenButtonsAreLocked = false;
+        startMenu.state = "INVISIBLE";
+    }
+
     function killCharacter( character ){
         if( character == "witch" ){
             startPickUpWitch();
         }
         else if ( character == "hansel" ){
             startPickUpHansel();
-            witchSound.play();
+            if(_SOUND_CHECK_FLAG) witchSound.play();
         }
         else if ( character == "gretel" ){
             startPickUpGretel();
-            witchSound.play();
+            if(_SOUND_CHECK_FLAG) witchSound.play();
         }
         else{
             console.log("in main.qml function killCharacter: invalid parameter");
@@ -174,7 +196,6 @@ Rectangle {
     function unlockBoardPieces(){
         console.log("unlocking board pieces and locking rotation");
         lockQuadrantRotation();
-        isGuiPlayersTurn = true;
         guiPlayerCanClickBoardHoleButton = true;
     }
 
@@ -186,12 +207,7 @@ Rectangle {
         if (!guiPlayerCanClickBoardHoleButton)
         {
             guiPlayerCanClickRotation = true;
-            turnRotationGlowOn();
         }
-    }
-
-    onBackToMainMenu:{
-        isFirstMoveOfGame = true;
     }
 
     TextArea{
@@ -210,8 +226,20 @@ Rectangle {
         onTriggered:{
             //console.log("registering guiPlayer's move... ");
             gameController.registerGuiTurnWithBoard();
-            //console.log("guiPlayers turn is over.");
-            isGuiPlayersTurn = false;
+            console.log("guiPlayers turn is over.");
+
+            movingPlayerIsTeal = !movingPlayerIsTeal;
+
+            if( isSinglePlayerGame ){
+                waitingOnNetworkOrAIMove = true;
+            }
+
+            if( isSinglePlayerGame || isNetworkGame ){
+                movingPlayerIsNetworkOrAI = true;
+            }
+            else if ( isVersusGame ){
+                unlockBoardPieces();
+            }
         }
     }
 
@@ -221,7 +249,7 @@ Rectangle {
     }
 
     QmlTimer{
-        id: opponentsMoveTimeout
+        id: aiOrNetworkMoveTimeout
         duration: _OPPONENT_START_ROTATION_DELAY
         property int quadrantToRotate
         property int rotationDirection
@@ -241,35 +269,29 @@ Rectangle {
         property int rotationDirection
 
         onTriggered:{
-
+            movingPlayerIsTeal = !movingPlayerIsTeal;
             unlockBoardPieces();
         }
     }
 
     onClearBoard:{
-        menuIsShowing = false;
-        isFirstMoveOfGame = true;
+        allGameScreenButtonsAreLocked = false;
+        movingPlayerIsTeal = true;
 
         lockQuadrantRotation();
 
-        if (!guiPlayerIsWhite){
+        if( movingPlayerIsNetworkOrAI ){
             lockBoardPieces();
-
         }
         else{
-
             unlockBoardPieces();
-
         }
-
     }
 
     Connections{
-        onRotationClicked:{
-            if(!menuIsShowing){
-                playRotateAnimationOnQuadrant( index, direction );
-                userMoveTimeout.startTimer();
-            }
+        onRotationLegallyClicked:{
+            playRotateAnimationOnQuadrant( index, direction );
+            userMoveTimeout.startTimer();
         }
 
     }
@@ -279,27 +301,31 @@ Rectangle {
         onReadyForGuiMove:{
 
 
-            var opponentsMove = gameController.getOpponentsTurn();
+            var aiOrNetworkMove = gameController.getOpponentsTurn();
 
-            if( !isFirstMoveOfGame ){
-                console.log("Opponents move: " + opponentsMove);
-                placeOpponentsPiece( opponentsMove[0], opponentsMove[1] );
-
-                if( parseInt(opponentsMove[2]) !== 111 ) //DONT_ROTATE_CODE
+            if( waitingOnNetworkOrAIMove && !waitingForAISoWeCanExitGame  ){
+                console.log("Network/AI move: " + aiOrNetworkMove);
+                placeNetworkOrAIPiece( aiOrNetworkMove[0], aiOrNetworkMove[1] );
+                waitingOnNetworkOrAIMove = false;
+                if( parseInt(aiOrNetworkMove[2]) !== 111 ) //DONT_ROTATE_CODE
                 {
                     //console.log("telling the timer rotation data" );
-                    opponentsMoveTimeout.quadrantToRotate = opponentsMove[2];
-                    opponentsMoveTimeout.rotationDirection = opponentsMove[3];
-                    opponentsMoveTimeout.startTimer();
+                    aiOrNetworkMoveTimeout.quadrantToRotate = aiOrNetworkMove[2];
+                    aiOrNetworkMoveTimeout.rotationDirection = aiOrNetworkMove[3];
+                    aiOrNetworkMoveTimeout.startTimer();
                 }
-
-
             }
 
-            isFirstMoveOfGame = false;
+        }
+
+
+        onReadyForVersusMove:{
+            unlockBoardPieces();
         }
 
     }
+
+
     NetworkLobby{
         id:networkLobby
         anchors.centerIn: parent

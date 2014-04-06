@@ -387,7 +387,8 @@ Rectangle {
             rearTire.rotation = 200
 
             helpBox_glowEffect.visible = true;
-            pulse_helpBox_glowEffect.running = true;
+            pulse_helpBox_glowEffect.start();
+            exitFlickerLongTimer.start();
         }
     }
 
@@ -614,79 +615,6 @@ Rectangle {
                 }
             }
 
-            /*
-            GUIButton {
-                id: startMenu_startOnePlayer
-                source_string: "singleplayer-button.png"
-                anchors.centerIn: parent
-                z: 3
-
-                MouseArea {
-                    anchors.fill: parent
-
-                    onClicked: {
-
-                        if( !piecesHaveStartedAnimating ){
-                            startPieceAnimations();
-                            piecesHaveStartedAnimating = true;
-
-                        }
-
-                        sendPlayerName( "TODO: FIX MEEEE" //playerNameBox.text );
-                        startMenu.state = "INVISIBLE"
-                        isNetworkGame = false;
-                        clearBoard();
-                        readyToStartOnePersonPlay();
-                    }
-                }
-            }
-            */
-
-            /*GUIButton {
-
-                property int buttonColor
-
-                id: colorSelection
-                source_string: "purp-button.png"
-                anchors.centerIn: parent
-                anchors.horizontalCenterOffset: 75
-                z: startMenu_startOnePlayer.z + 1
-
-                state: "BLACK"
-                buttonColor: 1
-
-                states: [
-                    State{
-                        name: "WHITE"
-                        PropertyChanges{ target: colorSelection; buttonColor: 0 }
-                    },
-                    State{
-                        name: "BLACK"
-                        PropertyChanges{ target: colorSelection; buttonColor: 1 }
-                    }
-                ]
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        if(colorSelection.state == "BLACK")
-                        {
-                            colorSelection.source_string = "teal-button.png"
-                            colorSelection.state = "WHITE"
-                            page.guiPlayerIsWhite = true;
-                            changeGuiPlayerColor(colorSelection.buttonColor);
-                        }
-                        else
-                        {
-                            colorSelection.source_string = "purp-button.png"
-                            colorSelection.state = "BLACK"
-                            page.guiPlayerIsWhite = false;
-                            changeGuiPlayerColor(colorSelection.buttonColor);
-                        }
-                    }
-                }
-            }*/
-
         }
 
         Image {
@@ -797,17 +725,7 @@ Rectangle {
                         if(_SOUND_CHECK_FLAG) slidingSound.play()
                     }
                     onClicked: {
-                        /*if( !piecesHaveStartedAnimating ){
-                            startPieceAnimations();
-                            piecesHaveStartedAnimating = true;
 
-                        }*/
-
-                        //sendPlayerName( "TODO: FIX MEEEE" /*playerNameBox.text*/ );
-                       // networkLobby.state ="VISIBLE"
-                        //isNetworkGame = true;
-                        //clearBoard();
-                        //enterNetworkLobby();
 
                         doors.state = "NETWORK";
                         startMenu_startNetwork.net_source_string = "network-game-stencil-selected.png";
@@ -816,25 +734,6 @@ Rectangle {
             }
 
         }
-
-        TextArea {
-
-            /*******TODO: PUT IN POP UP ********/
-            visible: false;
-
-            id: playerNameBox
-            width: 100
-            height: 25
-            text: "enter a name"
-            anchors.top: parent.top
-            anchors.topMargin: parent.height/2 + 135
-            anchors.left: parent.left
-            anchors.leftMargin: parent.width/2 + 90
-        }
-
-
-
-
     }
 
     Image {
@@ -875,12 +774,17 @@ Rectangle {
         onBackToMainMenu:{
             exitFlickerLongTimer.start();
         }
+        onLeaveForkliftMenuToGameScreen:{
+            exitFlickerLongTimer.stop();
+            exitFlickerShortTimer.stop();
+            pulse_helpBox_glowEffect.stop();
+        }
     }
 
     Timer{
         id: exitFlickerLongTimer
         interval: 4500
-        running: true
+        running: false
         repeat: true
 
         onTriggered:{

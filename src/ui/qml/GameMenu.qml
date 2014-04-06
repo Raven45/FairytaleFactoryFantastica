@@ -138,12 +138,31 @@ Rectangle {
 
                 if( isNetworkGame ){
                     networkQuitConfirmationPopup.state = "VISIBLE";
+                }
+                else if ( isSinglePlayerGame && waitingOnNetworkOrAIMove ){
+                    leaveGumdropAnimation();
+                    waitingForAISoWeCanExitGame = true;
+                    loadingScreen.visible = true;
                 }else{
                     gameMenu.state = "INVISIBLE";
                     startMenu.state = "VISIBLE";
                     leaveGumdropAnimation();
                     backToMainMenu();
                 }
+            }
+        }
+    }
+
+    Connections{
+        target: gameController
+        onReadyForGuiMove:{
+            if( waitingForAISoWeCanExitGame ){
+                waitingForAISoWeCanExitGame = false;
+                waitingOnNetworkOrAIMove = false;
+                gameMenu.state = "INVISIBLE";
+                startMenu.state = "VISIBLE";
+                loadingScreen.visible = false;
+                backToMainMenu();
             }
         }
     }
@@ -167,6 +186,7 @@ Rectangle {
             gameMenu.state = "INVISIBLE";
             networkQuitConfirmationPopup.state = "INVISIBLE";
             startMenu.state = "VISIBLE";
+            leaveGumdropAnimation();
             backToMainMenu();
         }
 

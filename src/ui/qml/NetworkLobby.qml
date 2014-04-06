@@ -9,7 +9,6 @@ Rectangle {
     color: "#00FFFF"
     state: "INVISIBLE"
     property int playerCount: 0
-    property bool guiPlayerIsWhiteAtEnter
 
     function challengePopupsAreHidden(){
         return challengePopup.state == "INVISIBLE" && sentChallengePopup.state == "INVISIBLE";
@@ -66,8 +65,6 @@ Rectangle {
             row5.clearRow();
             row6.clearRow();
             row7.clearRow();
-
-            guiPlayerIsWhite = guiPlayerIsWhiteAtEnter;
         }
 
         onPlayerLeftLobby:{

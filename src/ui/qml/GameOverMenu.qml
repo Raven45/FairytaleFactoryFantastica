@@ -130,7 +130,7 @@ Rectangle {
             lockBoardPieces()
             lockQuadrantRotation()
             gameOverMenu.state = "VISIBLE";
-            menuIsShowing = true;
+            allGameScreenButtonsAreLocked = true;
         }
     }
 
@@ -144,14 +144,17 @@ Rectangle {
 
             switch( parseInt(winner) ){
 
+            //DRAW
             case -1:
                 setWinnerText("NONE");
                 break;
+
+            //TEAL WON
             case 0:
 
                 setWinnerText(tealPlatformCharacter);
 
-                if( guiPlayerIsWhite ){
+                if( isVersusGame || !networkOrAIIsTeal ){
                     gameOverMenu.state = "VISIBLE";
                     killCharacter(purplePlatformCharacter);
                 }
@@ -161,11 +164,13 @@ Rectangle {
                 }
 
                 break;
+
+            //PURPLE WON
             case 1:
 
                 setWinnerText(purplePlatformCharacter);
 
-                if( !guiPlayerIsWhite ){
+                if(  isVersusGame || networkOrAIIsTeal ){
                     gameOverMenu.state = "VISIBLE";
                     killCharacter(tealPlatformCharacter);
                 }

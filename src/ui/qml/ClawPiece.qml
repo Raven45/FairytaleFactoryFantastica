@@ -191,14 +191,26 @@ Item {
         id: clawEndSpriteTimer
         duration: _CLAW_OPEN_DURATION + 20
         onTriggered:{
-            makeRightCanGoBack();
-            moveToHome.start()
 
-            if( (guiPlayerIsWhite && type == "TEAL" ) || (!guiPlayerIsWhite && type == "PURPLE") ){
-                readyForRotation();
+            //need to make the can-front image on the right side go back Z-wise so that we don't send the claw "through" it
+            makeRightCanGoBack();
+
+            moveClawToHome.start();
+
+            var thisClawIsNetworkOrAI = (networkOrAIIsTeal && type == "TEAL") || (!networkOrAIIsTeal && type != "TEAL");
+
+            if( isVersusGame || !thisClawIsNetworkOrAI ){
+                readyForUserToClickRotation();
             }
         }
 
+    }
+
+    Connections{
+        target: page
+        onClearBoard:{
+            moveClawToHome.start();
+        }
     }
 
 
@@ -206,7 +218,7 @@ Item {
     NumberAnimation {
         targets: [ root, clawHouse ]
         properties: "x"
-        id: moveToHome
+        id: moveClawToHome
         to: _CLAW_X_HOME
         duration: _CLAW_MOVE_DURATION * 3 / 4
         easing.type: Easing.OutSine

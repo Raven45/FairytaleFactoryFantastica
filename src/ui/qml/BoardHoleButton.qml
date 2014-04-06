@@ -56,7 +56,7 @@ Rectangle {
         width: 100; height: 100
         x: -31; y: -36
         visible: false
-        source: page.guiPlayerIsWhite ? "teal-gumdrop.png" : "purp-gumdrop.png"
+        source: movingPlayerIsTeal? "teal-gumdrop.png" : "purp-gumdrop.png"
     }
 
     SpriteSequence{
@@ -201,7 +201,7 @@ Rectangle {
 
         target: page
 
-        onPlaceOpponentsPiece: {
+        onPlaceNetworkOrAIPiece: {
             if( qIndex === quadrantIndex && pIndex === pieceIndex ) {
 
                 console.log("placing opponents piece at " + quadrantIndex + ", " + pieceIndex);
@@ -212,19 +212,18 @@ Rectangle {
                 if(_SOUND_CHECK_FLAG) magicSound.play();
 
 
-                if( page.guiPlayerIsWhite ){
-                    getFromCan( "PURPLE" );
-                    stateChangeTimer.playerColor = "BLACK";
+                if( networkOrAIIsTeal ){
+                    getFromCan( "TEAL" );
+                    stateChangeTimer.playerColor = "WHITE";
 
                 }
                 else{
-                    getFromCan( "TEAL" );
-                    stateChangeTimer.playerColor = "WHITE";
+                    getFromCan( "PURPLE" );
+                    stateChangeTimer.playerColor = "BLACK";
                 }
 
 
                 stateChangeTimer.startTimer();
-
             }
         }
 
@@ -532,7 +531,7 @@ Rectangle {
         hoverEnabled: true
 
         onEntered: {
-            if (!menuIsShowing && guiPlayerCanClickBoardHoleButton ) {
+            if (!allGameScreenButtonsAreLocked && guiPlayerCanClickBoardHoleButton ) {
                 if( boardHoleButton.state == "EMPTY" ) {
                     boardHole_glowEffect.visible = true;
                 }
@@ -547,7 +546,7 @@ Rectangle {
 
        onClicked: {
 
-           if (!menuIsShowing && guiPlayerCanClickBoardHoleButton ){
+           if (!allGameScreenButtonsAreLocked && guiPlayerCanClickBoardHoleButton ){
                 console.log("pieceIndex of click: " + pieceIndex );
 
                 if( boardHoleButton.state == "EMPTY" ){
@@ -558,7 +557,7 @@ Rectangle {
                     icingSprite.jumpTo( "spread" );
                     if(_SOUND_CHECK_FLAG) magicSound.play();
 
-                    if( guiPlayerIsWhite ) {
+                    if( movingPlayerIsTeal ) {
                          //boardHoleButton.state = "WHITE";
                         console.log( "calling getFromCan( TEAL )" );
                         getFromCan( "TEAL" );

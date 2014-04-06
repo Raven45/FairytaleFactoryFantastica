@@ -25,13 +25,12 @@ GenericPopup {
             challengeResponseResultTimer.wasAccepted = true;
             challengeResponseResultTimer.start();
 
-            //challenger does not move first
-            isFirstMoveOfGame = false;
 
-            //we need to save it so we can put it back later, fixes a bug where returning to main menu at starting a game and the guiPlayerIsWhite is wrong
-            guiPlayerIsWhiteAtEnter = guiPlayerIsWhite;
-            guiPlayerIsWhite = false;
+            waitingOnNetworkOrAIMove = true;
+            movingPlayerIsNetworkOrAI = true;
+            networkOrAIIsTeal = true;
 
+            leaveForkliftMenuToGameScreen();
             lockBoardPieces();
             lockQuadrantRotation();
         }
