@@ -211,7 +211,7 @@ Rectangle {
 
                 //if early win (no rotation)
                 if( parseInt(opponentsTurn[2]) === 111 ) {
-                    placeNetworkOrAIPiece( aiOrNetworkMove[0], aiOrNetworkMove[1] );
+                    placeNetworkOrAIPiece( opponentsTurn[0], opponentsTurn[1] );
                     networkEarlyWinGameOverAnimationsStartTimer.start();
                 }
             }
