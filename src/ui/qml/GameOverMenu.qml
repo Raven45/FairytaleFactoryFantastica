@@ -205,15 +205,13 @@ Rectangle {
     Connections {
         target: gameController
         onGameIsOver:{
-            if( isNetworkGame ) {
 
-                var opponentsTurn = gameController.getOpponentsTurn();
+            var opponentsTurn = gameController.getOpponentsTurn();
 
-                //if early win (no rotation)
-                if( parseInt(opponentsTurn[2]) === 111 ) {
-                    placeNetworkOrAIPiece( opponentsTurn[0], opponentsTurn[1] );
-                    networkEarlyWinGameOverAnimationsStartTimer.start();
-                }
+                                          //if early win (no rotation)
+            if( isNetworkGame && parseInt(opponentsTurn[2]) === 111 ) {
+                placeNetworkOrAIPiece( opponentsTurn[0], opponentsTurn[1] );
+                networkEarlyWinGameOverAnimationsStartTimer.start();
             }
             else{
                 gameOverAnimations();

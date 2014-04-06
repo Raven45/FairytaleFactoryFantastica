@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtQuick.Particles 2.0
 
 Item {
 
@@ -20,6 +21,31 @@ Item {
                     console.log("ERROR! bad direction received in onTurnCogs")
                 }
             }
+        }
+    }
+
+    ParticleSystem {
+        width: 1; height: 1
+        anchors.centerIn:  cogsSprite
+
+        ImageParticle {
+            groups: ["boardSmoke"]
+            source: "qrc:///particleresources/glowdot.png"
+            color: "#28111111"
+            blueVariation: 0.05
+        }
+
+        Emitter {
+            anchors.fill: parent
+            group: "boardSmoke"
+            emitRate: 75
+            lifeSpan: 3500
+            lifeSpanVariation:200
+            size: 20
+            endSize: 150
+            sizeVariation: 5
+            acceleration: PointDirection {y: 0; yVariation: 20; x: 0; xVariation: 20;}
+            velocity: AngleDirection { angle: 0; magnitude: 20; angleVariation:360; magnitudeVariation: 10 }
         }
     }
 
