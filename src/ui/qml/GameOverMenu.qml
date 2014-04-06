@@ -151,12 +151,14 @@ Rectangle {
                 //DRAW
                 case -1:
                     setWinnerText("NONE");
+                    console.log("draw detected.");
                     break;
 
                 //TEAL WON
                 case 0:
 
                     setWinnerText(tealPlatformCharacter);
+                    console.log("teal win detected.");
 
                     if( isVersusGame || !networkOrAIIsTeal ){
                         gameOverMenu.state = "VISIBLE";
@@ -173,6 +175,7 @@ Rectangle {
                 case 1:
 
                     setWinnerText(purplePlatformCharacter);
+                    console.log("purple win detected.");
 
                     if(  isVersusGame || networkOrAIIsTeal ){
                         gameOverMenu.state = "VISIBLE";
