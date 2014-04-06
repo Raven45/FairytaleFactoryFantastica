@@ -102,8 +102,12 @@ class MainBoard {
         bool whiteWon = whiteBoard.didWin();
         bool blackWon = blackBoard.didWin();
 
+        //qDebug() << std::boolalpha << "whiteWon: " << whiteWon << "; blackWon: " << blackWon;
+
         //both won or board is full
         result.isDraw = ( blackWon && whiteWon ) || ((BoardInt)(blackBoard | whiteBoard) == FULL_BOARD);
+
+       // qDebug() << "isDraw = " << result.isDraw;
 
         result.winner = NONE;
 

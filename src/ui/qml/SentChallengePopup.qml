@@ -29,7 +29,8 @@ GenericPopup {
             waitingOnNetworkOrAIMove = true;
             movingPlayerIsNetworkOrAI = true;
             networkOrAIIsTeal = true;
-
+            placeCharacterOnPlatform( "witch", "teal");
+            placeCharacterOnPlatform( "hansel", "purple");
             leaveForkliftMenuToGameScreen();
             lockBoardPieces();
             lockQuadrantRotation();

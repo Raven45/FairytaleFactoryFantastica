@@ -48,6 +48,8 @@ GenericPopup {
     onButton2Clicked: {
         challengeTimer.stop();
         resetValues();
+        placeCharacterOnPlatform( "hansel", "teal");
+        placeCharacterOnPlatform( "witch", "purple");
         challengePopup.state = "INVISIBLE";
         networkLobby.state = "INVISIBLE";
         leaveForkliftMenuToGameScreen();

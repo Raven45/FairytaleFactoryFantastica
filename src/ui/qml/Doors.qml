@@ -432,6 +432,7 @@ transitions:[
 
                 sendPlayerName( playerNameBox.text );
                 networkLobby.state ="VISIBLE";
+
                 enterNetworkLobby();
             }
         }
