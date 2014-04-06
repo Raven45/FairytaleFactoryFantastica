@@ -536,16 +536,16 @@ Rectangle {
                     hoverEnabled: true
 
                     onEntered: {
-                        if(forkWitch_glowEffect.visible == false && witch_mouseArea.containsMouse){
+                        if(forkWitch_glowEffect.visible == false && witch_mouseArea.containsMouse && !forkliftMenuButtonsAreLocked ){
                             forkWitch_glowEffect.visible = true;
                         }
                     }
                     onExited: {
-                        if(forkWitch_glowEffect.visible == true){
+                        if(forkWitch_glowEffect.visible == true ){
                             forkWitch_glowEffect.visible = false;
                         }
                     }
-                    onPressed: if(_SOUND_CHECK_FLAG) witchSound.play()
+                    onPressed: if(_SOUND_CHECK_FLAG && !forkliftMenuButtonsAreLocked ) witchSound.play()
                 }
             }
         }
@@ -585,32 +585,36 @@ Rectangle {
                     hoverEnabled: true
 
                     onEntered: {
-                        if( singlePlayer_mouseArea.containsMouse && startMenu_startOnePlayer.source_string === "single-player-stencil.png"){
+                        if( singlePlayer_mouseArea.containsMouse && startMenu_startOnePlayer.source_string === "single-player-stencil.png" && !forkliftMenuButtonsAreLocked ){
                             startMenu_startOnePlayer.source_string = "single-player-stencil-selected.png";
                         }
                     }
                     onExited: {
-                        if( startMenu_startOnePlayer.source_string === "single-player-stencil-selected.png"){
+                        if( startMenu_startOnePlayer.source_string === "single-player-stencil-selected.png" && !forkliftMenuButtonsAreLocked ){
                             if(startOnePlayer_currently_selected == false){
                                 startMenu_startOnePlayer.source_string = "single-player-stencil.png";
                             }
                         }
                     }
                     onPressed: {
-                        startOnePlayer_currently_selected = true;
-                        if(net_currently_selected == true) {
-                            net_currently_selected = false;
-                            startMenu_startNetwork.net_source_string = "network-game-stencil.png";
+                        if( !forkliftMenuButtonsAreLocked ){
+                            startOnePlayer_currently_selected = true;
+                            if(net_currently_selected == true) {
+                                net_currently_selected = false;
+                                startMenu_startNetwork.net_source_string = "network-game-stencil.png";
+                            }
+                            if(pvp_currently_selected == true) {
+                                pvp_currently_selected = false;
+                                startMenu_startPlayerVsPlayer.pvp_source_string = "player-vs-player-stencil.png";
+                            }
+                            if(_SOUND_CHECK_FLAG) slidingSound.play();
                         }
-                        if(pvp_currently_selected == true) {
-                            pvp_currently_selected = false;
-                            startMenu_startPlayerVsPlayer.pvp_source_string = "player-vs-player-stencil.png";
-                        }
-                        if(_SOUND_CHECK_FLAG) slidingSound.play();
                     }
                     onClicked: {
-                        doors.state = "SINGLE_PLAYER";
-                        startMenu_startOnePlayer.source_string = "single-player-stencil-selected.png";
+                        if( !forkliftMenuButtonsAreLocked ){
+                            doors.state = "SINGLE_PLAYER";
+                            startMenu_startOnePlayer.source_string = "single-player-stencil-selected.png";
+                        }
                     }
                 }
             }
@@ -643,33 +647,37 @@ Rectangle {
                     hoverEnabled: true
 
                     onEntered: {
-                        if( pvp_mouseArea.containsMouse && startMenu_startPlayerVsPlayer.pvp_source_string === "player-vs-player-stencil.png"){
+                        if( pvp_mouseArea.containsMouse && startMenu_startPlayerVsPlayer.pvp_source_string === "player-vs-player-stencil.png" && !forkliftMenuButtonsAreLocked  ){
                             startMenu_startPlayerVsPlayer.pvp_source_string = "player-vs-player-stencil-selected.png";
                         }
                     }
 
                     onExited: {
-                        if( startMenu_startPlayerVsPlayer.pvp_source_string === "player-vs-player-stencil-selected.png"){
+                        if( startMenu_startPlayerVsPlayer.pvp_source_string === "player-vs-player-stencil-selected.png"  ){
                             if(pvp_currently_selected == false){
                                 startMenu_startPlayerVsPlayer.pvp_source_string = "player-vs-player-stencil.png";
                             }
                         }
                     }
                     onPressed: {
-                        pvp_currently_selected = true;
-                        if(net_currently_selected == true) {
-                            net_currently_selected = false;
-                            startMenu_startNetwork.net_source_string = "network-game-stencil.png";
+                        if ( !forkliftMenuButtonsAreLocked ){
+                            pvp_currently_selected = true;
+                            if(net_currently_selected == true) {
+                                net_currently_selected = false;
+                                startMenu_startNetwork.net_source_string = "network-game-stencil.png";
+                            }
+                            if(startOnePlayer_currently_selected == true) {
+                                startOnePlayer_currently_selected = false;
+                                startMenu_startOnePlayer.source_string = "single-player-stencil.png";
+                            }
+                            if(_SOUND_CHECK_FLAG) slidingSound.play();
                         }
-                        if(startOnePlayer_currently_selected == true) {
-                            startOnePlayer_currently_selected = false;
-                            startMenu_startOnePlayer.source_string = "single-player-stencil.png";
-                        }
-                        if(_SOUND_CHECK_FLAG) slidingSound.play();
                     }
                     onClicked: {
-                        doors.state = "VERSUS"
-                        startMenu_startPlayerVsPlayer.pvp_source_string = "player-vs-player-stencil-selected.png";
+                        if ( !forkliftMenuButtonsAreLocked ){
+                            doors.state = "VERSUS"
+                            startMenu_startPlayerVsPlayer.pvp_source_string = "player-vs-player-stencil-selected.png";
+                        }
                     }
                 }
             }
@@ -700,7 +708,7 @@ Rectangle {
                     hoverEnabled: true
 
                     onEntered: {
-                        if( network_mouseArea.containsMouse && startMenu_startNetwork.net_source_string === "network-game-stencil.png"){
+                        if( !forkliftMenuButtonsAreLocked && network_mouseArea.containsMouse && startMenu_startNetwork.net_source_string === "network-game-stencil.png"){
                             startMenu_startNetwork.net_source_string = "network-game-stencil-selected.png";
                         }
                     }
@@ -713,22 +721,25 @@ Rectangle {
                         }
                     }
                     onPressed: {
-                        net_currently_selected = true;
-                        if(pvp_currently_selected == true) {
-                            pvp_currently_selected = false;
-                            startMenu_startPlayerVsPlayer.pvp_source_string = "player-vs-player-stencil.png";
+                        if (!forkliftMenuButtonsAreLocked ){
+                            net_currently_selected = true;
+                            if(pvp_currently_selected == true) {
+                                pvp_currently_selected = false;
+                                startMenu_startPlayerVsPlayer.pvp_source_string = "player-vs-player-stencil.png";
+                            }
+                            if(startOnePlayer_currently_selected == true) {
+                                startOnePlayer_currently_selected = false;
+                                startMenu_startOnePlayer.source_string = "single-player-stencil.png";
+                            }
+                            if(_SOUND_CHECK_FLAG) slidingSound.play()
                         }
-                        if(startOnePlayer_currently_selected == true) {
-                            startOnePlayer_currently_selected = false;
-                            startMenu_startOnePlayer.source_string = "single-player-stencil.png";
-                        }
-                        if(_SOUND_CHECK_FLAG) slidingSound.play()
                     }
                     onClicked: {
 
-
-                        doors.state = "NETWORK";
-                        startMenu_startNetwork.net_source_string = "network-game-stencil-selected.png";
+                        if (!forkliftMenuButtonsAreLocked ){
+                            doors.state = "NETWORK";
+                            startMenu_startNetwork.net_source_string = "network-game-stencil-selected.png";
+                        }
                     }
                 }
             }
@@ -753,17 +764,23 @@ Rectangle {
             hoverEnabled: true
 
             onEntered:{
-                exitSign.isHovered = true;
-                exitSign.source = "exitSignHover.png"
+                if ( !forkliftMenuButtonsAreLocked ){
+                    exitSign.isHovered = true;
+                    exitSign.source = "exitSignHover.png"
+                }
             }
 
             onExited:{
-                exitSign.isHovered = false;
-                exitSign.source = "exitSignDim.png"
+                if ( !forkliftMenuButtonsAreLocked ){
+                    exitSign.isHovered = false;
+                    exitSign.source = "exitSignDim.png"
+                }
             }
 
             onClicked: {
-                readyToExitGame()
+                if (!forkliftMenuButtonsAreLocked ){
+                    readyToExitGame()
+                }
             }
         }
 
@@ -772,9 +789,11 @@ Rectangle {
     Connections{
         target: page
         onBackToMainMenu:{
+            forkliftMenuButtonsAreLocked = false;
             exitFlickerLongTimer.start();
         }
         onLeaveForkliftMenuToGameScreen:{
+            forkliftMenuButtonsAreLocked = true;
             exitFlickerLongTimer.stop();
             exitFlickerShortTimer.stop();
             pulse_helpBox_glowEffect.stop();

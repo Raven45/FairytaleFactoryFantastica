@@ -50,8 +50,8 @@ Rectangle {
             id: characterFace_mouseArea
             anchors.fill: parent
 
-            onPressed: { if(_SOUND_CHECK_FLAG) selectorSound.play() }
-            onClicked: { changeCharacter(); }
+            onPressed: { if(_SOUND_CHECK_FLAG && !forkliftMenuButtonsAreLocked ) selectorSound.play() }
+            onClicked: { if( !forkliftMenuButtonsAreLocked ) changeCharacter(); }
         }
     }
 
@@ -86,17 +86,17 @@ Rectangle {
                 hoverEnabled: true
 
                 onEntered: {
-                    if(leftSelector_glowEffect.visible == false && leftSelector_mouseArea.containsMouse){
+                    if(leftSelector_glowEffect.visible == false && leftSelector_mouseArea.containsMouse && !forkliftMenuButtonsAreLocked ){
                         leftSelector_glowEffect.visible = true;
                     }
                 }
                 onExited: {
-                    if(leftSelector_glowEffect.visible == true){
+                    if(leftSelector_glowEffect.visible == true && !forkliftMenuButtonsAreLocked ){
                         leftSelector_glowEffect.visible = false;
                     }
                 }
-                onPressed: { if(_SOUND_CHECK_FLAG) selectorSound.play() }
-                onClicked: { changeCharacter(); }
+                onPressed: { if(_SOUND_CHECK_FLAG && !forkliftMenuButtonsAreLocked ) selectorSound.play() }
+                onClicked: { if( !forkliftMenuButtonsAreLocked ) changeCharacter(); }
             }
         }
     }
@@ -132,7 +132,7 @@ Rectangle {
                 hoverEnabled: true
 
                 onEntered: {
-                    if(rightSelector_glowEffect.visible == false && rightSelector_mouseArea.containsMouse){
+                    if(rightSelector_glowEffect.visible == false && rightSelector_mouseArea.containsMouse && !forkliftMenuButtonsAreLocked ){
                         rightSelector_glowEffect.visible = true;
                     }
                 }
@@ -141,8 +141,8 @@ Rectangle {
                         rightSelector_glowEffect.visible = false;
                     }
                 }
-                onPressed: { if(_SOUND_CHECK_FLAG) selectorSound.play(); }
-                onClicked: { changeCharacter(); }
+                onPressed: { if(_SOUND_CHECK_FLAG && !forkliftMenuButtonsAreLocked ) selectorSound.play(); }
+                onClicked: { if( !forkliftMenuButtonsAreLocked ) changeCharacter(); }
             }
         }
     }

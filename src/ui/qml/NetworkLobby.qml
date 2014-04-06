@@ -181,11 +181,25 @@ Rectangle {
         onClicked: {
 
            if( challengePopupsAreHidden() ){
-                networkLobby.state = "INVISIBLE";
-                startMenu.state = "VISIBLE"
-                backToMainMenu();
+               loadingScreen.visible = true;
+               networkLobby.state = "INVISIBLE";
+               networkLeaveLoadingTimer.start()
+
             }
         }
+    }
+
+    Timer{
+        id: networkLeaveLoadingTimer
+        interval: 2000
+        running: false
+        repeat: false
+        onTriggered: {
+            loadingScreen.visible = false;
+            startMenu.state = "VISIBLE";
+            backToMainMenu();
+        }
+
     }
 
     ChallengePopup{

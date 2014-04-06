@@ -258,70 +258,70 @@ transitions:[
             hoverEnabled: true
 
             onEntered:{
-                if(startHandle_mouseArea.containsMouse){
+                if(startHandle_mouseArea.containsMouse && !forkliftMenuButtonsAreLocked ){
                     startStencil_img.source = "start-stencil-selected.png";
                 }
             }
             onExited: { startStencil_img.source = "start-stencil.png"; }
-            onPressed:{ if(_SOUND_CHECK_FLAG) tankSound.play() }
+            onPressed:{ if(_SOUND_CHECK_FLAG && !forkliftMenuButtonsAreLocked ) tankSound.play() }
             onClicked:{
 
+                if( !forkliftMenuButtonsAreLocked ){
+                    sendPlayerName( "TODO: DEPRECATED?" );
 
-                sendPlayerName( "TODO: DEPRECATED?" );
+                    isNetworkGame = false;
+                    isVersusGame = false;
+                    isSinglePlayerGame = true;
 
-                isNetworkGame = false;
-                isVersusGame = false;
-                isSinglePlayerGame = true;
+                    var menuSelectedColor;
+                    if(singlePlayerGumdropSelector.gumdrop_selector_string == "teal")
+                    {
+                        networkOrAIIsTeal = false;
+                        waitingOnNetworkOrAIMove = false;
+                        movingPlayerIsNetworkOrAI = false;
+                        menuSelectedColor = 0;
 
-                var menuSelectedColor;
-                if(singlePlayerGumdropSelector.gumdrop_selector_string == "teal")
-                {
-                    networkOrAIIsTeal = false;
-                    waitingOnNetworkOrAIMove = false;
-                    movingPlayerIsNetworkOrAI = false;
-                    menuSelectedColor = 0;
+                    }
+                    else if(singlePlayerGumdropSelector.gumdrop_selector_string == "purp")
+                    {
+                        networkOrAIIsTeal = true;
+                        movingPlayerIsNetworkOrAI = true;
+                        waitingOnNetworkOrAIMove = true;
+                        menuSelectedColor = 1;
+                    }
+                    else{
 
+                        console.log("logic error with gumdrop selector")
+                    }
+
+                    placeCharacterOnPlatform(singlePlayerCharacterSelector.character_selector_string, singlePlayerGumdropSelector.gumdrop_selector_string );
+
+                    if( singlePlayerGumdropSelector.gumdrop_selector_string == "teal" ){
+                        placeCharacterOnPlatform("witch", "purple");
+                    }
+                    else{
+                        placeCharacterOnPlatform("witch", "teal");
+                    }
+
+                    leaveForkliftMenuToGameScreen();
+
+                    if( difficultySelector.difficulty_selector_string == "easy" ){
+                        readyToStartOnePersonPlay(1, menuSelectedColor);
+                    }
+                    else if( difficultySelector.difficulty_selector_string == "med" ) {
+                        readyToStartOnePersonPlay(2, menuSelectedColor);
+                    }
+                    else if( difficultySelector.difficulty_selector_string == "hard" ) {
+                        readyToStartOnePersonPlay(3, menuSelectedColor);
+                    }
+                    else{
+                        console.log("logic error with difficulty selector")
+                    }
+
+                    if( networkOrAIIsTeal ){
+                        lockBoardPieces();
+                    }
                 }
-                else if(singlePlayerGumdropSelector.gumdrop_selector_string == "purp")
-                {
-                    networkOrAIIsTeal = true;
-                    movingPlayerIsNetworkOrAI = true;
-                    waitingOnNetworkOrAIMove = true;
-                    menuSelectedColor = 1;
-                }
-                else{
-
-                    console.log("logic error with gumdrop selector")
-                }
-
-                placeCharacterOnPlatform(singlePlayerCharacterSelector.character_selector_string, singlePlayerGumdropSelector.gumdrop_selector_string );
-
-                if( singlePlayerGumdropSelector.gumdrop_selector_string == "teal" ){
-                    placeCharacterOnPlatform("witch", "purple");
-                }
-                else{
-                    placeCharacterOnPlatform("witch", "teal");
-                }
-
-                leaveForkliftMenuToGameScreen();
-
-                if( difficultySelector.difficulty_selector_string == "easy" ){
-                    readyToStartOnePersonPlay(1, menuSelectedColor);
-                }
-                else if( difficultySelector.difficulty_selector_string == "med" ) {
-                    readyToStartOnePersonPlay(2, menuSelectedColor);
-                }
-                else if( difficultySelector.difficulty_selector_string == "hard" ) {
-                    readyToStartOnePersonPlay(3, menuSelectedColor);
-                }
-                else{
-                    console.log("logic error with difficulty selector")
-                }
-
-                if( networkOrAIIsTeal ){
-                    lockBoardPieces();
-                }
-
             }
         }
 
@@ -359,26 +359,27 @@ transitions:[
             hoverEnabled: true
 
             onEntered:{
-                if(pvpHandle_mouseArea.containsMouse){
+                if(pvpHandle_mouseArea.containsMouse && !forkliftMenuButtonsAreLocked ){
                     pvpStencil_img.source = "start-stencil-selected.png";
                 }
             }
             onExited: { pvpStencil_img.source = "start-stencil.png"; }
-            onPressed:{ if(_SOUND_CHECK_FLAG) tankSound.play() }
+            onPressed:{ if(_SOUND_CHECK_FLAG && !forkliftMenuButtonsAreLocked ) tankSound.play() }
             onClicked:{
+                if( !forkliftMenuButtonsAreLocked ){
+                    //allThatWitch_IntoGameScreen();
 
-                //allThatWitch_IntoGameScreen();
+                    sendPlayerName( "TODO: DEPRECATED?" );
+                    isNetworkGame = false;
+                    isVersusGame = true;
+                    isSinglePlayerGame = false;
 
-                sendPlayerName( "TODO: DEPRECATED?" );
-                isNetworkGame = false;
-                isVersusGame = true;
-                isSinglePlayerGame = false;
+                    placeCharacterOnPlatform(pvpPlayer1CharacterSelector.character_selector_string, "teal" );
+                    placeCharacterOnPlatform(pvpPlayer2CharacterSelector.character_selector_string, "purple" );
 
-                placeCharacterOnPlatform(pvpPlayer1CharacterSelector.character_selector_string, "teal" );
-                placeCharacterOnPlatform(pvpPlayer2CharacterSelector.character_selector_string, "purple" );
-
-                leaveForkliftMenuToGameScreen();
-                readyToStartTwoPersonPlay();
+                    leaveForkliftMenuToGameScreen();
+                    readyToStartTwoPersonPlay();
+                }
             }
         }
 
@@ -417,23 +418,25 @@ transitions:[
             hoverEnabled: true
 
             onEntered:{
-                if(networkingHandle_mouseArea.containsMouse){
+                if(networkingHandle_mouseArea.containsMouse && !forkliftMenuButtonsAreLocked ){
                     networkingStencil_img.source = "enter-lobby-stencil-selected.png";
                 }
             }
             onExited: { networkingStencil_img.source = "enter-lobby-stencil.png"; }
-            onPressed:{ if(_SOUND_CHECK_FLAG) tankSound.play() }
+            onPressed:{ if(_SOUND_CHECK_FLAG && !forkliftMenuButtonsAreLocked ) tankSound.play() }
             onClicked: {
 
+                if( !forkliftMenuButtonsAreLocked ){
 
-                isNetworkGame = true;
-                isVersusGame = false;
-                isSinglePlayerGame = false;
+                    isNetworkGame = true;
+                    isVersusGame = false;
+                    isSinglePlayerGame = false;
 
-                sendPlayerName( playerNameBox.text );
-                networkLobby.state ="VISIBLE";
-
-                enterNetworkLobby();
+                    sendPlayerName( playerNameBox.text );
+                    networkLobby.state ="VISIBLE";
+                    forkliftMenuButtonsAreLocked = true;
+                    enterNetworkLobby();
+                }
             }
         }
 

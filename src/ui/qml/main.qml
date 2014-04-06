@@ -88,7 +88,8 @@ Rectangle {
     property string purplePlatformCharacter: "NONE"
     property bool guiPlayerCanClickBoardHoleButton: false
     property bool guiPlayerCanClickRotation: false
-    property bool allGameScreenButtonsAreLocked: false
+    property bool allGameScreenButtonsAreLocked: true
+    property bool forkliftMenuButtonsAreLocked: false
     property string gameMessage
 
     property bool isSinglePlayerGame: false
