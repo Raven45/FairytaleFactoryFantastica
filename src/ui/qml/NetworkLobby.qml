@@ -57,17 +57,6 @@ Rectangle {
             playerCount++;
         }
 
-        onBackToMainMenu:{
-            row0.clearRow();
-            row1.clearRow();
-            row2.clearRow();
-            row3.clearRow();
-            row4.clearRow();
-            row5.clearRow();
-            row6.clearRow();
-            row7.clearRow();
-        }
-
         onPlayerLeftLobby:{
             playerCount--;
             console.log("Player left lobby!");
@@ -184,8 +173,18 @@ Rectangle {
                loadingScreen.visible = true;
                networkLobby.state = "INVISIBLE";
 
+               row0.clearRow();
+               row1.clearRow();
+               row2.clearRow();
+               row3.clearRow();
+               row4.clearRow();
+               row5.clearRow();
+               row6.clearRow();
+               row7.clearRow();
+
                //need to allow others in lobby to recognize our leaving so we
                //can't reconnect quickly
+               leaveLobby();
                networkLeaveLoadingTimer.start()
 
             }
@@ -214,6 +213,4 @@ Rectangle {
         id: sentChallengePopup
         anchors.centerIn: parent
     }
-
-
 }

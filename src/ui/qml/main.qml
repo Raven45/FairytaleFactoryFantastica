@@ -46,6 +46,7 @@ Rectangle {
     signal clearBoard()
     signal readyToExitGame()
     signal backToMainMenu()
+    signal leaveLobby()
     signal sendPlayerName(var playerName )
     signal readyToOpenClaw(int qIndex, int pIndex, var whichClaw )
     signal getFromCan( var whichClaw )
@@ -366,6 +367,7 @@ Rectangle {
             onOpponentDisconnected:{
                 if( startMenu.state == "INVISIBLE" && networkLobby.state == "INVISIBLE" && isNetworkGame ){
                     networkPlayerDisconnectedPopup.state = "VISIBLE";
+                    allGameScreenButtonsAreLocked = true;
                 }
             }
 

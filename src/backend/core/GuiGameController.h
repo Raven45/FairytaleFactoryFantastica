@@ -37,7 +37,7 @@ signals:
     void changeSoundState();
     void changeGuiPlayerColor(int color);
     void readyToExitGame();
-    void backToMainMenu();
+    void leaveLobby();
     void sendPlayerName(QVariant playerName );
     void readyToOpenClaw(int qIndex, int pIndex, QVariant whichClaw );
     void enterNetworkLobby();
@@ -154,7 +154,7 @@ public slots:
     void networkTurnReceivedFromNetwork( int, int, int, int );
     void initialize();
     void setNetworkInterface();
-    void backToMainMenu();
+    void leaveLobby();
 };
 
 
@@ -188,7 +188,7 @@ public:
         connect( gui,   SIGNAL( changeSoundState() ),                               this,   SIGNAL( changeSoundState() ));
         connect( gui,   SIGNAL( changeGuiPlayerColor( int )),                       this,   SIGNAL( changeGuiPlayerColor( int ) ));
         connect( gui,   SIGNAL( readyToExitGame() ),                                this,   SIGNAL( readyToExitGame() ));
-        connect( gui,   SIGNAL( backToMainMenu() ),                                 this,   SIGNAL( backToMainMenu() ));
+        connect( gui,   SIGNAL( leaveLobby() ),                                     this,   SIGNAL( leaveLobby() ));
         connect( gui,   SIGNAL(sendThisChallenge(QVariant)),                        this,   SIGNAL(sendThisChallenge(QVariant)));
         connect( gui,   SIGNAL(sendThisChallengeResponse(bool)),                    this,   SIGNAL(sendThisChallengeResponse(bool)));
         connect( gui,   SIGNAL(sendThisNetworkMove( int, int, int, int )),          this,   SIGNAL(sendThisNetworkMove( int, int, int, int )));

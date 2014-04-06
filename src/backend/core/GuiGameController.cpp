@@ -75,7 +75,7 @@ void GuiGameController::setWindow(Proxy* g){
     connect(gui, SIGNAL( enterNetworkLobby() ),             this, SLOT( enterNetworkLobby() ),      Qt::QueuedConnection  );
     connect(gui, SIGNAL( changeSoundState() ),              this, SLOT( togglePlayback() ),         Qt::QueuedConnection  );
     connect(gui, SIGNAL( readyToExitGame() ),               this, SLOT( exitGame() ),               Qt::QueuedConnection  );
-    connect(gui, SIGNAL( backToMainMenu() ),                this, SLOT( backToMainMenu() ),         Qt::QueuedConnection  );
+    connect(gui, SIGNAL( leaveLobby() ),                this, SLOT( leaveLobby() ),         Qt::QueuedConnection  );
 
 }
 
@@ -126,14 +126,14 @@ void GuiGameController::setNetworkInterface(){
 
 }
 
-void GuiGameController::backToMainMenu(){
-    qDebug() << "gameController, going back to main menu";
+void GuiGameController::leaveLobby(){
+    qDebug() << "game controller telling network to leave lobby...";
     if( isNetworkGame ){
         isNetworkGame = false;
         net -> leaveLobby();
     }
     else{
-        qDebug() << "we weren't just in a network game";
+        qDebug() << "we weren't just in a network game - ERROR??";
     }
 
 }
