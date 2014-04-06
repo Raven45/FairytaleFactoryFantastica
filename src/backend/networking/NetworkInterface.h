@@ -144,7 +144,7 @@ public slots:
     }
 
     void tellMeGameIsOver(){
-        if( networkIsActive ){
+        if( networkIsActive && !networkGameIsOver ){
             networkGameIsOver = true;
             forgetAllAboutPlayer(connectedPlayerInfo);
             qDebug() << "network interface knows that game is over!";

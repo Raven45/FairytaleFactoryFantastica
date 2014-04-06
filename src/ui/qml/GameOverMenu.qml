@@ -134,61 +134,91 @@ Rectangle {
         }
     }
 
+    function gameOverAnimations(){
+        //this if fixes an edge case: when you leave a game right before the AI wins, the
+        //end game animations would play when the move was received
+        if( !leftSinglePlayerGameWhileAIWasMoving ){
+
+            allGameScreenButtonsAreLocked = true;
+
+            var winner = gameController.getWinner();
+
+            leaveGameScreenTimer.start();
+
+            switch( parseInt(winner) ){
+
+            //DRAW
+            case -1:
+                setWinnerText("NONE");
+                console.log("draw detected.");
+                break;
+
+            //TEAL WON
+            case 0:
+
+                setWinnerText(tealPlatformCharacter);
+                console.log("teal win detected.");
+
+                if( isVersusGame || !networkOrAIIsTeal ){
+                    gameOverMenu.state = "VISIBLE";
+                    killCharacter(purplePlatformCharacter);
+                }
+                else{
+                    gameOverTimeout.loser = purplePlatformCharacter;
+                    gameOverTimeout.startTimer();
+                }
+
+                break;
+
+            //PURPLE WON
+            case 1:
+
+                setWinnerText(purplePlatformCharacter);
+                console.log("purple win detected.");
+
+                if(  isVersusGame || networkOrAIIsTeal ){
+                    gameOverMenu.state = "VISIBLE";
+                    killCharacter(tealPlatformCharacter);
+                }
+                else{
+                    gameOverTimeout.loser = tealPlatformCharacter;
+                    gameOverTimeout.startTimer();
+                }
+
+                break;
+            }
+        }
+    }
+
+    Timer{
+        id: networkEarlyWinGameOverAnimationsStartTimer
+        interval: _OPPONENT_START_ROTATION_DELAY //time it takes the claw to place a piece
+        repeat: false
+        running: false
+
+        onTriggered:{
+            gameOverAnimations();
+        }
+
+    }
+
     Connections {
         target: gameController
         onGameIsOver:{
+            if( isNetworkGame ) {
 
-            //this if fixes an edge case: when you leave a game right before the AI wins, the
-            //end game animations would play when the move was received
-            if( !leftSinglePlayerGameWhileAIWasMoving ){
+                var opponentsTurn = gameController.getOpponentsTurn();
 
-                var winner = gameController.getWinner();
-
-                leaveGameScreenTimer.start();
-
-                switch( parseInt(winner) ){
-
-                //DRAW
-                case -1:
-                    setWinnerText("NONE");
-                    console.log("draw detected.");
-                    break;
-
-                //TEAL WON
-                case 0:
-
-                    setWinnerText(tealPlatformCharacter);
-                    console.log("teal win detected.");
-
-                    if( isVersusGame || !networkOrAIIsTeal ){
-                        gameOverMenu.state = "VISIBLE";
-                        killCharacter(purplePlatformCharacter);
-                    }
-                    else{
-                        gameOverTimeout.loser = purplePlatformCharacter;
-                        gameOverTimeout.startTimer();
-                    }
-
-                    break;
-
-                //PURPLE WON
-                case 1:
-
-                    setWinnerText(purplePlatformCharacter);
-                    console.log("purple win detected.");
-
-                    if(  isVersusGame || networkOrAIIsTeal ){
-                        gameOverMenu.state = "VISIBLE";
-                        killCharacter(tealPlatformCharacter);
-                    }
-                    else{
-                        gameOverTimeout.loser = tealPlatformCharacter;
-                        gameOverTimeout.startTimer();
-                    }
-
-                    break;
+                //if early win (no rotation)
+                if( parseInt(opponentsTurn[2]) === 111 ) {
+                    placeNetworkOrAIPiece( aiOrNetworkMove[0], aiOrNetworkMove[1] );
+                    networkEarlyWinGameOverAnimationsStartTimer.start();
                 }
             }
+            else{
+                gameOverAnimations();
+            }
+
         }
     }
 }

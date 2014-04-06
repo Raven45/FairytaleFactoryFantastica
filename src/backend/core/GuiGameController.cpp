@@ -374,11 +374,6 @@ void GuiGameController::registerOpponentsTurnWithBoard(Turn opponentsMove ) {
         assert(false);
     }
 
-    if( opponentsMove.getQuadrantToRotate() == DONT_ROTATE_CODE ){
-        //OPPONENT WON BECAUSE HE SENT A TURN WITHOUT A ROTATION
-        emit gameIsOver();
-
-    }
 
     if( qOpponentsLastTurn.empty() ){
         qOpponentsLastTurn.append( opponentsMove.getHole().quadrantIndex );
@@ -392,4 +387,11 @@ void GuiGameController::registerOpponentsTurnWithBoard(Turn opponentsMove ) {
         qOpponentsLastTurn[2] = opponentsMove.getQuadrantToRotate();
         qOpponentsLastTurn[3] = opponentsMove.getRotationDirection();
     }
+
+    if( opponentsMove.getQuadrantToRotate() == DONT_ROTATE_CODE ){
+        //OPPONENT WON BECAUSE HE SENT A TURN WITHOUT A ROTATION
+        emit gameIsOver();
+
+    }
+
 }
