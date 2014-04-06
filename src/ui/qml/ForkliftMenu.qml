@@ -387,7 +387,8 @@ Rectangle {
             rearTire.rotation = 200
 
             helpBox_glowEffect.visible = true;
-            pulse_helpBox_glowEffect.running = true;
+            pulse_helpBox_glowEffect.start();
+            exitFlickerLongTimer.start();
         }
     }
 
@@ -773,12 +774,17 @@ Rectangle {
         onBackToMainMenu:{
             exitFlickerLongTimer.start();
         }
+        onLeaveForkliftMenuToGameScreen:{
+            exitFlickerLongTimer.stop();
+            exitFlickerShortTimer.stop();
+            pulse_helpBox_glowEffect.stop();
+        }
     }
 
     Timer{
         id: exitFlickerLongTimer
         interval: 4500
-        running: true
+        running: false
         repeat: true
 
         onTriggered:{

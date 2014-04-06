@@ -14,13 +14,14 @@ Rectangle {
 
     color: "#333333"
 
+    signal leaveForkliftMenuToGameScreen()
     signal doneWithFireAnimation()
     signal placeCharacterOnPlatform( string character, string platform );
     signal droppedSomethingInOven()
     signal readyToStartOnePersonPlay( int aiLevel, int menuSelectedColor )
     signal readyToStartTwoPersonPlay()
     signal load()
-    signal turnRotationGlowOn()
+    signal startRotationOnRedRotationButtons()
     signal hanselIsOverOven()
     signal gretelIsOverOven()
     signal witchIsOverOven()
@@ -79,6 +80,7 @@ Rectangle {
 
     property alias main: page
     property bool movingPlayerIsTeal: false
+    property bool waitingForAISoWeCanExitGame: false
     property bool movingPlayerIsNetworkOrAI: false
     property bool networkOrAIIsTeal: false
     property string tealPlatformCharacter: "NONE"
@@ -87,14 +89,13 @@ Rectangle {
     property bool guiPlayerCanClickRotation: false
     property bool allGameScreenButtonsAreLocked: false
     property string gameMessage
-    property bool isFirstMoveOfGame: true
 
     property bool isSinglePlayerGame: false
     property bool isVersusGame: false
     property bool isNetworkGame: false
 
     property bool piecesHaveStartedAnimating: false
-    property bool waitingOnAIMove: false
+    property bool waitingOnNetworkOrAIMove: false
     property bool _SOUND_CHECK_FLAG: false
 
     property bool startOnePlayer_currently_selected: false
@@ -159,17 +160,33 @@ Rectangle {
         guiPlayerCanClickBoardHoleButton = false;
     }
 
+    onLeaveForkliftMenuToGameScreen:{
+
+        if( !piecesHaveStartedAnimating ){
+            startPieceAnimations();
+            piecesHaveStartedAnimating = true;
+
+        } else{
+            resumeGumdropAnimation();
+        }
+
+        clearBoard();
+        movingPlayerIsTeal = true;
+        allGameScreenButtonsAreLocked = false;
+        startMenu.state = "INVISIBLE";
+    }
+
     function killCharacter( character ){
         if( character == "witch" ){
             startPickUpWitch();
         }
         else if ( character == "hansel" ){
             startPickUpHansel();
-            witchSound.play();
+            if(_SOUND_CHECK_FLAG) witchSound.play();
         }
         else if ( character == "gretel" ){
             startPickUpGretel();
-            witchSound.play();
+            if(_SOUND_CHECK_FLAG) witchSound.play();
         }
         else{
             console.log("in main.qml function killCharacter: invalid parameter");
@@ -190,12 +207,7 @@ Rectangle {
         if (!guiPlayerCanClickBoardHoleButton)
         {
             guiPlayerCanClickRotation = true;
-            turnRotationGlowOn();
         }
-    }
-
-    onBackToMainMenu:{
-        isFirstMoveOfGame = true;
     }
 
     TextArea{
@@ -214,9 +226,13 @@ Rectangle {
         onTriggered:{
             //console.log("registering guiPlayer's move... ");
             gameController.registerGuiTurnWithBoard();
-            //console.log("guiPlayers turn is over.");
+            console.log("guiPlayers turn is over.");
 
             movingPlayerIsTeal = !movingPlayerIsTeal;
+
+            if( isSinglePlayerGame ){
+                waitingOnNetworkOrAIMove = true;
+            }
 
             if( isSinglePlayerGame || isNetworkGame ){
                 movingPlayerIsNetworkOrAI = true;
@@ -260,7 +276,6 @@ Rectangle {
 
     onClearBoard:{
         allGameScreenButtonsAreLocked = false;
-        isFirstMoveOfGame = true;
         movingPlayerIsTeal = true;
 
         lockQuadrantRotation();
@@ -288,10 +303,10 @@ Rectangle {
 
             var aiOrNetworkMove = gameController.getOpponentsTurn();
 
-            if( !isFirstMoveOfGame ){
+            if( waitingOnNetworkOrAIMove && !waitingForAISoWeCanExitGame  ){
                 console.log("Network/AI move: " + aiOrNetworkMove);
                 placeNetworkOrAIPiece( aiOrNetworkMove[0], aiOrNetworkMove[1] );
-
+                waitingOnNetworkOrAIMove = false;
                 if( parseInt(aiOrNetworkMove[2]) !== 111 ) //DONT_ROTATE_CODE
                 {
                     //console.log("telling the timer rotation data" );
@@ -301,7 +316,6 @@ Rectangle {
                 }
             }
 
-            isFirstMoveOfGame = false;
         }
 
 

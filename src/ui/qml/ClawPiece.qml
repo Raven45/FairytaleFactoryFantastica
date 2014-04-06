@@ -206,6 +206,13 @@ Item {
 
     }
 
+    Connections{
+        target: page
+        onClearBoard:{
+            moveClawToHome.start();
+        }
+    }
+
 
 
     NumberAnimation {

@@ -220,7 +220,6 @@ void GuiGameController::startOnePersonPlay( int aiLevel, int menuSelectedColor )
 
     if( guiPlayerColor != firstMover ){
         registerOpponentsTurnWithBoard ( player2 -> getMove( copyCurrentBoard() ) );
-        emit readyForGuiMove();
     }
 
     //default to gui move

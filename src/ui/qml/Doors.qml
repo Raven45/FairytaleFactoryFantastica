@@ -129,7 +129,7 @@ transitions:[
 
     function allThatWitch_IntoGameScreen(){
         helpBox_glowEffect.visible = false;
-        pulse_helpBox_glowEffect.running = false;
+        pulse_helpBox_glowEffect.stop();
         doorsRectangle.state = "UP";
         moveForklift_IntoGameScreen_Timer.start();
     }
@@ -265,31 +265,28 @@ transitions:[
             onExited: { startStencil_img.source = "start-stencil.png"; }
             onPressed:{ if(_SOUND_CHECK_FLAG) tankSound.play() }
             onClicked:{
-                    if( !piecesHaveStartedAnimating ){
-                        startPieceAnimations();
-                        piecesHaveStartedAnimating = true;
 
-                    } else{
-                        resumeGumdropAnimation();
-                    }
 
-                    sendPlayerName( "TODO: FIX MEEEE" );
-                    startMenu.state = "INVISIBLE"
-                    isNetworkGame = false;
-                    isVersusGame = false;
-                    isSinglePlayerGame = true;
-                    clearBoard();
+                sendPlayerName( "TODO: DEPRECATED?" );
+
+                isNetworkGame = false;
+                isVersusGame = false;
+                isSinglePlayerGame = true;
 
                 var menuSelectedColor;
                 if(singlePlayerGumdropSelector.gumdrop_selector_string == "teal")
                 {
                     networkOrAIIsTeal = false;
+                    waitingOnNetworkOrAIMove = false;
+                    movingPlayerIsNetworkOrAI = false;
                     menuSelectedColor = 0;
 
                 }
                 else if(singlePlayerGumdropSelector.gumdrop_selector_string == "purp")
                 {
                     networkOrAIIsTeal = true;
+                    movingPlayerIsNetworkOrAI = true;
+                    waitingOnNetworkOrAIMove = true;
                     menuSelectedColor = 1;
                 }
                 else{
@@ -306,26 +303,7 @@ transitions:[
                     placeCharacterOnPlatform("witch", "teal");
                 }
 
-
-                if( !piecesHaveStartedAnimating ){
-                    startPieceAnimations();
-                    piecesHaveStartedAnimating = true;
-                }
-                else{
-                    resumeGumdropAnimation();
-                }
-
-                sendPlayerName( "TODO: FIX MEEEE" /*playerNameBox.text*/ );
-                startMenu.state = "INVISIBLE"
-                isNetworkGame = false;
-                clearBoard();
-
-                exitFlickerLongTimer.stop();
-                exitFlickerShortTimer.stop();
-
-                //Stop How-to-Play box
-                //helpBox_glowEffect.visible = false;
-                //pulse_helpBox_glowEffect.running = false;
+                leaveForkliftMenuToGameScreen();
 
                 if( difficultySelector.difficulty_selector_string == "easy" ){
                     readyToStartOnePersonPlay(1, menuSelectedColor);
@@ -338,6 +316,10 @@ transitions:[
                 }
                 else{
                     console.log("logic error with difficulty selector")
+                }
+
+                if( networkOrAIIsTeal ){
+                    lockBoardPieces();
                 }
 
             }
@@ -387,44 +369,15 @@ transitions:[
 
                 //allThatWitch_IntoGameScreen();
 
-                if( !piecesHaveStartedAnimating ){
-                    startPieceAnimations();
-                    piecesHaveStartedAnimating = true;
-
-                } else{
-                    resumeGumdropAnimation();
-                }
-
-                sendPlayerName( "TODO: FIX MEEEE" );
-                startMenu.state = "INVISIBLE"
+                sendPlayerName( "TODO: DEPRECATED?" );
                 isNetworkGame = false;
                 isVersusGame = true;
                 isSinglePlayerGame = false;
-                clearBoard();
-
 
                 placeCharacterOnPlatform(pvpPlayer1CharacterSelector.character_selector_string, "teal" );
                 placeCharacterOnPlatform(pvpPlayer2CharacterSelector.character_selector_string, "purple" );
 
-                if( !piecesHaveStartedAnimating ){
-                    startPieceAnimations();
-                    piecesHaveStartedAnimating = true;
-                }
-                else{
-                    resumeGumdropAnimation();
-                }
-
-                sendPlayerName( "TODO: FIX MEEEE" /*playerNameBox.text*/ );
-
-                startMenu.state = "INVISIBLE"
-
-                exitFlickerLongTimer.stop();
-                exitFlickerShortTimer.stop();
-
-                //Stop How-to-Play box
-                //helpBox_glowEffect.visible = false;
-                //pulse_helpBox_glowEffect.running = false;
-
+                leaveForkliftMenuToGameScreen();
                 readyToStartTwoPersonPlay();
             }
         }
@@ -471,25 +424,16 @@ transitions:[
             onExited: { networkingStencil_img.source = "enter-lobby-stencil.png"; }
             onPressed:{ if(_SOUND_CHECK_FLAG) tankSound.play() }
             onClicked: {
-                if( !piecesHaveStartedAnimating ){
-                    startPieceAnimations();
-                    piecesHaveStartedAnimating = true;
 
-                } else{
-                    resumeGumdropAnimation();
-                }
 
                 isNetworkGame = true;
                 isVersusGame = false;
                 isSinglePlayerGame = false;
 
-
-
                 sendPlayerName( playerNameBox.text );
-                networkLobby.state ="VISIBLE"
+                networkLobby.state ="VISIBLE";
                 exitFlickerLongTimer.stop();
                 exitFlickerShortTimer.stop();
-                clearBoard();
                 enterNetworkLobby();
             }
         }

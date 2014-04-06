@@ -50,7 +50,7 @@ GenericPopup {
         resetValues();
         challengePopup.state = "INVISIBLE";
         networkLobby.state = "INVISIBLE";
-        startMenu.state = "INVISIBLE";
+        leaveForkliftMenuToGameScreen();
         unlockBoardPieces();
         lockQuadrantRotation();
 

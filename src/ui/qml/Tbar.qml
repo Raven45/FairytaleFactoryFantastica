@@ -48,7 +48,7 @@ Rectangle {
 
         RedRotateButton {
             id: rotate_clockwise
-            direction_string: "clockwise"
+            isClockwise: true
             anchors.left: tbar.left
             anchors.leftMargin: -53
             anchors.top: tbar.top
@@ -60,7 +60,7 @@ Rectangle {
 
         RedRotateButton {
             id: rotate_counter
-            direction_string: "counter"
+            isClockwise: false
             anchors.left: tbar.left
             anchors.leftMargin: 50
             anchors.top: tbar.top

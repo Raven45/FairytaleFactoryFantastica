@@ -25,13 +25,12 @@ GenericPopup {
             challengeResponseResultTimer.wasAccepted = true;
             challengeResponseResultTimer.start();
 
-            //challenger does not move first
-            isFirstMoveOfGame = false;
 
+            waitingOnNetworkOrAIMove = true;
             movingPlayerIsNetworkOrAI = true;
             networkOrAIIsTeal = true;
-            movingPlayerIsTeal = true;
 
+            leaveForkliftMenuToGameScreen();
             lockBoardPieces();
             lockQuadrantRotation();
         }

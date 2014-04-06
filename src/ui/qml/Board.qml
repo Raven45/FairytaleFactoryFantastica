@@ -384,6 +384,7 @@ Rectangle {
         id: animateTbarsOut
 
         onStopped: {
+            startRotationOnRedRotationButtons();
             unlockQuadrantRotation();
         }
 

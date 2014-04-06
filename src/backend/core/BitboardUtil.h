@@ -77,6 +77,30 @@ constexpr BoardInt FOUR_TO_FIVE_IN_A_ROW[ NUMBER_OF_SIGNIFICANT_FOUR_IN_A_ROW_PA
     #include "fourToFiveInARowArray.cpp"
 };
 
+static constexpr BoardInt START_PATTERNS1[] = {16,
+                                               4194304,
+                                               2147483648,
+                                               8192};
+
+static constexpr BoardInt START_PATTERNS2[] = {2147491840,
+                                               2151677952,
+                                               4194320,
+                                               8208};
+
+static constexpr BoardInt START_PATTERNS3[] = {6446645248,
+                                               2153775104,
+                                               2147492864,
+                                               19327361024,
+                                               8216,
+                                               24592,
+                                               37748752,
+                                               4194322};
+
+static constexpr BoardInt START_PATTERNS4[] = {19327362048,
+                                               6448742400,
+                                               37748754,
+                                               24600};
+
 typedef std::uint8_t RowInt;
 
 constexpr BoardInt FULL_BOARD =
