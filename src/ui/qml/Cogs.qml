@@ -38,14 +38,14 @@ Item {
         Emitter {
             anchors.fill: parent
             group: "boardSmoke"
-            emitRate: 75
+            emitRate: 30
             lifeSpan: 3500
             lifeSpanVariation:200
             size: 20
             endSize: 150
             sizeVariation: 5
             acceleration: PointDirection {y: 0; yVariation: 20; x: 0; xVariation: 20;}
-            velocity: AngleDirection { angle: 0; magnitude: 20; angleVariation:360; magnitudeVariation: 10 }
+            velocity: AngleDirection { angle: 270; magnitude: 20; angleVariation:180; magnitudeVariation: 10 }
         }
     }
 

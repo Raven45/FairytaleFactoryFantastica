@@ -149,6 +149,7 @@ Item {
 
     NumberAnimation on y{
         id: moveOutOfCan
+        running: false
         easing.type: Easing.OutSine
         to: (type == "PURPLE"? _RIGHT_CAN_Y : _LEFT_CAN_Y) - _CAN_HEIGHT
         duration: _CLAW_MOVE_OUT_OF_CAN_DURATION
@@ -164,7 +165,7 @@ Item {
      ParallelAnimation{
 
          id: scaleInAnimation
-
+         running: false
         NumberAnimation {
             targets: [root, clawHouse]
             properties: "scale"
@@ -218,6 +219,7 @@ Item {
     NumberAnimation {
         targets: [ root, clawHouse ]
         properties: "x"
+        running: false
         id: moveClawToHome
         to: _CLAW_X_HOME
         duration: _CLAW_MOVE_DURATION * 3 / 4
@@ -233,6 +235,7 @@ Item {
 
     NumberAnimation on y{
         id: moveYToHome
+        running: false
         to: _CLAW_Y_HOME
         duration: _CLAW_MOVE_DURATION / 4
         easing.type: Easing.OutSine

@@ -139,13 +139,31 @@ Rectangle {
                 NumberAnimation{ target: fire.acceleration; properties: "y"; to: -70; duration: startDuration }
                 NumberAnimation{ target: fire; properties: "size"; to: 10; duration: startDuration }
                 NumberAnimation{ target: fire; properties: "lifeSpan"; to: 1600; duration: startDuration }
-                ScriptAction{ script: fireParticle.state = "NORMAL" }
+                ScriptAction{ script: {fireParticle.state = "NORMAL"; animationOverTimer.start();} }
+
 
              }
 
              Rectangle{id: dummy; color:"transparent"; visible: false; }
 
+            Timer{
+                id: animationOverTimer
 
+                property bool isFirstTime: true
+                interval: 1000
+                running: false
+                repeat: false
+
+                onTriggered:{
+                    if( !isFirstTime ){
+                        doneWithFireAnimation();
+
+                    }
+                    else{
+                        isFirstTime = false;
+                    }
+                }
+            }
 
             Timer{
                 id: calmFlameTimer

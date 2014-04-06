@@ -414,6 +414,7 @@ Rectangle {
                 splash.visible = true;
                 loadingScreen.visible = false;
                 load()
+                console.log("loaded");
             }
         }
     }

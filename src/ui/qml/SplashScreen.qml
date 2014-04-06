@@ -92,6 +92,7 @@ Rectangle {
         Connections{
             target: page
             onLoad:{
+                console.log("starting muffin man animation");
                 muffinManAnimation.start();
                 splashTimer.start();
 

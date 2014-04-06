@@ -108,12 +108,9 @@ Rectangle {
         }
     }
 
-    Timer{
-        id: leaveGameScreenTimer
-        interval: 15000
-        repeat: false
-        running: false
-        onTriggered:{
+    Connections{
+        target: page
+        onDoneWithFireAnimation:{
             gameOverMenu.state = "INVISIBLE";
             startMenu.state = "VISIBLE"
             clearPauseOpacity();
@@ -137,13 +134,13 @@ Rectangle {
     function gameOverAnimations(){
         //this if fixes an edge case: when you leave a game right before the AI wins, the
         //end game animations would play when the move was received
+
+        console.log("in gameOverAnimations()");
+
         if( !leftSinglePlayerGameWhileAIWasMoving ){
 
             allGameScreenButtonsAreLocked = true;
-
             var winner = gameController.getWinner();
-
-            leaveGameScreenTimer.start();
 
             switch( parseInt(winner) ){
 
@@ -197,6 +194,7 @@ Rectangle {
         running: false
 
         onTriggered:{
+            console.log("HMMM");
             gameOverAnimations();
         }
 
