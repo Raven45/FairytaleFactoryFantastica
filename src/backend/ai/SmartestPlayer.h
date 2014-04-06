@@ -55,7 +55,6 @@ class ConcurrentSmartestPlayer : public Player {
         }
     };
 
-    int moveCount;
     bool isFirstMove;
     Turn lastMove;
     double my_longest_time;
@@ -85,23 +84,26 @@ class ConcurrentSmartestPlayer : public Player {
     static constexpr long double THREE_WEIGHT =300.393;
     static constexpr long double TWO_WEIGHT = 1.001;
     static constexpr long double DEFAULT_WEIGHT = 1;
-
+    static constexpr long double PATTERN_WEIGHT1 = 10000;
+    static constexpr long double PATTERN_WEIGHT2 = 20000;
+    static constexpr long double PATTERN_WEIGHT3 = 30000;
+    static constexpr long double PATTERN_WEIGHT4 = 40000;
     //2,2,1,2 = good
     //1.5,2,1,2 = better
-    static constexpr long double DEFENSE_FACTOR = 1.27948;
-    static constexpr long double EVAL_DEFENSE_FACTOR = 1.73917;
+    static constexpr long double DEFENSE_FACTOR = 1.1;
+    static constexpr long double EVAL_DEFENSE_FACTOR = 1.9;
     static constexpr int MAX_EXTRA_LEVELS = 2;
-    static constexpr long double OPPONENT_LEVEL_FACTOR = 2;
+    static constexpr long double OPPONENT_LEVEL_FACTOR = 2.37;
 
     static_assert( THREE_WEIGHT != 0 && FOUR_WEIGHT != 0 && TWO_WEIGHT != 0 && WIN_WEIGHT * WIN_WEIGHT > 0, "dividing too small in AI code" );
 
 
+
 public:
 
-    ConcurrentSmartestPlayer():moveCount(0),isFirstMove(true){
+    ConcurrentSmartestPlayer():isFirstMove(true){
 
         my_longest_time = 0;
-
         std::cout << "WIN_WEIGHT: " << WIN_WEIGHT;
         std::cout << "\nFOUR_WEIGHT: " << FOUR_WEIGHT;
         std::cout << "\nTHREE_WEIGHT: " << THREE_WEIGHT;
@@ -116,6 +118,8 @@ public:
     static inline long double newEvaluateBitBoard( const BitBoard& boardToCheck, const BitBoard& opponentsBoard,  const BitBoard& myOriginalBoard ) {
 
         long double resultWeight = DEFAULT_WEIGHT;
+
+
 
         for(unsigned int winIndex = 32; winIndex--;){
             const BitBoard winningBoard = WINS[winIndex];
@@ -135,6 +139,8 @@ public:
             return resultWeight;
 
         }
+
+
 
 
         //optimize
@@ -181,6 +187,8 @@ public:
             return resultWeight;
 
         }
+
+
 
         for( unsigned char threeInARowIndex = NUMBER_OF_SIGNIFICANT_THREE_IN_A_ROW_PATTERNS; threeInARowIndex--; ){
             BoardInt threeInARowBoard = THREE_IN_A_ROW[threeInARowIndex];
@@ -259,26 +267,10 @@ public:
         }
 
         if( resultWeight != DEFAULT_WEIGHT ){
-
-
             return resultWeight;
-
         }
 
-
-        /*
-        for( BitBoard twoInARowBoard : TWO_IN_A_ROW ){
-            if( boardToCheck.hasPattern(twoInARowBoard) && !opponentsBoard.overlapsPattern(twoInARowBoard) ){
-                resultWeight += TWO_WEIGHT;
-            }
-
-            else if( opponentsBoard.hasPattern(twoInARowBoard) && !boardToCheck.overlapsPattern(twoInARowBoard) ){
-                resultWeight -= TWO_WEIGHT*EVAL_DEFENSE_FACTOR;
-            }
-
-        }*/
-
-        for( unsigned char twoIndex = 77 /*countof(TWO_IN_A_ROW)*/; twoIndex--;){
+        /*for( unsigned char twoIndex = countof(TWO_IN_A_ROW); twoIndex--;){
             const BitBoard twoInARowBoard = TWO_IN_A_ROW[twoIndex];
 
             if( boardToCheck.hasPattern(twoInARowBoard) && !opponentsBoard.overlapsPattern(twoInARowBoard) ){
@@ -288,7 +280,49 @@ public:
             else if( opponentsBoard.hasPattern(twoInARowBoard) && !boardToCheck.overlapsPattern(twoInARowBoard) ){
                 resultWeight -= TWO_WEIGHT*EVAL_DEFENSE_FACTOR;
             }
+        }*/
+
+        for( BoardInt pattern : START_PATTERNS1 ){
+            if( boardToCheck == pattern ){
+                resultWeight += PATTERN_WEIGHT1;
+            }
         }
+
+        for( BoardInt pattern : START_PATTERNS2 ){
+            if( boardToCheck == pattern ){
+                resultWeight += PATTERN_WEIGHT2;
+            }
+            else if( opponentsBoard == pattern ){
+                resultWeight -= PATTERN_WEIGHT2*EVAL_DEFENSE_FACTOR;
+            }
+        }
+
+        if( resultWeight != DEFAULT_WEIGHT ){
+            return resultWeight;
+        }
+
+        for( BoardInt pattern : START_PATTERNS3 ){
+            if( boardToCheck == pattern ){
+                resultWeight += PATTERN_WEIGHT3;
+            }
+            else if( opponentsBoard == pattern ){
+                resultWeight -= PATTERN_WEIGHT3*EVAL_DEFENSE_FACTOR;
+            }
+        }
+
+        if( resultWeight != DEFAULT_WEIGHT ){
+            return resultWeight;
+        }
+
+        for( BoardInt pattern : START_PATTERNS4 ){
+            if( boardToCheck == pattern ){
+                resultWeight += PATTERN_WEIGHT4;
+            }
+            else if( opponentsBoard == pattern ){
+                resultWeight -= PATTERN_WEIGHT4*EVAL_DEFENSE_FACTOR;
+            }
+        }
+
 
         return resultWeight;
 
@@ -404,7 +438,7 @@ public:
     }
 
 
-    static inline std::pair<Turn, long double> getMoveRightRotations (const Board& mainBoard, const PlayerColor myColor, const PlayerColor opponentColor ){
+    static inline std::pair<Turn, long double> getMoveParallel (const Board& mainBoard, const PlayerColor myColor, const PlayerColor opponentColor, Direction direction, unsigned int seedRand ){
          //qDebug() << "calculating move with SmarterPlayer2, moveCount = " << moveCount;
          BitBoard myOriginalBoard = mainBoard.getBoardOfPlayer(myColor);
 
@@ -415,8 +449,8 @@ public:
          //make every possible move for mover
          //make every possible piece placement
 
-         for( int quadrantIndex =  qrand()% 4, quadrantCount = 0;  quadrantCount < NUMBER_OF_QUADRANTS;    quadrantIndex = ((quadrantIndex == 3)? 0 : quadrantIndex + 1), ++quadrantCount ){
-             for( int pieceIndex = qrand()%9, pieceCount = 0;     pieceCount    < MAX_PIECES_ON_QUADRANT;   pieceIndex  = ((pieceIndex    == 8)? 0 : pieceIndex    + 1), ++pieceCount    ){
+         for( int quadrantIndex =  seedRand % 4, quadrantCount = 0;  quadrantCount < NUMBER_OF_QUADRANTS;    quadrantIndex = ((quadrantIndex == 3)? 0 : quadrantIndex + 1), ++quadrantCount ){
+             for( int pieceIndex = seedRand %9, pieceCount = 0;     pieceCount    < MAX_PIECES_ON_QUADRANT;   pieceIndex  = ((pieceIndex    == 8)? 0 : pieceIndex    + 1), ++pieceCount    ){
 
                  if( mainBoard.holeIsEmpty( quadrantIndex, pieceIndex )){
 
@@ -429,26 +463,28 @@ public:
                      for( unsigned char rotationIndex = 4; rotationIndex--;){
 
                          BitBoard boardToRotate = myNewBoard;
-                         boardToRotate.rotate( rotationIndex, RIGHT );
+                         boardToRotate.rotate( rotationIndex, direction );
                          BitBoard opponentsBoard = mainBoard.getBoardOfPlayer(opponentColor);
-                         opponentsBoard.rotate( rotationIndex, RIGHT);
+                         opponentsBoard.rotate( rotationIndex, direction);
 
                          long double newMoveWeight = newEvaluateBitBoard( boardToRotate, opponentsBoard, myOriginalBoard /*, opponentsBoardBeforeTurn */ );
 
 
                          Board testBoard (myColor == BLACK? opponentsBoard:boardToRotate,myColor == BLACK? boardToRotate:opponentsBoard, util.opposite(myColor) );
 
+
                          newMoveWeight -= (getRecursiveWeight( testBoard, opponentColor, myColor ) * DEFENSE_FACTOR);
+
 
                          //pick first valid move by default
                          if( !beenThroughOnce ){
-                             bestMove = Turn(quadrantIndex, pieceIndex, rotationIndex, RIGHT, myColor);
+                             bestMove = Turn(quadrantIndex, pieceIndex, rotationIndex, direction, myColor);
                              bestMoveWeight = newMoveWeight;
                              beenThroughOnce = true;
                          }
 
                          else if( newMoveWeight > bestMoveWeight ){
-                             bestMove = Turn(quadrantIndex, pieceIndex, rotationIndex, RIGHT, myColor);
+                             bestMove = Turn(quadrantIndex, pieceIndex, rotationIndex, direction, myColor);
                              bestMoveWeight = newMoveWeight;
                          }
                      }
@@ -463,72 +499,14 @@ public:
 
      }
 
-   static inline std::pair<Turn, long double> getMoveLeftRotations (const Board& mainBoard, const PlayerColor myColor, const PlayerColor opponentColor ){
-        //qDebug() << "calculating move with SmarterPlayer2, moveCount = " << moveCount;
-        BitBoard myOriginalBoard = mainBoard.getBoardOfPlayer(myColor);
-        long double bestMoveWeight = INT_MIN;
-        bool beenThroughOnce = false;
-        Turn bestMove;
-
-        //make every possible move for mover
-        //make every possible piece placement
-
-        for( int quadrantIndex =  qrand()% 4, quadrantCount = 0;  quadrantCount < NUMBER_OF_QUADRANTS;    quadrantIndex = ((quadrantIndex == 3)? 0 : quadrantIndex + 1), ++quadrantCount ){
-            for( int pieceIndex = qrand()%9, pieceCount = 0;     pieceCount    < MAX_PIECES_ON_QUADRANT;   pieceIndex  = ((pieceIndex    == 8)? 0 : pieceIndex    + 1), ++pieceCount    ){
-
-                if( mainBoard.holeIsEmpty( quadrantIndex, pieceIndex )){
-
-
-
-                    //place the piece
-                    BitBoard myNewBoard = myOriginalBoard;
-                    myNewBoard.placePiece(quadrantIndex, pieceIndex);
-
-                    for( unsigned char rotationIndex = 4; rotationIndex--;){
-
-                        BitBoard boardToRotate = myNewBoard;
-                        boardToRotate.rotate( rotationIndex, LEFT );
-                        BitBoard opponentsBoard = mainBoard.getBoardOfPlayer(opponentColor);
-                        opponentsBoard.rotate( rotationIndex, LEFT);
-
-                        long double newMoveWeight = newEvaluateBitBoard( boardToRotate, opponentsBoard, myOriginalBoard /*, opponentsBoardBeforeTurn */ );
-
-
-                        Board testBoard (myColor == BLACK? opponentsBoard:boardToRotate,myColor == BLACK? boardToRotate:opponentsBoard, util.opposite(myColor) );
-
-                        newMoveWeight -= (getRecursiveWeight( testBoard, opponentColor, myColor ) * DEFENSE_FACTOR);
-
-                        //pick first valid move by default
-                        if( !beenThroughOnce ){
-                            bestMove = Turn(quadrantIndex, pieceIndex, rotationIndex, LEFT, myColor);
-                            bestMoveWeight = newMoveWeight;
-                            beenThroughOnce = true;
-                        }
-
-                        else if( newMoveWeight > bestMoveWeight ){
-                            bestMove = Turn(quadrantIndex, pieceIndex, rotationIndex, LEFT, myColor);
-                            bestMoveWeight = newMoveWeight;
-                        }
-                    }
-                }
-            }
-        }
-
-
-
-
-        return std::make_pair(bestMove,bestMoveWeight);
-
-    }
-
 
     Turn getMove(const Board& mainBoard) override{
         clock_t begin = clock();
 
         Turn bestMove;
 
-        QFuture< std::pair<Turn, long double> > futureLeft = QtConcurrent::run(getMoveLeftRotations, mainBoard, myColor, opponentColor);
-        QFuture< std::pair<Turn, long double> > futureRight = QtConcurrent::run(getMoveRightRotations, mainBoard, myColor, opponentColor);
+        QFuture< std::pair<Turn, long double> > futureLeft = QtConcurrent::run(getMoveParallel, mainBoard, myColor, opponentColor, LEFT, qrand() );
+        QFuture< std::pair<Turn, long double> > futureRight = QtConcurrent::run(getMoveParallel, mainBoard, myColor, opponentColor, RIGHT, qrand() );
 
         std::pair<Turn, long double> resultLeft = futureLeft.result();
         std::pair<Turn, long double> resultRight = futureRight.result();
@@ -542,6 +520,7 @@ public:
 
         clock_t end = clock();
         double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+
         if( elapsed_secs > my_longest_time ){
             std::cout << "\nnew longest time: " << elapsed_secs << " seconds\n";
             my_longest_time = elapsed_secs;

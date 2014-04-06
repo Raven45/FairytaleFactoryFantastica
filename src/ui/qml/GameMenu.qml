@@ -142,6 +142,7 @@ Rectangle {
                 else if ( isSinglePlayerGame && waitingOnNetworkOrAIMove ){
                     leaveGumdropAnimation();
                     waitingForAISoWeCanExitGame = true;
+                    leftSinglePlayerGameWhileAIWasMoving = true;
                     loadingScreen.visible = true;
                 }else{
                     gameMenu.state = "INVISIBLE";
