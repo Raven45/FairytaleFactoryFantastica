@@ -9,6 +9,7 @@ struct GameData{
     bool isDraw;
     WinningAlignment alignment;
     PlayerColor winner;
+    PlayerColor lastMover;
     BoardLocation startPiece;
     BoardLocation endPiece;
 };

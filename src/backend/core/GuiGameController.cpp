@@ -64,6 +64,11 @@ int GuiGameController::getWinner(){
     return (int) gameData.winner;
 }
 
+int GuiGameController::getLastMoverColor(){
+    //white/teal is 0, black/purple is 1
+    return (int) gameData.lastMover;
+}
+
 void GuiGameController::setWindow(Proxy* g){
 
     gui = g;
@@ -367,13 +372,18 @@ void GuiGameController::registerOpponentsTurnWithBoard(Turn opponentsMove ) {
 
     //qDebug() << "registering oppenents turn with board";
 
+    //strip a rotation out of AI move if it's an early win (ai sends rotations, we have to hide them if they won before it rotated
+    if( copyCurrentBoard().checkEarlyWin(opponentsMove.getHole(),opponentsMove.getPieceColor()).winner == opponentsMove.getPieceColor() ){
+        opponentsMove.setQuadrantToRotate(DONT_ROTATE_CODE);
+    }
+
     GameCore::registerTurnWithBoard(opponentsMove);
+
 
     //making sure that this only gets called with the opponents move
     if( !PENTAGO_RELEASE && opponentsMove.getPieceColor() == guiPlayerColor ){
         assert(false);
     }
-
 
     if( qOpponentsLastTurn.empty() ){
         qOpponentsLastTurn.append( opponentsMove.getHole().quadrantIndex );
@@ -387,11 +397,4 @@ void GuiGameController::registerOpponentsTurnWithBoard(Turn opponentsMove ) {
         qOpponentsLastTurn[2] = opponentsMove.getQuadrantToRotate();
         qOpponentsLastTurn[3] = opponentsMove.getRotationDirection();
     }
-
-    if( opponentsMove.getQuadrantToRotate() == DONT_ROTATE_CODE ){
-        //OPPONENT WON BECAUSE HE SENT A TURN WITHOUT A ROTATION
-        emit gameIsOver();
-
-    }
-
 }

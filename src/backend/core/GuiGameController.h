@@ -117,7 +117,7 @@ public:
     }
 
     Q_INVOKABLE int getWinner();
-
+    Q_INVOKABLE int getLastMoverColor();
 signals:
 
     void badMoveFromGui();
@@ -173,6 +173,9 @@ public:
 
     Q_INVOKABLE int getWinner(){
         return core->getWinner();
+    }
+    Q_INVOKABLE int getLastMoverColor(){
+        return core->getLastMoverColor();
     }
 
     ~GuiProxy(){}

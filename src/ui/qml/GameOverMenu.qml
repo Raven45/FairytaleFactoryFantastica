@@ -118,19 +118,6 @@ Rectangle {
         }
     }
 
-    QmlTimer {
-        duration: _OPPONENT_START_ROTATION_DELAY + _ROTATION_ANIMATION_DURATION
-        id: gameOverTimeout
-        property string loser: "NONE"
-        onTriggered: {
-            killCharacter(loser);
-            lockBoardPieces()
-            lockQuadrantRotation()
-            gameOverMenu.state = "VISIBLE";
-            allGameScreenButtonsAreLocked = true;
-        }
-    }
-
     Timer{
         id: leaveAfterDrawTimer
         running: false
@@ -198,7 +185,7 @@ Rectangle {
     }
 
     Timer{
-        id: networkEarlyWinGameOverAnimationsStartTimer
+        id: networkOrAIEarlyWinGameOverAnimationsStartTimer
         interval: _OPPONENT_START_ROTATION_DELAY //time it takes the claw to place a piece
         repeat: false
         running: false
@@ -209,23 +196,25 @@ Rectangle {
 
     }
 
+    function lastMoverWasAIOrNetwork(){
+        return (gameController.getLastMoverColor() === (networkOrAIIsTeal? 0 : 1));
+    }
+
     Connections {
         target: gameController
         onGameIsOver:{
 
-            if( movingPlayerIsNetworkOrAI ){
-                console.log( " network or AI caused game to end. (testing to see if variable is reliable)");
-            }
-
             var opponentsTurn = gameController.getOpponentsTurn();
 
                                           //if early win (no rotation)
-            if( isNetworkGame && parseInt(opponentsTurn[2]) === 111 ) {
+            if( !isVersusGame && parseInt(opponentsTurn[2]) === 111 ) {
                 placeNetworkOrAIPiece( opponentsTurn[0], opponentsTurn[1] );
-                networkEarlyWinGameOverAnimationsStartTimer.start();
+                networkOrAIEarlyWinGameOverAnimationsStartTimer.start();
             }
-            else if( isNetworkGame && movingPlayerIsNetworkOrAI && gameController.getWinner() === -1 ){
-                console.log("draw caused by networkPlayer");
+
+                //if draw is caused by network player
+            else if( isNetworkGame && lastMoverWasAIOrNetwork() && gameController.getWinner() === -1 ){
+                console.log("draw caused by network player");
                 waitingOnNetworkOrAIMove = false;
                 placeNetworkOrAIPiece( opponentsTurn[0], opponentsTurn[1] );
                 aiOrNetworkMoveTimeout.quadrantToRotate = opponentsTurn[2];
@@ -233,8 +222,13 @@ Rectangle {
                 aiOrNetworkMoveTimeout.startTimer();
                 aiOrNetworkEndedTheGameTimer.start();
             }
-            else if( isSinglePlayerGame && movingPlayerIsNetworkOrAI ){
-                console.log("game ended by AI Player");
+            else if( !isVersusGame && lastMoverWasAIOrNetwork() ){
+                console.log("game ended with rotation by AI or network player");
+                waitingOnNetworkOrAIMove = false;
+                placeNetworkOrAIPiece( opponentsTurn[0], opponentsTurn[1] );
+                aiOrNetworkMoveTimeout.quadrantToRotate = opponentsTurn[2];
+                aiOrNetworkMoveTimeout.rotationDirection = opponentsTurn[3];
+                aiOrNetworkMoveTimeout.startTimer();
                 waitingOnNetworkOrAIMove = false;
                 aiOrNetworkEndedTheGameTimer.start();
             }

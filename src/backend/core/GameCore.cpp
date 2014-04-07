@@ -36,6 +36,8 @@ void GameCore::registerTurnWithBoard( Turn playersMove ){
 
          gameData = currentBoard.checkWin();
     }
+
+    gameData.lastMover = playersMove.getPieceColor();
 }
 
 bool GameCore::isGameOver() const{

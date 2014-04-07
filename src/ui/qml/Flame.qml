@@ -150,7 +150,7 @@ Rectangle {
                 id: animationOverTimer
 
                 property bool isFirstTime: true
-                interval: 1000
+                interval: 1300
                 running: false
                 repeat: false
 
