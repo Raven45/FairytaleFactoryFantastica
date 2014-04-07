@@ -749,6 +749,18 @@ Rectangle {
         }
     }
 
+    Image{
+        id: exitSignUnder
+        width: 1056 / 9
+        height: 587 / 9
+        source: "exitSignLit.png"
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.topMargin: 15
+        z: brickWall_rightSide.z + 1
+
+    }
+
     Image {
         id: exitSign
         width: 1056 / 9
@@ -757,7 +769,7 @@ Rectangle {
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.topMargin: 15
-        z: brickWall_rightSide.z + 1
+        z: brickWall_rightSide.z + 2
 
         property bool isHovered:false
 
@@ -804,7 +816,7 @@ Rectangle {
 
     Timer{
         id: exitFlickerLongTimer
-        interval: 4500
+        interval: 3000
         running: false
         repeat: true
 
@@ -815,21 +827,24 @@ Rectangle {
 
     Timer{
         id: exitFlickerShortTimer
-        interval: 50
+        interval: 20
         running: false
         repeat: false
         property bool isLit: false
         property int flickerCount: 0
+        property int totalCount: 0
         onTriggered:{
             if( flickerCount <= 26 ){
                 ++flickerCount;
+                totalCount+= flickerCount/2 + 1;
+                interval = (totalCount % 100 + 30 ) / (totalCount%2 + 1);
 
                 if( !exitSign.isHovered ){
                     if( isLit ){
-                        exitSign.source = "exitSignLit.png";
+                        exitSign.opacity = 0;
                     }
                     else{
-                        exitSign.source = "exitSignDim.png";
+                        exitSign.opacity = 1;
                     }
 
                     isLit = !isLit;

@@ -10,12 +10,19 @@ Rectangle {
 
     property string character_selector_string: "hansel"
     property string character_image_source: character_selector_string + "-head.png"
-
+    property bool overrideDefault: false
+    signal characterChangeClicked
     function changeCharacter() {
         if(character_selector_string == "hansel"){
             character_selector_string = "gretel";
         } else {
             character_selector_string = "hansel";
+        }
+    }
+
+    onCharacterChangeClicked: {
+        if( !overrideDefault ){
+            changeCharacter();
         }
     }
 
@@ -51,7 +58,7 @@ Rectangle {
             anchors.fill: parent
 
             onPressed: { if(_SOUND_CHECK_FLAG && !forkliftMenuButtonsAreLocked ) selectorSound.play() }
-            onClicked: { if( !forkliftMenuButtonsAreLocked ) changeCharacter(); }
+            onClicked: { if( !forkliftMenuButtonsAreLocked ) characterChangeClicked(); }
         }
     }
 
@@ -96,7 +103,7 @@ Rectangle {
                     }
                 }
                 onPressed: { if(_SOUND_CHECK_FLAG && !forkliftMenuButtonsAreLocked ) selectorSound.play() }
-                onClicked: { if( !forkliftMenuButtonsAreLocked ) changeCharacter(); }
+                onClicked: { if( !forkliftMenuButtonsAreLocked ) characterChangeClicked(); }
             }
         }
     }
@@ -142,7 +149,7 @@ Rectangle {
                     }
                 }
                 onPressed: { if(_SOUND_CHECK_FLAG && !forkliftMenuButtonsAreLocked ) selectorSound.play(); }
-                onClicked: { if( !forkliftMenuButtonsAreLocked ) changeCharacter(); }
+                onClicked: { if( !forkliftMenuButtonsAreLocked ) characterChangeClicked(); }
             }
         }
     }

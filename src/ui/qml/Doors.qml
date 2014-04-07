@@ -217,8 +217,62 @@ transitions:[
     CharacterSelector{
         id: pvpPlayer1CharacterSelector
         anchors.top: versusDoor.top
-        anchors.topMargin: -50
+        anchors.topMargin: -25
         anchors.horizontalCenter: versusDoor.horizontalCenter
+        overrideDefault: true
+        onCharacterChangeClicked:{
+            changeCharacter();
+            pvpPlayer2CharacterSelector.changeCharacter();
+        }
+
+        Rectangle{
+            id: p1DropRectangle
+            height: 300
+            width: 300
+            anchors.centerIn: pvpPlayer1CharacterSelector
+            rotation: 0
+            z: -1
+            color: "transparent"
+            Image{
+                id: topDrop
+                source: "teal-gumdrop-centered.png"
+                width: 150
+                height: 150
+                anchors.top: parent.top
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+            Image{
+                id: leftDrop
+                source: "teal-gumdrop-centered.png"
+                width: 150
+                height: 150
+                anchors.left: parent.left
+                rotation: 270
+                anchors.verticalCenter: parent.verticalCenter
+            }
+            Image{
+                id: bottomDrop
+                source: "teal-gumdrop-centered.png"
+                width: 150
+                height: 150
+                anchors.bottom: parent.bottom
+                rotation: 180
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+            Image{
+                id: rightDrop
+                source: "teal-gumdrop-centered.png"
+                width: 150
+                height: 150
+                anchors.right: parent.right
+                rotation: 90
+                anchors.verticalCenter: parent.verticalCenter
+            }
+
+            NumberAnimation { targets: [topDrop,leftDrop,bottomDrop,rightDrop,p1DropRectangle]; property: "rotation"; from: rotation; to: rotation-360;duration: 6000; easing.type: Easing.Linear;
+                running: doorsRectangle.state == "VERSUS" && !forkliftMenuButtonsAreLocked; loops: Animation.Infinite }
+
+        }
     }
 
     CharacterSelector{
@@ -227,6 +281,60 @@ transitions:[
         anchors.topMargin: -75
         anchors.horizontalCenter: versusDoor.horizontalCenter
         character_selector_string: "gretel"
+        overrideDefault: true
+        onCharacterChangeClicked:{
+            changeCharacter();
+            pvpPlayer1CharacterSelector.changeCharacter();
+        }
+
+        Rectangle{
+            id: p2DropRectangle
+            height: 300
+            width: 300
+            anchors.centerIn: pvpPlayer2CharacterSelector
+            rotation: 0
+            z: -1
+            color: "transparent"
+            Image{
+                id: topDrop2
+                source: "purp-gumdrop-centered.png"
+                width: 150
+                height: 150
+                anchors.top: parent.top
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+            Image{
+                id: leftDrop2
+                source: "purp-gumdrop-centered.png"
+                width: 150
+                height: 150
+                anchors.left: parent.left
+                rotation: 270
+                anchors.verticalCenter: parent.verticalCenter
+            }
+            Image{
+                id: bottomDrop2
+                source: "purp-gumdrop-centered.png"
+                width: 150
+                height: 150
+                anchors.bottom: parent.bottom
+                rotation: 180
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+            Image{
+                id: rightDrop2
+                source: "purp-gumdrop-centered.png"
+                width: 150
+                height: 150
+                anchors.right: parent.right
+                rotation: 90
+                anchors.verticalCenter: parent.verticalCenter
+            }
+
+            NumberAnimation { targets: [topDrop2,leftDrop2,bottomDrop2,rightDrop2,p2DropRectangle]; property: "rotation"; from: rotation; to: rotation+360;duration: 6000; easing.type: Easing.Linear;
+                running: doorsRectangle.state == "VERSUS" && !forkliftMenuButtonsAreLocked; loops: Animation.Infinite }
+
+        }
     }
 
     //------networkDoor TextArea------------------------------------------------
