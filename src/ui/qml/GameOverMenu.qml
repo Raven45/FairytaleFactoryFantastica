@@ -233,6 +233,11 @@ Rectangle {
                 aiOrNetworkMoveTimeout.startTimer();
                 aiOrNetworkEndedTheGameTimer.start();
             }
+            else if( isSinglePlayerGame && movingPlayerIsNetworkOrAI ){
+                console.log("game ended by AI Player");
+                waitingOnNetworkOrAIMove = false;
+                aiOrNetworkEndedTheGameTimer.start();
+            }
             else{
                 gameOverAnimations();
             }
