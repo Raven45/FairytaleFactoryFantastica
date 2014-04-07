@@ -20,6 +20,10 @@ Rectangle {
         return myAddress.text;
     }
 
+    function getBusyStatus(){
+        return challengePlayer.text == "Busy...";
+    }
+
     visible: false
     anchors.topMargin: 30
     anchors.left: networkLobby.left
@@ -82,10 +86,12 @@ Rectangle {
 
      }
 
-     function setRow(newPlayer, playerAddress, idToSet ){
+     function setRow(newPlayer, playerAddress, idToSet, isBusy ){
          myName.text = newPlayer;
          myAddress.text = playerAddress;
          playerId = idToSet;
+         challengePlayer.enabled = isBusy;
+         challengePlayer.text = isBusy? "Busy..." : "Challenge!";
 
          if( playerId != 0 ){
              challengePlayer.visible = true;

@@ -77,38 +77,38 @@ Rectangle {
             var foundLeavingPlayerRow = false;
 
             if( id == row0.getId() ){
-                row0.setRow( row1.getName(),row1.getIpAddress(), row1.getId() );
+                row0.setRow( row1.getName(),row1.getIpAddress(), row1.getId(), row1.getBusyStatus() );
                 row1.clearRow();
                 foundLeavingPlayerRow = true;
             }
 
             if( id == row1.getId() || foundLeavingPlayerRow){
-                row1.setRow( row2.getName(),row2.getIpAddress(), row2.getId() );
+                row1.setRow( row2.getName(),row2.getIpAddress(), row2.getId(), row2.getBusyStatus() );
                 row2.clearRow();
                 foundLeavingPlayerRow = true;
             }
             if( id == row2.getId() || foundLeavingPlayerRow){
-                row2.setRow( row3.getName(),row3.getIpAddress(), row3.getId() );
+                row2.setRow( row3.getName(),row3.getIpAddress(), row3.getId(), row3.getBusyStatus() );
                 row3.clearRow();
                 foundLeavingPlayerRow = true;
             }
             if( id == row3.getId() || foundLeavingPlayerRow){
-                row3.setRow( row4.getName(),row4.getIpAddress(), row4.getId());
+                row3.setRow( row4.getName(),row4.getIpAddress(), row4.getId(), row4.getBusyStatus() );
                 row4.clearRow();
                 foundLeavingPlayerRow = true;
             }
             if( id == row4.getId() || foundLeavingPlayerRow){
-                row4.setRow( row5.getName(),row5.getIpAddress(), row5.getId());
+                row4.setRow( row5.getName(),row5.getIpAddress(), row5.getId(), row5.getBusyStatus() );
                 row5.clearRow();
                 foundLeavingPlayerRow = true;
             }
             if( id == row5.getId() || foundLeavingPlayerRow){
-                row5.setRow( row6.getName(),row6.getIpAddress(), row6.getId());
+                row5.setRow( row6.getName(),row6.getIpAddress(), row6.getId(), row6.getBusyStatus() );
                 row6.clearRow();
                 foundLeavingPlayerRow = true;
             }
             if( id == row6.getId() || foundLeavingPlayerRow){
-                row6.setRow( row7.getName(),row7.getIpAddress(), row7.getId() );
+                row6.setRow( row7.getName(),row7.getIpAddress(), row7.getId(), row7.getBusyStatus() );
                 foundLeavingPlayerRow = true;
             }
 

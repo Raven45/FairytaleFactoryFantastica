@@ -286,10 +286,11 @@ public slots:
 
         qDebug() << "challenge received";
 
-        assert(receivedFromConnectedPlayerStack.size() == 1);
+
 
         if( !isBusy ){
             isBusy = true;
+            assert(receivedFromConnectedPlayerStack.size() == 1);
             qDebug() << "connecting to player's gameListenSocket";
             //now our game socket is committed to this player
             connectToPlayer( QHostAddress(challengeTransaction.author.address) );
@@ -375,6 +376,7 @@ public slots:
         else {
             //we leave it on the stack to prevent barrage abuse but it is about to be cleared
             emit challengeResponseReceived(false);
+            isBusy = false;
         }
     }
 
