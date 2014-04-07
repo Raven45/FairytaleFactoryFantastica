@@ -45,7 +45,7 @@ Item {
             endSize: 150
             sizeVariation: 5
             acceleration: PointDirection {y: 0; yVariation: 20; x: 0; xVariation: 20;}
-            velocity: AngleDirection { angle: 180; magnitude: 200; angleVariation:180; magnitudeVariation: 10 }
+            velocity: AngleDirection { angle: 180; magnitude: 50; angleVariation:180; magnitudeVariation: 10 }
         }
     }
 
