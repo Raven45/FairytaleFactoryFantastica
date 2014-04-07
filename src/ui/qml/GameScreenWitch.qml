@@ -24,6 +24,12 @@ Rectangle {
             head.source = "Angry_Witch_Scared.png";
 
         }
+
+        onDoneWithFireAnimation:{
+            flail.stop();
+            swingBody.stop();
+        }
+
         onClearBoard:{
             head.source = "Witch_Head.png";
             flail.stop()

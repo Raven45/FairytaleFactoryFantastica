@@ -31,15 +31,18 @@ Rectangle {
         target: page
 
         onBackToMainMenu:{
-            leaveLobby();
-            row0.clearRow();
-            row1.clearRow();
-            row2.clearRow();
-            row3.clearRow();
-            row4.clearRow();
-            row5.clearRow();
-            row6.clearRow();
-            row7.clearRow();
+
+            if( isNetworkGame ){
+                leaveLobby();
+                row0.clearRow();
+                row1.clearRow();
+                row2.clearRow();
+                row3.clearRow();
+                row4.clearRow();
+                row5.clearRow();
+                row6.clearRow();
+                row7.clearRow();
+            }
         }
 
         onPlayerEnteredLobby: {

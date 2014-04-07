@@ -21,6 +21,12 @@ Rectangle {
         onGretelIsOverOven:{
             flail.start()
         }
+
+        onDoneWithFireAnimation:{
+            flail.stop();
+            swingBody.stop();
+        }
+
         onClearBoard:{
             head.source = "Gretel_Happy_Head.png";
             flail.stop()
