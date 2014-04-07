@@ -90,7 +90,7 @@ Rectangle {
          myName.text = newPlayer;
          myAddress.text = playerAddress;
          playerId = idToSet;
-         challengePlayer.enabled = isBusy;
+         challengePlayer.enabled = !isBusy;
          challengePlayer.text = isBusy? "Busy..." : "Challenge!";
 
          if( playerId != 0 ){

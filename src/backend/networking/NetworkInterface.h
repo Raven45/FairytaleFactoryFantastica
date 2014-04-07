@@ -248,7 +248,7 @@ public slots:
     //the only game Transaction-sending function
     //that needs an IPv4 address as an argument
     void sendChallenge( QVariant addressString ){
-        isBusy = true;
+
         if( !receivedFromConnectedPlayerStack.empty() &&
             receivedFromConnectedPlayerStack.top().transactionType == TransactionType::CHALLENGE_RESPONSE &&
             !receivedFromConnectedPlayerStack.top().data.challengeResponse.isAccepted  )
@@ -263,6 +263,7 @@ public slots:
         //the IP address back down to c++
 
         if ( QHostAddress(connectedPlayerInfo.address) != address ){
+            isBusy = true;
             connectToPlayer( address );
 
             Transaction challengeTransaction;
