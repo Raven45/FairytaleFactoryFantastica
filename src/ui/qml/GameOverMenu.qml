@@ -131,6 +131,30 @@ Rectangle {
         }
     }
 
+    Timer{
+        id: leaveAfterDrawTimer
+        running: false
+        repeat: false
+        interval: 2200
+        onTriggered:{
+
+            //since there was no fire animation, we can pretend
+            doneWithFireAnimation();
+        }
+    }
+
+    Timer{
+        id: aiOrNetworkEndedTheGameTimer
+        running: false
+        repeat: false
+        interval: _OPPONENT_START_ROTATION_DELAY + _CLAW_MOVE_DURATION
+        onTriggered:{
+
+            //since there was no fire animation, we can pretend
+            gameOverAnimations()
+        }
+    }
+
     function gameOverAnimations(){
         //this if fixes an edge case: when you leave a game right before the AI wins, the
         //end game animations would play when the move was received
@@ -148,6 +172,8 @@ Rectangle {
             case -1:
                 setWinnerText("NONE");
                 console.log("draw detected.");
+                gameOverMenu.state = "VISIBLE";
+                leaveAfterDrawTimer.start();
                 break;
 
             //TEAL WON
@@ -155,16 +181,8 @@ Rectangle {
 
                 setWinnerText(tealPlatformCharacter);
                 console.log("teal win detected.");
-
-                if( isVersusGame || !networkOrAIIsTeal ){
-                    gameOverMenu.state = "VISIBLE";
-                    killCharacter(purplePlatformCharacter);
-                }
-                else{
-                    gameOverTimeout.loser = purplePlatformCharacter;
-                    gameOverTimeout.startTimer();
-                }
-
+                gameOverMenu.state = "VISIBLE";
+                killCharacter(purplePlatformCharacter);
                 break;
 
             //PURPLE WON
@@ -172,16 +190,8 @@ Rectangle {
 
                 setWinnerText(purplePlatformCharacter);
                 console.log("purple win detected.");
-
-                if(  isVersusGame || networkOrAIIsTeal ){
-                    gameOverMenu.state = "VISIBLE";
-                    killCharacter(tealPlatformCharacter);
-                }
-                else{
-                    gameOverTimeout.loser = tealPlatformCharacter;
-                    gameOverTimeout.startTimer();
-                }
-
+                gameOverMenu.state = "VISIBLE";
+                killCharacter(tealPlatformCharacter);
                 break;
             }
         }
@@ -194,7 +204,6 @@ Rectangle {
         running: false
 
         onTriggered:{
-            console.log("HMMM");
             gameOverAnimations();
         }
 
@@ -204,12 +213,25 @@ Rectangle {
         target: gameController
         onGameIsOver:{
 
+            if( movingPlayerIsNetworkOrAI ){
+                console.log( " network or AI caused game to end. (testing to see if variable is reliable)");
+            }
+
             var opponentsTurn = gameController.getOpponentsTurn();
 
                                           //if early win (no rotation)
             if( isNetworkGame && parseInt(opponentsTurn[2]) === 111 ) {
                 placeNetworkOrAIPiece( opponentsTurn[0], opponentsTurn[1] );
                 networkEarlyWinGameOverAnimationsStartTimer.start();
+            }
+            else if( isNetworkGame && movingPlayerIsNetworkOrAI && gameController.getWinner() === -1 ){
+                console.log("draw caused by networkPlayer");
+                waitingOnNetworkOrAIMove = false;
+                placeNetworkOrAIPiece( opponentsTurn[0], opponentsTurn[1] );
+                aiOrNetworkMoveTimeout.quadrantToRotate = opponentsTurn[2];
+                aiOrNetworkMoveTimeout.rotationDirection = opponentsTurn[3];
+                aiOrNetworkMoveTimeout.startTimer();
+                aiOrNetworkEndedTheGameTimer.start();
             }
             else{
                 gameOverAnimations();
