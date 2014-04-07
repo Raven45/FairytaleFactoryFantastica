@@ -287,11 +287,8 @@ public slots:
 
         qDebug() << "challenge received";
 
-
-
-        if( !isBusy ){
+        if( !isBusy && receivedFromConnectedPlayerStack.size() == 1){
             isBusy = true;
-            assert(receivedFromConnectedPlayerStack.size() == 1);
             qDebug() << "connecting to player's gameListenSocket";
             //now our game socket is committed to this player
             connectToPlayer( QHostAddress(challengeTransaction.author.address) );
@@ -300,6 +297,9 @@ public slots:
             //this will go back to the gameController which will
             //set up the challenge in the GUI
             emit challengeReceived( QVariant(QString(challengeTransaction.author.name)), QVariant(QHostAddress(challengeTransaction.author.address).toString()) );
+        }
+        else{
+
         }
     }
 
@@ -415,7 +415,6 @@ public slots:
         assert( pTimer != NULL );
 
         if( pTimer->isActive() ) {
-            qDebug() << "WHY U R HAVE ACTIVE, PTIMER!!!!";
             pTimer -> stop();
         }
 
@@ -431,10 +430,10 @@ public slots:
 
 
             //stupid ugly special case with a "pointless" challenge decline sitting on top of the stack
-            if( !receivedFromConnectedPlayerStack.empty() &&
-                receivedFromConnectedPlayerStack.top().transactionType == TransactionType::CHALLENGE_RESPONSE &&
-                !receivedFromConnectedPlayerStack.top().data.challengeResponse.isAccepted  )
-            {
+            if(     !receivedFromConnectedPlayerStack.empty() &&
+                    receivedFromConnectedPlayerStack.top().transactionType == TransactionType::CHALLENGE_RESPONSE &&
+                    !receivedFromConnectedPlayerStack.top().data.challengeResponse.isAccepted  ){
+
                 qDebug() << "disconnectedPlayer was involved in something UNimportant. no problem. ";
                 terminateConnectionToPlayer();
                 forgetAllAboutPlayer(disconnectedPlayerInfo);

@@ -73,7 +73,7 @@ Rectangle {
         //fillMode: Image.PreserveAspectFit
     }
 
-    Image{
+    Image {
         id: fx3_logo
         width: 600; height: 200
         source: "fx3-50opacity.png"
@@ -172,12 +172,12 @@ Rectangle {
                 hoverEnabled: true
 
                 onEntered: {
-                    if(nosound_forkliftMenu_glowEffect.visible == false && nosound_forkliftMenu_mouseArea.containsMouse){
+                    if(!nosound_forkliftMenu_glowEffect.visible  && nosound_forkliftMenu_mouseArea.containsMouse){
                         nosound_forkliftMenu_glowEffect.visible = true;
                     }
                 }
                 onExited: {
-                    if(nosound_forkliftMenu_glowEffect.visible == true){
+                    if(nosound_forkliftMenu_glowEffect.visible){
                         nosound_forkliftMenu_glowEffect.visible = false;
                     }
                 }
@@ -240,19 +240,21 @@ Rectangle {
                 hoverEnabled: true
 
                 onEntered: {
-                    if(sound_forkliftMenu_glowEffect.visible == false && sound_forkliftMenu_mouseArea.containsMouse){
+                    if( !sound_forkliftMenu_glowEffect.visible && sound_forkliftMenu_mouseArea.containsMouse && !forkliftMenuButtonsAreLocked){
                         sound_forkliftMenu_glowEffect.visible = true;
                     }
                 }
                 onExited: {
-                    if(sound_forkliftMenu_glowEffect.visible == true){
+                    if( sound_forkliftMenu_glowEffect.visible ){
                         sound_forkliftMenu_glowEffect.visible = false;
                     }
                 }
-                onPressed: { if(!_SOUND_CHECK_FLAG) pressButtonSound.play() }
+                onPressed: { if(!_SOUND_CHECK_FLAG && !forkliftMenuButtonsAreLocked ) pressButtonSound.play() }
                 onClicked: {
-                    changeSoundState();
-                    changeSoundCheckFlag();
+                    if( !forkliftMenuButtonsAreLocked ){
+                        changeSoundState();
+                        changeSoundCheckFlag();
+                    }
                 }
             }
         }
@@ -340,8 +342,8 @@ Rectangle {
                             helpbox_text.help_source_string = "how-to-play-stencil.png";
                         }
                     }
-                    onPressed: { if(_SOUND_CHECK_FLAG) pressButtonSound.play(); }
-                    onClicked: { help.state = "SHOW_HELP"; }
+                    onPressed: { if(_SOUND_CHECK_FLAG && !forkliftMenuButtonsAreLocked ) pressButtonSound.play(); }
+                    onClicked: { if( !forkliftMenuButtonsAreLocked )help.state = "SHOW_HELP"; }
                 }
             }
         }
