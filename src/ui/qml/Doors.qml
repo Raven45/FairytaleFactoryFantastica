@@ -59,14 +59,14 @@ Rectangle {
         }
     ]
 
-NumberAnimation {id: defaultDoorUp; target: defaultDoor.anchors; properties: "verticalCenterOffset"; from: 0; to: 0 - doorsRectangle.height * 2 ; duration: 1000; }
-NumberAnimation {id: singlePlayerDoorUp; target: singlePlayerDoor.anchors; properties: "verticalCenterOffset"; from: 0; to: 0 - doorsRectangle.height * 2 ; duration: 1000; }
-NumberAnimation {id: versusDoorUp; target: versusDoor.anchors; properties: "verticalCenterOffset"; from: 0; to: 0 - doorsRectangle.height * 2 ; duration: 1000; }
-NumberAnimation {id: networkDoorUp; target: networkDoor.anchors; properties: "verticalCenterOffset";from: 0; to: 0 - doorsRectangle.height * 2; duration: 1000; }
-NumberAnimation {id: defaultDoorDown; target: defaultDoor.anchors; properties: "verticalCenterOffset"; to: 0; from: 0 - doorsRectangle.height * 2 ; duration: 1000; }
-NumberAnimation {id: singlePlayerDoorDown; target: singlePlayerDoor.anchors; properties: "verticalCenterOffset"; to: 0; from: 0 - doorsRectangle.height * 2; duration: 1000; }
-NumberAnimation {id: versusDoorDown; target: versusDoor.anchors; properties: "verticalCenterOffset"; to: 0; from: 0 - doorsRectangle.height * 2 ; duration: 1000; }
-NumberAnimation {id: networkDoorDown; target: networkDoor.anchors; properties: "verticalCenterOffset";to: 0; from: 0 - doorsRectangle.height * 2; duration: 1000; }
+NumberAnimation {id: defaultDoorUp; alwaysRunToEnd: true; target: defaultDoor.anchors; properties: "verticalCenterOffset"; from: 0; to: 0 - doorsRectangle.height * 2 ; duration: 1000; }
+NumberAnimation {id: singlePlayerDoorUp; alwaysRunToEnd: true;target: singlePlayerDoor.anchors; properties: "verticalCenterOffset"; from: 0; to: 0 - doorsRectangle.height * 2 ; duration: 1000; }
+NumberAnimation {id: versusDoorUp;alwaysRunToEnd: true; target: versusDoor.anchors; properties: "verticalCenterOffset"; from: 0; to: 0 - doorsRectangle.height * 2 ; duration: 1000; }
+NumberAnimation {id: networkDoorUp; alwaysRunToEnd: true;target: networkDoor.anchors; properties: "verticalCenterOffset";from: 0; to: 0 - doorsRectangle.height * 2; duration: 1000; }
+NumberAnimation {id: defaultDoorDown;alwaysRunToEnd: true; target: defaultDoor.anchors; properties: "verticalCenterOffset"; to: 0; from: 0 - doorsRectangle.height * 2 ; duration: 1000; }
+NumberAnimation {id: singlePlayerDoorDown;alwaysRunToEnd: true; target: singlePlayerDoor.anchors; properties: "verticalCenterOffset"; to: 0; from: 0 - doorsRectangle.height * 2; duration: 1000; }
+NumberAnimation {id: versusDoorDown;alwaysRunToEnd: true; target: versusDoor.anchors; properties: "verticalCenterOffset"; to: 0; from: 0 - doorsRectangle.height * 2 ; duration: 1000; }
+NumberAnimation {id: networkDoorDown;alwaysRunToEnd: true; target: networkDoor.anchors; properties: "verticalCenterOffset";to: 0; from: 0 - doorsRectangle.height * 2; duration: 1000; }
 
 transitions:[
     Transition{from: "DEFAULT"; to: "SINGLE_PLAYER"; ScriptAction{script: {
