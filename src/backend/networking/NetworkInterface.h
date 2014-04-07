@@ -108,7 +108,7 @@ signals:
     void challengeResponseReceived(bool accepted);
     void networkTurnReceived( int, int, int, int ); //turn in int form
     void playerLeftNetwork( int id );
-    void playerJoinedNetwork( QVariant name, QVariant address, int id );
+    void playerJoinedNetwork( QVariant name, QVariant address, int id, bool isBusy );
     void opponentDisconnectedEarly();
     void connectionReestablished();
     void networkPlayerNoLongerBusy(QVariant address);
@@ -192,7 +192,7 @@ public slots:
             QVariant vAddress(QHostAddress(announceTransaction.author.address).toString());
 
             playerStatusMap[announceTransaction.author] = announceTransaction.data.isBusy;
-            emit playerJoinedNetwork( vName, vAddress, announceTransaction.author.id  );
+            emit playerJoinedNetwork( vName, vAddress, announceTransaction.author.id, announceTransaction.data.isBusy );
 
             qDebug() << "making new QTimer for " << announceTransaction.author.name;
             pTimer = new QTimer(this);

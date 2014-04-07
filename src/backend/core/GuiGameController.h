@@ -47,7 +47,7 @@ signals:
     void challengeWasDeclined();
     void sendThisChallengeResponse( bool acceptChallenge );
     void sendThisNetworkMove( int quadrantIndex, int pieceIndex, int quadrantToRotate, int rotationDirection );
-    void playerEnteredLobby( QVariant arrivingPlayerName, QVariant addressOfArrivingPlayer, int playerId );
+    void playerEnteredLobby( QVariant arrivingPlayerName, QVariant addressOfArrivingPlayer, int playerId, bool isBusy );
     void networkPlayerNoLongerBusy(QVariant);
     void networkPlayerBecameBusy(QVariant);
     void playerLeftLobby( int playerId );
@@ -200,7 +200,7 @@ public:
         connect( this,  SIGNAL(challengeReceivedFromNetwork(QVariant, QVariant)),   gui,    SIGNAL(challengeReceivedFromNetwork(QVariant, QVariant)));
         connect( this,  SIGNAL( challengeWasAccepted()),                            gui,    SIGNAL(challengeWasAccepted() ));
         connect( this,  SIGNAL( challengeWasDeclined()),                            gui,    SIGNAL(challengeWasDeclined()));
-        connect( this,  SIGNAL( playerEnteredLobby(QVariant, QVariant, int )),      gui,    SIGNAL(playerEnteredLobby(QVariant, QVariant, int )));
+        connect( this,  SIGNAL( playerEnteredLobby(QVariant, QVariant, int, bool )),      gui,    SIGNAL(playerEnteredLobby(QVariant, QVariant, int, bool )));
         connect( this,  SIGNAL( playerLeftLobby(int)),                              gui,    SIGNAL(playerLeftLobby(int)));
         connect( this,  SIGNAL(opponentReconnected()),                              gui,    SIGNAL(opponentReconnected()));
         connect( this,  SIGNAL(opponentDisconnected()),                             gui,    SIGNAL(opponentDisconnected()));

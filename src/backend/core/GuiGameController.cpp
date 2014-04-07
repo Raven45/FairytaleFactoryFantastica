@@ -117,7 +117,7 @@ void GuiGameController::setNetworkInterface(){
         connect( net,   SIGNAL( networkTurnReceived(int,int,int,int) ),         this,   SLOT(networkTurnReceivedFromNetwork(int,int,int,int)),      Qt::QueuedConnection );
         connect( this,  SIGNAL( challengeAccepted()),                           gui,    SIGNAL(challengeWasAccepted() ),                            Qt::QueuedConnection );
         connect( this,  SIGNAL( challengeDeclined()),                           gui,    SIGNAL(challengeWasDeclined()) ,                            Qt::QueuedConnection );
-        connect( net,   SIGNAL( playerJoinedNetwork(QVariant, QVariant, int )), gui,    SIGNAL(playerEnteredLobby(QVariant, QVariant, int )),       Qt::QueuedConnection );
+        connect( net,   SIGNAL( playerJoinedNetwork(QVariant, QVariant, int, bool )), gui,    SIGNAL(playerEnteredLobby(QVariant, QVariant, int, bool )),       Qt::QueuedConnection );
         connect( net,   SIGNAL( playerLeftNetwork(int)),                        gui,    SIGNAL(playerLeftLobby(int)));
         connect( net,   SIGNAL( networkPlayerBecameBusy(QVariant)),             gui,    SIGNAL(networkPlayerBecameBusy(QVariant)),                  Qt::QueuedConnection );
         connect( net,   SIGNAL( networkPlayerNoLongerBusy(QVariant)),           gui,    SIGNAL(networkPlayerNoLongerBusy(QVariant)),                Qt::QueuedConnection );

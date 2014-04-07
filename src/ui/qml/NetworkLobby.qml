@@ -48,23 +48,23 @@ Rectangle {
             var id = playerId;
             switch(playerCount){
                 case 0:
-                    row0.setRow(newPlayer,playerAddress,id); break;
+                    row0.setRow(newPlayer,playerAddress,id, isBusy ); break;
                 case 1:
-                    row1.setRow(newPlayer,playerAddress,id); break;
+                    row1.setRow(newPlayer,playerAddress,id, isBusy ); break;
                 case 2:
-                    row2.setRow(newPlayer,playerAddress,id); break;
+                    row2.setRow(newPlayer,playerAddress,id, isBusy ); break;
                 case 3:
-                    row3.setRow(newPlayer,playerAddress,id); break;
+                    row3.setRow(newPlayer,playerAddress,id, isBusy ); break;
                 case 4:
-                    row4.setRow(newPlayer,playerAddress,id); break;
+                    row4.setRow(newPlayer,playerAddress,id, isBusy ); break;
                 case 5:
-                    row5.setRow(newPlayer,playerAddress,id); break;
+                    row5.setRow(newPlayer,playerAddress,id, isBusy ); break;
                 case 5:
-                    row5.setRow(newPlayer,playerAddress,id); break;
+                    row5.setRow(newPlayer,playerAddress,id, isBusy ); break;
                 case 6:
-                    row6.setRow(newPlayer,playerAddress,id); break;
+                    row6.setRow(newPlayer,playerAddress,id, isBusy ); break;
                 case 7:
-                    row7.setRow(newPlayer,playerAddress,id); break;
+                    row7.setRow(newPlayer,playerAddress,id, isBusy ); break;
             }
 
             playerCount++;
