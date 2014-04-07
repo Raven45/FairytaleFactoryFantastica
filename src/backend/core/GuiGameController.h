@@ -48,6 +48,8 @@ signals:
     void sendThisChallengeResponse( bool acceptChallenge );
     void sendThisNetworkMove( int quadrantIndex, int pieceIndex, int quadrantToRotate, int rotationDirection );
     void playerEnteredLobby( QVariant arrivingPlayerName, QVariant addressOfArrivingPlayer, int playerId );
+    void networkPlayerNoLongerBusy(QVariant);
+    void networkPlayerBecameBusy(QVariant);
     void playerLeftLobby( int playerId );
     void opponentDisconnected();
     void opponentReconnected();
@@ -202,6 +204,8 @@ public:
         connect( this,  SIGNAL( playerLeftLobby(int)),                              gui,    SIGNAL(playerLeftLobby(int)));
         connect( this,  SIGNAL(opponentReconnected()),                              gui,    SIGNAL(opponentReconnected()));
         connect( this,  SIGNAL(opponentDisconnected()),                             gui,    SIGNAL(opponentDisconnected()));
+        connect( this,  SIGNAL(networkPlayerBecameBusy(QVariant)),                  gui,    SIGNAL(networkPlayerBecameBusy(QVariant)) );
+        connect( this,  SIGNAL(networkPlayerNoLongerBusy(QVariant)),                  gui,  SIGNAL(networkPlayerNoLongerBusy(QVariant)) );
 
         qDebug() << "connecting core proxy signals";
         connect( core,  SIGNAL( readyForGuiMove() ),                                this,   SIGNAL(readyForGuiMove()),          Qt::QueuedConnection );

@@ -14,6 +14,8 @@ Rectangle {
 
     color: "#333333"
 
+    signal networkPlayerBecameBusy( var addressVariant )
+    signal networkPlayerNoLongerBusy(var addressVariant )
     signal leaveForkliftMenuToGameScreen()
     signal doneWithFireAnimation()
     signal placeCharacterOnPlatform( string character, string platform );

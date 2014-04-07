@@ -32,9 +32,10 @@ class NetworkInterface : public QObject {
     NetworkPlayerInfo myInfo;
     bool networkIsActive;
     bool networkGameIsOver;
-
+    bool isBusy;
     QMap< QTimer*, NetworkPlayerInfo > timerPlayerMap;
     QMap< NetworkPlayerInfo, QTimer* > playerTimerMap;
+    QMap< NetworkPlayerInfo, bool > playerStatusMap;
     QUdpSocket announceSocket;
     QTimer announceTimer;
 
@@ -85,7 +86,7 @@ public:
         connect(&announceTimer, SIGNAL(timeout()), this, SLOT(broadcastAnnounce()));
 
         myInfo.id = qrand();
-
+        isBusy = false;
         qDebug() << "my id is " << myInfo.id;
 
         for (const QHostAddress &address : QNetworkInterface::allAddresses()) {
@@ -110,6 +111,8 @@ signals:
     void playerJoinedNetwork( QVariant name, QVariant address, int id );
     void opponentDisconnectedEarly();
     void connectionReestablished();
+    void networkPlayerNoLongerBusy(QVariant address);
+    void networkPlayerBecameBusy(QVariant address);
 
 public slots:
 
@@ -171,7 +174,7 @@ public slots:
         if( networkIsActive ){
             Transaction t(myInfo);
             t.transactionType = Transaction::TransactionType::ANNOUNCE;
-
+            t.data.isBusy = isBusy;
             QByteArray datagram = t.toByteArray();
 
             announceSocket.writeDatagram( datagram.data(), datagram.size(), QHostAddress::Broadcast, ANNOUNCE_PORT );
@@ -188,6 +191,7 @@ public slots:
             QVariant vName(QString(announceTransaction.author.name));
             QVariant vAddress(QHostAddress(announceTransaction.author.address).toString());
 
+            playerStatusMap[announceTransaction.author] = announceTransaction.data.isBusy;
             emit playerJoinedNetwork( vName, vAddress, announceTransaction.author.id  );
 
             qDebug() << "making new QTimer for " << announceTransaction.author.name;
@@ -202,11 +206,21 @@ public slots:
             //start the timer associated with that player
             pTimer -> start( MAX_WAIT_TIME );
         }
-        else if( pTimer -> timerId() != -1 ){
+        else /*if( pTimer -> timerId() != -1 ){
             pTimer -> start( MAX_WAIT_TIME );
-        }else{
-            //qDebug() << "pTIMER WE HAVE MAKE CATCH YOU NOW!!!!!!";
-            //start the timer associated with that player
+        }else*/{
+
+            if( playerStatusMap[announceTransaction.author] && !announceTransaction.data.isBusy ){
+                qDebug() << "in networkInterface.h: " << announceTransaction.author.name << " is no longer busy";
+                emit networkPlayerNoLongerBusy( QVariant(QString(QHostAddress(announceTransaction.author.address).toString()) ) );
+                playerStatusMap[announceTransaction.author] = false;
+            }
+            else if( !playerStatusMap[announceTransaction.author] && announceTransaction.data.isBusy ){
+                qDebug() << "in networkInterface.h: " << announceTransaction.author.name << " became busy";
+                emit networkPlayerBecameBusy(  QVariant(QString(QHostAddress(announceTransaction.author.address).toString()) ) );
+                playerStatusMap[announceTransaction.author] = true;
+            }
+
             pTimer -> start( MAX_WAIT_TIME );
         }
     }
@@ -234,7 +248,7 @@ public slots:
     //the only game Transaction-sending function
     //that needs an IPv4 address as an argument
     void sendChallenge( QVariant addressString ){
-
+        isBusy = true;
         if( !receivedFromConnectedPlayerStack.empty() &&
             receivedFromConnectedPlayerStack.top().transactionType == TransactionType::CHALLENGE_RESPONSE &&
             !receivedFromConnectedPlayerStack.top().data.challengeResponse.isAccepted  )
@@ -274,15 +288,17 @@ public slots:
 
         assert(receivedFromConnectedPlayerStack.size() == 1);
 
-        qDebug() << "connecting to player's gameListenSocket";
-        //now our game socket is committed to this player
-        connectToPlayer( QHostAddress(challengeTransaction.author.address) );
+        if( !isBusy ){
+            isBusy = true;
+            qDebug() << "connecting to player's gameListenSocket";
+            //now our game socket is committed to this player
+            connectToPlayer( QHostAddress(challengeTransaction.author.address) );
 
 
-        //this will go back to the gameController which will
-        //set up the challenge in the GUI
-        emit challengeReceived( QVariant(QString(challengeTransaction.author.name)), QVariant(QHostAddress(challengeTransaction.author.address).toString()) );
-
+            //this will go back to the gameController which will
+            //set up the challenge in the GUI
+            emit challengeReceived( QVariant(QString(challengeTransaction.author.name)), QVariant(QHostAddress(challengeTransaction.author.address).toString()) );
+        }
     }
 
     //connected to a gameController signal
@@ -324,6 +340,7 @@ public slots:
         receivedFromConnectedPlayerStack.clear();
         sentToConnectedPlayerStack.clear();
         connectedPlayerInfo = NetworkPlayerInfo();
+        isBusy = false;
         disconnectGameSocket();
     }
 

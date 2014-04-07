@@ -40,11 +40,38 @@ Rectangle {
          text: ""
      }
 
+     Connections{
+         target: page
+         onNetworkPlayerNoLongerBusy:{
+             var address = addressVariant.toString();
+
+             if( address === getIpAddress() ){
+                challengePlayer.text = "Challenge!"
+                 console.log("lobby row: " + address + " is no longer busy")
+                challengePlayer.enabled = true;
+             }
+
+         }
+
+         onNetworkPlayerBecameBusy:{
+             var address = addressVariant.toString();
+
+             console.log( "address format in gui: " + address );
+
+             if( address === getIpAddress() ) {
+                challengePlayer.text = "Busy..."
+                console.log("lobby row: " + address + " became busy")
+                challengePlayer.enabled = false;
+             }
+         }
+     }
+
      Button {
          anchors.left: myAddress.right
          id: challengePlayer
          visible: false;
          text: "Challenge!"
+         enabled: true
          onClicked: {
 
              if( challengePopupsAreHidden() ){
@@ -75,6 +102,7 @@ Rectangle {
          myAddress.text = "";
          challengePlayer.visible = false;
          challengePlayer.text = "Challenge!";
+         challengePlayer.enabled = true;
          playerId = 0;
          visible = false;
      }

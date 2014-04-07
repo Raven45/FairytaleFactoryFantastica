@@ -95,7 +95,7 @@ namespace PentagoNetworkUtil {
     typedef unsigned int WaxSeal;
 
     union TransactionData{
-        //NetworkPlayerInfo announce;
+        bool isBusy;//for announce
         Challenge challenge;
         ChallengeResponse challengeResponse;
         Turn turn;
