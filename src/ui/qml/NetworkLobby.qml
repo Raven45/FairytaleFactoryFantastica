@@ -31,6 +31,7 @@ Rectangle {
         target: page
 
         onBackToMainMenu:{
+            leaveLobby();
             row0.clearRow();
             row1.clearRow();
             row2.clearRow();
