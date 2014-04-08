@@ -51,14 +51,6 @@ class ConcurrentSmartestPlayer : public Player {
 public:
 
     ConcurrentSmartestPlayer():moveCount(0),my_longest_time(0){
-        std::cout << "WIN_WEIGHT: " << WIN_WEIGHT;
-        std::cout << "\nFOUR_WEIGHT: " << FOUR_WEIGHT;
-        std::cout << "\nTHREE_WEIGHT: " << THREE_WEIGHT;
-        std::cout << "\nDEFAULT_WEIGHT: " << DEFAULT_WEIGHT << "\n";
-    }
-
-    void printWeights() {
-        std::cout << "SmartestPlayer won the tournament!\n";
     }
 
     static inline long double evaluateBitBoard( const BitBoard& boardToCheck, const BitBoard& opponentsBoard,  const BitBoard& myOriginalBoard ) {
@@ -425,8 +417,21 @@ public:
         moveCount = 0;
     }
 
+
     template< unsigned char quadrantA, unsigned char quadrantB >
     static inline bool blockEarlyDiagonal( Turn& bestMove, const BitBoard& opponentsBoard, const MainBoard& mainBoard ){
+
+        //when opponent...
+
+        //... ...
+        //... .@.
+        //... ...
+        //          (or flipped)
+        //... ...
+        //.@. ...
+        //... ...
+
+        //...look for open diagonal pair and block it
 
         bool foundSpecialCase = false;
 
@@ -547,12 +552,14 @@ public:
                     opponentsCopy.rotate(quadrantToRotate, currentDirection);
                     myCopy.rotate(quadrantToRotate, currentDirection);
 
-                    long double checkWeight = evaluateBitBoard(myCopy, opponentsCopy, myBoard);
+                    MainBoard testBoard(myColor == BLACK? opponentsCopy:myCopy,myColor == BLACK? myCopy:opponentsCopy, opponentColor );
+                    long double checkWeight = getRecursiveWeight<1>(testBoard, opponentColor, myColor ) * DEFENSE_FACTOR;
 
-                    if( checkWeight > bestRotationWeight ){
+                    if( checkWeight > bestRotationWeight || !beenThroughOnce ){
                         bestMove.setQuadrantToRotate(quadrantToRotate);
                         bestMove.setRotationDirection(currentDirection);
                         bestRotationWeight = checkWeight;
+                        beenThroughOnce = true;
                     }
                 }
             }
