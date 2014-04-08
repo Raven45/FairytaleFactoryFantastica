@@ -31,18 +31,17 @@ class ConcurrentSmartestPlayer : public Player {
     static constexpr long double WIN_WEIGHT = 27721000;
     static constexpr long double FOUR_WEIGHT = 91253.4;
     static constexpr long double THREE_WEIGHT =300.393;
-    static constexpr long double TWO_WEIGHT = 1.001;
     static constexpr long double DEFAULT_WEIGHT = 1;
     static constexpr long double PATTERN_WEIGHT1 = THREE_WEIGHT*THREE_WEIGHT;
-    static constexpr long double PATTERN_WEIGHT2 = THREE_WEIGHT*THREE_WEIGHT;
+    static constexpr long double PATTERN_WEIGHT2 = FOUR_WEIGHT;
     static constexpr long double PATTERN_WEIGHT3 = THREE_WEIGHT/2;
     static constexpr long double PATTERN_WEIGHT4 = THREE_WEIGHT/2;
     //2,2,1,2 = good
     //1.5,2,1,2 = better
-    static constexpr long double DEFENSE_FACTOR = 1.1;
-    static constexpr long double EVAL_DEFENSE_FACTOR = 1.9;
+    static constexpr long double DEFENSE_FACTOR = 1;
+    static constexpr long double EVAL_DEFENSE_FACTOR = 1;
     static constexpr int MAX_EXTRA_LEVELS = 2;
-    static constexpr long double OPPONENT_LEVEL_FACTOR = 5;
+    static constexpr long double OPPONENT_LEVEL_FACTOR = 2.37;
 
     static_assert( THREE_WEIGHT != 0 && FOUR_WEIGHT != 0 && TWO_WEIGHT != 0 && WIN_WEIGHT * WIN_WEIGHT > 0, "dividing too small in AI code" );
 
@@ -585,6 +584,10 @@ public:
         if( elapsed_secs > my_longest_time ){
             std::cout << "\nnew longest time: " << elapsed_secs << " seconds\n";
             my_longest_time = elapsed_secs;
+
+            if( elapsed_secs >= 5.5 ){
+                assert(false); //AI took too long
+            }
 
         }
         ++moveCount;
