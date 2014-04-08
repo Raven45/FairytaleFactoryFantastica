@@ -214,6 +214,8 @@ void GuiGameController::startOnePersonPlay( int aiLevel, int menuSelectedColor )
         setPlayer2(&hardAi);
     }
 
+    player2 -> reset();
+
     assert( menuSelectedColor == 0 or menuSelectedColor == 1 );
 
     guiPlayerColor = static_cast<PlayerColor>(menuSelectedColor);

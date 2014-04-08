@@ -30,7 +30,8 @@ RESOURCES += \
     ui/resources/kidResources.qrc \
     ui/resources/qmlResources.qrc \
     ui/resources/SpookyMusic.qrc \
-    ui/resources/qmlResources2.qrc
+    ui/resources/qmlResources2.qrc \
+    ui/resources/introAnimationResources.qrc
 
 INCLUDEPATH += \
     backend \

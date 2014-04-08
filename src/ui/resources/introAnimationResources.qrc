@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="Nob.png">../media/Nob.png</file>
+        <file alias="Projector.png">../media/Projector.png</file>
+        <file alias="Screen.png">../media/ScreenStand.png</file>
+        <file alias="Table.png">../media/Table.png</file>
+        <file alias="Screen_ON.png">../media/Screen_ON.png</file>
+        <file alias="Lights_Off.png">../media/Lights_Off.png</file>
+        <file alias="Background.png">../media/Background.png</file>
+	<file alias="Film.png">../media/Film.png</file>
+	<file alias="introBackground.png">../media/factoryBackground.png</file>
+     </qresource>
+</RCC>
