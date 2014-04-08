@@ -85,7 +85,9 @@ static constexpr BoardInt START_PATTERNS1[] = {16,
 static constexpr BoardInt START_PATTERNS2[] = {2147491840,
                                                2151677952,
                                                4194320,
-                                               8208};
+                                               8208,
+                                               2147483664,
+                                               4202496};
 
 static constexpr BoardInt START_PATTERNS3[] = {6446645248,
                                                2153775104,
@@ -94,16 +96,73 @@ static constexpr BoardInt START_PATTERNS3[] = {6446645248,
                                                8216,
                                                24592,
                                                37748752,
-                                               4194322};
+                                               4194322,
+                                               36507222032,
+                                               20979712,
+                                               2147483665,
+                                               4204544};
 
 static constexpr BoardInt START_PATTERNS4[] = {19327362048,
                                                6448742400,
                                                37748754,
-                                               24600};
+                                               24600,
+                                               36507222033,
+                                               20981760
+                                              };
+
+static constexpr BoardInt START_PATTERNS_ROTATE_TO_3[] ={19331547136,
+                                                         2420113408,
+                                                         2152202240,
+                                                         2185232384,
+                                                         6442459136,
+                                                         3221233664,
+                                                         2147508224,
+                                                         2147495936,
+                                                         8210,
+                                                         8336,
+                                                         73744,
+                                                         9232,
+                                                         4194328,
+                                                         4194352,
+                                                         6291472,
+                                                         12582928};
+
+static constexpr BoardInt START_PATTERNS_ROTATE_TO_4[] = {19333644288,
+                                                        2422210560,
+                                                        6447169536,
+                                                        6480199680,
+                                                        6442460160,
+                                                        3221234688,
+                                                        19327365120,
+                                                        19327377408,
+                                                        9240,
+                                                        73752,
+                                                        24594,
+                                                        24720,
+                                                        37748760,
+                                                        37748784,
+                                                        12582930,
+                                                        6291474,
+                                                        10737418257,
+                                                        2684354577,
+                                                        36507222036,
+                                                        36507222096,
+                                                        4466688,
+                                                        71313408,
+                                                        20980224,
+                                                        21110784};
 
 typedef std::uint8_t RowInt;
 
 constexpr BoardInt FULL_BOARD =
 111111111111111111111111111111111111_b;
+
+constexpr BoardInt TOP_PAIR = 2151677952;
+constexpr BoardInt BOTTOM_PAIR = 8208;
+constexpr BoardInt LEFT_PAIR = 2147491840;
+constexpr BoardInt RIGHT_PAIR = 4194320;
+constexpr BoardInt LEFT_DIAGONAL_PAIR = 2147483664;
+constexpr BoardInt RIGHT_DIAGONAL_PAIR = 4202496;
+
 
 #endif // BITBOARDUTIL_H
