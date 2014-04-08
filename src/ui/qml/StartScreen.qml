@@ -281,7 +281,7 @@ Rectangle {
                 anchors.bottom: parent.bottom
                 height: parent.height*.75
                 group: "fog"
-                z:15
+                z:5
                 shape: LineShape{}
                 lifeSpan: 9500
                 lifeSpanVariation: 400
@@ -627,7 +627,7 @@ Rectangle {
         id: sign
         source: "Sign.png"
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: -110
+        anchors.bottomMargin: -150
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.horizontalCenterOffset: -185
         z: 16
@@ -755,9 +755,9 @@ Rectangle {
         id:  footprints
         source: "FootPrints.png"
         anchors.left: parent.left
-        anchors.leftMargin: 100
+        anchors.leftMargin: -20
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 80
+        anchors.bottomMargin: -30
         z: 5
     }
 
@@ -859,6 +859,7 @@ Rectangle {
         anchors.bottom: treeLayer5.bottom
         anchors.bottomMargin: -130
         z: 10
+        visible: false
     }
 
 
