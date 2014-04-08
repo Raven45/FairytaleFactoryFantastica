@@ -31,6 +31,7 @@ class ConcurrentSmartestPlayer : public Player {
     static constexpr long double WIN_WEIGHT = 27721000;
     static constexpr long double FOUR_WEIGHT = 91253.4;
     static constexpr long double THREE_WEIGHT =300.393;
+
     static constexpr long double DEFAULT_WEIGHT = 1;
     static constexpr long double PATTERN_WEIGHT1 = THREE_WEIGHT*THREE_WEIGHT;
     static constexpr long double PATTERN_WEIGHT2 = FOUR_WEIGHT;
@@ -43,7 +44,7 @@ class ConcurrentSmartestPlayer : public Player {
     static constexpr int MAX_EXTRA_LEVELS = 2;
     static constexpr long double OPPONENT_LEVEL_FACTOR = 2.37;
 
-    static_assert( THREE_WEIGHT != 0 && FOUR_WEIGHT != 0 && TWO_WEIGHT != 0 && WIN_WEIGHT * WIN_WEIGHT > 0, "dividing too small in AI code" );
+    static_assert( THREE_WEIGHT != 0 && FOUR_WEIGHT != 0 && WIN_WEIGHT * WIN_WEIGHT > 0, "dividing too small in AI code" );
 
 
 
@@ -53,7 +54,6 @@ public:
         std::cout << "WIN_WEIGHT: " << WIN_WEIGHT;
         std::cout << "\nFOUR_WEIGHT: " << FOUR_WEIGHT;
         std::cout << "\nTHREE_WEIGHT: " << THREE_WEIGHT;
-        std::cout << "\nTWO_WEIGHT: " << TWO_WEIGHT;
         std::cout << "\nDEFAULT_WEIGHT: " << DEFAULT_WEIGHT << "\n";
     }
 
