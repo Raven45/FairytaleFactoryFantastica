@@ -111,7 +111,7 @@ Item {
 
                 target: witchClaw.anchors
                 properties:"verticalCenterOffset"
-                to: -1100
+                to: -1300
                 duration: 1000
                 easing.type:Easing.Linear
             }

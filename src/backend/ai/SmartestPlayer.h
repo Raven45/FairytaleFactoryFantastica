@@ -27,7 +27,7 @@ class SmartestPlayer : public Player {
 
     double longestTimeSpentCalculatingMove;
 
-    static constexpr long double WIN_WEIGHT =   EASY_MODE? 288 :   27721000;
+    /*static constexpr long double WIN_WEIGHT =   EASY_MODE? 288 :   27721000;
     static constexpr long double FOUR_WEIGHT =  EASY_MODE? 5   :   91253.4;
     static constexpr long double THREE_WEIGHT = EASY_MODE? 1.1 :   300.393;
 
@@ -40,7 +40,22 @@ class SmartestPlayer : public Player {
     //1.5,2,1,2 = better
     static constexpr long double DEFENSE_FACTOR = 1;
     static constexpr long double EVAL_DEFENSE_FACTOR = 1;
-    static constexpr long double OPPONENT_LEVEL_FACTOR = 2.37;
+    static constexpr long double OPPONENT_LEVEL_FACTOR = 2.37;*/
+
+    static constexpr long double WIN_WEIGHT =   EASY_MODE? 288 :   28921000;
+    static constexpr long double FOUR_WEIGHT =  EASY_MODE? 5   :   97853.4;
+    static constexpr long double THREE_WEIGHT = EASY_MODE? 1.1 :   330.393;
+
+    static constexpr long double DEFAULT_WEIGHT = 1;
+    static constexpr long double PATTERN_WEIGHT1 = 86726.73;
+    static constexpr long double PATTERN_WEIGHT2 = 86726.7;
+    static constexpr long double PATTERN_WEIGHT3 = 1900.6;
+    static constexpr long double PATTERN_WEIGHT4 = 1900.9;
+    //2,2,1,2 = good
+    //1.5,2,1,2 = better
+    static constexpr long double DEFENSE_FACTOR = 1.96564;
+    static constexpr long double EVAL_DEFENSE_FACTOR = 1.9752;
+    static constexpr long double OPPONENT_LEVEL_FACTOR = 2;
 
     static_assert( THREE_WEIGHT != 0 && FOUR_WEIGHT != 0 && WIN_WEIGHT * WIN_WEIGHT > 0, "dividing too small in AI code" );
 
