@@ -122,27 +122,20 @@ HEADERS += \
     backend/core/GameData.h \
     backend/core/GuiGameController.h \
     backend/core/MainBoard.h \
-    backend/core/MusicPlayer.h \
     backend/core/PentagoExceptions.h \
     backend/core/Player.h \
     backend/core/PlayerColor.h \
     backend/core/Quadrant.h \
     backend/core/Turn.h \
     backend/core/WinningAlignment.h \
-    backend/ai/lessdumbplayer2.h \
-    backend/ai/lessdumbplayer3.h \
     backend/ai/MonteCarloAI.h \
     backend/ai/randomplayer.h \
-    backend/ai/SmarterPlayer.h \
-    backend/ai/SmarterPlayer2.h \
     backend/ai/MonteCarloAI2.h \
     backend/ai/MonteCarloAI3.h \
     backend/ai/MonteCarloAI4.h \
     backend/ai/MonteCarloParallelAI.h \
     backend/ai/AlphaBetaAI.h \
-    backend/ai/SmarterPlayer4.h \
     SmarterPlayer6.h \
-    backend/ai/SmartPlayer.h \
     backend/ai/SmartestPlayer.h
 
 

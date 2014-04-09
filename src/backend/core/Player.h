@@ -26,10 +26,6 @@ public:
 
     virtual Turn getMove(const Board& b) = 0;
 
-    virtual void reset(){
-
-    }
-
 signals:
 
     void setColor( const PlayerColor& pc ){

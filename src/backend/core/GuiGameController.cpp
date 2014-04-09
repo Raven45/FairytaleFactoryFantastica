@@ -17,14 +17,7 @@ GuiGameController::GuiGameController( QGuiApplication* mainApp ) {
 
     player2 = nullptr;
     net = nullptr;
-
     isNetworkGame = false;
-
-    //change this URL path
-//    musicPlayer.setMedia(QUrl("qrc:/MonkeysSpinningMonkeys.mp3"));
-//    //musicPlayer.setMedia(QUrl("qrc:/CalltoAdventure.mp3"));
-//    musicPlayer.play();
-
     app = mainApp;
 }
 
@@ -78,7 +71,6 @@ void GuiGameController::setWindow(Proxy* g){
     connect(gui, SIGNAL( readyToStartTwoPersonPlay() ),     this, SLOT( startTwoPersonPlay() ),     Qt::QueuedConnection  );
     connect(gui, SIGNAL( sendPlayerName( QVariant ) ) ,     this, SLOT( setPlayerName( QVariant ) ),Qt::QueuedConnection  );
     connect(gui, SIGNAL( enterNetworkLobby() ),             this, SLOT( enterNetworkLobby() ),      Qt::QueuedConnection  );
-    connect(gui, SIGNAL( changeSoundState() ),              this, SLOT( togglePlayback() ),         Qt::QueuedConnection  );
     connect(gui, SIGNAL( readyToExitGame() ),               this, SLOT( exitGame() ),               Qt::QueuedConnection  );
     connect(gui, SIGNAL( leaveLobby() ),                this, SLOT( leaveLobby() ),         Qt::QueuedConnection  );
 
@@ -214,8 +206,6 @@ void GuiGameController::startOnePersonPlay( int aiLevel, int menuSelectedColor )
         setPlayer2(&hardAi);
     }
 
-    player2 -> reset();
-
     assert( menuSelectedColor == 0 or menuSelectedColor == 1 );
 
     guiPlayerColor = static_cast<PlayerColor>(menuSelectedColor);
@@ -273,27 +263,17 @@ void GuiGameController::startNetworkGame() {
 
 }
 
-
-
-void GuiGameController::togglePlayback(){
-    if (musicPlayer.mediaStatus() == QMediaPlayer::NoMedia)
-        //error, there is no file set in the player
-        ;
-    else if (musicPlayer.state() == QMediaPlayer::PlayingState)
-        musicPlayer.pause();
-    else
-        musicPlayer.play();
-}
-
 void GuiGameController::exitGame() {
 
     QThread* coreThread = this -> thread();
     moveToThread(QGuiApplication::instance()->thread());
 
-    net -> deleteLater();
-    connect( net, SIGNAL(destroyed()), coreThread, SLOT(quit()) );
-    connect( coreThread, SIGNAL(finished()), app, SLOT(quit()) );
+    if( net != nullptr ){
+        net -> deleteLater();
+        connect( net, SIGNAL(destroyed()), coreThread, SLOT(quit()) );
+    }
 
+    connect( coreThread, SIGNAL(finished()), app, SLOT(quit()) );
 }
 
 

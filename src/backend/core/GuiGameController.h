@@ -13,11 +13,9 @@
 
 //#include "MonteCarloParallelAI.h"
 #include "NetworkInterface.h"
-#include "SmarterPlayer2.h"
 #include "SmartestPlayer.h"
 #include "MonteCarloParallelAI.h"
 #include "AlphaBetaAI.h"
-#include "SmartPlayer.h"
 
 
 class Proxy : public QObject {
@@ -67,28 +65,22 @@ signals:
 class GuiGameController : public QObject, public GameCore {
 
     Q_OBJECT
-
     Q_PROPERTY( QList<int> opponentsTurn READ getOpponentsTurn )
-
     Q_PROPERTY( int winner READ getWinner )
 
 protected:
 
-    QGuiApplication* app;
-    Proxy* gui;
-
-    //player1 is in the Gui; his turn is too specialized to force into the player class
-    Player* player2;
-
     typedef AlphaBetaAI EasyAIPlayer;
-    typedef SmarterPlayer2 MediumAIPlayer;
+    typedef ConcurrentSmartestPlayer MediumAIPlayer;
     typedef ConcurrentSmartestPlayer HardAIPlayer;
 
+    QGuiApplication* app;
+    Proxy* gui;
+    Player* player2; //AI
+    NetworkInterface* net;
     EasyAIPlayer easyAi;
     MediumAIPlayer mediumAi;
     HardAIPlayer hardAi;
-
-
     PlayerColor guiPlayerColor;
     QString guiPlayerName;
     PlayerColor firstMover;
@@ -97,12 +89,6 @@ protected:
     bool isVersusGame;
     QList<int> qOpponentsLastTurn;
     Turn qGuiTurn;
-
-    NetworkInterface* net;
-
-    QThread* pMusicThread;
-
-    QMediaPlayer musicPlayer;
 
     void startNetworkGame();
 
@@ -141,7 +127,6 @@ public slots:
     void startOnePersonPlay( int aiLevel, int menuSelectedColor );
     void startTwoPersonPlay();
     void enterNetworkLobby();
-    void togglePlayback();
     void exitGame();
     void setPlayerName(QVariant name);
 

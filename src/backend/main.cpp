@@ -5,20 +5,7 @@
 #include "MonteCarloParallelAI.h"
 #include "AlphaBetaAI.h"
 #include "NetworkInterface.h"
-#include "SmarterPlayer4.h"
 #include <time.h>
-
-/*
-#include <QtCore/qdebug.h>
-#include <QtCore/qthread.h>
-#include <QtQuick/qquickitem.h>
-#include <QtQuick/qquickview.h>
-#include <QtGui/qguiapplication.h>
-#include <QtQml/qqmlengine.h>
-#include <QtQml/qqmlcomponent.h>
-#include <QtQml/qqmlcontext.h>
-#include <QtCore/qurl.h>
-*/
 
 #include <QDebug>
 #include <QThread>

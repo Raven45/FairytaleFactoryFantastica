@@ -25,8 +25,7 @@
 
 class ConcurrentSmartestPlayer : public Player {
 
-    unsigned char moveCount;
-    double my_longest_time;
+    double longestTimeSpentCalculatingMove;
 
     static constexpr long double WIN_WEIGHT = 27721000;
     static constexpr long double FOUR_WEIGHT = 91253.4;
@@ -50,7 +49,7 @@ class ConcurrentSmartestPlayer : public Player {
 
 public:
 
-    ConcurrentSmartestPlayer():moveCount(0),my_longest_time(0){
+    ConcurrentSmartestPlayer():longestTimeSpentCalculatingMove(0){
     }
 
     static inline long double evaluateBitBoard( const BitBoard& boardToCheck, const BitBoard& opponentsBoard,  const BitBoard& myOriginalBoard ) {
@@ -65,7 +64,7 @@ public:
 
                 resultWeight += WIN_WEIGHT;
             }
-            //account for opponents board! Important new feature!!
+            //account for opponents board
             else if( opponentsBoard.hasPattern(winningBoard) && !winningBoard.overlapsPattern( boardToCheck ) ){
                 resultWeight -= WIN_WEIGHT * EVAL_DEFENSE_FACTOR;
             }
@@ -253,6 +252,8 @@ public:
 
         long double bestMoveWeight = INT_MIN;
         bool beenThroughOnce = false;
+
+        //backwards loop idiom, possibly uses 1 less register
         for( int quadrantIndex =  4; quadrantIndex--;){
             for( int pieceIndex = 9; pieceIndex--;){
 
@@ -412,12 +413,6 @@ public:
 
      }
 
-
-    void reset() override {
-        moveCount = 0;
-    }
-
-
     template< unsigned char quadrantA, unsigned char quadrantB >
     static inline bool blockEarlyDiagonal( Turn& bestMove, const BitBoard& opponentsBoard, const MainBoard& mainBoard ){
 
@@ -431,7 +426,7 @@ public:
         //.@. ...
         //... ...
 
-        //...look for open diagonal pair and block it
+        //...look for open diagonal pair and block it, if found
 
         bool foundSpecialCase = false;
 
@@ -470,6 +465,18 @@ public:
 
     template< unsigned char quadrantA, unsigned char quadrantB >
     static inline bool blockEarly( Turn& bestMove, const BitBoard& opponentsBoard, const MainBoard& mainBoard ){
+
+        //when opponent...
+
+        //... ...
+        //.@. .@.
+        //... ...
+        //          (or similar)
+        //... ...
+        //... ...
+        //... ...
+
+        //...look for open horizontal/vertical pair and block it, if found
 
         bool foundSpecialCase = false;
 
@@ -535,8 +542,8 @@ public:
         }
 
         if( foundSpecialCase ){
-            qDebug() << "******FOUND SPECIAL CASE*******";
-            //pieceHole has already been set
+
+            //pieceHole has already been set by blockEarly or blockEarlyDiagonal function
 
             long double bestRotationWeight = INT_MIN;
 
@@ -571,9 +578,13 @@ public:
             QFuture< std::pair<Turn, long double> > futureLeft;
             QFuture< std::pair<Turn, long double> > futureRight;
 
+            //divide the work in two, do each in parallel (must be under 6 seconds)
+            //qrand() argument adds element of unpredictability to move selection
+            //need to call it here from the thread from which qrand was seeded
             futureLeft = QtConcurrent::run(getMoveParallel<LEFT>, mainBoard, myColor, opponentColor, qrand() );
             futureRight = QtConcurrent::run(getMoveParallel<RIGHT>, mainBoard, myColor, opponentColor, qrand() );
 
+            //blocking
             std::pair<Turn, long double> resultLeft = futureLeft.result();
             std::pair<Turn, long double> resultRight = futureRight.result();
 
@@ -586,18 +597,18 @@ public:
         }
 
         clock_t end = clock();
-        double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+        double elapsedSeconds = double(end - begin) / CLOCKS_PER_SEC;
 
-        if( elapsed_secs > my_longest_time ){
-            std::cout << "\nnew longest time: " << elapsed_secs << " seconds\n";
-            my_longest_time = elapsed_secs;
+        if( elapsedSeconds > longestTimeSpentCalculatingMove ){
+            std::cout << "\nnew longest time: " << elapsedSeconds << " seconds\n";
+            longestTimeSpentCalculatingMove = elapsedSeconds;
 
-            if( elapsed_secs >= 5.5 ){
-                assert(false); //AI took too long
+            if( elapsedSeconds >= 5.5 ){
+                assert(false); //AI took too long, crash program to draw our attention
             }
 
         }
-        ++moveCount;
+        //++moveCount;
         return bestMove;
 
     }
