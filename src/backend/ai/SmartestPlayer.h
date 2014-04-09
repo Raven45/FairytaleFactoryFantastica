@@ -55,7 +55,7 @@ class SmartestPlayer : public Player {
     //1.5,2,1,2 = better
     static constexpr long double DEFENSE_FACTOR = 1.96564;
     static constexpr long double EVAL_DEFENSE_FACTOR = 1.9752;
-    static constexpr long double OPPONENT_LEVEL_FACTOR = 0.55;
+    static constexpr long double OPPONENT_LEVEL_FACTOR = 0.8;
 
     static_assert( THREE_WEIGHT != 0 && FOUR_WEIGHT != 0 && WIN_WEIGHT * WIN_WEIGHT > 0, "dividing too small in AI code" );
 
@@ -72,7 +72,7 @@ public:
 
 
 
-        for(unsigned int winIndex = 32; winIndex--;){
+        for(unsigned int winIndex = 32; winIndex--; ){
             const BitBoard winningBoard = WINS[winIndex];
             if( boardToCheck.hasPattern(winningBoard) && !winningBoard.overlapsPattern( opponentsBoard ) ){
 
