@@ -611,7 +611,7 @@ public:
             }
 
         }
-        //++moveCount;
+
         return bestMove;
 
     }
