@@ -54,7 +54,8 @@ SOURCES += \
     backend/core/twoInARowArray.cpp \
     backend/core/Wins.cpp \
     backend/main.cpp \
-    backend/core/rotationArray.cpp
+    backend/core/rotationArray.cpp \
+    backend/core/MainBoard.cpp
 
 # Installation path
 # target.path =
@@ -122,20 +123,15 @@ HEADERS += \
     backend/core/GameData.h \
     backend/core/GuiGameController.h \
     backend/core/MainBoard.h \
-    backend/core/PentagoExceptions.h \
     backend/core/Player.h \
     backend/core/PlayerColor.h \
-    backend/core/Quadrant.h \
     backend/core/Turn.h \
-    backend/core/WinningAlignment.h \
     backend/ai/MonteCarloAI.h \
-    backend/ai/randomplayer.h \
     backend/ai/MonteCarloAI2.h \
     backend/ai/MonteCarloAI3.h \
     backend/ai/MonteCarloAI4.h \
     backend/ai/MonteCarloParallelAI.h \
     backend/ai/AlphaBetaAI.h \
-    SmarterPlayer6.h \
     backend/ai/SmartestPlayer.h
 
 

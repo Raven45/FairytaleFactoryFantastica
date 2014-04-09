@@ -1,5 +1,5 @@
-#ifndef CONCURRENTSMARTESTPLAYER_H
-#define CONCURRENTSMARTESTPLAYER_H
+#ifndef SMARTESTPLAYER_H
+#define SMARTESTPLAYER_H
 
 #include <QtConcurrent>
 #include <QFuture>
@@ -22,14 +22,14 @@
 #define NUMBER_OF_QUADRANTS 4
 
 
-
-class ConcurrentSmartestPlayer : public Player {
+template<unsigned char MAX_EXTRA_LEVELS, bool EASY_MODE = false >
+class SmartestPlayer : public Player {
 
     double longestTimeSpentCalculatingMove;
 
-    static constexpr long double WIN_WEIGHT = 27721000;
-    static constexpr long double FOUR_WEIGHT = 91253.4;
-    static constexpr long double THREE_WEIGHT =300.393;
+    static constexpr long double WIN_WEIGHT =   EASY_MODE? 288 :   27721000;
+    static constexpr long double FOUR_WEIGHT =  EASY_MODE? 5   :   91253.4;
+    static constexpr long double THREE_WEIGHT = EASY_MODE? 1.1 :   300.393;
 
     static constexpr long double DEFAULT_WEIGHT = 1;
     static constexpr long double PATTERN_WEIGHT1 = THREE_WEIGHT*THREE_WEIGHT;
@@ -40,7 +40,6 @@ class ConcurrentSmartestPlayer : public Player {
     //1.5,2,1,2 = better
     static constexpr long double DEFENSE_FACTOR = 1;
     static constexpr long double EVAL_DEFENSE_FACTOR = 1;
-    static constexpr int MAX_EXTRA_LEVELS = 2;
     static constexpr long double OPPONENT_LEVEL_FACTOR = 2.37;
 
     static_assert( THREE_WEIGHT != 0 && FOUR_WEIGHT != 0 && WIN_WEIGHT * WIN_WEIGHT > 0, "dividing too small in AI code" );
@@ -49,7 +48,7 @@ class ConcurrentSmartestPlayer : public Player {
 
 public:
 
-    ConcurrentSmartestPlayer():longestTimeSpentCalculatingMove(0){
+    SmartestPlayer():longestTimeSpentCalculatingMove(0){
     }
 
     static inline long double evaluateBitBoard( const BitBoard& boardToCheck, const BitBoard& opponentsBoard,  const BitBoard& myOriginalBoard ) {
@@ -413,6 +412,10 @@ public:
 
      }
 
+    void printWeights(){
+        qDebug() << "Original ConcurrentSmartestPlayer won the tournament.";
+    }
+
     template< unsigned char quadrantA, unsigned char quadrantB >
     static inline bool blockEarlyDiagonal( Turn& bestMove, const BitBoard& opponentsBoard, const MainBoard& mainBoard ){
 
@@ -604,7 +607,7 @@ public:
             longestTimeSpentCalculatingMove = elapsedSeconds;
 
             if( elapsedSeconds >= 5.5 ){
-                assert(false); //AI took too long, crash program to draw our attention
+                assert(false);
             }
 
         }
@@ -616,4 +619,4 @@ public:
 };
 
 
-#endif // CONCURRENTSMARTESTPLAYER_H
+#endif //SMARTESTPLAYER_H

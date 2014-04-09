@@ -70,9 +70,9 @@ class GuiGameController : public QObject, public GameCore {
 
 protected:
 
-    typedef AlphaBetaAI EasyAIPlayer;
-    typedef ConcurrentSmartestPlayer MediumAIPlayer;
-    typedef ConcurrentSmartestPlayer HardAIPlayer;
+    typedef SmartestPlayer<1, true> EasyAIPlayer;
+    typedef SmartestPlayer<1>       MediumAIPlayer;
+    typedef SmartestPlayer<2>       HardAIPlayer;
 
     QGuiApplication* app;
     Proxy* gui;
@@ -118,8 +118,6 @@ signals:
     void challengeDeclined();
 
 public slots:
-
-
 
     //connected to Gui buttons
     void setFirstMovingPlayerColor( PlayerColor playerToMoveFirst );

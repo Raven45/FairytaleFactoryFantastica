@@ -55,7 +55,8 @@ constexpr BoardInt FOUR_IN_A_ROW[ NUMBER_OF_SIGNIFICANT_FOUR_IN_A_ROW_PATTERNS ]
     #include "fourInARowArray.cpp"
 };
 
-constexpr BoardInt WINS[32] = {
+constexpr unsigned char POSSIBLE_WIN_COUNT = 32;
+constexpr BoardInt WINS[POSSIBLE_WIN_COUNT] = {
     #include "Wins.cpp"
 };
 

@@ -129,7 +129,7 @@ public:
     }
 
     //got this code from stack overflow. It just... works.
-    std::uint8_t reverse(std::uint8_t b) {
+    std::uint8_t reverse(std::uint8_t b) const {
        b = (b & 0xF0) >> 4 | (b & 0x0F) << 4;
        b = (b & 0xCC) >> 2 | (b & 0x33) << 2;
        b = (b & 0xAA) >> 1 | (b & 0x55) << 1;
@@ -146,20 +146,22 @@ public:
         return board;
     }
 
-    std::string getPrintableRow( unsigned char rowIndex ){
+    std::string getPrintableRow( unsigned char rowIndex ) const {
         return std::bitset<6>( reverse(getRow(rowIndex)) >> 2 ).to_string();
     }
 
     inline bool didWin() const {
 
-        for( auto win : WINS ){
+        for( unsigned char winIndex = POSSIBLE_WIN_COUNT; winIndex--; ){
+
+            BoardInt win = WINS[winIndex];
+
             if( ( bitBoard & win ) == win ){
                 return true;
             }
         }
 
         return false;
-
     }
 
 

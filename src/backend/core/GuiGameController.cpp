@@ -286,15 +286,7 @@ void GuiGameController::registerGuiTurnWithBoard(){
 
     assert( ! qGuiTurn.isEmpty() );
 
-    try{
-        registerTurnWithBoard( qGuiTurn );
-
-    }
-    catch(InvalidMoveException){
-        emit badMoveFromGui();
-        qDebug() << "BAD MOVE FROM GUI";
-        throw;
-    }
+    registerTurnWithBoard( qGuiTurn );
 
     if( isGameOver() && !isNetworkGame ){
          emit gameIsOver();
@@ -310,38 +302,25 @@ void GuiGameController::registerGuiTurnWithBoard(){
 
         //network moves are registered elsewhere.
         if( !isNetworkGame ){
-            try{
-                registerOpponentsTurnWithBoard( player2 -> getMove( copyCurrentBoard() ) );
-            }
-            catch(InvalidMoveException){
-                qDebug() << "BAD MOVE FROM OPPONENT";
-                throw;
-            }
+
+            registerOpponentsTurnWithBoard( player2 -> getMove( copyCurrentBoard() ) );
 
             if( isGameOver() ){
                  emit gameIsOver();
             }
 
-
-        copyCurrentBoard().print();
-
-        emit readyForGuiMove();
-
+            copyCurrentBoard().print();
+            emit readyForGuiMove();
         }
         else{
-
             net -> sendGuiTurn( qGuiTurn.getHole().quadrantIndex, qGuiTurn.getHole().pieceIndex, qGuiTurn.getQuadrantToRotate(), qGuiTurn.getRotationDirection() );
-
-
 
             if( isGameOver() ){
                  emit gameIsOver();
-             }
+            }
             else{
                 emit waitingForOpponentsMove();
             }
-
-
         }
      }
  }
@@ -364,7 +343,7 @@ void GuiGameController::registerOpponentsTurnWithBoard(Turn opponentsMove ) {
 
 
     //making sure that this only gets called with the opponents move
-    if( !PENTAGO_RELEASE && opponentsMove.getPieceColor() == guiPlayerColor ){
+    if( opponentsMove.getPieceColor() == guiPlayerColor ){
         assert(false);
     }
 

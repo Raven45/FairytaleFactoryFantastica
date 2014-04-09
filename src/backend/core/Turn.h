@@ -11,12 +11,8 @@
 
 //used to account for special win condition where there is no rotation
 #define DONT_ROTATE_CODE 111
-
-//#if PENTAGO_RELEASE == false
 #define TURN_DEBUGGING true
-//#else
-//#define TURN_DEBUGGING false
-//#endif
+
 
 
 class Turn{

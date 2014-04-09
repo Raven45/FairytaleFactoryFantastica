@@ -555,27 +555,15 @@ public slots:
         while ( announceSocket.hasPendingDatagrams() ) {
 
             QByteArray datagram;
-
-            /*#if PENTAGO_RELEASE == false
-            if(announceSocket.pendingDatagramSize() != sizeof(Transaction)){
-                assert( announceSocket.pendingDatagramSize() == sizeof(Transaction) );
-            }
-            #endif*/
-
             datagram.resize( sizeof(Transaction) );
 
             //fill QByteArray
             announceSocket.readDatagram( datagram.data(), datagram.size() );
-
             Transaction receivedTransaction( datagram );
 
             if( networkIsActive && receivedTransaction.author.id != myInfo.id ){
-
-                //QtConcurrent::run(this, &NetworkInterface::handleAnnounce, receivedTransaction);
                 handleAnnounce( receivedTransaction );
             }
-
-            //receivedTransaction.print();
         }
     }
 

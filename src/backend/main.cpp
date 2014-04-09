@@ -1,7 +1,5 @@
-﻿#include "PentagoExceptions.h"
+﻿
 #include "GuiGameController.h"
-//#include "MonteCarloAI.h"
-//#include "MonteCarloAI3.h"
 #include "MonteCarloParallelAI.h"
 #include "AlphaBetaAI.h"
 #include "NetworkInterface.h"

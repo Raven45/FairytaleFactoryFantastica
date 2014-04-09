@@ -2,7 +2,6 @@
 #define GAMECORE_H
 
 #include "GameData.h"
-#include "PentagoExceptions.h"
 #include "MainBoard.h"
 
 

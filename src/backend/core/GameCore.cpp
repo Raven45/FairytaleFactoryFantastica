@@ -1,5 +1,5 @@
 #include "GameCore.h"
-#include "PentagoExceptions.h"
+#include "MainBoard.h"
 
 Board GameCore::copyCurrentBoard(){
     return currentBoard;
@@ -25,13 +25,13 @@ void GameCore::registerTurnWithBoard( Turn playersMove ){
 
         //if a rotationless move comes here, it better be a winner
         if(gameData.winner == PlayerColor::NONE ){
-           throw InvalidMoveException(playersMove);
+           assert(false);
         }
     }
     else{
         //set the move in motion, change the board
         if(!currentBoard.move(playersMove)){
-           throw InvalidMoveException(playersMove);
+           assert(false);
         }
 
          gameData = currentBoard.checkWin();
