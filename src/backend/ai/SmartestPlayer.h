@@ -72,7 +72,7 @@ public:
 
 
 
-        for(unsigned int winIndex = 32; winIndex--; ){
+        for(unsigned int winIndex = 32; winIndex--; ) {
             const BitBoard winningBoard = WINS[winIndex];
             if( boardToCheck.hasPattern(winningBoard) && !winningBoard.overlapsPattern( opponentsBoard ) ){
 
@@ -94,13 +94,13 @@ public:
         //optimize
         for( unsigned char fourInARowIndex = NUMBER_OF_SIGNIFICANT_FOUR_IN_A_ROW_PATTERNS; fourInARowIndex--; ){
 
-            BoardInt fourInARowBoard = FOUR_IN_A_ROW[fourInARowIndex];
+            const BoardInt fourInARowBoard = FOUR_IN_A_ROW[fourInARowIndex];
 
             //if( boardToCheck has a four-in-a-row pattern we didn't already have
             if( !myOriginalBoard.hasPattern( fourInARowBoard ) && boardToCheck.hasPattern( fourInARowBoard ) ){
 
-                BoardInt futureWinPattern1 = FOUR_TO_FIVE_IN_A_ROW[fourInARowIndex][0];
-                BoardInt futureWinPattern2 = FOUR_TO_FIVE_IN_A_ROW[fourInARowIndex][1];
+                const BoardInt futureWinPattern1 = FOUR_TO_FIVE_IN_A_ROW[fourInARowIndex][0];
+                const BoardInt futureWinPattern2 = FOUR_TO_FIVE_IN_A_ROW[fourInARowIndex][1];
 
                 // make sure the four-in-a-row patterns aren't blocked on at least one end
                 if( !opponentsBoard.overlapsPattern(futureWinPattern1) ){
@@ -114,8 +114,8 @@ public:
 
             else if( opponentsBoard.hasPattern( fourInARowBoard )  ){
 
-                BoardInt futureWinPattern1 = FOUR_TO_FIVE_IN_A_ROW[fourInARowIndex][0];
-                BoardInt futureWinPattern2 = FOUR_TO_FIVE_IN_A_ROW[fourInARowIndex][1];
+                const BoardInt futureWinPattern1 = FOUR_TO_FIVE_IN_A_ROW[fourInARowIndex][0];
+                const BoardInt futureWinPattern2 = FOUR_TO_FIVE_IN_A_ROW[fourInARowIndex][1];
 
                 // make sure the four-in-a-row patterns aren't blocked on at least one end
                 if( !boardToCheck.overlapsPattern(futureWinPattern1) ){
@@ -139,7 +139,7 @@ public:
 
 
         for( unsigned char threeInARowIndex = NUMBER_OF_SIGNIFICANT_THREE_IN_A_ROW_PATTERNS; threeInARowIndex--; ){
-            BoardInt threeInARowBoard = THREE_IN_A_ROW[threeInARowIndex];
+           const BoardInt threeInARowBoard = THREE_IN_A_ROW[threeInARowIndex];
 
             if( boardToCheck.hasPattern( threeInARowBoard ) && !myOriginalBoard.hasPattern( threeInARowBoard )  ){
 
@@ -147,8 +147,8 @@ public:
                     assert( false );
                 }
 
-                BoardInt future4Pattern1 = THREE_TO_FOUR_IN_A_ROW[threeInARowIndex][0];
-                BoardInt future4Pattern2 = THREE_TO_FOUR_IN_A_ROW[threeInARowIndex][1];
+                const BoardInt future4Pattern1 = THREE_TO_FOUR_IN_A_ROW[threeInARowIndex][0];
+                const BoardInt future4Pattern2 = THREE_TO_FOUR_IN_A_ROW[threeInARowIndex][1];
                 int future4Pattern1Index = THREE_TO_FOUR_IN_A_ROW_INDEXES[threeInARowIndex][0];
                 int future4Pattern2Index = THREE_TO_FOUR_IN_A_ROW_INDEXES[threeInARowIndex][1];
 
@@ -167,8 +167,8 @@ public:
 
                 if( future4Pattern2Index != -1 && !opponentsBoard.overlapsPattern(future4Pattern2) ){
 
-                    BoardInt futureWinPattern1 = FOUR_TO_FIVE_IN_A_ROW[future4Pattern2Index][0];
-                    BoardInt futureWinPattern2 = FOUR_TO_FIVE_IN_A_ROW[future4Pattern2Index][1];
+                    const BoardInt futureWinPattern1 = FOUR_TO_FIVE_IN_A_ROW[future4Pattern2Index][0];
+                    const BoardInt futureWinPattern2 = FOUR_TO_FIVE_IN_A_ROW[future4Pattern2Index][1];
 
                     if( !opponentsBoard.overlapsPattern(futureWinPattern1) ){
                         resultWeight += FOUR_WEIGHT/2;
@@ -181,15 +181,15 @@ public:
 
             else if(  opponentsBoard.hasPattern( threeInARowBoard ) ){
 
-                BoardInt future4Pattern1 = THREE_TO_FOUR_IN_A_ROW[threeInARowIndex][0];
-                BoardInt future4Pattern2 = THREE_TO_FOUR_IN_A_ROW[threeInARowIndex][1];
+                const BoardInt future4Pattern1 = THREE_TO_FOUR_IN_A_ROW[threeInARowIndex][0];
+                const BoardInt future4Pattern2 = THREE_TO_FOUR_IN_A_ROW[threeInARowIndex][1];
                 int future4Pattern1Index = THREE_TO_FOUR_IN_A_ROW_INDEXES[threeInARowIndex][0];
                 int future4Pattern2Index = THREE_TO_FOUR_IN_A_ROW_INDEXES[threeInARowIndex][1];
 
                 if( !boardToCheck.overlapsPattern(future4Pattern1) ){
 
-                    BoardInt futureWinPattern1 = FOUR_TO_FIVE_IN_A_ROW[future4Pattern1Index][0];
-                    BoardInt futureWinPattern2 = FOUR_TO_FIVE_IN_A_ROW[future4Pattern1Index][1];
+                    const BoardInt futureWinPattern1 = FOUR_TO_FIVE_IN_A_ROW[future4Pattern1Index][0];
+                    const BoardInt futureWinPattern2 = FOUR_TO_FIVE_IN_A_ROW[future4Pattern1Index][1];
 
                     if( !boardToCheck.overlapsPattern(futureWinPattern1) ){
                         resultWeight -= THREE_WEIGHT*EVAL_DEFENSE_FACTOR;
@@ -201,8 +201,8 @@ public:
 
                 if( future4Pattern2Index != -1 && !boardToCheck.overlapsPattern(future4Pattern2) ){
 
-                    BoardInt futureWinPattern1 = FOUR_TO_FIVE_IN_A_ROW[future4Pattern2Index][0];
-                    BoardInt futureWinPattern2 = FOUR_TO_FIVE_IN_A_ROW[future4Pattern2Index][1];
+                    const BoardInt futureWinPattern1 = FOUR_TO_FIVE_IN_A_ROW[future4Pattern2Index][0];
+                    const BoardInt futureWinPattern2 = FOUR_TO_FIVE_IN_A_ROW[future4Pattern2Index][1];
 
                     if( !boardToCheck.overlapsPattern(futureWinPattern1) ){
                         resultWeight -= THREE_WEIGHT*EVAL_DEFENSE_FACTOR;
@@ -566,7 +566,7 @@ public:
             long double bestRotationWeight = INT_MIN;
 
 
-            BitBoard myBoard = mainBoard.getBoardOfPlayer(myColor);
+            const BitBoard myBoard = mainBoard.getBoardOfPlayer(myColor);
             bool beenThroughOnce = false;
             Direction currentDirection = LEFT;
             for( int i = 1; i--; currentDirection = RIGHT ){
