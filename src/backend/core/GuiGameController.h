@@ -70,7 +70,7 @@ class GuiGameController : public QObject, public GameCore {
 
 protected:
 
-    typedef SmartestPlayer<1, true> EasyAIPlayer;
+    typedef SmartestPlayer<0, true>       EasyAIPlayer;
     typedef SmartestPlayer<1>       MediumAIPlayer;
     typedef SmartestPlayer<2>       HardAIPlayer;
 

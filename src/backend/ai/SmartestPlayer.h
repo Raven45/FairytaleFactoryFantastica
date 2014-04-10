@@ -42,7 +42,7 @@ class SmartestPlayer : public Player {
     static constexpr long double EVAL_DEFENSE_FACTOR = 1;
     static constexpr long double OPPONENT_LEVEL_FACTOR = 2.37;*/
 
-    static constexpr long double WIN_WEIGHT =   EASY_MODE? 288 :   28921000;
+    static constexpr long double WIN_WEIGHT =   EASY_MODE? 20 :   28921000;
     static constexpr long double FOUR_WEIGHT =  EASY_MODE? 5   :   97853.4;
     static constexpr long double THREE_WEIGHT = EASY_MODE? 1.1 :   330.393;
 
@@ -218,35 +218,37 @@ public:
             return resultWeight;
         }
 
-        for( BoardInt pattern : START_PATTERNS1 ){
-            if( boardToCheck.hasPattern(pattern) && !myOriginalBoard.hasPattern(pattern) ){
-                resultWeight += PATTERN_WEIGHT1;
+        if( !EASY_MODE ){
+            for( BoardInt pattern : START_PATTERNS1 ){
+                if( boardToCheck.hasPattern(pattern) && !myOriginalBoard.hasPattern(pattern) ){
+                    resultWeight += PATTERN_WEIGHT1;
+                }
             }
-        }
 
-        for( BoardInt pattern : START_PATTERNS2 ){
-            if( boardToCheck.hasPattern(pattern) && !myOriginalBoard.hasPattern(pattern) ){
-                resultWeight += PATTERN_WEIGHT2;
+            for( BoardInt pattern : START_PATTERNS2 ){
+                if( boardToCheck.hasPattern(pattern) && !myOriginalBoard.hasPattern(pattern) ){
+                    resultWeight += PATTERN_WEIGHT2;
+                }
             }
-        }
 
-        if( resultWeight != DEFAULT_WEIGHT ){
-            return resultWeight;
-        }
-
-        for( BoardInt pattern : START_PATTERNS3 ){
-            if(  boardToCheck.hasPattern(pattern) && !myOriginalBoard.hasPattern(pattern)  ){
-                resultWeight += PATTERN_WEIGHT3;
+            if( resultWeight != DEFAULT_WEIGHT ){
+                return resultWeight;
             }
-        }
 
-        if( resultWeight != DEFAULT_WEIGHT ){
-            return resultWeight;
-        }
+            for( BoardInt pattern : START_PATTERNS3 ){
+                if(  boardToCheck.hasPattern(pattern) && !myOriginalBoard.hasPattern(pattern)  ){
+                    resultWeight += PATTERN_WEIGHT3;
+                }
+            }
 
-        for( BoardInt pattern : START_PATTERNS4 ){
-            if( boardToCheck.hasPattern(pattern) && !myOriginalBoard.hasPattern(pattern) ){
-                resultWeight += PATTERN_WEIGHT4;
+            if( resultWeight != DEFAULT_WEIGHT ){
+                return resultWeight;
+            }
+
+            for( BoardInt pattern : START_PATTERNS4 ){
+                if( boardToCheck.hasPattern(pattern) && !myOriginalBoard.hasPattern(pattern) ){
+                    resultWeight += PATTERN_WEIGHT4;
+                }
             }
         }
 
@@ -401,8 +403,9 @@ public:
 
                          Board testBoard (myColor == BLACK? opponentsBoard:boardToRotate,myColor == BLACK? boardToRotate:opponentsBoard, util.opposite(myColor) );
 
-                         newMoveWeight -= (getRecursiveWeight<1>( testBoard, opponentColor, myColor ) * DEFENSE_FACTOR);
-
+                         if( !EASY_MODE ){
+                            newMoveWeight -= (getRecursiveWeight<1>( testBoard, opponentColor, myColor ) * DEFENSE_FACTOR);
+                         }
 
                          //pick first valid move by default
                          if( !beenThroughOnce ){
@@ -543,6 +546,7 @@ public:
 
         bool foundSpecialCase = false;
 
+
         for( auto centerPair : START_PATTERNS2 ){
             if( opponentsBoard.hasPattern( centerPair )){
                 switch( centerPair ){
@@ -559,7 +563,7 @@ public:
             }
         }
 
-        if( foundSpecialCase ){
+        if( foundSpecialCase && !EASY_MODE ){
 
             //pieceHole has already been set by blockEarly or blockEarlyDiagonal function
 
