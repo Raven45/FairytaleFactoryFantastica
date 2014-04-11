@@ -22,11 +22,19 @@ Rectangle {
         rotation: tbar_rec.tbar_rotate_angle
         z: 18
 
+        /* Changed the RedRotateButtons to go out
+
+                          <------->
+                              |
+                              |
+                              |
+        */
+
         RedRotateButton {
             id: rotate_clockwise
             isClockwise: true
             anchors.left: tbar.left
-            anchors.leftMargin: -53
+            anchors.leftMargin: 50
             anchors.top: tbar.top
             anchors.topMargin: -53
 
@@ -38,7 +46,7 @@ Rectangle {
             id: rotate_counter
             isClockwise: false
             anchors.left: tbar.left
-            anchors.leftMargin: 50
+            anchors.leftMargin: -53
             anchors.top: tbar.top
             anchors.topMargin: -53
 
