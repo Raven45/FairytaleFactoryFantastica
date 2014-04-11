@@ -155,7 +155,7 @@ Rectangle {
         id: filmBounceAnimation
         ParallelAnimation{
             NumberAnimation { target: film; property: "opacity"; from: 0; to: 100; duration: 700; easing.type: Easing.InBack }
-            NumberAnimation { target: film; property: "y"; from: film.y; to: film.y-25; duration: 600; easing.type: Easing.InBack }
+            NumberAnimation { target: film; property: "y"; from: film.y; to: film.y-25; duration: 700; easing.type: Easing.InBack }
             //NumberAnimation { target: slide; property: "opacity"; from: .7; to: 0; duration: 400; easing.type: Easing.InBack }
             NumberAnimation { target: slide; property: "anchors.topMargin"; from: 125; to: -250; duration: 600; easing.type: Easing.InBack }
             RotationAnimation{
@@ -170,7 +170,7 @@ Rectangle {
 
         ParallelAnimation{
             NumberAnimation { target: film; property: "opacity"; from: 100; to: 0; duration: 700; easing.type: Easing.OutBack }
-            NumberAnimation { target: film; property: "y"; from: film.y-25; to: film.y; duration: 600; easing.type: Easing.OutBack }
+            NumberAnimation { target: film; property: "y"; from: film.y-25; to: film.y; duration: 700; easing.type: Easing.OutBack }
             NumberAnimation { target: slide; property: "opacity"; from: 0; to: .7; duration: 400; easing.type: Easing.InBack }
             NumberAnimation { target: slide; property: "anchors.topMargin"; from: -250; to: 125; duration: 600; easing.type: Easing.InBack }
             RotationAnimation{
@@ -286,7 +286,7 @@ Rectangle {
 
     Timer{
         id: bouncingFilmTimer
-        interval: 3200; running: false; repeat: false
+        interval: 3150; running: false; repeat: false
         onTriggered:{
             bouncingFilmTimer.stop();
             filmBounceAnimation.start();

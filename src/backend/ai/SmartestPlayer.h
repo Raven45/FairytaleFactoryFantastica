@@ -625,9 +625,12 @@ public:
             std::cout << "\nnew longest time: " << elapsedSeconds << " seconds\n";
             longestTimeSpentCalculatingMove = elapsedSeconds;
 
+            /* Causes issues while in debug
+             * on a non-optimal machine
             if( elapsedSeconds >= 5.5 ){
                 assert(false);
             }
+            */
 
         }
 
