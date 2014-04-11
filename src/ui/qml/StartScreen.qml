@@ -76,8 +76,7 @@ Rectangle {
             showGretelBlinkTimer.startTimer();
 
         }
-
-        }
+    }
 
     QmlTimer{
         id: hanselBlinkTimer
@@ -670,7 +669,10 @@ Rectangle {
                         enterButton_glowEffect.visible = false;
                     }
                 }
-                onPressed: if(_SOUND_CHECK_FLAG) buzzerSound.play()
+                onPressed:{
+                    hiringSign_mouseArea.hoverEnabled = false;
+                    if(_SOUND_CHECK_FLAG) buzzerSound.play()
+                }
                 onClicked:{
                     gate_lDoorSprite.jumpTo("opening_gate");
                     gateOpened();
