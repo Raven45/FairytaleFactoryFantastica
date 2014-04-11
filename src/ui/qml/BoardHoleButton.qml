@@ -550,6 +550,7 @@ Rectangle {
                 console.log("pieceIndex of click: " + pieceIndex );
 
                 if( boardHoleButton.state == "EMPTY" ){
+                    waitingForAnimationsToFinish = true;
                     boardHole_glowEffect.visible = false;
 
                     icingSprite.visible = true;

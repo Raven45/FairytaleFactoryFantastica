@@ -24,7 +24,7 @@ Image {
 
     function rotate( direction ){
 
-        if(_SOUND_CHECK_FLAG) rotationSound.play();
+        if(_SOUND_CHECK_FLAG && !waitingOnAnimationsToFinishSoWeCanLeaveGameScreen ) rotationSound.play();
         rotationAnimation.animationDirection = direction;
         rotationAnimation.start();
 

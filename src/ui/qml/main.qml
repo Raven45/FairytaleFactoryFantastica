@@ -82,7 +82,9 @@ Rectangle {
 
 
     property alias main: page
+    property bool waitingOnAnimationsToFinishSoWeCanLeaveGameScreen: false
     property bool movingPlayerIsTeal: false
+    property bool waitingForAnimationsToFinish: false
     property bool waitingForAISoWeCanExitGame: false
     property bool movingPlayerIsNetworkOrAI: false
     property bool leftSinglePlayerGameWhileAIWasMoving: false
@@ -317,6 +319,7 @@ Rectangle {
             if( waitingOnNetworkOrAIMove && !waitingForAISoWeCanExitGame  ){
 
                 console.log("Network/AI move: " + aiOrNetworkMove);
+                waitingForAnimationsToFinish = true;
                 placeNetworkOrAIPiece( aiOrNetworkMove[0], aiOrNetworkMove[1] );
                 waitingOnNetworkOrAIMove = false;
                 if( parseInt(aiOrNetworkMove[2]) !== 111 ) //DONT_ROTATE_CODE

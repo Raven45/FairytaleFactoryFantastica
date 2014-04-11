@@ -144,12 +144,31 @@ Rectangle {
                     waitingForAISoWeCanExitGame = true;
                     leftSinglePlayerGameWhileAIWasMoving = true;
                     loadingScreen.visible = true;
+                }
+                else if( waitingForAnimationsToFinish ){
+                    leaveGumdropAnimation();
+                    waitingOnAnimationsToFinishSoWeCanLeaveGameScreen = true;
+                    loadingScreen.visible = true;
                 }else{
                     gameMenu.state = "INVISIBLE";
                     startMenu.state = "VISIBLE";
                     leaveGumdropAnimation();
                     backToMainMenu();
                 }
+            }
+        }
+    }
+
+    Connections{
+        target: page
+        onRotationAnimationFinished:{
+            if( waitingOnAnimationsToFinishSoWeCanLeaveGameScreen ){
+                waitingOnNetworkOrAIMove = false;
+                gameMenu.state = "INVISIBLE";
+                startMenu.state = "VISIBLE";
+                loadingScreen.visible = false;
+                backToMainMenu();
+                waitingOnAnimationsToFinishSoWeCanLeaveGameScreen = false;
             }
         }
     }

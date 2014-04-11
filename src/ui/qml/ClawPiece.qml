@@ -210,7 +210,12 @@ Item {
     Connections{
         target: page
         onClearBoard:{
-            moveClawToHome.start();
+            root.x = _CLAW_X_HOME;
+            root.y = _CLAW_Y_HOME;
+            clawHouse.x = _CLAW_X_HOME;
+            clawHouse.y = _CLAW_Y_HOME;
+            clawHouse.scale = 1;
+            root.scale = 1;
         }
     }
 
@@ -241,8 +246,10 @@ Item {
         easing.type: Easing.OutSine
         //onStarted: if(_SOUND_CHECK_FLAG) clawSound.play()
         onStopped: {
-            finishedClawMovingY();
+            waitingForAnimationsToFinish = false;
             y = to;
+            finishedClawMovingY();
+
         }
     }
 
