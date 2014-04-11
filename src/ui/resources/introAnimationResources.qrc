@@ -6,8 +6,15 @@
         <file alias="Table.png">../media/Table.png</file>
         <file alias="Screen_ON.png">../media/Screen_ON.png</file>
         <file alias="Lights_Off.png">../media/Lights_Off.png</file>
-        <file alias="Background.png">../media/Background.png</file>
-	<file alias="Film.png">../media/Film.png</file>
-	<file alias="introBackground.png">../media/factoryBackground.png</file>
+        <file alias="IntroScreen-Background.png">../media/IntroScreen-Background.png</file>
+		<file alias="Film.png">../media/Film.png</file>
+		<file alias="Projector_Light.png">../media/Projector_Light.png</file>
+		<file alias="Click.wav">../media/click.wav</file>
+		<file alias="Projector.wav">../media/projector.wav</file>
+		<file alias="WhistleSong.wav">../media/whistleSong.wav</file>
+		<file alias="Slide1.png">../media/Slide1.png</file>
+		<file alias="Slide2.png">../media/Slide2.png</file>
+		<file alias="Slide3.png">../media/Slide3.png</file>
+		<file alias="HideSlide.png">../media/Bounce_Effect.png</file>
      </qresource>
 </RCC>
