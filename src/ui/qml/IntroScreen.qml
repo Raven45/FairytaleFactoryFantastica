@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Window 2.1
+import QtMultimedia 5.0
 
 //! [splash-properties]
 Rectangle {
@@ -9,16 +10,23 @@ Rectangle {
     anchors.fill: parent
     z:100
 
-    //property int timeoutInterval: 10000
-    //signal timeout
-function getRandomNumber(){
-    var number = rand();
-    while (number > 1800 || number < 300)
-    {
-        number = rand();
+    property int slideNumber: 1
+    property string slideSourceString: "Slide" + slideNumber + ".png"
+
+    function getRandomNumber(){
+        var number = rand();
+        while (number > 1800 || number < 300)
+        {
+            number = rand();
+        }
+        console.log("random number = " + number);
+        return number;
     }
-    return number;
-}
+
+    SoundEffect {
+        id: playProjector
+        source: "Projector.wav"
+    }
 
     states: [
         State{
@@ -39,23 +47,18 @@ function getRandomNumber(){
             PropertyChanges{target: screenOnTimer; running: false}
             PropertyChanges{target: flickerTimer; running: false}
             PropertyChanges{target: bouncingFilmTimer; running: false}
-
+            StateChangeScript{ name: turnOffSound; script: playProjector.stop() }
+            StateChangeScript{ name: resetProjector; script: slideNumber = 1 }
 
         }
     ]
 
     Image{
-        id: background
-        source: "Background.png"
+        id: introScreen_background
+        source: "IntroScreen-Background.png"
         z: 1
         anchors.bottom: parent.bottom
     }
-
-    /*Image{
-        id: topBackground
-        source: "introBackground.png"
-        z: 2
-    }*/
 
     Image{
         id: screen
@@ -76,7 +79,7 @@ function getRandomNumber(){
         anchors.bottomMargin: -50
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.horizontalCenterOffset: -300
-        z:25
+        z:35
 
         Image{
             id: spinningProjectorWheel
@@ -91,6 +94,18 @@ function getRandomNumber(){
     }
 
     Image{
+        id: projectorlight
+        source: "Projector_Light.png"
+        height: 350
+        width: 250
+        anchors.bottom: projector.top
+        anchors.bottomMargin: -85
+        anchors.right: projector.right
+        anchors.rightMargin: -75
+        z:3
+    }
+
+    Image{
         id: film
         source: "Film.png"
         height: 100
@@ -100,17 +115,49 @@ function getRandomNumber(){
         //anchors.right: spinningProjectorWheel.right
         //anchors.rightMargin: -20
         //anchors.verticalCenter: spinningProjectorWheel.verticalCenter
-        z:27
+        z:36
         visible: true
         opacity: 0
 
     }
 
+    Image{
+        id: slide
+        source: slideSourceString
+        height: 860*.57
+        width: 1440*.57
+        anchors.top: screen.top
+        anchors.topMargin: 125
+        anchors.horizontalCenter: screen.horizontalCenter
+        anchors.horizontalCenterOffset: 30
+        z: 31
+        opacity: 0
+        fillMode: Image.PreserveAspectFit
+    }
+
+    Image{
+        id: hideSlide
+        source: "HideSlide.png"
+        height: 960
+        width: 1440*.80
+        anchors.top: parent.top
+        anchors.topMargin: -80
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.horizontalCenterOffset: -126
+        rotation: -1
+        z:51
+        visible: false
+        fillMode: Image.PreserveAspectCrop
+    }
+
+
     SequentialAnimation{
         id: filmBounceAnimation
         ParallelAnimation{
-            NumberAnimation { target: film; property: "opacity"; from: 0; to: 100; duration: 600; easing.type: Easing.InBack }
-            NumberAnimation { target: film; property: "y"; from: film.y; to: film.y-25; duration: 500; easing.type: Easing.InBack }
+            NumberAnimation { target: film; property: "opacity"; from: 0; to: 100; duration: 700; easing.type: Easing.InBack }
+            NumberAnimation { target: film; property: "y"; from: film.y; to: film.y-25; duration: 600; easing.type: Easing.InBack }
+            //NumberAnimation { target: slide; property: "opacity"; from: .7; to: 0; duration: 400; easing.type: Easing.InBack }
+            NumberAnimation { target: slide; property: "anchors.topMargin"; from: 125; to: -250; duration: 600; easing.type: Easing.InBack }
             RotationAnimation{
                 target: spinningProjectorWheel;
                 duration: 500;
@@ -119,9 +166,13 @@ function getRandomNumber(){
                 to: 20
             }
         }
+        ScriptAction { script: slideNumber++;}
+
         ParallelAnimation{
-            NumberAnimation { target: film; property: "opacity"; from: 100; to: 0; duration: 600; easing.type: Easing.OutBack }
-            NumberAnimation { target: film; property: "y"; from: film.y-25; to: film.y; duration: 500; easing.type: Easing.OutBack }
+            NumberAnimation { target: film; property: "opacity"; from: 100; to: 0; duration: 700; easing.type: Easing.OutBack }
+            NumberAnimation { target: film; property: "y"; from: film.y-25; to: film.y; duration: 600; easing.type: Easing.OutBack }
+            NumberAnimation { target: slide; property: "opacity"; from: 0; to: .7; duration: 400; easing.type: Easing.InBack }
+            NumberAnimation { target: slide; property: "anchors.topMargin"; from: -250; to: 125; duration: 600; easing.type: Easing.InBack }
             RotationAnimation{
                 target: spinningProjectorWheel;
                 duration: 500;
@@ -138,6 +189,7 @@ function getRandomNumber(){
             to: 0
         }
     }
+    NumberAnimation { id: turnSlideOn; target: slide; property: "opacity"; from: 0; to: .7; duration: 400; easing.type: Easing.InBack }
 
     Image{
         id: table
@@ -175,11 +227,17 @@ function getRandomNumber(){
         visible: true
         opacity: 0
     }
-    NumberAnimation { id: screenOnAnimation; target: screenOnFilter; property: "opacity"; from: 0; to: 1; duration: 800; easing.type: Easing.InOutQuad }
+    NumberAnimation { id: screenOnAnimation; target: screenOnFilter; property: "opacity"; from: 0; to: 1; duration: 800; easing.type: Easing.InOutQuad; onStarted: if(_SOUND_CHECK_FLAG) playProjector.play(); onStopped: hideSlide.visible = true;}
     SequentialAnimation{
         id:flickerAnimation
-        NumberAnimation {  target: screenOnFilter; property: "opacity"; from: 1; to: 0.5; duration: 50; easing.type: Easing.InOutQuad }
-        NumberAnimation {  target: screenOnFilter; property: "opacity"; from: 0.5; to: 1; duration: 50; easing.type: Easing.InOutQuad }
+        ParallelAnimation{
+            NumberAnimation {  target: screenOnFilter; property: "opacity"; from: 1; to: 0.5; duration: 50; easing.type: Easing.InOutQuad }
+            NumberAnimation {  target: projectorlight; property: "opacity"; from: 1; to: 0.5; duration: 50; easing.type: Easing.InOutQuad }
+        }
+        ParallelAnimation{
+            NumberAnimation {  target: screenOnFilter; property: "opacity"; from: 0.5; to: 1; duration: 50; easing.type: Easing.InOutQuad }
+            NumberAnimation {  target: projectorlight; property: "opacity"; from: 0.5; to: 1; duration: 50; easing.type: Easing.InOutQuad }
+        }
     }
 
 
@@ -200,7 +258,7 @@ function getRandomNumber(){
             lightsOffTimer.stop();
             lightsOffAnimation.start();
             screenOnTimer.start();
-            bouncingFilmTimer.start();
+
         }
     }
 
@@ -210,6 +268,8 @@ function getRandomNumber(){
         onTriggered:{
             screenOnTimer.stop();
             screenOnAnimation.start();
+            turnSlideOn.start();
+            bouncingFilmTimer.start();
             flickerTimer.start();
         }
     }
@@ -226,7 +286,7 @@ function getRandomNumber(){
 
     Timer{
         id: bouncingFilmTimer
-        interval: 1000; running: false; repeat: false
+        interval: 3200; running: false; repeat: false
         onTriggered:{
             bouncingFilmTimer.stop();
             filmBounceAnimation.start();
@@ -264,4 +324,3 @@ function getRandomNumber(){
     }
 
 }
-
