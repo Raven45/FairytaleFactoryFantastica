@@ -810,6 +810,7 @@ Rectangle {
             forkliftMenuButtonsAreLocked = true;
             exitFlickerLongTimer.stop();
             exitFlickerShortTimer.stop();
+            helpBox_glowEffect.visible = false;
             pulse_helpBox_glowEffect.stop();
         }
     }

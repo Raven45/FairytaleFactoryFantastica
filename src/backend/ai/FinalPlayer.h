@@ -1,5 +1,6 @@
-#ifndef SMARTESTPLAYER_H
-#define SMARTESTPLAYER_H
+#ifndef FINALPLAYER_H
+#define FINALPLAYER_H
+
 
 #include <QtConcurrent>
 #include <QFuture>
@@ -23,7 +24,7 @@
 
 
 template<unsigned char MAX_EXTRA_LEVELS, bool EASY_MODE = false >
-class SmartestPlayer : public Player {
+class FinalPlayer : public Player {
 
     double longestTimeSpentCalculatingMove;
 
@@ -42,33 +43,19 @@ class SmartestPlayer : public Player {
     static constexpr long double EVAL_DEFENSE_FACTOR = 1;
     static constexpr long double OPPONENT_LEVEL_FACTOR = 2.37;*/
 
-    static constexpr long double WIN_WEIGHT =   EASY_MODE? 20 :   29881000;
-    static constexpr long double FOUR_WEIGHT =  EASY_MODE? 5   :   100700.4;
-    static constexpr long double THREE_WEIGHT = EASY_MODE? 1.1 :   330.371;
-
-    static constexpr long double DEFAULT_WEIGHT = 1;
-    static constexpr long double PATTERN_WEIGHT1 = THREE_WEIGHT*THREE_WEIGHT;
-    static constexpr long double PATTERN_WEIGHT2 = THREE_WEIGHT*THREE_WEIGHT;
-    static constexpr long double PATTERN_WEIGHT3 = 1900.3;
-    static constexpr long double PATTERN_WEIGHT4 = 1900.3;
-    //2,2,1,2 = good
-    //1.5,2,1,2 = better
-    static constexpr long double DEFENSE_FACTOR = 1;
-    static constexpr long double EVAL_DEFENSE_FACTOR = 1.2;
-    static constexpr long double OPPONENT_LEVEL_FACTOR = 2.8;
-
-    static_assert( THREE_WEIGHT != 0 && FOUR_WEIGHT != 0 && WIN_WEIGHT * WIN_WEIGHT > 0, "dividing too small in AI code" );
+    static constexpr long double WIN_WEIGHT =   EASY_MODE? 20 :   100000881000;
+    static constexpr long double DEFENSE_FACTOR = 110;
 
 
 
 public:
 
-    SmartestPlayer():longestTimeSpentCalculatingMove(0){
+    FinalPlayer():longestTimeSpentCalculatingMove(0){
     }
 
-    static inline long double evaluateBitBoard( const BitBoard& boardToCheck, const BitBoard& opponentsBoard,  const BitBoard& myOriginalBoard ) {
+    static inline long double evaluateBitBoard( const BitBoard& boardToCheck, const BitBoard& opponentsBoard ) {
 
-        long double resultWeight = DEFAULT_WEIGHT;
+        long double resultWeight = 0;
 
 
 
@@ -80,175 +67,31 @@ public:
             }
             //account for opponents board
             else if( opponentsBoard.hasPattern(winningBoard) && !winningBoard.overlapsPattern( boardToCheck ) ){
-                resultWeight -= WIN_WEIGHT * EVAL_DEFENSE_FACTOR;
+                resultWeight -= WIN_WEIGHT;
             }
         }
 
-        if( resultWeight != DEFAULT_WEIGHT ){
+        if( resultWeight != 0 ){
             return resultWeight;
         }
 
-
-
-
-        //optimize
-        for( unsigned char fourInARowIndex = NUMBER_OF_SIGNIFICANT_FOUR_IN_A_ROW_PATTERNS; fourInARowIndex--; ){
-
-            const BoardInt fourInARowBoard = FOUR_IN_A_ROW[fourInARowIndex];
-
-            //if( boardToCheck has a four-in-a-row pattern we didn't already have
-            if( !myOriginalBoard.hasPattern( fourInARowBoard ) && boardToCheck.hasPattern( fourInARowBoard ) ){
-
-                const BoardInt futureWinPattern1 = FOUR_TO_FIVE_IN_A_ROW[fourInARowIndex][0];
-                const BoardInt futureWinPattern2 = FOUR_TO_FIVE_IN_A_ROW[fourInARowIndex][1];
-
-                // make sure the four-in-a-row patterns aren't blocked on at least one end
-                if( !opponentsBoard.overlapsPattern(futureWinPattern1) ){
-                    resultWeight += FOUR_WEIGHT;
-                }
-
-                if( futureWinPattern2 != 0 && !opponentsBoard.overlapsPattern(futureWinPattern2) ){
-                    resultWeight += FOUR_WEIGHT;
-                }
+        for( unsigned int winIndex = 32; winIndex--;){
+            const BoardInt winPattern = WINS[winIndex];
+            if( !opponentsBoard.overlapsPattern( winPattern ) ){
+                resultWeight += HAMMING_WEIGHT_WEIGHTS[ WIN_PERMUTATION_HAMMING_WEIGHTS[ (winPattern & boardToCheck) ] ];
             }
-
-            else if( opponentsBoard.hasPattern( fourInARowBoard )  ){
-
-                const BoardInt futureWinPattern1 = FOUR_TO_FIVE_IN_A_ROW[fourInARowIndex][0];
-                const BoardInt futureWinPattern2 = FOUR_TO_FIVE_IN_A_ROW[fourInARowIndex][1];
-
-                // make sure the four-in-a-row patterns aren't blocked on at least one end
-                if( !boardToCheck.overlapsPattern(futureWinPattern1) ){
-                    resultWeight -= FOUR_WEIGHT*EVAL_DEFENSE_FACTOR;
-                }
-
-                if( futureWinPattern2 != 0 && !boardToCheck.overlapsPattern(futureWinPattern2) ){
-                    resultWeight -= FOUR_WEIGHT*EVAL_DEFENSE_FACTOR;
-                }
+            else if( !boardToCheck.overlapsPattern( winPattern )){
+                resultWeight -= HAMMING_WEIGHT_WEIGHTS[ WIN_PERMUTATION_HAMMING_WEIGHTS[ (winPattern & opponentsBoard) ] ];
             }
         }
 
-        //TODO: test to see whether removing this early return is helpful
-        if( resultWeight != DEFAULT_WEIGHT ){
-
-
-            return resultWeight;
-
-        }
-
-
-
-        for( unsigned char threeInARowIndex = NUMBER_OF_SIGNIFICANT_THREE_IN_A_ROW_PATTERNS; threeInARowIndex--; ){
-           const BoardInt threeInARowBoard = THREE_IN_A_ROW[threeInARowIndex];
-
-            if( boardToCheck.hasPattern( threeInARowBoard ) && !myOriginalBoard.hasPattern( threeInARowBoard )  ){
-
-                if( opponentsBoard.overlapsPattern(threeInARowBoard) ){
-                    assert( false );
-                }
-
-                const BoardInt future4Pattern1 = THREE_TO_FOUR_IN_A_ROW[threeInARowIndex][0];
-                const BoardInt future4Pattern2 = THREE_TO_FOUR_IN_A_ROW[threeInARowIndex][1];
-                int future4Pattern1Index = THREE_TO_FOUR_IN_A_ROW_INDEXES[threeInARowIndex][0];
-                int future4Pattern2Index = THREE_TO_FOUR_IN_A_ROW_INDEXES[threeInARowIndex][1];
-
-                if( !opponentsBoard.overlapsPattern(future4Pattern1) ){
-
-                    BoardInt futureWinPattern1 = FOUR_TO_FIVE_IN_A_ROW[future4Pattern1Index][0];
-                    BoardInt futureWinPattern2 = FOUR_TO_FIVE_IN_A_ROW[future4Pattern1Index][1];
-
-                    if( !opponentsBoard.overlapsPattern(futureWinPattern1) ){
-                        resultWeight += FOUR_WEIGHT/2;
-                    }
-                    if( futureWinPattern2 != 0 && !opponentsBoard.overlapsPattern(futureWinPattern2) ){
-                        resultWeight += FOUR_WEIGHT/2;
-                    }
-                }
-
-                if( future4Pattern2Index != -1 && !opponentsBoard.overlapsPattern(future4Pattern2) ){
-
-                    const BoardInt futureWinPattern1 = FOUR_TO_FIVE_IN_A_ROW[future4Pattern2Index][0];
-                    const BoardInt futureWinPattern2 = FOUR_TO_FIVE_IN_A_ROW[future4Pattern2Index][1];
-
-                    if( !opponentsBoard.overlapsPattern(futureWinPattern1) ){
-                        resultWeight += FOUR_WEIGHT/2;
-                    }
-                    if( futureWinPattern2 != 0 && !opponentsBoard.overlapsPattern(futureWinPattern2) ){
-                           resultWeight += FOUR_WEIGHT/2;
-                    }
-                }
+        for(unsigned int rotateToWinPatternIndex = 100; rotateToWinPatternIndex--; ){
+            const BoardInt rotateToWinPattern = ROTATE_TO_WIN_PATTERNS[rotateToWinPatternIndex];
+            if( !opponentsBoard.overlapsPattern( rotateToWinPattern) ){
+                resultWeight += HAMMING_WEIGHT_WEIGHTS[ ROTATE_TO_WIN_PERMUTATION_HAMMING_WEIGHTS[ (rotateToWinPattern & boardToCheck) ] ];
             }
-
-            else if(  opponentsBoard.hasPattern( threeInARowBoard ) ){
-
-                const BoardInt future4Pattern1 = THREE_TO_FOUR_IN_A_ROW[threeInARowIndex][0];
-                const BoardInt future4Pattern2 = THREE_TO_FOUR_IN_A_ROW[threeInARowIndex][1];
-                int future4Pattern1Index = THREE_TO_FOUR_IN_A_ROW_INDEXES[threeInARowIndex][0];
-                int future4Pattern2Index = THREE_TO_FOUR_IN_A_ROW_INDEXES[threeInARowIndex][1];
-
-                if( !boardToCheck.overlapsPattern(future4Pattern1) ){
-
-                    const BoardInt futureWinPattern1 = FOUR_TO_FIVE_IN_A_ROW[future4Pattern1Index][0];
-                    const BoardInt futureWinPattern2 = FOUR_TO_FIVE_IN_A_ROW[future4Pattern1Index][1];
-
-                    if( !boardToCheck.overlapsPattern(futureWinPattern1) ){
-                        resultWeight -= THREE_WEIGHT*EVAL_DEFENSE_FACTOR;
-                    }
-                    if( futureWinPattern2 != 0 && !boardToCheck.overlapsPattern(futureWinPattern2) ){
-                        resultWeight -= THREE_WEIGHT*EVAL_DEFENSE_FACTOR;
-                    }
-                }
-
-                if( future4Pattern2Index != -1 && !boardToCheck.overlapsPattern(future4Pattern2) ){
-
-                    const BoardInt futureWinPattern1 = FOUR_TO_FIVE_IN_A_ROW[future4Pattern2Index][0];
-                    const BoardInt futureWinPattern2 = FOUR_TO_FIVE_IN_A_ROW[future4Pattern2Index][1];
-
-                    if( !boardToCheck.overlapsPattern(futureWinPattern1) ){
-                        resultWeight -= THREE_WEIGHT*EVAL_DEFENSE_FACTOR;
-                    }
-                    if( futureWinPattern2 != 0 && !boardToCheck.overlapsPattern(futureWinPattern2) ){
-                           resultWeight -= THREE_WEIGHT*EVAL_DEFENSE_FACTOR;
-                    }
-                }
-            }
-        }
-
-        if( resultWeight != DEFAULT_WEIGHT ){
-            return resultWeight;
-        }
-
-        if( !EASY_MODE ){
-            for( BoardInt pattern : START_PATTERNS1 ){
-                if( boardToCheck.hasPattern(pattern) && !myOriginalBoard.hasPattern(pattern) ){
-                    resultWeight += PATTERN_WEIGHT1;
-                }
-            }
-
-            for( BoardInt pattern : START_PATTERNS2 ){
-                if( boardToCheck.hasPattern(pattern) && !myOriginalBoard.hasPattern(pattern) ){
-                    resultWeight += PATTERN_WEIGHT2;
-                }
-            }
-
-            if( resultWeight != DEFAULT_WEIGHT ){
-                return resultWeight;
-            }
-
-            for( BoardInt pattern : START_PATTERNS3 ){
-                if(  boardToCheck.hasPattern(pattern) && !myOriginalBoard.hasPattern(pattern)  ){
-                    resultWeight += PATTERN_WEIGHT3;
-                }
-            }
-
-            if( resultWeight != DEFAULT_WEIGHT ){
-                return resultWeight;
-            }
-
-            for( BoardInt pattern : START_PATTERNS4 ){
-                if( boardToCheck.hasPattern(pattern) && !myOriginalBoard.hasPattern(pattern) ){
-                    resultWeight += PATTERN_WEIGHT4;
-                }
+            else if( !boardToCheck.overlapsPattern( rotateToWinPattern )){
+                resultWeight -= HAMMING_WEIGHT_WEIGHTS[ ROTATE_TO_WIN_PERMUTATION_HAMMING_WEIGHTS[ (rotateToWinPattern & opponentsBoard) ] ];
             }
         }
 
@@ -288,12 +131,8 @@ public:
 
                         long double newMoveWeight;
 
-                        newMoveWeight = evaluateBitBoard(newBoardCopy, opponentsBoard, movingPlayersBoardBeforeTurn );
+                        newMoveWeight = evaluateBitBoard(newBoardCopy, opponentsBoard );
 
-
-                        if( level == 1 ){
-                            newMoveWeight *= OPPONENT_LEVEL_FACTOR;
-                        }
 
                         Board testBoard;
 
@@ -309,7 +148,11 @@ public:
                         }
 
                         if( level < MAX_EXTRA_LEVELS ){
-                            newMoveWeight -= (getRecursiveWeight<level + 1>( testBoard, opponentsColor, movingPlayersColor )  * DEFENSE_FACTOR);
+                            newMoveWeight -= (getRecursiveWeight<level + 1>( testBoard, opponentsColor, movingPlayersColor ));
+                        }
+                        else{
+                            //actual opponents level
+                            newMoveWeight *= DEFENSE_FACTOR;
                         }
 
                         if(!beenThroughOnce){
@@ -326,11 +169,7 @@ public:
                         opponentsBoard = opponentsBoardBeforeTurn;
                         opponentsBoard.rotate( rotationIndex, RIGHT );
 
-                        newMoveWeight = evaluateBitBoard(newBoardCopy, opponentsBoard, movingPlayersBoardBeforeTurn );
-
-                        if( level == 1 ){
-                            newMoveWeight *= OPPONENT_LEVEL_FACTOR;
-                        }
+                        newMoveWeight = evaluateBitBoard(newBoardCopy, opponentsBoard );
 
                         Board testBoard2;
 
@@ -347,11 +186,16 @@ public:
                         }
 
                         if( level < MAX_EXTRA_LEVELS ){
-                            newMoveWeight -= (getRecursiveWeight<level + 1>( testBoard2, opponentsColor, movingPlayersColor )  * DEFENSE_FACTOR);
+                            newMoveWeight -= (getRecursiveWeight<level + 1>( testBoard2, opponentsColor, movingPlayersColor ));
                         }
 
-                        else if( newMoveWeight > bestMoveWeight ){
-                            bestMoveWeight = newMoveWeight ;
+                        else {
+                            //actual opponents level
+                            newMoveWeight *= DEFENSE_FACTOR;
+
+                            if( newMoveWeight > bestMoveWeight ){
+                                bestMoveWeight = newMoveWeight ;
+                            }
                         }
 
 
@@ -399,12 +243,12 @@ public:
 
                          long double newMoveWeight;
 
-                         newMoveWeight = evaluateBitBoard( boardToRotate, opponentsBoard, myOriginalBoard );
+                         newMoveWeight = evaluateBitBoard( boardToRotate, opponentsBoard );
 
                          Board testBoard (myColor == BLACK? opponentsBoard:boardToRotate,myColor == BLACK? boardToRotate:opponentsBoard, util.opposite(myColor) );
 
                          if( !EASY_MODE ){
-                            newMoveWeight -= (getRecursiveWeight<1>( testBoard, opponentColor, myColor ) * DEFENSE_FACTOR);
+                            newMoveWeight -= (getRecursiveWeight<1>( testBoard, opponentColor, myColor ));
                          }
 
                          //pick first valid move by default
@@ -540,8 +384,6 @@ public:
 
         Turn bestMove;
 
-
-
         BitBoard opponentsBoard = mainBoard.getBoardOfPlayer(opponentColor);
 
         bool foundSpecialCase = false;
@@ -566,7 +408,7 @@ public:
         if( foundSpecialCase && !EASY_MODE ){
 
             //pieceHole has already been set by blockEarly or blockEarlyDiagonal function
-
+            qDebug() << "blocking starting move";
             long double bestRotationWeight = INT_MIN;
 
 
@@ -596,7 +438,6 @@ public:
             bestMove.setPieceColor(myColor);
         }
         else{
-
             QFuture< std::pair<Turn, long double> > futureLeft;
             QFuture< std::pair<Turn, long double> > futureRight;
 
@@ -625,7 +466,7 @@ public:
             std::cout << "\nnew longest time: " << elapsedSeconds << " seconds\n";
             longestTimeSpentCalculatingMove = elapsedSeconds;
 
-            if( elapsedSeconds >= 6 ){
+            if( elapsedSeconds >= 5.9 ){
                 assert(false);
             }
 
@@ -637,5 +478,4 @@ public:
 
 };
 
-
-#endif //SMARTESTPLAYER_H
+#endif // FINALPLAYER_H

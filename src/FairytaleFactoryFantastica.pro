@@ -55,7 +55,8 @@ SOURCES += \
     backend/core/Wins.cpp \
     backend/main.cpp \
     backend/core/rotationArray.cpp \
-    backend/core/MainBoard.cpp
+    backend/core/MainBoard.cpp \
+    backend/core/rotateToWinArray.cpp
 
 # Installation path
 # target.path =
@@ -132,7 +133,8 @@ HEADERS += \
     backend/ai/MonteCarloAI4.h \
     backend/ai/MonteCarloParallelAI.h \
     backend/ai/AlphaBetaAI.h \
-    backend/ai/SmartestPlayer.h
+    backend/ai/SmartestPlayer.h \
+    backend/ai/FinalPlayer.h
 
 
 
