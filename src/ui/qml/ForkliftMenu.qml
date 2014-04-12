@@ -266,8 +266,9 @@ Rectangle {
         height: helpBox_img.height
         z: forklift.z + 1
         anchors.bottom: forkliftMenu.bottom
-        anchors.right: forkliftMenu.right
-        anchors.rightMargin: 15
+        anchors.bottomMargin: -5
+        anchors.horizontalCenter: forkliftMenu.horizontalCenter
+        anchors.horizontalCenterOffset: -20
 
         Rectangle{
             id:dummy_helpBox_rec
@@ -342,7 +343,10 @@ Rectangle {
                             helpbox_text.help_source_string = "how-to-play-stencil.png";
                         }
                     }
-                    onPressed: { if(_SOUND_CHECK_FLAG && !forkliftMenuButtonsAreLocked ) pressButtonSound.play(); }
+                    onPressed: {
+                        if(_SOUND_CHECK_FLAG && !forkliftMenuButtonsAreLocked ) pressButtonSound.play();
+                        resolveEscFocus();
+                    }
                     onClicked: { if( !forkliftMenuButtonsAreLocked )credits.state = "SHOW_CREDITS"; }
                     //onClicked: { if( !forkliftMenuButtonsAreLocked )help.state = "SHOW_HELP"; }
                 }
