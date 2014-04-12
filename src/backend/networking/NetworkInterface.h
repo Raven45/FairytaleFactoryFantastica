@@ -287,7 +287,7 @@ public slots:
 
         qDebug() << "challenge received";
 
-        if( !isBusy && receivedFromConnectedPlayerStack.size() == 1){
+        if( !isBusy ){
             isBusy = true;
             qDebug() << "connecting to player's gameListenSocket";
             //now our game socket is committed to this player
@@ -299,7 +299,7 @@ public slots:
             emit challengeReceived( QVariant(QString(challengeTransaction.author.name)), QVariant(QHostAddress(challengeTransaction.author.address).toString()) );
         }
         else{
-            isBusy = false;
+
         }
     }
 
