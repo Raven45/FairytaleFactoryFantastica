@@ -933,6 +933,7 @@ Rectangle {
             PropertyChanges { target: startScreenKeyControls; focus: true}
             PropertyChanges { target: gretelBlinkTimer; duration: 5000 }
             PropertyChanges { target: hanselBlinkTimer; duration: 3800 }
+            StateChangeScript { script: if(_SOUND_CHECK_FLAG) windSound.play(); }
             StateChangeScript { script: hanselBlinkTimer.startTimer() }
             StateChangeScript { script: gretelBlinkTimer.startTimer() }
             StateChangeScript { script: appropriateTimeToQuit = true; }
@@ -950,6 +951,11 @@ Rectangle {
             PropertyChanges { target: hanselBlink; visible: false }
             PropertyChanges { target: gretelBlinkTimer; duration: 0 }
             PropertyChanges { target: hanselBlinkTimer; duration: 0 }
+            StateChangeScript {
+                script:
+                    if(windSound.playing)
+                        windSound.stop();
+            }
         }
 
     ]

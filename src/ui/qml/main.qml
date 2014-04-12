@@ -63,6 +63,8 @@ Rectangle {
     signal resumeGumdropAnimation()
     signal resetGumdropAnimation()
     signal leaveGumdropAnimation()
+    signal resolveEscFocus()
+    signal turnOffHelpBox()
 
     //network-related signals
     signal enterNetworkLobby()

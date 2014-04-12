@@ -16,7 +16,6 @@ Rectangle {
     }
 
     function getOutOfHere(){
-        networkLobby.state = "INVISIBLE";
 
         //need to allow others in lobby to recognize our leaving so we
         //can't reconnect quickly
@@ -32,11 +31,10 @@ Rectangle {
             NumberAnimation{ target: net_card; property: "y"; from: net_card.y; to: net_card.y - 250; duration: 800; easing.type: Easing.InOutQuad }
             NumberAnimation{ target: net_card; property: "x"; from: net_card.x; to: net_card.x - 294; duration: 800; easing.type: Easing.InOutQuad }
         }
-        //Just makes it disappear. WHY?! WHY!!!
-        //PropertyAction { target: net_card; property: "z"; value: "net_dummy_rec.z"  }
+        ScriptAction { script: net_card.z = net_clock_slot_front.z - 1 }
         NumberAnimation{ target: net_card; property: "y"; from: net_card.y - 250; to: net_card.y - 175; duration: 400; easing.type: Easing.OutInQuad }
         NumberAnimation{ target: net_card; property: "y"; from: net_card.y - 175; to: net_card.y - 250; duration: 400; easing.type: Easing.OutInQuad }
-        //PropertyAction { target: net_card; property: "z"; value: "net_punch_cards.z + 1" }
+        ScriptAction { script: net_card.z = net_punch_cards.z + 1 }
         ParallelAnimation{
             NumberAnimation{ target: net_card; property: "y"; to: net_card.y; from: net_card.y - 250; duration: 800; easing.type: Easing.InOutQuad }
             NumberAnimation{ target: net_card; property: "x"; to: net_card.x; from: net_card.x - 294; duration: 800; easing.type: Easing.InOutQuad }
@@ -55,6 +53,29 @@ Rectangle {
         anchors.topMargin: -10
         anchors.left: networkLobby.left
         anchors.leftMargin: -10
+    }
+
+    Rectangle{
+        id: net_clock_slot_front
+        width: (net_clock_front_img.width * net_clock_front_img.scale)/3 + 10
+        height: 10
+        color: "black"
+        z: net_clock.z + 3
+
+        anchors.top: net_clock_front_img.top
+        anchors.topMargin: 110
+        anchors.horizontalCenter: net_clock.horizontalCenter
+        anchors.horizontalCenterOffset: 2
+    }
+
+    Image{
+        id: net_clock_front_img
+        source: "net-clock-front.png"
+        width: 400; height: 400
+        fillMode: Image.PreserveAspectFit
+        scale: 0.6
+        z: net_clock.z + 3
+        anchors.centerIn: net_clock
     }
 
     Rectangle{
@@ -80,28 +101,6 @@ Rectangle {
             anchors.horizontalCenterOffset: 2
         }
 
-        Rectangle{
-            id: net_clock_slot_front
-            width: (net_clock_img.width * net_clock_img.scale)/3 + 10
-            height: 10
-            color: "black"
-            z: net_clock_img.z + 5
-
-            anchors.top: net_clock_slot_back.bottom
-            anchors.horizontalCenter: net_clock.horizontalCenter
-            anchors.horizontalCenterOffset: 2
-        }
-
-        Image{
-            id: net_clock_front_img
-            source: "net-clock-front.png"
-            width: 400; height: 400
-            fillMode: Image.PreserveAspectFit
-            scale: 0.6
-            z: net_clock_img.z + 5
-            anchors.centerIn: net_clock
-        }
-
         Image{
             id: net_clock_img
             source: "net-clock.png"
@@ -119,7 +118,7 @@ Rectangle {
         width: 500; height: 500
         fillMode: Image.PreserveAspectFit
         scale: 0.6 //300x300
-        z: net_brick_background.z + 1
+        z: net_clock.z + 3
         anchors.right: networkLobby.right
         anchors.rightMargin: -120
         anchors.verticalCenter: networkLobby.verticalCenter
@@ -405,6 +404,7 @@ Rectangle {
         repeat: false
         onTriggered: {
             loadingScreen.visible = false;
+            networkLobby.state = "INVISIBLE";
             startMenu.state = "VISIBLE";
             backToMainMenu();
         }

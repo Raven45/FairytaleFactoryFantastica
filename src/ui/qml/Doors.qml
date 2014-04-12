@@ -10,6 +10,22 @@ Rectangle {
     FontLoader{ id: stencilFont; source: "STENCIL.TTF" }
     FontLoader{ id: monoSpacedDejaVu; source: "DejaVuSansMono.ttf" }
 
+    Connections{
+        target: page
+
+        onResolveEscFocus: {
+            if(playerNameBox.activeFocus){
+                playerNameBox.focus = false;
+            }
+            escKeyQuit.focus = true;
+        }
+
+        onTurnOffHelpBox: {
+            helpBox_glowEffect.visible = false;
+            pulse_helpBox_glowEffect.stop();
+        }
+    }
+
     state: "DEFAULT"
 
     states:[
@@ -90,6 +106,7 @@ transitions:[
     }}},
     Transition{from: "SINGLE_PLAYER"; to: "NETWORK"; ScriptAction{script: {
         singlePlayerDoorUp.start();
+        if(playerNameBox.text == ""){ playerNameBox.text = "Type Your ID Here"; }
         networkDoorDown.start();
     }}},
     Transition{from: "VERSUS"; to: "SINGLE_PLAYER"; ScriptAction{script: {
@@ -98,13 +115,16 @@ transitions:[
     }}},
     Transition{from: "VERSUS"; to: "NETWORK"; ScriptAction{script: {
         versusDoorUp.start();
+        if(playerNameBox.text == ""){ playerNameBox.text = "Type Your ID Here"; }
         networkDoorDown.start();
     }}},
     Transition{from: "NETWORK"; to: "VERSUS"; ScriptAction{script: {
+        resolveEscFocus();
         networkDoorUp.start();
         versusDoorDown.start();
     }}},
     Transition{from: "NETWORK"; to: "SINGLE_PLAYER"; ScriptAction{script: {
+        resolveEscFocus();
         networkDoorUp.start();
         singlePlayerDoorDown.start();
     }}}
@@ -454,6 +474,7 @@ transitions:[
             onClicked:{
 
                 if( !forkliftMenuButtonsAreLocked ){
+                    turnOffHelpBox();
                     sendPlayerName( "TODO: DEPRECATED?" );
 
                     isNetworkGame = false;
@@ -554,6 +575,7 @@ transitions:[
             onPressed:{ if(_SOUND_CHECK_FLAG && !forkliftMenuButtonsAreLocked ) tankSound.play() }
             onClicked:{
                 if( !forkliftMenuButtonsAreLocked ){
+                    turnOffHelpBox();
                     //allThatWitch_IntoGameScreen();
 
                     sendPlayerName( "TODO: DEPRECATED?" );
@@ -623,13 +645,15 @@ transitions:[
 
                 if( !forkliftMenuButtonsAreLocked && !submission_error.visible ){
                     if(_SOUND_CHECK_FLAG && !forkliftMenuButtonsAreLocked ) tankSound.play()
-                    escKeyQuit.focus = true;
+                    turnOffHelpBox();
+                    resolveEscFocus();
 
                     isNetworkGame = true;
                     isVersusGame = false;
                     isSinglePlayerGame = false;
 
                     sendPlayerName( playerNameBox.text );
+                    forkliftMenu.state ="INVISIBLE";
                     networkLobby.state ="VISIBLE";
                     forkliftMenuButtonsAreLocked = true;
                     enterNetworkLobby();
