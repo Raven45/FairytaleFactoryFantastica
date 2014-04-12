@@ -276,7 +276,7 @@ public slots:
 
         }
         else{
-            qDebug() << "hmm, tried to send a challenge during other connection.";
+            isBusy = false;
         }
 
 
@@ -299,7 +299,7 @@ public slots:
             emit challengeReceived( QVariant(QString(challengeTransaction.author.name)), QVariant(QHostAddress(challengeTransaction.author.address).toString()) );
         }
         else{
-
+            isBusy = false;
         }
     }
 
