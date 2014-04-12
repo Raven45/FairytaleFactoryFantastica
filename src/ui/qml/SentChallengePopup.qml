@@ -27,6 +27,7 @@ GenericPopup {
 
 
             waitingOnNetworkOrAIMove = true;
+
             movingPlayerIsNetworkOrAI = true;
             networkOrAIIsTeal = true;
             placeCharacterOnPlatform( "witch", "teal");

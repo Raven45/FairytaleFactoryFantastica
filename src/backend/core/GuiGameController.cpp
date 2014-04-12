@@ -144,7 +144,7 @@ void GuiGameController::forwardChallengeResponse(bool accepted){
         firstMover = PlayerColor::WHITE;
         guiPlayerColor = PlayerColor::WHITE;
 
-        startNetworkGame();
+        startNetworkGame( WHITE );
     }
 
     net -> sendChallengeResponse( accepted );
@@ -156,7 +156,7 @@ void GuiGameController::challengeResponseReceivedFromNetwork(bool challengeWasAc
 
     //start a new game according to parameters
     if( challengeWasAccepted ){
-        startNetworkGame();
+        startNetworkGame( BLACK );
 
         //for our program, that the challenged player moves first
         firstMover = PlayerColor::BLACK;
@@ -243,21 +243,19 @@ void GuiGameController::enterNetworkLobby() {
     net -> enterLobby();
 }
 
-void GuiGameController::startNetworkGame() {
+void GuiGameController::startNetworkGame( PlayerColor myColor ) {
 
     GameCore::startNewGame();
 
     qOpponentsLastTurn.clear();
 
-    qGuiTurn.setPieceColor( PlayerColor::WHITE );
+    qGuiTurn.setPieceColor( myColor );
+    guiPlayerColor = myColor;
 
     if( guiPlayerColor == firstMover ){
         emit readyForGuiMove();
     }
     else{
-
-        //TODO: put this functionality into the AI game too, so we can show a
-        //"waiting for move" thing in the GUI
         emit waitingForOpponentsMove();
     }
 

@@ -91,7 +91,7 @@ protected:
     QList<int> qOpponentsLastTurn;
     Turn qGuiTurn;
 
-    void startNetworkGame();
+    void startNetworkGame( PlayerColor myColor );
 
 public:
 
