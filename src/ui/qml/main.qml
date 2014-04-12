@@ -82,6 +82,7 @@ Rectangle {
 
 
     property alias main: page
+    property bool appropriateTimeToQuit: false
     property bool waitingOnAnimationsToFinishSoWeCanLeaveGameScreen: false
     property bool movingPlayerIsTeal: false
     property bool waitingForAnimationsToFinish: false
@@ -174,9 +175,20 @@ Rectangle {
         id: escKeyQuit
         anchors.fill: parent
         focus: false
+        Keys.onEscapePressed: { escIfAppropriate(); }
+    }
+
+    Item {
+        id: dummyKeyDummy
+        anchors.fill: parent
+        focus: true
         Keys.onEscapePressed: {
-            escKeyPopup.visible = true;
+            console.log("dummyKeyDummy gots focus!");
         }
+    }
+
+    function escIfAppropriate() {
+        if(appropriateTimeToQuit){ escKeyPopup.visible = true; }
     }
 
     function changeSoundCheckFlag() {
@@ -438,6 +450,7 @@ Rectangle {
             running: true
 
             onTriggered:{
+                escKeyQuit.focus = false;
                 musicPlayer.togglePlayback();
                 _SOUND_CHECK_FLAG = true;
                 splash.visible = true;

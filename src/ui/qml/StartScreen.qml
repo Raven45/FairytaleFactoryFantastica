@@ -24,9 +24,7 @@ Rectangle {
         id: startScreenKeyControls
         anchors.fill: parent
         focus: false
-        Keys.onEscapePressed: {
-            escKeyPopup.visible = true;
-        }
+        Keys.onEscapePressed: { escIfAppropriate(); }
         Keys.onReturnPressed: {
             hiringSign_mouseArea.hoverEnabled = false;
             gate_lDoorSprite.jumpTo("opening_gate");
@@ -925,11 +923,12 @@ Rectangle {
             PropertyChanges { target: startScreen; visible: true }
             PropertyChanges { target: gretelBlink; visible: false }
             PropertyChanges { target: hanselBlink; visible: false }
-            PropertyChanges{target: startScreenKeyControls; focus: true}
+            PropertyChanges { target: startScreenKeyControls; focus: true}
             PropertyChanges { target: gretelBlinkTimer; duration: 5000 }
             PropertyChanges { target: hanselBlinkTimer; duration: 3800 }
             StateChangeScript { script: hanselBlinkTimer.startTimer() }
             StateChangeScript { script: gretelBlinkTimer.startTimer() }
+            StateChangeScript { script: appropriateTimeToQuit = true; }
         },
         State{
             name: "INVISIBLE"

@@ -93,6 +93,7 @@ Rectangle {
             target: page
             onLoad:{
                 console.log("starting muffin man animation");
+                splashKeySkip.focus = true;
                 muffinManAnimation.start();
                 splashTimer.start();
 
