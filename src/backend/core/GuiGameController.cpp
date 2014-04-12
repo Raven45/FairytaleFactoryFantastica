@@ -109,6 +109,7 @@ void GuiGameController::setNetworkInterface(){
         connect( net,   SIGNAL( networkTurnReceived(int,int,int,int) ),         this,   SLOT(networkTurnReceivedFromNetwork(int,int,int,int)),      Qt::QueuedConnection );
         connect( this,  SIGNAL( challengeAccepted()),                           gui,    SIGNAL(challengeWasAccepted() ),                            Qt::QueuedConnection );
         connect( this,  SIGNAL( challengeDeclined()),                           gui,    SIGNAL(challengeWasDeclined()) ,                            Qt::QueuedConnection );
+        connect( gui,   SIGNAL( challengeTimedOutAsIfDeclined()),              net,    SLOT(forceNotBusy()), Qt::QueuedConnection );
         connect( net,   SIGNAL( playerJoinedNetwork(QVariant, QVariant, int, bool )), gui,    SIGNAL(playerEnteredLobby(QVariant, QVariant, int, bool )),       Qt::QueuedConnection );
         connect( net,   SIGNAL( playerLeftNetwork(int)),                        gui,    SIGNAL(playerLeftLobby(int)));
         connect( net,   SIGNAL( networkPlayerBecameBusy(QVariant)),             gui,    SIGNAL(networkPlayerBecameBusy(QVariant)),                  Qt::QueuedConnection );
@@ -159,8 +160,8 @@ void GuiGameController::challengeResponseReceivedFromNetwork(bool challengeWasAc
         startNetworkGame( BLACK );
 
         //for our program, that the challenged player moves first
-        firstMover = PlayerColor::BLACK;
-        guiPlayerColor = PlayerColor::WHITE;
+        firstMover = PlayerColor::WHITE;
+        guiPlayerColor = PlayerColor::BLACK;
 
 
         emit challengeAccepted();
@@ -251,6 +252,7 @@ void GuiGameController::startNetworkGame( PlayerColor myColor ) {
 
     qGuiTurn.setPieceColor( myColor );
     guiPlayerColor = myColor;
+    firstMover = PlayerColor::WHITE;
 
     if( guiPlayerColor == firstMover ){
         emit readyForGuiMove();

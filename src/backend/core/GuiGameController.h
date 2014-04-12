@@ -31,6 +31,7 @@ public:
 signals:
 
     //qml proxy
+    void challengeTimedOutAsIfDeclined();
     void readyToStartOnePersonPlay( int aiLevel, int menuSelectedColor );
     void readyToStartTwoPersonPlay();
     void changeSoundState();
@@ -184,7 +185,8 @@ public:
         connect( this,  SIGNAL(challengeReceivedFromNetwork(QVariant, QVariant)),   gui,    SIGNAL(challengeReceivedFromNetwork(QVariant, QVariant)));
         connect( this,  SIGNAL( challengeWasAccepted()),                            gui,    SIGNAL(challengeWasAccepted() ));
         connect( this,  SIGNAL( challengeWasDeclined()),                            gui,    SIGNAL(challengeWasDeclined()));
-        connect( this,  SIGNAL( playerEnteredLobby(QVariant, QVariant, int, bool )),      gui,    SIGNAL(playerEnteredLobby(QVariant, QVariant, int, bool )));
+        connect( gui,   SIGNAL( challengeTimedOutAsIfDeclined()),                   this,   SIGNAL(challengeTimedOutAsIfDeclined()));
+        connect( this,  SIGNAL( playerEnteredLobby(QVariant, QVariant, int, bool )),gui,    SIGNAL(playerEnteredLobby(QVariant, QVariant, int, bool )));
         connect( this,  SIGNAL( playerLeftLobby(int)),                              gui,    SIGNAL(playerLeftLobby(int)));
         connect( this,  SIGNAL(opponentReconnected()),                              gui,    SIGNAL(opponentReconnected()));
         connect( this,  SIGNAL(opponentDisconnected()),                             gui,    SIGNAL(opponentDisconnected()));
@@ -193,7 +195,7 @@ public:
 
         qDebug() << "connecting core proxy signals";
         connect( core,  SIGNAL( readyForGuiMove() ),                                this,   SIGNAL(readyForGuiMove()),          Qt::QueuedConnection );
-        connect( core,  SIGNAL( readyForVersusMove() ),                                this,   SIGNAL(readyForVersusMove()),    Qt::QueuedConnection );
+        connect( core,  SIGNAL( readyForVersusMove() ),                             this,   SIGNAL(readyForVersusMove()),    Qt::QueuedConnection );
         connect( core,  SIGNAL( gameIsOver() ),                                     this,   SIGNAL(gameIsOver()),               Qt::QueuedConnection );
         connect( this,  SIGNAL( registerGuiTurnWithBoard()),                        core,   SLOT( registerGuiTurnWithBoard()),  Qt::QueuedConnection );
         connect( this,  SIGNAL(setGuiTurnRotation(int, int)),                       core,   SLOT(setGuiTurnRotation(int,int)),  Qt::QueuedConnection );

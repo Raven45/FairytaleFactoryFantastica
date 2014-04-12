@@ -73,6 +73,7 @@ Rectangle {
     signal challengeReceivedFromNetwork( var challengerName, var stringAddressOfPlayerWhoChallenged )
     signal challengeWasAccepted()
     signal challengeWasDeclined()
+    signal challengeTimedOutAsIfDeclined()
     signal sendThisChallengeResponse( bool acceptChallenge )
     signal sendThisNetworkMove( int quadrantIndex, int pieceIndex, int quadrantToRotate, int rotationDirection )
     signal playerEnteredLobby( var arrivingPlayerName, var addressOfArrivingPlayer, int playerId, bool isBusy )

@@ -95,8 +95,8 @@ GenericPopup {
             else{
                 if( challengeNotYetAccepted ){
 
-                    // 3/17/2014 resume working here in the morning
                     challengeWasDeclined();
+                    challengeTimedOutAsIfDeclined();
                     challengeResponseResultTimer.wasAccepted = false;
                     challengeResponseResultTimer.start();
                     resetValues();

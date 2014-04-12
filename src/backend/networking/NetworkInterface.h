@@ -116,6 +116,9 @@ signals:
 
 public slots:
 
+    void forceNotBusy(){
+        isBusy = false;
+    }
 
     void setNetworkPlayerName( QVariant nameFromGui ){
         QString name = nameFromGui.toString();
@@ -287,7 +290,7 @@ public slots:
 
         qDebug() << "challenge received";
 
-        if( !isBusy ){
+        if( !isBusy && receivedFromConnectedPlayerStack.size() == 1){
             isBusy = true;
             qDebug() << "connecting to player's gameListenSocket";
             //now our game socket is committed to this player
@@ -297,9 +300,6 @@ public slots:
             //this will go back to the gameController which will
             //set up the challenge in the GUI
             emit challengeReceived( QVariant(QString(challengeTransaction.author.name)), QVariant(QHostAddress(challengeTransaction.author.address).toString()) );
-        }
-        else{
-
         }
     }
 
@@ -360,7 +360,6 @@ public slots:
         }
         else {
             qDebug() << "thought player was connected!!!";
-            //we need to handle this - when player disconnects while waiting on a challenge response
         }
     }
 
@@ -376,8 +375,9 @@ public slots:
 
         else {
             //we leave it on the stack to prevent barrage abuse but it is about to be cleared
-            emit challengeResponseReceived(false);
             isBusy = false;
+            emit challengeResponseReceived(false);
+
         }
     }
 
