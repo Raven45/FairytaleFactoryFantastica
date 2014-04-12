@@ -17,6 +17,11 @@ Rectangle {
     Connections{
         target: page
 
+        onReadyForUserToClickRotation:{
+            console.log("READY FOR ROTATION");
+            animateTbarsOut.start();
+        }
+
         onClearBoard:{
             tealClawPiece.reset();
             purpleClawPiece.reset();
@@ -24,6 +29,20 @@ Rectangle {
             quadrant1.resetRotations();
             quadrant2.resetRotations();
             quadrant3.resetRotations();
+            animateTbarsOut.stop();
+            animateTbarsIn.stop();
+
+            tbarTopLeft.anchors.topMargin = 80;
+            tbarTopLeft.anchors.leftMargin = 80;
+
+            tbarTopRight.anchors.topMargin = 80;
+            tbarTopRight.anchors.rightMargin = 80;
+
+            tbarBottomLeft.anchors.bottomMargin = 80;
+            tbarBottomLeft.anchors.leftMargin = 80;
+
+            tbarBottomRight.anchors.bottomMargin = 80;
+            tbarBottomRight.anchors.rightMargin = 80;
         }
 
         onReadyToStartOnePersonPlay:{
@@ -462,13 +481,6 @@ Rectangle {
         }
     }
 
-    Connections{
-        target: page
-        onReadyForUserToClickRotation:{
-            console.log("READY FOR ROTATION");
-            animateTbarsOut.start();
-        }
-    }
 
 
     Image{

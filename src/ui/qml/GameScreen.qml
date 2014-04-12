@@ -66,12 +66,11 @@ Rectangle {
         
     Oven {
         id: oven
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.horizontalCenterOffset: 140
-        //anchors.leftMargin: -75
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: -200
-        z: 71
+         anchors.horizontalCenter: parent.horizontalCenter
+         anchors.leftMargin: -75
+         anchors.bottom: parent.bottom
+         anchors.bottomMargin: -100
+         z: 71
     }
 
     Image{
@@ -124,7 +123,7 @@ Rectangle {
         anchors.top: gameScreen.top
         anchors.topMargin: gameScreen.height/2 + left_can_arm.height
         anchors.left: left_wall.left
-//        anchors.leftMargin: 53
+        anchors.leftMargin: 53
     }
 
     Rectangle {
@@ -175,7 +174,7 @@ Rectangle {
         anchors.top: gameScreen.top
         anchors.topMargin: gameScreen.height/2 + right_can_arm.height
         anchors.right: right_wall.right
-//        anchors.rightMargin: 53
+        anchors.rightMargin: 53
     }
 
     Image {
