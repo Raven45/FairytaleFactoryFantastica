@@ -16,6 +16,7 @@
 #include "SmartestPlayer.h"
 #include "MonteCarloParallelAI.h"
 #include "AlphaBetaAI.h"
+#include "FinalPlayer.h"
 
 
 class Proxy : public QObject {
@@ -72,7 +73,7 @@ protected:
 
     typedef SmartestPlayer<0, true>       EasyAIPlayer;
     typedef SmartestPlayer<1>       MediumAIPlayer;
-    typedef SmartestPlayer<2>       HardAIPlayer;
+    typedef FinalPlayer<1>       HardAIPlayer;
 
     QGuiApplication* app;
     Proxy* gui;
