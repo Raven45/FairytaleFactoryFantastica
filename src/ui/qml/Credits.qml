@@ -29,14 +29,26 @@ Rectangle {
         id: infoCredits
         width: parent.width; height: parent.height;
         z: parent.z + 1
-        text: "hello"
-        font.pointSize: 72
+        text:
+"Sound effects:
+
+Mark DiAngelo
+http://soundbible.com/1810-Wind.html
+
+Music:
+
+Monkeys Spinning Monkeys
+Oppressive Gloom
+
+Art assets:
+"
+        font.pointSize: 15
         font.bold: true
-        horizontalAlignment: Text.AlignHCenter
+        horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignTop
         color: "#9DEB9B"
-        anchors.centerIn: creditsScreen
-        anchors.verticalCenterOffset: 300
+        anchors.fill: creditsScreen
+        //anchors.verticalCenterOffset: 300
         visible: true
     }
 
