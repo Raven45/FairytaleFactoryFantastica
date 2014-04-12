@@ -168,7 +168,7 @@ Rectangle {
         z: 999 //Any z value greater than this? Hopefully not.
 
         visible: false
-        message: "Would you like to Quit?"
+        message: "Would you like to exit Fairytale Factory Fantastica?"
         button1Text: "No"
         onButton1Clicked: escKeyPopup.visible = false;
         button2Text: "Quit"
