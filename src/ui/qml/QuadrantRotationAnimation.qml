@@ -13,6 +13,7 @@ SequentialAnimation {
     onStopped:{
         root.z--;
         rotationAnimationFinished( myIndex, animationDirection );
+        waitingForRotationAnimationToFinish = false;
     }
 
     NumberAnimation {

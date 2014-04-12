@@ -145,11 +145,18 @@ Rectangle {
                     leftSinglePlayerGameWhileAIWasMoving = true;
                     loadingScreen.visible = true;
                 }
-                else if( waitingForAnimationsToFinish ){
+                else if( waitingForClawAnimationToFinish ){
                     leaveGumdropAnimation();
-                    waitingOnAnimationsToFinishSoWeCanLeaveGameScreen = true;
+                    waitingOnClawAnimationToFinishSoWeCanLeaveGameScreen = true;
                     loadingScreen.visible = true;
-                }else{
+                }
+                else if ( waitingForRotationAnimationToFinish ){
+                    leaveGumdropAnimation();
+                    waitingOnRotationAnimationToFinishSoWeCanLeaveGameScreen = true;
+                    loadingScreen.visible = true;
+                }
+
+                else{
                     gameMenu.state = "INVISIBLE";
                     startMenu.state = "VISIBLE";
                     leaveGumdropAnimation();
@@ -159,18 +166,43 @@ Rectangle {
         }
     }
 
+    Timer{
+        id: leaveLoadingScreenTimer
+        interval:3000
+        repeat: false
+        running: false
+        onTriggered: {
+            waitingOnNetworkOrAIMove = false;
+            gameMenu.state = "INVISIBLE";
+            startMenu.state = "VISIBLE";
+            loadingScreen.visible = false;
+            backToMainMenu();
+            waitingOnRotationAnimationToFinishSoWeCanLeaveGameScreen = false;
+            waitingOnClawAnimationToFinishSoWeCanLeaveGameScreen = false;
+        }
+    }
+
     Connections{
         target: page
         onRotationAnimationFinished:{
-            if( waitingOnAnimationsToFinishSoWeCanLeaveGameScreen ){
+            if( waitingOnRotationAnimationToFinishSoWeCanLeaveGameScreen ){
                 waitingOnNetworkOrAIMove = false;
                 gameMenu.state = "INVISIBLE";
                 startMenu.state = "VISIBLE";
                 loadingScreen.visible = false;
                 backToMainMenu();
-                waitingOnAnimationsToFinishSoWeCanLeaveGameScreen = false;
+                waitingOnRotationAnimationToFinishSoWeCanLeaveGameScreen = false;
+                waitingOnClawAnimationToFinishSoWeCanLeaveGameScreen = false;
             }
         }
+
+        onFinishedClawMovingY:{
+            if( waitingOnClawAnimationToFinishSoWeCanLeaveGameScreen ){
+                leaveLoadingScreenTimer.start()
+            }
+        }
+
+
     }
 
     Connections{

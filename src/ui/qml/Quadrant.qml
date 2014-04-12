@@ -24,7 +24,7 @@ Image {
 
     function rotate( direction ){
 
-        if(_SOUND_CHECK_FLAG && !waitingOnAnimationsToFinishSoWeCanLeaveGameScreen ) rotationSound.play();
+        if(_SOUND_CHECK_FLAG && !(waitingOnRotationAnimationToFinishSoWeCanLeaveGameScreen || waitingOnClawAnimationToFinishSoWeCanLeaveGameScreen ) ) rotationSound.play();
         rotationAnimation.animationDirection = direction;
         rotationAnimation.start();
 
@@ -78,6 +78,7 @@ Image {
         id: rotationAnimation
 
         function start(){
+            waitingForRotationAnimationToFinish = true;
             if( animationDirection == 0 ){
                 rightRotation.start();
             }

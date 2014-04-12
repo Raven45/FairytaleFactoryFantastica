@@ -246,7 +246,7 @@ Item {
         easing.type: Easing.OutSine
         //onStarted: if(_SOUND_CHECK_FLAG) clawSound.play()
         onStopped: {
-            waitingForAnimationsToFinish = false;
+            waitingForClawAnimationToFinish = false;
             y = to;
             finishedClawMovingY();
 
