@@ -318,8 +318,8 @@ public slots:
 
 
         //don't want to be sending a challenge response at the wrong point in gameplay
-        assert( receivedFromConnectedPlayerStack.top().transactionType == TransactionType::CHALLENGE );
-        assert( receivedFromConnectedPlayerStack.size() == 1 );
+        //assert( receivedFromConnectedPlayerStack.top().transactionType == TransactionType::CHALLENGE );
+        //assert( receivedFromConnectedPlayerStack.size() == 1 );
 
         std::function<void()> onComplete;
 
