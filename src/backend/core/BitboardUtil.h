@@ -141,7 +141,7 @@ static std::map<BoardInt,unsigned int>  WIN_PERMUTATION_HAMMING_WEIGHTS = {
 };
 
 static constexpr long double HAMMING_WEIGHT_WEIGHTS[] = {
-    0, 1, 5, 100, 100000, 99900000
+    0, 1, 5, 100, 100000, 999999999
 };
 
 static constexpr BoardInt START_PATTERNS_ROTATE_TO_4[] = {19333644288,

@@ -44,7 +44,7 @@ class FinalPlayer : public Player {
     static constexpr long double OPPONENT_LEVEL_FACTOR = 2.37;*/
 
     static constexpr long double WIN_WEIGHT =   EASY_MODE? 20 :   100000881000;
-    static constexpr long double DEFENSE_FACTOR = 110;
+    static constexpr long double DEFENSE_FACTOR = 600;
 
 
 
