@@ -135,7 +135,8 @@ HEADERS += \
     backend/ai/MonteCarloAI4.h \
     backend/ai/MonteCarloParallelAI.h \
     backend/ai/AlphaBetaAI.h \
-    backend/ai/SmartestPlayer.h
+    backend/ai/SmartestPlayer.h \
+    backend/ai/FinalPlayer.h
 
 
 

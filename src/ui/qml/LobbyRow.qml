@@ -5,8 +5,61 @@ import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
 
 Rectangle {
+    id: parentRow
+    anchors.topMargin: 30
+    state: "READY"
+
+    states:[
+        State{
+            name: "BUSY"
+            PropertyChanges {
+                target: challengePlayer
+                color: "red"
+                enabled: false
+
+            }
+
+            PropertyChanges {
+                target: challengePlayer_text
+                color: "white"
+                text: "Busy..."
+            }
+        },
+        State{
+            name: "READY"
+            PropertyChanges {
+                target: challengePlayer
+                color: "yellow"
+                enabled: true
+
+            }
+
+            PropertyChanges {
+                target: challengePlayer_text
+                color: "black"
+                text: "Ready"
+            }
+        },
+        State{
+            name: "CHALLENGE"
+            PropertyChanges {
+                target: challengePlayer
+                color: "green"
+                enabled: true
+            }
+            PropertyChanges {
+                target: challengePlayer_text
+                color: "white"
+                text: "Challenge!"
+            }
+        }
+
+    ]
+
+
 
     property int playerId: 0
+
 
     function getName(){
         return myName_text.text;
@@ -21,7 +74,7 @@ Rectangle {
     }
 
     function getBusyStatus(){
-        return challengePlayer.text == "Busy...";
+        return state == "BUSY";
     }
 
     visible: false
@@ -52,7 +105,7 @@ Rectangle {
              var address = addressVariant.toString();
 
              if( address === getIpAddress() ){
-                challengePlayer.text = "Challenge!"
+                parentRow.state = "READY";
                  console.log("lobby row: " + address + " is no longer busy")
                 challengePlayer.enabled = true;
              }
@@ -65,7 +118,7 @@ Rectangle {
              console.log( "address format in gui: " + address );
 
              if( address === getIpAddress() ) {
-                challengePlayer.text = "Busy..."
+                parentRow.state = "BUSY"
                 console.log("lobby row: " + address + " became busy")
                 challengePlayer.enabled = false;
              }
@@ -94,7 +147,7 @@ Rectangle {
          visible: false;
          color: "yellow"
          border.color: "black"
-
+         property bool enabled: true
          Text {
              id: challengePlayer_text
              anchors.centerIn: challengePlayer
@@ -108,21 +161,17 @@ Rectangle {
              hoverEnabled: true
 
              onEntered:{
-                 if(challengePopupsAreHidden() && challengePlayer_text.text == "Ready"){
-                    challengePlayer_text.text = "Challenge!";
-                    challengePlayer_text.color = "white";
-                    challengePlayer.color = "green";
+                 if(challengePopupsAreHidden() && parentRow.state == "READY"){
+                    parentRow.state = "CHALLENGE";
                  }
              }
              onExited: {
-                 if(challengePopupsAreHidden() && challengePlayer_text.text == "Challenge!"){
-                     challengePlayer_text.text = "Ready";
-                     challengePlayer_text.color = "black";
-                     challengePlayer.color = "yellow";
+                 if(challengePopupsAreHidden() && parentRow.state == "CHALLENGE"){
+                     parentRow.state = "READY";
                  }
              }
              onClicked: {
-                 if( challengePopupsAreHidden() ){
+                 if( challengePopupsAreHidden() && challengePlayer.enabled ){
                      sendThisChallenge( myAddress_text.text );
                  }
              }
@@ -134,10 +183,11 @@ Rectangle {
          myAddress_text.text = playerAddress;
          playerId = idToSet;
          challengePlayer.enabled = !isBusy;
-         challengePlayer.text = isBusy? "Busy..." : "Challenge!";
+         state = isBusy? "BUSY" : "READY"
 
          if( playerId != 0 ){
              challengePlayer.visible = true;
+
          }
          else{
              challengePlayer.visible = false;
@@ -150,10 +200,15 @@ Rectangle {
          myName_text.text = "";
          myAddress_text.text = "";
          challengePlayer.visible = false;
-         challengePlayer_text.text = "Ready";
-         challengePlayer_text.color = "black";
-         challengePlayer.color = "yellow";
+         state = "READY"
          playerId = 0;
          visible = false;
+     }
+
+     Connections{
+         target: page
+         onLeaveLobby:{
+            challengePlayer.enabled = false;
+         }
      }
 }

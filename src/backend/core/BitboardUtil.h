@@ -140,8 +140,19 @@ static std::map<BoardInt,unsigned int>  WIN_PERMUTATION_HAMMING_WEIGHTS = {
     #include "winPermutations.cpp"
 };
 
+struct WEIGHTS_CLASS{
+static constexpr long double a = 1;
+static constexpr long double b = 288;
+static constexpr long double c = 288 * b;
+static constexpr long double d = 288 * c;
+static constexpr long double e = 288 * d;
+static constexpr long double f = 288 * e;
+static constexpr long double g = 288 * f;
+static constexpr long double h = 288 * g;
+};
+
 static constexpr long double HAMMING_WEIGHT_WEIGHTS[] = {
-    0, 1, 5, 100, 100000, 999999999
+    0, WEIGHTS_CLASS::a, WEIGHTS_CLASS::b, WEIGHTS_CLASS::c, WEIGHTS_CLASS::d, WEIGHTS_CLASS::e
 };
 
 static constexpr BoardInt START_PATTERNS_ROTATE_TO_4[] = {19333644288,
