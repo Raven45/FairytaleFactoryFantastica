@@ -46,7 +46,7 @@ signals:
     void challengeWasAccepted();
     void challengeWasDeclined();
     void sendThisChallengeResponse( bool acceptChallenge );
-    void sendThisNetworkMove( int quadrantIndex, int pieceIndex, int quadrantToRotate, int rotationDirection );
+    void sendThisNetworkMove( int quadrantIndex, int pieceIndex, int quadrantToRotate, int rotationDirection, PlayerColor );
     void playerEnteredLobby( QVariant arrivingPlayerName, QVariant addressOfArrivingPlayer, int playerId, bool isBusy );
     void networkPlayerNoLongerBusy(QVariant);
     void networkPlayerBecameBusy(QVariant);
@@ -114,7 +114,6 @@ signals:
     void gameIsOver();
     void readyForGuiMove();
     void readyForVersusMove();
-    void waitingForOpponentsMove();
     void challengeReceived();
     void challengeAccepted();
     void challengeDeclined();
@@ -122,7 +121,6 @@ signals:
 public slots:
 
     //connected to Gui buttons
-    void setFirstMovingPlayerColor( PlayerColor playerToMoveFirst );
     void setPlayer2( Player* );
     void startOnePersonPlay( int aiLevel, int menuSelectedColor );
     void startTwoPersonPlay();
@@ -181,7 +179,6 @@ public:
         connect( gui,   SIGNAL( leaveLobby() ),                                     this,   SIGNAL( leaveLobby() ));
         connect( gui,   SIGNAL(sendThisChallenge(QVariant)),                        this,   SIGNAL(sendThisChallenge(QVariant)));
         connect( gui,   SIGNAL(sendThisChallengeResponse(bool)),                    this,   SIGNAL(sendThisChallengeResponse(bool)));
-        connect( gui,   SIGNAL(sendThisNetworkMove( int, int, int, int )),          this,   SIGNAL(sendThisNetworkMove( int, int, int, int )));
         connect( this,  SIGNAL(challengeReceivedFromNetwork(QVariant, QVariant)),   gui,    SIGNAL(challengeReceivedFromNetwork(QVariant, QVariant)));
         connect( this,  SIGNAL( challengeWasAccepted()),                            gui,    SIGNAL(challengeWasAccepted() ));
         connect( this,  SIGNAL( challengeWasDeclined()),                            gui,    SIGNAL(challengeWasDeclined()));

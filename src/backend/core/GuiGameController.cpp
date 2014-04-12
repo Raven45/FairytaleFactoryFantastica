@@ -42,7 +42,7 @@ void GuiGameController::setGuiTurnHole( int qIndex, int pIndex ){
         if( isNetworkGame ){
 
             //we won without rotating, so we need to inform the other player
-            net -> sendGuiTurn( bl.quadrantIndex, bl.pieceIndex, DONT_ROTATE_CODE, Direction::NO_DIRECTION );
+            net -> sendGuiTurn( bl.quadrantIndex, bl.pieceIndex, DONT_ROTATE_CODE, Direction::NO_DIRECTION, guiPlayerColor );
         }
 
         emit gameIsOver();
@@ -117,7 +117,6 @@ void GuiGameController::setNetworkInterface(){
         //GUI -> network
         connect(gui, SIGNAL(sendThisChallenge(QVariant)),               net,    SLOT(sendChallenge(QVariant)),              Qt::QueuedConnection );
         connect(gui, SIGNAL(sendThisChallengeResponse(bool)),           this,   SLOT(forwardChallengeResponse(bool)),       Qt::QueuedConnection );
-        connect(gui, SIGNAL(sendThisNetworkMove( int, int, int, int )), net,    SLOT(sendGuiTurn( int, int, int, int )),    Qt::QueuedConnection );
 
     }else{
         qDebug() << "WEIRD, net should've been null";
@@ -246,6 +245,7 @@ void GuiGameController::enterNetworkLobby() {
 
 void GuiGameController::startNetworkGame( PlayerColor myColor ) {
 
+    setMovingPlayerColor(WHITE);
     GameCore::startNewGame();
 
     qOpponentsLastTurn.clear();
@@ -256,9 +256,6 @@ void GuiGameController::startNetworkGame( PlayerColor myColor ) {
 
     if( guiPlayerColor == firstMover ){
         emit readyForGuiMove();
-    }
-    else{
-        emit waitingForOpponentsMove();
     }
 
 }
@@ -313,21 +310,14 @@ void GuiGameController::registerGuiTurnWithBoard(){
             emit readyForGuiMove();
         }
         else{
-            net -> sendGuiTurn( qGuiTurn.getHole().quadrantIndex, qGuiTurn.getHole().pieceIndex, qGuiTurn.getQuadrantToRotate(), qGuiTurn.getRotationDirection() );
+            net -> sendGuiTurn( qGuiTurn.getHole().quadrantIndex, qGuiTurn.getHole().pieceIndex, qGuiTurn.getQuadrantToRotate(), qGuiTurn.getRotationDirection(), qGuiTurn.getPieceColor() );
 
             if( isGameOver() ){
                  emit gameIsOver();
             }
-            else{
-                emit waitingForOpponentsMove();
-            }
         }
      }
  }
-
-void GuiGameController::setFirstMovingPlayerColor( PlayerColor playerToMoveFirst ){
-    setMovingPlayerColor(playerToMoveFirst);
-}
 
 void GuiGameController::registerOpponentsTurnWithBoard(Turn opponentsMove ) {
     //this will only be called by a non-gui player
@@ -353,7 +343,7 @@ void GuiGameController::registerOpponentsTurnWithBoard(Turn opponentsMove ) {
         qOpponentsLastTurn.append( opponentsMove.getQuadrantToRotate() );
         qOpponentsLastTurn.append( opponentsMove.getRotationDirection() );
     }
-    else{
+    else {
         qOpponentsLastTurn[0] = opponentsMove.getHole().quadrantIndex;
         qOpponentsLastTurn[1] = opponentsMove.getHole().pieceIndex;
         qOpponentsLastTurn[2] = opponentsMove.getQuadrantToRotate();

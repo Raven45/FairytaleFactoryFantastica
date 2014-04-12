@@ -127,7 +127,7 @@ public slots:
     }
 
     //gameController calls this when the GUI chooses a turn
-    void sendGuiTurn( int q,int p,int qr,int rd ){
+    void sendGuiTurn( int q,int p,int qr,int rd, PlayerColor pc ){
 
         qDebug() << "sending our turn...";
 
@@ -135,7 +135,7 @@ public slots:
 
         networkTurnTransaction.transactionType = TransactionType::NETWORK_TURN;
         networkTurnTransaction.author = myInfo;
-        networkTurnTransaction.data.turn = Turn( q, p, qr, rd, PlayerColor::BLACK );
+        networkTurnTransaction.data.turn = Turn( q, p, qr, rd, pc );
         networkTurnTransaction.seal = freshSeal();
 
         sendTransaction( networkTurnTransaction );
