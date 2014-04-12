@@ -173,7 +173,7 @@ void GuiGameController::challengeResponseReceivedFromNetwork(bool challengeWasAc
 
 void GuiGameController::networkTurnReceivedFromNetwork( int quadrantIndex, int pieceIndex, int quadrantToRotate, int rotationDirection ){
 
-    setMovingPlayerColor(BLACK);
+    setMovingPlayerColor(util.opposite(guiPlayerColor));
 
     //network opponent is always BLACK to the game core
     registerOpponentsTurnWithBoard( Turn(quadrantIndex, pieceIndex, quadrantToRotate, rotationDirection, PlayerColor::BLACK ) );

@@ -117,7 +117,8 @@ signals:
 public slots:
 
     void forceNotBusy(){
-        isBusy = false;
+        qDebug() << "forcing terminate of " << connectedPlayerInfo.name;
+        terminateConnectionToPlayer();
     }
 
     void setNetworkPlayerName( QVariant nameFromGui ){
