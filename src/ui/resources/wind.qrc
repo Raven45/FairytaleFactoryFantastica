@@ -1,0 +1,5 @@
+<RCC>
+    <qresource>
+                <file alias="wind.wav">../media/Wind-Mark_DiAngelo-1940285615.wav</file>
+    </qresource>
+</RCC>

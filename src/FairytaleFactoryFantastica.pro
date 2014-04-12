@@ -31,7 +31,8 @@ RESOURCES += \
     ui/resources/qmlResources.qrc \
     ui/resources/SpookyMusic.qrc \
     ui/resources/qmlResources2.qrc \
-    ui/resources/introAnimationResources.qrc
+    ui/resources/introAnimationResources.qrc \
+    ui/resources/wind.qrc
 
 INCLUDEPATH += \
     backend \
@@ -108,7 +109,8 @@ OTHER_FILES += \
     ui/qml/DifficultySelector.qml \
     ui/qml/Doors.qml \
     ui/qml/GumdropSelector.qml \
-    ui/qml/IntroScreen.qml
+    ui/qml/IntroScreen.qml \
+    ui/qml/Credits.qml
 
 HEADERS += \
     backend/networking/Barrager.h \

@@ -62,6 +62,12 @@ Rectangle {
         source: "scary.wav"
     }
 
+    SoundEffect {
+        id: windSound
+        source: "wind.wav"
+        loops: Audio.Infinite
+    }
+
     Item {
         anchors.fill: parent
         focus: true
@@ -695,6 +701,7 @@ Rectangle {
                 onPressed:{
                     hiringSign_mouseArea.hoverEnabled = false;
                     if(_SOUND_CHECK_FLAG) buzzerSound.play()
+                    windSound.stop();
                 }
                 onClicked:{
                     killKeyControls();
@@ -817,7 +824,7 @@ Rectangle {
                 id: wolf_mouseArea
                 anchors.fill: parent
                 hoverEnabled: true
-                onPressed: if(_SOUND_CHECK_FLAG) wolfSound.play()
+                onPressed: if(_SOUND_CHECK_FLAG) wolfSound.play();
                 onEntered: {
                     if(wolf_glowEffect.visible == false && wolf_mouseArea.containsMouse){
                         wolf_glowEffect.visible = true;

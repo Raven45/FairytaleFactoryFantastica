@@ -343,7 +343,8 @@ Rectangle {
                         }
                     }
                     onPressed: { if(_SOUND_CHECK_FLAG && !forkliftMenuButtonsAreLocked ) pressButtonSound.play(); }
-                    onClicked: { if( !forkliftMenuButtonsAreLocked )help.state = "SHOW_HELP"; }
+                    onClicked: { if( !forkliftMenuButtonsAreLocked )credits.state = "SHOW_CREDITS"; }
+                    //onClicked: { if( !forkliftMenuButtonsAreLocked )help.state = "SHOW_HELP"; }
                 }
             }
         }
