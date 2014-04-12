@@ -140,10 +140,6 @@ void GuiGameController::leaveLobby(){
 void GuiGameController::forwardChallengeResponse(bool accepted){
 
     if( accepted ){
-        //for our program, the challenged player moves first
-        firstMover = PlayerColor::WHITE;
-        guiPlayerColor = PlayerColor::WHITE;
-
         startNetworkGame( WHITE );
     }
 
@@ -174,9 +170,7 @@ void GuiGameController::networkTurnReceivedFromNetwork( int quadrantIndex, int p
 
     setMovingPlayerColor(util.opposite(guiPlayerColor));
 
-    //network opponent is always BLACK to the game core
-    registerOpponentsTurnWithBoard( Turn(quadrantIndex, pieceIndex, quadrantToRotate, rotationDirection, PlayerColor::BLACK ) );
-
+    registerOpponentsTurnWithBoard( Turn(quadrantIndex, pieceIndex, quadrantToRotate, rotationDirection, util.opposite(guiPlayerColor) ) );
 
     if( isGameOver() ){
          emit gameIsOver();
@@ -184,7 +178,6 @@ void GuiGameController::networkTurnReceivedFromNetwork( int quadrantIndex, int p
     else{
         emit readyForGuiMove();
     }
-
 }
 
 
@@ -246,13 +239,11 @@ void GuiGameController::enterNetworkLobby() {
 void GuiGameController::startNetworkGame( PlayerColor myColor ) {
 
     setMovingPlayerColor(WHITE);
-    GameCore::startNewGame();
-
-    qOpponentsLastTurn.clear();
-
-    qGuiTurn.setPieceColor( myColor );
     guiPlayerColor = myColor;
     firstMover = PlayerColor::WHITE;
+    GameCore::startNewGame();
+    qOpponentsLastTurn.clear();
+    qGuiTurn.setPieceColor( myColor );
 
     if( guiPlayerColor == firstMover ){
         emit readyForGuiMove();
