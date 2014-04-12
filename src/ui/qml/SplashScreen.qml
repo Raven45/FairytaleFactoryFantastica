@@ -149,14 +149,6 @@ Rectangle {
             introScreen.state = "VISIBLE";
         }
     }
-
-    Item {
-        id: escKeyQuit
-        anchors.fill: parent
-        focus: true
-        Keys.onEscapePressed: readyToExitGame();
-    }
-
 }
 
 

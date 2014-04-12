@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
+		<file alias="DejaVuSansMono.ttf">../media/DejaVuSansMono.ttf</file>
+		<file alias="STENCIL.TTF">../media/STENCIL.TTF</file>
         <file alias="top_tubes.png">../media/top_tubes.png</file>
         <file alias="left-cogs-spritesheet.png">../media/left-cogs-spritesheet.png</file>
         <file alias="purp-claw-spritesheet-75.png">../media/purp-claw-spritesheet-75.png</file>
