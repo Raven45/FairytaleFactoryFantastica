@@ -67,9 +67,10 @@ Rectangle {
     Oven {
         id: oven
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.leftMargin: -75
+        anchors.horizontalCenterOffset: 140
+        //anchors.leftMargin: -75
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: -100
+        anchors.bottomMargin: -200
         z: 71
     }
 

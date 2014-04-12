@@ -8,8 +8,8 @@ Rectangle {
 
     Image{
         source: "oven.png"
-        height:parent.height
-        width: parent.width
+        height:800*.3
+        width: 750*.3
         mirror: true
         z: parent.z
     }
