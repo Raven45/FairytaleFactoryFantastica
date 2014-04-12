@@ -1,6 +1,7 @@
 <RCC>
     <qresource>
 		<file alias="changed-floor.png">../media/changed-floor.png</file>
+                <file alias="pipes.png">../media/pipes.png</file>
 		<file alias="changed-left-wall.png">../media/changed-left-wall.png</file>
 		<file alias="changed-right-wall.png">../media/changed-right-wall.png</file>
 		<file alias="gameScreen-right-wall.png">../media/gameScreen-right-wall.png</file>

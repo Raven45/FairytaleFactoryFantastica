@@ -2,6 +2,7 @@
     <qresource>
 		<file alias="GumdropKnob.qml">../qml/GumdropKnob.qml</file>
 		<file alias="Cogs.qml">../qml/Cogs.qml</file>
+		<file alias="Credits.qml">../qml/Credits.qml</file>
 		<file alias="SplashScreen.qml">../qml/SplashScreen.qml</file>
 		<file alias="Witch.qml">../qml/Witch.qml</file>
 		<file alias="Smoke.qml">../qml/Smoke.qml</file>

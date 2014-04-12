@@ -115,15 +115,16 @@ Rectangle {
         id: gumdrop_knob
     }
 
-    Rectangle {
+    Image {
         id: left_can_arm
-        width: 120; height: 50; z: 2
-        color: "black"
+        width: 120; height: 48; z: 2
+        source: "pipes.png"
+        fillMode: Image.PreserveAspectCrop
 
         anchors.top: gameScreen.top
         anchors.topMargin: gameScreen.height/2 + left_can_arm.height
         anchors.left: left_wall.left
-        anchors.leftMargin: 53
+//        anchors.leftMargin: 53
     }
 
     Rectangle {
@@ -165,15 +166,16 @@ Rectangle {
         anchors.leftMargin: 75
     }
 
-    Rectangle {
+    Image {
         id: right_can_arm
-        width: 120; height: 50; z: 2
-        color: "black"
+        width: 120; height: 48; z: 2
+        source: "pipes.png"
+        fillMode: Image.PreserveAspectCrop
 
         anchors.top: gameScreen.top
         anchors.topMargin: gameScreen.height/2 + right_can_arm.height
         anchors.right: right_wall.right
-        anchors.rightMargin: 53
+//        anchors.rightMargin: 53
     }
 
     Image {

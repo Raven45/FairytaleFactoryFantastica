@@ -19,6 +19,7 @@ Item {
         id: scaryMusic
         source: "OppressiveGloom.mp3"
         loops: Audio.Infinite
+        volume: .75
     }
 
     property bool isScary: true

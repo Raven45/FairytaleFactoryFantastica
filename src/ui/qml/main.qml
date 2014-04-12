@@ -500,7 +500,15 @@ Rectangle {
         color: "#88000000"
         //color: "black"
     }
-	
+    Credits{
+        id: credits
+        visible: false
+        width: page.width
+        height: page.height
+        anchors.centerIn: page
+        z: 900
+        color: "#88000000"
+    }
     function getXYOffset(quadrantIndex, pieceIndex){
         var xyOffset = { "x": 0, "y":0 };
         var distanceFromCenter = _QUADRANT_WIDTH/2 - _BOARD_HOLE_WIDTH/2;
