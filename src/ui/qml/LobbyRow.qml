@@ -15,6 +15,7 @@ Rectangle {
             PropertyChanges {
                 target: challengePlayer
                 color: "red"
+                visible: true
                 enabled: false
 
             }
@@ -26,10 +27,20 @@ Rectangle {
             }
         },
         State{
+            name: "DISABLED"
+            PropertyChanges {
+                target: challengePlayer
+                visible: false
+                enabled: false
+
+            }
+        },
+        State{
             name: "READY"
             PropertyChanges {
                 target: challengePlayer
                 color: "yellow"
+                visible: true
                 enabled: true
 
             }
@@ -44,6 +55,7 @@ Rectangle {
             name: "CHALLENGE"
             PropertyChanges {
                 target: challengePlayer
+                visible: true
                 color: "green"
                 enabled: true
             }
@@ -123,6 +135,10 @@ Rectangle {
                 challengePlayer.enabled = false;
              }
          }
+
+         onNetClockAnimationStarted:{
+            parentRow.state = "DISABLED";
+         }
      }
 
      Rectangle{
@@ -161,12 +177,12 @@ Rectangle {
              hoverEnabled: true
 
              onEntered:{
-                 if(challengePopupsAreHidden() && parentRow.state == "READY"){
+                 if(challengePopupsAreHidden() && parentRow.state == "READY" && challengePlayer.enabled ){
                     parentRow.state = "CHALLENGE";
                  }
              }
              onExited: {
-                 if(challengePopupsAreHidden() && parentRow.state == "CHALLENGE"){
+                 if(challengePopupsAreHidden() && parentRow.state == "CHALLENGE" && challengePlayer.enabled ){
                      parentRow.state = "READY";
                  }
              }
@@ -203,12 +219,5 @@ Rectangle {
          state = "READY"
          playerId = 0;
          visible = false;
-     }
-
-     Connections{
-         target: page
-         onLeaveLobby:{
-            challengePlayer.enabled = false;
-         }
      }
 }

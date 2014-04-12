@@ -192,7 +192,8 @@ Rectangle {
             anchors.fill: parent
             onClicked:{
                 if( challengePopupsAreHidden() ){
-                    net_clock_animation.start()
+                    netClockAnimationStarted();
+                    net_clock_animation.start();
                  }
             }
         }

@@ -14,6 +14,7 @@ Rectangle {
 
     color: "#333333"
 
+    signal netClockAnimationStarted()
     signal networkPlayerBecameBusy( var addressVariant )
     signal networkPlayerNoLongerBusy(var addressVariant )
     signal leaveForkliftMenuToGameScreen()
