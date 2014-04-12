@@ -1,5 +1,14 @@
 <RCC>
     <qresource prefix="/">
+		<file alias="net-clock-front.png">../media/net-clock-front.png</file>
+		<file alias="net-clock.png">../media/net-clock.png</file>
+		<file alias="net-sleve.png">../media/net-sleve.png</file>
+		<file alias="net-punch-cards.png">../media/net-punch-cards.png</file>
+		<file alias="net-card.png">../media/net-card.png</file>
+		<file alias="net-clip-lobby-3.png">../media/net-clip-lobby-3.png</file>
+		<file alias="net-clip-lobby-2.png">../media/net-clip-lobby-2.png</file>
+		<file alias="net-clip-lobby.png">../media/net-clip-lobby.png</file>
+		<file alias="net-brick-background.png">../media/net-brick-background.png</file>
 		<file alias="LoadingDockRightSide.png">../media/LoadingDockRightSide.png</file>
 		<file alias="sound-stencil.png">../media/sound-stencil.png</file>
 		<file alias="smaller-cardboard-box.png">../media/smaller-cardboard-box.png</file>

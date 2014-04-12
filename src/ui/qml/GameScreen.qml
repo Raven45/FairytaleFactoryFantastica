@@ -29,6 +29,36 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
     }
 
+    Image{
+        id: floor
+        source: "changed-floor.png"
+        width: 1440; height: 900
+        z: gameScreen.z + 1
+        fillMode: Image.PreserveAspectCrop
+        anchors.top: gameScreen.top
+        anchors.topMargin: 1
+    }
+
+    Image{
+        id: left_wall
+        source: "changed-left-wall.png"
+        width: 400; height: 900
+        z: gameScreen.z + 1
+        fillMode: Image.PreserveAspectCrop
+        anchors.bottom: gameScreen.bottom
+        anchors.left: gameScreen.left
+    }
+
+    Image{
+        id: right_wall
+        source: "changed-right-wall.png"
+        width: 400; height: 900
+        z: gameScreen.z + 1
+        fillMode: Image.PreserveAspectCrop
+        anchors.bottom: gameScreen.bottom
+        anchors.right: gameScreen.right
+    }
+
     SoundEffect {
             id: playSound
             source: "ButtonClick2.wav"
@@ -86,18 +116,18 @@ Rectangle {
 
     Rectangle {
         id: left_can_arm
-        width: 150; height: 50; z: 1
+        width: 120; height: 50; z: 2
         color: "black"
 
         anchors.top: gameScreen.top
         anchors.topMargin: gameScreen.height/2 + left_can_arm.height
-        anchors.left: gameScreen.left
-        anchors.leftMargin: -20
+        anchors.left: left_wall.left
+        anchors.leftMargin: 53
     }
 
     Rectangle {
         id: claw_width_bar
-        width: gameScreen.width * 1.7; height: 10; z: 1
+        width: gameScreen.width * 1.7; height: 10; z: 2
         anchors.top: gameScreen.top
         anchors.topMargin: 10
         anchors.left: gameScreen.left
@@ -136,13 +166,13 @@ Rectangle {
 
     Rectangle {
         id: right_can_arm
-        width: 150; height: 50; z: 1
+        width: 120; height: 50; z: 2
         color: "black"
 
         anchors.top: gameScreen.top
         anchors.topMargin: gameScreen.height/2 + right_can_arm.height
-        anchors.right: gameScreen.right
-        anchors.leftMargin: -20
+        anchors.right: right_wall.right
+        anchors.rightMargin: 53
     }
 
     Image {
@@ -177,10 +207,12 @@ Rectangle {
         z: 69
     }
 
+    /* At one point, we considered Animating the platforms up and down! NEAT!
     NumberAnimation { id: moveTealPlatformUp; target: tealPlatform; property: "y"; to: 400; duration: 800; easing.type: Easing.OutSine }
     NumberAnimation { id: movePurplePlatformUp; target: purplePlatform; property: "y"; to: 400; duration: 800; easing.type: Easing.OutSine }
     NumberAnimation { id: moveTealPlatformDown; target: tealPlatform; property: "y"; to: 750; duration: 800; easing.type: Easing.OutSine }
     NumberAnimation { id: movePurplePlatformDown; target: purplePlatform; property: "y"; to: 750; duration: 800; easing.type: Easing.OutSine }
+C:\Users\Worker\Documents\FX3-MERGE\monday-morning-madness\src\ui\qml\GameScreen.qml    */
 
     HanselClaw {
         id: hanselClaw

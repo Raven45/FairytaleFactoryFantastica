@@ -155,6 +155,30 @@ Rectangle {
         }
     }
 
+    GenericPopup {
+        id: escKeyPopup
+        anchors.left: parent.left
+        anchors.leftMargin: (parent.width / 2) - (escKeyPopup.width/2)
+        anchors.verticalCenter: parent.verticalCenter
+        z: 999 //Any z value greater than this? Hopefully not.
+
+        visible: false
+        message: "Would you like to Quit?"
+        button1Text: "No"
+        onButton1Clicked: escKeyPopup.visible = false;
+        button2Text: "Quit"
+        onButton2Clicked: readyToExitGame();
+    }
+
+    Item {
+        id: escKeyQuit
+        anchors.fill: parent
+        focus: false
+        Keys.onEscapePressed: {
+            escKeyPopup.visible = true;
+        }
+    }
+
     function changeSoundCheckFlag() {
         if( _SOUND_CHECK_FLAG ) {
             _SOUND_CHECK_FLAG = false;

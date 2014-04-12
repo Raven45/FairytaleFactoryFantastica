@@ -9,7 +9,7 @@ Rectangle {
     property int playerId: 0
 
     function getName(){
-        return myName.text;
+        return myName_text.text;
     }
 
     function getId(){
@@ -17,7 +17,7 @@ Rectangle {
     }
 
     function getIpAddress(){
-        return myAddress.text;
+        return myAddress_text.text;
     }
 
     function getBusyStatus(){
@@ -25,26 +25,28 @@ Rectangle {
     }
 
     visible: false
-    anchors.topMargin: 30
-    anchors.left: networkLobby.left
-    anchors.leftMargin: 20
+    anchors.left: net_brick_background.left
+    anchors.leftMargin: 138
 
+    FontLoader{ id: monoSpacedFont; source: "DejaVuSansMono.ttf" }
 
+    Rectangle{
+        id: myName
+        anchors.left: parent.left
+        anchors.leftMargin: 76
+        width: 80; height: 25
+        color: "transparent"
 
-     Text {
-         id: myName
-         anchors.left: parent.left
-         width: 250
-         text: ""
-     }
-     Text {
-         anchors.left: myName.right
-         id: myAddress
-         width: 250
-         text: ""
-     }
-
-     Connections{
+        Text {
+            id: myName_text
+            anchors.left: myName.left
+            anchors.verticalCenter: myName.verticalCenter
+            font{ family: monoSpacedFont.name; pointSize: 10 }
+            text: ""
+        }
+    }
+    
+    Connections{
          target: page
          onNetworkPlayerNoLongerBusy:{
              var address = addressVariant.toString();
@@ -70,25 +72,66 @@ Rectangle {
          }
      }
 
-     Button {
-         anchors.left: myAddress.right
+     Rectangle{
+         id: myAddress
+         anchors.left: myName.right
+         width: 373; height: 25
+         color: "transparent"
+
+         Text {
+             id: myAddress_text
+             anchors.centerIn: myAddress
+             font{ family: monoSpacedFont.name; pointSize: 10 }
+             text: ""
+         }
+     }
+
+     Rectangle {
          id: challengePlayer
+         width: 95; height: 25
+         anchors.left: myAddress.right
+         anchors.leftMargin: -65
          visible: false;
-         text: "Challenge!"
-         enabled: true
-         onClicked: {
+         color: "yellow"
+         border.color: "black"
 
-             if( challengePopupsAreHidden() ){
-                 sendThisChallenge( myAddress.text );
-             }
-
+         Text {
+             id: challengePlayer_text
+             anchors.centerIn: challengePlayer
+             font{ family: monoSpacedFont.name; pointSize: 10 }
+             text: "Ready"
          }
 
+         MouseArea{
+             id: challengePlayer_mouseArea
+             anchors.fill: challengePlayer
+             hoverEnabled: true
+
+             onEntered:{
+                 if(challengePopupsAreHidden() && challengePlayer_text.text == "Ready"){
+                    challengePlayer_text.text = "Challenge!";
+                    challengePlayer_text.color = "white";
+                    challengePlayer.color = "green";
+                 }
+             }
+             onExited: {
+                 if(challengePopupsAreHidden() && challengePlayer_text.text == "Challenge!"){
+                     challengePlayer_text.text = "Ready";
+                     challengePlayer_text.color = "black";
+                     challengePlayer.color = "yellow";
+                 }
+             }
+             onClicked: {
+                 if( challengePopupsAreHidden() ){
+                     sendThisChallenge( myAddress_text.text );
+                 }
+             }
+         }
      }
 
      function setRow(newPlayer, playerAddress, idToSet, isBusy ){
-         myName.text = newPlayer;
-         myAddress.text = playerAddress;
+         myName_text.text = newPlayer;
+         myAddress_text.text = playerAddress;
          playerId = idToSet;
          challengePlayer.enabled = !isBusy;
          challengePlayer.text = isBusy? "Busy..." : "Challenge!";
@@ -104,11 +147,12 @@ Rectangle {
      }
 
      function clearRow(){
-         myName.text = "";
-         myAddress.text = "";
+         myName_text.text = "";
+         myAddress_text.text = "";
          challengePlayer.visible = false;
-         challengePlayer.text = "Challenge!";
-         challengePlayer.enabled = true;
+         challengePlayer_text.text = "Ready";
+         challengePlayer_text.color = "black";
+         challengePlayer.color = "yellow";
          playerId = 0;
          visible = false;
      }

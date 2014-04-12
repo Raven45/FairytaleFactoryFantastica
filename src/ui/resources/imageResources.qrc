@@ -1,5 +1,11 @@
 <RCC>
     <qresource>
+		<file alias="changed-floor.png">../media/changed-floor.png</file>
+		<file alias="changed-left-wall.png">../media/changed-left-wall.png</file>
+		<file alias="changed-right-wall.png">../media/changed-right-wall.png</file>
+		<file alias="gameScreen-right-wall.png">../media/gameScreen-right-wall.png</file>
+		<file alias="gameScreen-left-wall.png">../media/gameScreen-left-wall.png</file>
+		<file alias="gameScreen-floor.png">../media/gameScreen-floor.png</file>
 		<file alias="can-front.png">../media/can-front.png</file>
 		<file alias="can-front-rusty.png">../media/can-front-rusty.png</file>
 		<file alias="can-back.png">../media/can-back.png</file>
@@ -10,9 +16,9 @@
 		<file alias="knob-3.png">../media/knob-3.png</file>
 		<file alias="knob-4.png">../media/knob-4.png</file>
 		<file alias="knob-5.png">../media/knob-5.png</file>
-                <file alias="step1.png">../media/step 1.png</file>
-                <file alias="step2.png">../media/step 2.png</file>
-                <file alias="step3.png">../media/step 3.png</file>
+		<file alias="step1.png">../media/step 1.png</file>
+		<file alias="step2.png">../media/step 2.png</file>
+		<file alias="step3.png">../media/step 3.png</file>
 		<file alias="bar.png">../media/bar.png</file>
 		<file alias="grahm-quad.png">../media/grahm-quad.png</file>
 		<file alias="pentago-quad.png">../media/pentago-quad.png</file>

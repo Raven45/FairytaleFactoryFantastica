@@ -7,6 +7,9 @@ Rectangle {
     id: doorsRectangle
     color: "transparent"
 
+    FontLoader{ id: stencilFont; source: "STENCIL.TTF" }
+    FontLoader{ id: monoSpacedDejaVu; source: "DejaVuSansMono.ttf" }
+
     state: "DEFAULT"
 
     states:[
@@ -339,13 +342,89 @@ transitions:[
 
     //------networkDoor TextArea------------------------------------------------
 
-    TextArea{
-            id: playerNameBox
-            width: 100; height: 25
-            text: "enter a name"
-            textColor: "#474747"
-            anchors.verticalCenter: networkDoor.verticalCenter
-            anchors.horizontalCenter: networkDoor.horizontalCenter
+    //What happens when changed from TextArea to TextInput?
+    Text{
+        id: networkId_text
+        font{ family: stencilFont.name; pointSize: 18 }
+        color: "black"
+        text: "NETWORK ID"
+
+        width: playerNameBox.width
+        height: playerNameBox.height
+        anchors.horizontalCenter: networkDoor.horizontalCenter
+        anchors.bottom: playerNameBox_rec.top
+        anchors.bottomMargin: 10
+    }
+
+    Rectangle{
+        id: playerNameBox_rec
+        width: playerNameBox.width
+        height: playerNameBox.height
+        anchors.verticalCenter: networkDoor.verticalCenter
+        anchors.horizontalCenter: networkDoor.horizontalCenter
+        color: "white"
+        border.color: "black"
+
+        TextInput{
+                id: playerNameBox
+                width: 205; height: 25
+                anchors.left: playerNameBox_rec.left
+                anchors.leftMargin: 2
+                anchors.verticalCenter: playerNameBox_rec.verticalCenter
+                anchors.verticalCenterOffset: 2
+                focus: false
+                activeFocusOnPress: false
+                font{ family: monoSpacedDejaVu.name; pointSize: 12 }
+                text: "Type Your ID Here"
+                maximumLength: 19
+                color: "#474747"
+
+                selectionColor: "black"
+                selectedTextColor: "white"
+
+                MouseArea{
+                    id: playerNameBox_mouseArea
+                    anchors.fill: playerNameBox
+                    onClicked: {
+                        playerNameBox.selectAll();
+                        if(playerNameBox.text != ""){
+                            playerNameBox.text = ""
+                        }
+
+                        if(!playerNameBox.activeFocus){
+                            playerNameBox.forceActiveFocus();
+                        } else {
+                            playerNameBox.focus = false;
+                        }
+                    }
+                }
+
+                onAccepted: {
+                    if(playerNameBox.text == "" || playerNameBox.text == "Type Your ID Here"){
+                        submission_error.visible = true;
+                    } else if(submission_error.visible){
+                        submission_error.visible = false;
+                    }
+
+                    playerNameBox.focus = false;
+                    escKeyQuit.focus = true;
+                }
+        }
+    }
+
+    Text {
+        id: submission_error
+        font.pointSize: 12
+        color: "red" //'#6B6B6B'
+        text: '(Please submit a valid ID)'
+
+        visible: false
+
+        width: playerNameBox.width
+        height: playerNameBox.height
+        anchors.horizontalCenter: networkDoor.horizontalCenter
+        anchors.top: playerNameBox_rec.bottom
+        anchors.topMargin: 5
     }
 
     //-------------------------------------------------------------------------
@@ -531,10 +610,20 @@ transitions:[
                 }
             }
             onExited: { networkingStencil_img.source = "enter-lobby-stencil.png"; }
-            onPressed:{ if(_SOUND_CHECK_FLAG && !forkliftMenuButtonsAreLocked ) tankSound.play() }
+            onPressed:{
+                if(playerNameBox.text === "" || playerNameBox.text == "Type Your ID Here"){
+                    submission_error.visible = true;
+                } else if(submission_error.visible){
+                    submission_error.visible = false;
+                }
+                if(playerNameBox.activeFocus) playerNameBox.focus = false;
+
+            }
             onClicked: {
 
-                if( !forkliftMenuButtonsAreLocked ){
+                if( !forkliftMenuButtonsAreLocked && !submission_error.visible ){
+                    if(_SOUND_CHECK_FLAG && !forkliftMenuButtonsAreLocked ) tankSound.play()
+                    escKeyQuit.focus = true;
 
                     isNetworkGame = true;
                     isVersusGame = false;

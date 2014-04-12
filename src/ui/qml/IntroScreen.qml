@@ -32,7 +32,6 @@ Rectangle {
         State{
             name: "VISIBLE"
             PropertyChanges { target: introKeySkip; focus: true }
-            PropertyChanges{target: escKeyQuit; focus: false}
             PropertyChanges{target: introScreen; visible: true}
             PropertyChanges{target: introTimer; running: true}
             PropertyChanges{target: lightsOffTimer; running: true}
@@ -40,7 +39,6 @@ Rectangle {
         State{
             name: "INVISIBLE"
             PropertyChanges{target: introKeySkip; focus: false}
-            PropertyChanges{target: escKeyQuit; focus: true}
             PropertyChanges{target: introScreen; visible: false}
             PropertyChanges{target: introTimer; running: false}
             PropertyChanges{target: lightsOffTimer; running: false}
@@ -307,7 +305,7 @@ Rectangle {
     Item{
         id: introKeySkip
         anchors.fill: parent
-        focus: true
+        focus: false
 
         Keys.onSpacePressed: {
             introTimer.stop();
@@ -316,11 +314,6 @@ Rectangle {
         }
     }
 
-    Item {
-        id: escKeyQuit
-        anchors.fill: parent
-        focus: true
-        Keys.onEscapePressed: readyToExitGame();
-    }
-
 }
+
+

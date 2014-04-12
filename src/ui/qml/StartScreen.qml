@@ -15,6 +15,30 @@ Rectangle {
 
     state: "INVISIBLE"
 
+    function killKeyControls(){
+        startScreenKeyControls.focus = false;
+        escKeyQuit.focus = true;
+    }
+
+    Item{
+        id: startScreenKeyControls
+        anchors.fill: parent
+        focus: false
+        Keys.onEscapePressed: {
+            escKeyPopup.visible = true;
+        }
+        Keys.onReturnPressed: {
+            hiringSign_mouseArea.hoverEnabled = false;
+            gate_lDoorSprite.jumpTo("opening_gate");
+            gateOpened();
+        }
+        Keys.onEnterPressed: {
+            hiringSign_mouseArea.hoverEnabled = false;
+            gate_lDoorSprite.jumpTo("opening_gate");
+            gateOpened();
+        }
+    }
+
     SoundEffect {
         id: gateSound
         source: "metal-gate.wav"
@@ -76,6 +100,7 @@ Rectangle {
             showGretelBlinkTimer.startTimer();
 
         }
+
     }
 
     QmlTimer{
@@ -674,6 +699,7 @@ Rectangle {
                     if(_SOUND_CHECK_FLAG) buzzerSound.play()
                 }
                 onClicked:{
+                    killKeyControls();
                     gate_lDoorSprite.jumpTo("opening_gate");
                     gateOpened();
                 }
@@ -899,6 +925,7 @@ Rectangle {
             PropertyChanges { target: startScreen; visible: true }
             PropertyChanges { target: gretelBlink; visible: false }
             PropertyChanges { target: hanselBlink; visible: false }
+            PropertyChanges{target: startScreenKeyControls; focus: true}
             PropertyChanges { target: gretelBlinkTimer; duration: 5000 }
             PropertyChanges { target: hanselBlinkTimer; duration: 3800 }
             StateChangeScript { script: hanselBlinkTimer.startTimer() }
@@ -906,6 +933,7 @@ Rectangle {
         },
         State{
             name: "INVISIBLE"
+            StateChangeScript{ script: killKeyControls() }
             PropertyChanges { target: smokeRectangle; state: "OFF" }
             PropertyChanges { target: startMenu_witch;  state: "OFF" }
             PropertyChanges { target: menuFade; opacity: 0; visible: false; }
