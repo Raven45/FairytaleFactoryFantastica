@@ -128,6 +128,22 @@ static constexpr BoardInt START_PATTERNS_ROTATE_TO_3[] ={19331547136,
                                                          6291472,
                                                          12582928};
 
+static constexpr BoardInt ROTATE_TO_WIN_PATTERNS[] = {
+    #include "rotateToWinArray.cpp"
+};
+
+static std::map<BoardInt,unsigned int>  ROTATE_TO_WIN_PERMUTATION_HAMMING_WEIGHTS = {
+    #include "rotateToWinPermutations.cpp"
+};
+
+static std::map<BoardInt,unsigned int>  WIN_PERMUTATION_HAMMING_WEIGHTS = {
+    #include "winPermutations.cpp"
+};
+
+static constexpr long double HAMMING_WEIGHT_WEIGHTS[] = {
+    0, 1, 5, 100, 100000, 999999999
+};
+
 static constexpr BoardInt START_PATTERNS_ROTATE_TO_4[] = {19333644288,
                                                         2422210560,
                                                         6447169536,
@@ -154,6 +170,16 @@ static constexpr BoardInt START_PATTERNS_ROTATE_TO_4[] = {19333644288,
                                                         21110784};
 
 typedef std::uint8_t RowInt;
+
+template <BoardInt x>
+struct SignificantBits {
+    static constexpr BoardInt n = SignificantBits<x/2>::n + 1;
+};
+
+template <>
+struct SignificantBits<0> {
+    static constexpr BoardInt n = 0;
+};
 
 constexpr BoardInt FULL_BOARD =
 111111111111111111111111111111111111_b;

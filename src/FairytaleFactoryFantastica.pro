@@ -56,7 +56,8 @@ SOURCES += \
     backend/core/Wins.cpp \
     backend/main.cpp \
     backend/core/rotationArray.cpp \
-    backend/core/MainBoard.cpp
+    backend/core/MainBoard.cpp \
+    backend/core/rotateToWinArray.cpp
 
 # Installation path
 # target.path =
