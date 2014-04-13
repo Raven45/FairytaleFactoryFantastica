@@ -6,7 +6,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <string>
-#include <cassert>
+//#include <cassert>
 #include <ctime>
 #include "MainBoard.h"
 #include <QDebug>

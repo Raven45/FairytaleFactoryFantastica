@@ -3,7 +3,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <string>
-#include <cassert>
+//#include <cassert>
 #include "BoardLocation.h"
 #include "GameData.h"
 #include "Turn.h"
@@ -27,7 +27,7 @@ MainBoard::MainBoard( const BitBoard& white, const BitBoard& black, PlayerColor 
 }
 
 const BitBoard& MainBoard::getBoardOfPlayer( PlayerColor player ) const {
-    assert(player != PlayerColor::NONE);
+    //assert(player != PlayerColor::NONE);
     return (player == PlayerColor::BLACK? blackBoard : whiteBoard );
 }
 
@@ -109,7 +109,7 @@ bool MainBoard::move( Turn t ){
 
     bool moveIsValid = (copy != ref) && ((ref & opponent) == 0);
 
-    assert( movingPlayersColor == t.getPieceColor() );
+    //assert( movingPlayersColor == t.getPieceColor() );
 
     if( moveIsValid ){
         movingPlayersColor = (t.getPieceColor() == PlayerColor::BLACK)? PlayerColor::WHITE : PlayerColor::BLACK;
@@ -165,7 +165,7 @@ GameData MainBoard::checkEarlyWin( BoardLocation partialMove, PlayerColor color 
 
     if(!(movingPlayersColor == color && moveIsValid)){
             qDebug() << "movingPlayersColor: " << color << " && " << "moveIsValid: " << moveIsValid;
-            assert(false);
+            //assert(false);
     }
 
     if( copy.didWin() ){

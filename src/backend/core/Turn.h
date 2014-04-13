@@ -1,7 +1,7 @@
 #ifndef TURN_H
 #define TURN_H
 
-#include <cassert>
+//#include <cassert>
 
 #include <QDebug>
 
@@ -11,7 +11,7 @@
 
 //used to account for special win condition where there is no rotation
 #define DONT_ROTATE_CODE 111
-#define TURN_DEBUGGING true
+#define TURN_DEBUGGING false
 
 
 
@@ -65,11 +65,11 @@ public:
         if( TURN_DEBUGGING ){
             if ( hole.pieceIndex < 0 || hole.pieceIndex >= 9 ){
                 qDebug() << "Error: tried to read bad.getHole().pieceIndex value";
-                assert(false);
+                //assert(false);
             }
             if ( hole.quadrantIndex < 0 || hole.quadrantIndex >= 4 ){
                 qDebug() << "Error: tried to read bad.getHole().quadrantIndex value";
-                assert(false);
+                //assert(false);
             }
         }
 
@@ -81,7 +81,7 @@ public:
 
             if ( (quadrantToRotate < 0 || quadrantToRotate >= 4) && quadrantToRotate != DONT_ROTATE_CODE  ){
                 qDebug() << "Error: tried to read bad quadrantToRotate value";
-                assert(false);
+                //assert(false);
             }
 
         }
@@ -93,7 +93,7 @@ public:
         if( TURN_DEBUGGING ){
             if ( rotationDirection != Direction::LEFT && rotationDirection != Direction::RIGHT && rotationDirection != Direction::NO_DIRECTION ){
                 qDebug() << "Error: tried to read bad rotationDirection value";
-                assert(false);
+                //assert(false);
             }
         }
 
@@ -104,7 +104,7 @@ public:
         if( TURN_DEBUGGING ){
             if ( pieceColor != PlayerColor::WHITE && pieceColor != PlayerColor::BLACK ){
                 qDebug() << "Error: tried to read bad pieceColor value";
-                assert(false);
+                //assert(false);
             }
         }
 
@@ -116,7 +116,7 @@ public:
 
             if ( pc != PlayerColor::WHITE && pc != PlayerColor::BLACK ){
                 qDebug() << "Error: tried to set turn with bad pieceColor value";
-                assert(false);
+                //assert(false);
             }
 
         }
@@ -133,7 +133,7 @@ public:
 
             if ( badValue1 && badValue2 && badValue3 ){
                 qDebug() << "Error: tried to set turn with bad rotationDirection value";
-                assert(false);
+                //assert(false);
             }
         }
 
@@ -144,7 +144,7 @@ public:
         if( TURN_DEBUGGING ){
             if ( (x < 0 || x >= 4 ) && x != DONT_ROTATE_CODE ){
                 qDebug() << "Error: tried to set turn with bad quadrantToRotate value of " << x;
-                assert(false);
+                //assert(false);
             }
         }
 
@@ -155,11 +155,11 @@ public:
         if( TURN_DEBUGGING ){
             if ( bl.pieceIndex < 0 || bl.pieceIndex >= 9 ){
                 qDebug() << "Error: tried to set turn with bad.getHole().pieceIndex value of " << bl.pieceIndex;
-                assert(false);
+                //assert(false);
             }
             if ( bl.quadrantIndex < 0 || bl.quadrantIndex >= 4 ){
                 qDebug() << "Error: tried to set turn with bad.getHole().quadrantIndex value of " << bl.quadrantIndex;
-                assert(false);
+                //assert(false);
             }
         }
 

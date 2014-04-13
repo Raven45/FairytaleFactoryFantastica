@@ -8,7 +8,7 @@
 #include <bitset>
 #include <QDebug>
 #include <string>
-#include <cassert>
+//#include <cassert>
 #include "Direction.h"
 #include <map>
 #include <initializer_list>

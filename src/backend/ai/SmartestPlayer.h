@@ -9,7 +9,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <string>
-#include <cassert>
+//#include <cassert>
 #include <time.h>
 #include <type_traits>
 #include <utility>
@@ -144,7 +144,7 @@ public:
             if( boardToCheck.hasPattern( threeInARowBoard ) && !myOriginalBoard.hasPattern( threeInARowBoard )  ){
 
                 if( opponentsBoard.overlapsPattern(threeInARowBoard) ){
-                    assert( false );
+                    //assert( false );
                 }
 
                 const BoardInt future4Pattern1 = THREE_TO_FOUR_IN_A_ROW[threeInARowIndex][0];
@@ -556,9 +556,7 @@ public:
                     case RIGHT_PAIR: foundSpecialCase = blockEarly<1,3>(bestMove, opponentsBoard, mainBoard ); break;
                     case LEFT_DIAGONAL_PAIR: foundSpecialCase = blockEarlyDiagonal<0,3>(bestMove, opponentsBoard, mainBoard ); break;
                     case RIGHT_DIAGONAL_PAIR: foundSpecialCase = blockEarlyDiagonal<1,2>(bestMove, opponentsBoard, mainBoard ); break;
-                    default: assert(false);
                 }
-
                 break;
             }
         }
@@ -624,14 +622,6 @@ public:
         if( elapsedSeconds > longestTimeSpentCalculatingMove ){
             std::cout << "\nnew longest time: " << elapsedSeconds << " seconds\n";
             longestTimeSpentCalculatingMove = elapsedSeconds;
-
-            /* Causes issues while in debug
-             * on a non-optimal machine
-            if( elapsedSeconds >= 5.5 ){
-                assert(false);
-            }
-            */
-
         }
 
         return bestMove;

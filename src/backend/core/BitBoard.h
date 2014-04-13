@@ -31,9 +31,6 @@ protected:
             bitBoard &= 111111111111111111111111111000000000_b;
             bitBoard |= ((BoardInt)(bitValues));
             return;
-
-            default:
-                assert(false);
         }
     }
 
@@ -47,9 +44,7 @@ protected:
             return (BoardInt)(((BoardInt)(bitBoard & 000000000000000000111111111000000000_b)) >> 9);
             case 3:
             return  (BoardInt)(bitBoard & 000000000000000000000000000111111111_b);
-            default:
-                assert(false);
-                return 0;
+            default: return 0;
         }
     }
 
@@ -67,9 +62,7 @@ protected:
             return (BoardInt)((BoardInt)((bitBoard & 000000000000000000000000000000111000_b)))              | (BoardInt)((BoardInt)(bitBoard & 000000000000000000000111000000000000_b) >> 12);
         case 5:
             return ((BoardInt)((BoardInt)((BoardInt)(bitBoard & 000000000000000000000000000111000000_b) >>  6) << 3)) | (BoardInt)((BoardInt)(bitBoard & 000000000000000000111000000000000000_b) >> 15);
-            default:
-                assert(false);
-                return 0;
+            default: return 0;
         }
     }
 

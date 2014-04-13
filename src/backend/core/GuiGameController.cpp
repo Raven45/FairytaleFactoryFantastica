@@ -80,7 +80,7 @@ void GuiGameController::setPlayerName(QVariant name){
 
     guiPlayerName = name.toString();
 
-    assert( net != nullptr );
+    //assert( net != nullptr );
     net -> setNetworkPlayerName(name);
 
 }
@@ -188,7 +188,7 @@ void GuiGameController::startOnePersonPlay( int aiLevel, int menuSelectedColor )
 
     qDebug() << "in startOnePersonPlay, aiLevel is " << aiLevel << " and menuSelectedColor is " << menuSelectedColor;
 
-    assert (aiLevel == 1 || aiLevel == 2 || aiLevel == 3);
+    //assert (aiLevel == 1 || aiLevel == 2 || aiLevel == 3);
     if ( aiLevel == 1 ){
         setPlayer2(&easyAi);
     }
@@ -199,7 +199,7 @@ void GuiGameController::startOnePersonPlay( int aiLevel, int menuSelectedColor )
         setPlayer2(&hardAi);
     }
 
-    assert( menuSelectedColor == 0 or menuSelectedColor == 1 );
+    //assert( menuSelectedColor == 0 or menuSelectedColor == 1 );
 
     guiPlayerColor = static_cast<PlayerColor>(menuSelectedColor);
     player2 -> setColor(util.opposite(guiPlayerColor));
@@ -272,7 +272,7 @@ void GuiGameController::setPlayer2( Player* p ){
 //this function oversees the sequence of gameplay
 void GuiGameController::registerGuiTurnWithBoard(){
 
-    assert( ! qGuiTurn.isEmpty() );
+    //assert( ! qGuiTurn.isEmpty() );
 
     registerTurnWithBoard( qGuiTurn );
 
@@ -325,7 +325,7 @@ void GuiGameController::registerOpponentsTurnWithBoard(Turn opponentsMove ) {
 
     //making sure that this only gets called with the opponents move
     if( opponentsMove.getPieceColor() == guiPlayerColor ){
-        assert(false);
+        //assert(false);
     }
 
     if( qOpponentsLastTurn.empty() ){

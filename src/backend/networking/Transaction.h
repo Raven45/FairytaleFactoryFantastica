@@ -38,20 +38,22 @@ struct Transaction {
 
     Transaction( const QByteArray& bytes ){
 
-        assert( bytes.size() == sizeof (Transaction) );
+        //assert( bytes.size() == sizeof (Transaction) );
 
         const char* start = bytes.data();
 
-        seal =          *(WaxSeal*) start;
-        start += sizeof  (WaxSeal);
+        if(start != nullptr){
+            seal =          *(WaxSeal*) start;
+            start += sizeof  (WaxSeal);
 
-        author =        *(NetworkPlayerInfo*) start;
-        start += sizeof  (NetworkPlayerInfo);
+            author =        *(NetworkPlayerInfo*) start;
+            start += sizeof  (NetworkPlayerInfo);
 
-        transactionType =   *(TransactionType*) start;
-        start += sizeof      (TransactionType);
+            transactionType =   *(TransactionType*) start;
+            start += sizeof      (TransactionType);
 
-        data = *(TransactionData*) start;
+            data = *(TransactionData*) start;
+        }
 
     }
 

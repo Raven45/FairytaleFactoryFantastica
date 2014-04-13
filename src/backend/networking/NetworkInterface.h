@@ -411,9 +411,9 @@ public slots:
 
         //this slot is connected to QTimer::timeout().
         //We need to get the pointer to the timer object that sent the signal
-        assert( sentBy != 0 );
+        //assert( sentBy != 0 );
         QTimer* pTimer = qobject_cast<QTimer*>(sentBy);
-        assert( pTimer != NULL );
+        //assert( pTimer != NULL );
 
         if( pTimer->isActive() ) {
             pTimer -> stop();
@@ -468,7 +468,7 @@ public slots:
             //qDebug() << "processing game tx";
             QByteArray datagram;
 
-            assert( gameListenSocket.pendingDatagramSize() == sizeof(Transaction) );
+            //assert( gameListenSocket.pendingDatagramSize() == sizeof(Transaction) );
 
             datagram.resize( sizeof(Transaction) );
 
@@ -486,18 +486,11 @@ public slots:
 
                 qDebug() << "connectedPlayerInfo.id = " << connectedPlayerInfo.id;
                 qDebug() << "receivedFromConnectedPlayerStack.top().author.id = " << receivedFromConnectedPlayerStack.top().author.id;
-                assert(connectedPlayerInfo.id == receivedFromConnectedPlayerStack.top().author.id );
+                //assert(connectedPlayerInfo.id == receivedFromConnectedPlayerStack.top().author.id );
                 terminateConnectionToPlayer();
             }
 
             if( networkIsActive && (receivedFromConnectedPlayerStack.isEmpty() || ( receivedFromConnectedPlayerStack.top().seal != receivedTransaction.seal ))){
-
-                /*if( !receivedFromConnectedPlayerStack.isEmpty()){
-                  qDebug() << "top of stack has seal " << receivedFromConnectedPlayerStack.top().seal;
-                }
-                else{
-                    qDebug() << "receivedFromConnectedPlayerStack is empty.";
-                }*/
 
                 receivedFromConnectedPlayerStack.push( receivedTransaction );
 
@@ -512,7 +505,7 @@ public slots:
 
                     case TransactionType::ANNOUNCE:
                         qDebug() << "Error: announce sent to GAME_PORT!!";
-                        assert(false);
+                        //assert(false);
                         break;
 
                     case TransactionType::CHALLENGE:
@@ -542,7 +535,7 @@ public slots:
 
                     default:
                         qDebug() << "Error: unknown transaction type received";
-                        assert(false);
+                        //assert(false);
                         break;
                 }
 
@@ -575,9 +568,9 @@ public slots:
 
         //this slot is connected to QTimer::timeout().
         //We need to get the pointer to the timer object that sent the signal
-        assert( sentBy != 0 );
+        //assert( sentBy != 0 );
         QUdpSocket* socket = qobject_cast<QUdpSocket*>(sentBy);
-        assert( socket != NULL );
+        //assert( socket != NULL );
 
         if( sentBy == &announceSocket ){
             sentName = "announceSocket";

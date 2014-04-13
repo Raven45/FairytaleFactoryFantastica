@@ -25,13 +25,13 @@ void GameCore::registerTurnWithBoard( Turn playersMove ){
 
         //if a rotationless move comes here, it better be a winner
         if(gameData.winner == PlayerColor::NONE ){
-           assert(false);
+           //assert(false);
         }
     }
     else{
         //set the move in motion, change the board
         if(!currentBoard.move(playersMove)){
-           assert(false);
+           //assert(false);
         }
 
          gameData = currentBoard.checkWin();

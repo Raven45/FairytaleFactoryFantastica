@@ -349,8 +349,65 @@ Rectangle {
                         if(_SOUND_CHECK_FLAG && !forkliftMenuButtonsAreLocked ) pressButtonSound.play();
                         resolveEscFocus();
                     }
-                    //onClicked: { if( !forkliftMenuButtonsAreLocked )credits.state = "SHOW_CREDITS"; }
                     onClicked: { if( !forkliftMenuButtonsAreLocked )help.state = "SHOW_HELP"; }
+                }
+            }
+        }
+    }
+
+    Item{
+        id: creditsBox
+        width: creditsBox_img.width
+        height: creditsBox_img.height
+        z: forklift.z + 1
+        anchors.bottom: helpBox.bottom
+        anchors.right: helpBox.left
+        anchors.rightMargin: 15
+
+        FontLoader{ id: stencilFont; source: "STENCIL.TTF" }
+
+        Rectangle{
+            id:dummy_creditsBox_rec
+            width: 75; height: 75
+            color: "transparent"
+            z: creditsBox.z - 1
+            anchors.centerIn: creditsBox
+        }
+
+        Image {
+            id: creditsBox_img
+            width: 150; height: 150
+            z: creditsBox.z + 1
+            anchors.centerIn: creditsBox
+            source: "smaller-cardboard-box.png"
+            Text {
+                id: creditsBox_text
+                font.family: stencilFont.name
+                text: "credits"
+                color: "#371D07"
+                font.pointSize: 18
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                anchors.left: creditsBox_img.left
+                anchors.top: creditsBox_img.top
+
+                width: creditsBox_img.width - 22
+                height: creditsBox_img.height
+                z: creditsBox_img.z + 1
+
+                MouseArea {
+                    id: creditsBox_mouseArea
+                    anchors.fill: parent
+                    hoverEnabled: true
+
+                    onEntered: {
+                        creditsBox_text.color = "#653306"
+                    }
+                    onExited: {
+                        creditsBox_text.color = "#371D07"
+                    }
+                    onPressed: { if(_SOUND_CHECK_FLAG && !forkliftMenuButtonsAreLocked ) pressButtonSound.play(); }
+                    onClicked: { if( !forkliftMenuButtonsAreLocked )credits.state = "SHOW_CREDITS" }
                 }
             }
         }

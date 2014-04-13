@@ -244,7 +244,7 @@ private:
             }
         }
 
-        assert(false);
+        //assert(false);
         return Turn();
     }
 

@@ -62,7 +62,7 @@ Rectangle {
         source: "scary.wav"
     }
 
-    SoundEffect {
+    Audio {
         id: windSound
         source: "wind.wav"
         loops: Audio.Infinite
@@ -951,11 +951,7 @@ Rectangle {
             PropertyChanges { target: hanselBlink; visible: false }
             PropertyChanges { target: gretelBlinkTimer; duration: 0 }
             PropertyChanges { target: hanselBlinkTimer; duration: 0 }
-            StateChangeScript {
-                script:
-                    if(windSound.playing)
-                        windSound.stop();
-            }
+            StateChangeScript { script: windSound.stop();}
         }
 
     ]
