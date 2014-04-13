@@ -181,10 +181,12 @@ Rectangle {
                         nosound_forkliftMenu_glowEffect.visible = false;
                     }
                 }
-                onPressed: { if(_SOUND_CHECK_FLAG) pressButtonSound.play() }
+                onPressed: { if( !forkliftMenuButtonsAreLocked ) pressButtonSound.play() }
                 onClicked: {
-                    changeSoundState();
-                    changeSoundCheckFlag();
+                    if( !forkliftMenuButtonsAreLocked ){
+                        changeSoundState();
+                        changeSoundCheckFlag();
+                    }
                 }
             }
         }
@@ -249,7 +251,7 @@ Rectangle {
                         sound_forkliftMenu_glowEffect.visible = false;
                     }
                 }
-                onPressed: { if(!_SOUND_CHECK_FLAG && !forkliftMenuButtonsAreLocked ) pressButtonSound.play() }
+                onPressed: { if( !forkliftMenuButtonsAreLocked ) pressButtonSound.play() }
                 onClicked: {
                     if( !forkliftMenuButtonsAreLocked ){
                         changeSoundState();
@@ -620,7 +622,6 @@ Rectangle {
                     onClicked: {
                         if( !forkliftMenuButtonsAreLocked ){
                             doors.state = "SINGLE_PLAYER";
-                            startMenu_startOnePlayer.source_string = "single-player-stencil-selected.png";
                         }
                     }
                 }
@@ -683,7 +684,6 @@ Rectangle {
                     onClicked: {
                         if ( !forkliftMenuButtonsAreLocked ){
                             doors.state = "VERSUS"
-                            startMenu_startPlayerVsPlayer.pvp_source_string = "player-vs-player-stencil-selected.png";
                         }
                     }
                 }
@@ -745,12 +745,10 @@ Rectangle {
 
                         if (!forkliftMenuButtonsAreLocked ){
                             doors.state = "NETWORK";
-                            startMenu_startNetwork.net_source_string = "network-game-stencil-selected.png";
                         }
                     }
                 }
             }
-
         }
     }
 

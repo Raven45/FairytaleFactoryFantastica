@@ -47,6 +47,7 @@ Rectangle {
                 target:defaultDoor.anchors
                 verticalCenterOffset: 0
             }
+
         },
         State{
             name: "UP"
@@ -66,26 +67,74 @@ Rectangle {
                 target:defaultDoor.anchors
                 verticalCenterOffset: 0 - doorsRectangle.height * 2
             }
+            PropertyChanges{
+                target: startMenu_startNetwork
+                net_source_string:"network-game-stencil.png";
+            }
+            PropertyChanges{
+                target: startMenu_startOnePlayer
+                source_string:"single-player-stencil.png";
+            }
+            PropertyChanges{
+                target: startMenu_startPlayerVsPlayer
+                pvp_source_string:"player-vs-player-stencil.png";
+            }
         },
         State{
             name: "SINGLE_PLAYER"
+            PropertyChanges{
+                target: startMenu_startNetwork
+                net_source_string:"network-game-stencil.png";
+            }
+            PropertyChanges{
+                target: startMenu_startOnePlayer
+                source_string:"single-player-stencil-selected.png";
+            }
+            PropertyChanges{
+                target: startMenu_startPlayerVsPlayer
+                pvp_source_string:"player-vs-player-stencil.png";
+            }
         },
         State{
             name: "VERSUS"
+            PropertyChanges{
+                target: startMenu_startNetwork
+                net_source_string:"network-game-stencil.png";
+            }
+            PropertyChanges{
+                target: startMenu_startOnePlayer
+                source_string:"single-player-stencil.png";
+            }
+            PropertyChanges{
+                target: startMenu_startPlayerVsPlayer
+                pvp_source_string:"player-vs-player-stencil-selected.png";
+            }
         },
         State{
             name: "NETWORK"
+            PropertyChanges{
+                target: startMenu_startNetwork
+                net_source_string:"network-game-stencil-selected.png";
+            }
+            PropertyChanges{
+                target: startMenu_startOnePlayer
+                source_string:"single-player-stencil.png";
+            }
+            PropertyChanges{
+                target: startMenu_startPlayerVsPlayer
+                pvp_source_string:"player-vs-player-stencil.png";
+            }
         }
     ]
 
-NumberAnimation {id: defaultDoorUp; alwaysRunToEnd: true; target: defaultDoor.anchors; properties: "verticalCenterOffset"; to: 0 - doorsRectangle.height * 2 ; duration: 500; }
-NumberAnimation {id: singlePlayerDoorUp; alwaysRunToEnd: true;target: singlePlayerDoor.anchors; properties: "verticalCenterOffset"; to: 0 - doorsRectangle.height * 2 ; duration: 500; }
-NumberAnimation {id: versusDoorUp;alwaysRunToEnd: true; target: versusDoor.anchors; properties: "verticalCenterOffset"; to: 0 - doorsRectangle.height * 2 ; duration: 500; }
-NumberAnimation {id: networkDoorUp; alwaysRunToEnd: true;target: networkDoor.anchors; properties: "verticalCenterOffset"; to: 0 - doorsRectangle.height * 2; duration: 500; }
-NumberAnimation {id: defaultDoorDown;alwaysRunToEnd: true; target: defaultDoor.anchors; properties: "verticalCenterOffset"; to: 0; duration: 500; }
-NumberAnimation {id: singlePlayerDoorDown;alwaysRunToEnd: true; target: singlePlayerDoor.anchors; properties: "verticalCenterOffset"; to: 0; duration: 500; }
-NumberAnimation {id: versusDoorDown;alwaysRunToEnd: true; target: versusDoor.anchors; properties: "verticalCenterOffset"; to: 0; duration: 500; }
-NumberAnimation {id: networkDoorDown;alwaysRunToEnd: true; target: networkDoor.anchors; properties: "verticalCenterOffset";to: 0; duration: 500; }
+NumberAnimation {id: defaultDoorUp; alwaysRunToEnd: true; target: defaultDoor.anchors; properties: "verticalCenterOffset"; to: 0 - doorsRectangle.height * 2 ; duration: 500;onStarted:{ forkliftMenuButtonsAreLocked = true; } onStopped:{forkliftMenuButtonsAreLocked = false; } }
+NumberAnimation {id: singlePlayerDoorUp; alwaysRunToEnd: true;target: singlePlayerDoor.anchors; properties: "verticalCenterOffset"; to: 0 - doorsRectangle.height * 2 ; duration: 500; onStarted:{ forkliftMenuButtonsAreLocked = true; } onStopped:{forkliftMenuButtonsAreLocked = false; }}
+NumberAnimation {id: versusDoorUp;alwaysRunToEnd: true; target: versusDoor.anchors; properties: "verticalCenterOffset"; to: 0 - doorsRectangle.height * 2 ; duration: 500;onStarted:{ forkliftMenuButtonsAreLocked = true; } onStopped:{forkliftMenuButtonsAreLocked = false; } }
+NumberAnimation {id: networkDoorUp; alwaysRunToEnd: true;target: networkDoor.anchors; properties: "verticalCenterOffset"; to: 0 - doorsRectangle.height * 2; duration: 500;onStarted:{ forkliftMenuButtonsAreLocked = true; } onStopped:{forkliftMenuButtonsAreLocked = false; } }
+NumberAnimation {id: defaultDoorDown;alwaysRunToEnd: true; target: defaultDoor.anchors; properties: "verticalCenterOffset"; to: 0; duration: 500;onStarted:{ forkliftMenuButtonsAreLocked = true; } onStopped:{forkliftMenuButtonsAreLocked = false; } }
+NumberAnimation {id: singlePlayerDoorDown;alwaysRunToEnd: true; target: singlePlayerDoor.anchors; properties: "verticalCenterOffset"; to: 0; duration: 500;onStarted:{ forkliftMenuButtonsAreLocked = true; } onStopped:{forkliftMenuButtonsAreLocked = false; } }
+NumberAnimation {id: versusDoorDown;alwaysRunToEnd: true; target: versusDoor.anchors; properties: "verticalCenterOffset"; to: 0; duration: 500;onStarted:{ forkliftMenuButtonsAreLocked = true; } onStopped:{forkliftMenuButtonsAreLocked = false; } }
+NumberAnimation {id: networkDoorDown;alwaysRunToEnd: true; target: networkDoor.anchors; properties: "verticalCenterOffset";to: 0; duration: 500;onStarted:{ forkliftMenuButtonsAreLocked = true; } onStopped:{forkliftMenuButtonsAreLocked = false; } }
 
 transitions:[
     Transition{from: "DEFAULT"; to: "SINGLE_PLAYER"; ScriptAction{script: {
