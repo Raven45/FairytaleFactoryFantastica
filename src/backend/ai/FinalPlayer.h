@@ -385,8 +385,48 @@ public:
         Turn bestMove;
 
         BitBoard opponentsBoard = mainBoard.getBoardOfPlayer(opponentColor);
-
+        BitBoard myBoard = mainBoard.getBoardOfPlayer(myColor);
         bool foundSpecialCase = false;
+
+        for( int quadrantIndex =  4; quadrantIndex--;){
+            for( int pieceIndex = 9; pieceIndex--;){
+
+                if( mainBoard.holeIsEmpty( quadrantIndex, pieceIndex )){
+
+                    //place the piece
+                    BitBoard myBoardCopy = myBoard;
+                    myBoardCopy.placePiece(quadrantIndex, pieceIndex);
+
+                    for( unsigned char rotationIndex = 4; rotationIndex--;){
+
+                        BitBoard newBoardCopy = myBoardCopy;
+                        newBoardCopy.rotate( rotationIndex, LEFT );
+                        BitBoard opponentsBoardCopy = opponentsBoard;
+                        opponentsBoardCopy.rotate( rotationIndex, LEFT );
+
+                         Board testBoard (myColor == BLACK? opponentsBoardCopy:newBoardCopy,myColor == BLACK? newBoardCopy:opponentsBoardCopy, util.opposite(myColor) );
+                         GameData data = testBoard.checkWin();
+
+                         if( data.winner == myColor && !data.isDraw ){
+                             return Turn(quadrantIndex, pieceIndex, rotationIndex, LEFT, myColor);
+                         }
+
+                         newBoardCopy = myBoardCopy;
+                         newBoardCopy.rotate( rotationIndex, RIGHT );
+                         opponentsBoardCopy = opponentsBoard;
+                         opponentsBoardCopy.rotate( rotationIndex, RIGHT );
+
+                        Board testBoard2 ( myColor == BLACK? opponentsBoardCopy:newBoardCopy,myColor == BLACK? newBoardCopy:opponentsBoardCopy, util.opposite(myColor) );
+                        data = testBoard2.checkWin();
+
+                        if( data.winner == myColor && !data.isDraw ){
+                            return Turn(quadrantIndex, pieceIndex, rotationIndex, RIGHT, myColor);
+                        }
+
+                    }
+                }
+            }
+        }
 
 
         for( auto centerPair : START_PATTERNS2 ){
