@@ -32,7 +32,8 @@ RESOURCES += \
     ui/resources/SpookyMusic.qrc \
     ui/resources/qmlResources2.qrc \
     ui/resources/introAnimationResources.qrc \
-    ui/resources/wind.qrc
+    ui/resources/wind.qrc \
+	ui/resources/installationEveResources.qrc
 
 INCLUDEPATH += \
     backend \

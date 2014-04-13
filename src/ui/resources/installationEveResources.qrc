@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+		<file alias="flip_card.wav">../media/flip_card.wav</file>
+		<file alias="punch_card.wav">../media/punch_card.wav</file>
+		<file alias="forkliftMenu_left_sidewall.png">../media/forkliftMenu_left_sidewall.png</file>
+		<file alias="forkliftMenu_right_sidewall.png">../media/forkliftMenu_right_sidewall.png</file>
+		<file alias="forkliftMenu_top_sidewall.png">../media/forkliftMenu_top_sidewall.png</file>
+    </qresource>
+</RCC>

@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtMultimedia 5.0
+import QtGraphicalEffects 1.0
 
 Item {
     id: gumdropknob
@@ -27,6 +28,19 @@ Item {
         source: "gumdrop-vol-down.wav"
     }
 
+    Glow {
+       id: base_knob_glowEffect
+       anchors.fill: base_knob
+       radius: 1
+       samples: 4
+       spread: 0.2
+       color: "#ff0084"
+       source: base_knob
+       visible: false
+       fast: true
+       cached: true
+    }
+
     Image {
         id: base_knob
         width: 85; height: 85; z: top_tubes.z + 1
@@ -51,7 +65,20 @@ Item {
             MouseArea {
                 id: volume_knob_mouseArea
                 anchors.fill: volume_knob
+                hoverEnabled: true
                 acceptedButtons: Qt.LeftButton | Qt.RightButton
+
+                onEntered:{
+                    if(base_knob_glowEffect.visible == false && volume_knob_mouseArea.containsMouse){
+                        base_knob_glowEffect.visible = true;
+                    }
+                }
+
+                onExited: {
+                    if(base_knob_glowEffect.visible == true){
+                        base_knob_glowEffect.visible = false;
+                    }
+                }
 
                 onPressed: {
                     if (_SOUND_CHECK_FLAG && mouse.button == Qt.RightButton) {
