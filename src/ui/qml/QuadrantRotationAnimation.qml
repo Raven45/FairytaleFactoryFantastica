@@ -13,7 +13,21 @@ SequentialAnimation {
     onStopped:{
         root.z--;
         rotationAnimationFinished( myIndex, animationDirection );
+
+        if( tealLightBlink.running ){
+            tealLightBlink.stop();
+            tealLightOn.opacity = 0;
+            purpleLightBlink.start();
+        }
+        else{
+            purpleLightBlink.stop();
+            purpleLightOn.opacity = 0;
+            tealLightBlink.start();
+        }
+
+
         waitingForRotationAnimationToFinish = false;
+
     }
 
     NumberAnimation {

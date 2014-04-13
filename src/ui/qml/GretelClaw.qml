@@ -25,7 +25,7 @@ Item {
             moveGretelToOven.stop()
             burnGretelToDeath.stop()
             gretelClaw.anchors.horizontalCenterOffset = -64;
-            gretelClaw.anchors.verticalCenterOffset = -1100;
+            gretelClaw.anchors.verticalCenterOffset = -1300;
         }
     }
 

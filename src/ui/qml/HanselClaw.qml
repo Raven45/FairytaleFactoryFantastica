@@ -25,7 +25,7 @@ Item {
             moveHanselToOven.stop()
             burnHanselToDeath.stop()
             hanselClaw.anchors.horizontalCenterOffset = -66;
-            hanselClaw.anchors.verticalCenterOffset = -1100;
+            hanselClaw.anchors.verticalCenterOffset = -1300;
         }
     }
 

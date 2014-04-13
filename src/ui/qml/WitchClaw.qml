@@ -25,7 +25,7 @@ Item {
             moveWitchToOven.stop()
             burnWitchToDeath.stop()
             witchClaw.anchors.horizontalCenterOffset = -64;
-            witchClaw.anchors.verticalCenterOffset = -1100;
+            witchClaw.anchors.verticalCenterOffset = -1300;
         }
     }
 

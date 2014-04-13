@@ -227,6 +227,7 @@ Rectangle {
         id: tealLightBlink
         running: false
         loops: Animation.Infinite
+
         NumberAnimation { target: tealLightOn; property: "opacity"; duration: 300; from: 0; to: 1; easing.type: Easing.OutCirc }
         NumberAnimation { target: tealLightOn; property: "opacity"; duration: 300; from: 1; to: 0; easing.type: Easing.InCirc }
     }
@@ -313,7 +314,8 @@ C:\Users\Worker\Documents\FX3-MERGE\monday-morning-madness\src\ui\qml\GameScreen
 
         onClearBoard:{
             tealLightBlink.start();
-            purpleLightBlink.start();
+            purpleLightBlink.stop();
+            purpleLightOn.opacity = 0;
         }
 
         onPlaceCharacterOnPlatform:{
