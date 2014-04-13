@@ -17,9 +17,6 @@ Item {
                 else if( direction == "RIGHT" ){
                     cogsSprite.jumpTo( "rightCogsSprite")
                 }
-                else{
-                    console.log("ERROR! bad direction received in onTurnCogs")
-                }
             }
         }
     }
@@ -31,21 +28,22 @@ Item {
         ImageParticle {
             groups: ["boardSmoke"]
             source: "qrc:///particleresources/glowdot.png"
-            color: "#28111111"
-            blueVariation: 0.05
+            color: "#88333333"
+           // blueVariation: 0.05
+            //colorVariation: 0.5
         }
 
         Emitter {
             anchors.fill: parent
             group: "boardSmoke"
             emitRate: 30
-            lifeSpan: 3500
+            lifeSpan: 7000
             lifeSpanVariation:200
             size: 20
-            endSize: 150
+            endSize: 140
             sizeVariation: 5
-            acceleration: PointDirection {y: 0; yVariation: 20; x: 0; xVariation: 20;}
-            velocity: AngleDirection { angle: 180; magnitude: 50; angleVariation:180; magnitudeVariation: 10 }
+            acceleration: PointDirection {y: 0; yVariation: 10; x: 0; xVariation: 10;}
+            velocity: AngleDirection { angle: 180; magnitude: 20; angleVariation:180; magnitudeVariation: 10 }
         }
     }
 

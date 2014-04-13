@@ -126,15 +126,6 @@ Rectangle {
         anchors.leftMargin: 53
     }
 
-    Rectangle {
-        id: claw_width_bar
-        width: gameScreen.width * 1.7; height: 10; z: 2
-        anchors.top: gameScreen.top
-        anchors.topMargin: 10
-        anchors.left: gameScreen.left
-        color: "grey"
-    }
-
     Image {
         id: left_can_back
         width: 152; height: 256; z: 2

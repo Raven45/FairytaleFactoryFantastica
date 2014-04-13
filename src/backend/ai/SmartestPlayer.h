@@ -42,15 +42,15 @@ class SmartestPlayer : public Player {
     static constexpr long double EVAL_DEFENSE_FACTOR = 1;
     static constexpr long double OPPONENT_LEVEL_FACTOR = 2.37;*/
 
-    static constexpr long double WIN_WEIGHT =   EASY_MODE? 20 :   28921000;
-    static constexpr long double FOUR_WEIGHT =  EASY_MODE? 5   :   97853.4;
-    static constexpr long double THREE_WEIGHT = EASY_MODE? 1.1 :   330.393;
+    static constexpr long double WIN_WEIGHT =   EASY_MODE? 1 :   28921000;
+    static constexpr long double FOUR_WEIGHT =  EASY_MODE? 2   : 97853.4;
+    static constexpr long double THREE_WEIGHT = EASY_MODE? 5:  330.393;
 
     static constexpr long double DEFAULT_WEIGHT = 1;
-    static constexpr long double PATTERN_WEIGHT1 = 86726.73;
-    static constexpr long double PATTERN_WEIGHT2 = 86726.7;
-    static constexpr long double PATTERN_WEIGHT3 = 1900.6;
-    static constexpr long double PATTERN_WEIGHT4 = 1900.9;
+    static constexpr long double PATTERN_WEIGHT1 = EASY_MODE? 1 : 86726.73;
+    static constexpr long double PATTERN_WEIGHT2 = EASY_MODE? 1 : 86726.7;
+    static constexpr long double PATTERN_WEIGHT3 = EASY_MODE? 3 : 1900.6;
+    static constexpr long double PATTERN_WEIGHT4 = EASY_MODE? 1 : 1900.9;
     //2,2,1,2 = good
     //1.5,2,1,2 = better
     static constexpr long double DEFENSE_FACTOR = 1.96564;
