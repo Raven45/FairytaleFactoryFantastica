@@ -38,50 +38,50 @@ Rectangle {
 "
 
 
-Music:
+                                                        Music:
 
-Monkeys Spinning Monkeys - Kevin MacLeod (incompetech.com)
-Licensed under Creative Commons: By Attribution 3.0
-http://creativecommons.org/licenses/by/3.0/
+       Monkeys Spinning Monkeys - Kevin MacLeod (incompetech.com)
+          Licensed under Creative Commons: By Attribution 3.0
+              http://creativecommons.org/licenses/by/3.0/
 
-Oppressive Gloom - Kevin MacLeod (incompetech.com)
-Licensed under Creative Commons: By Attribution 3.0
-http://creativecommons.org/licenses/by/3.0/
+           Oppressive Gloom - Kevin MacLeod (incompetech.com)
+          Licensed under Creative Commons: By Attribution 3.0
+               http://creativecommons.org/licenses/by/3.0/
 
 
 
-Sound effects:
+                                                 Sound effects:
 
-two tone; science_fiction_steampunk_gear_wind;
-multimedia_button_click_029;
-http://www.freesfx.co.uk
+                two tone; science_fiction_steampunk_gear_wind;
+                            multimedia_button_click_029;
+                              http://www.freesfx.co.uk
 
 114588__herbertboland__bigdrum1.wav: Herbert Boland / www.freesound.org
 114591__herbertboland__bigdrum4.wav: Herbert Boland / www.freesound.org
 
-Mark DiAngelo - http://soundbible.com/1810-Wind.html
-Licensed under Creative Commons: By Attribution 3.0
-Stephan - http://soundbible.com/1352-Large-Metal-Rusty-Door.html
-Licensed under Creative Commons: By Attribution 3.0
-Mike Koenig - http://soundbible.com/1291-Dog-Growl.html
-Licensed under Creative Commons: By Attribution 3.0
-Mike Koenig - http://soundbible.com/1129-Maniacal-Witches-Laugh.html
-Licensed under Creative Commons: By Attribution 3.0
-Mike Koenig - http://soundbible.com/1359-Small-Fireball.html
-Licensed under Creative Commons: By Attribution 3.0
-nofeedbak - http://soundbible.com/1495-Basketball-Buzzer.html
-Licensed under Creative Commons: By Attribution 3.0
-man - http://soundbible.com/682-Swoosh-1.html
-Licensed under Creative Commons: By Attribution 3.0
-Mike Koenig - http://soundbible.com/1832-Climactic-Suspense.html
-Licensed under Creative Commons: By Attribution 3.0
-Titus Calen - http://soundbible.com/1814-Scary.html
-Licensed under Creative Commons: By Attribution 3.0"
+                Mark DiAngelo - http://soundbible.com/1810-Wind.html
+                 Licensed under Creative Commons: By Attribution 3.0
+       Stephan - http://soundbible.com/1352-Large-Metal-Rusty-Door.html
+                 Licensed under Creative Commons: By Attribution 3.0
+              Mike Koenig - http://soundbible.com/1291-Dog-Growl.html
+                 Licensed under Creative Commons: By Attribution 3.0
+        Mike Koenig - http://soundbible.com/1129-Maniacal-Witches-Laugh.html
+                 Licensed under Creative Commons: By Attribution 3.0
+           Mike Koenig - http://soundbible.com/1359-Small-Fireball.html
+                 Licensed under Creative Commons: By Attribution 3.0
+          nofeedbak - http://soundbible.com/1495-Basketball-Buzzer.html
+                 Licensed under Creative Commons: By Attribution 3.0
+                  man - http://soundbible.com/682-Swoosh-1.html
+                 Licensed under Creative Commons: By Attribution 3.0
+         Mike Koenig - http://soundbible.com/1832-Climactic-Suspense.html
+                 Licensed under Creative Commons: By Attribution 3.0
+                Titus Calen - http://soundbible.com/1814-Scary.html
+                 Licensed under Creative Commons: By Attribution 3.0"
 
 
         font.pointSize: 10
         font.bold: true
-        horizontalAlignment: Text.AlignRight
+        horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignTop
         color: "#9DEB9B"
         anchors.centerIn: creditsScreen

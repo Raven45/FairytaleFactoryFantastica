@@ -936,6 +936,7 @@ Rectangle {
             StateChangeScript { script: hanselBlinkTimer.startTimer() }
             StateChangeScript { script: gretelBlinkTimer.startTimer() }
             StateChangeScript { script: appropriateTimeToQuit = true; }
+            StateChangeScript { script: windSound.play() }
         },
         State{
             name: "INVISIBLE"
@@ -950,6 +951,7 @@ Rectangle {
             PropertyChanges { target: hanselBlink; visible: false }
             PropertyChanges { target: gretelBlinkTimer; duration: 0 }
             PropertyChanges { target: hanselBlinkTimer; duration: 0 }
+            StateChangeScript { script: windSound.stop() }
         }
 
     ]
