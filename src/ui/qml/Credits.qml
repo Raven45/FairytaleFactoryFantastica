@@ -11,6 +11,11 @@ Rectangle {
         State{
             name: "SHOW_CREDITS"
             PropertyChanges { target: creditsScreen; visible: true }
+
+            PropertyChanges {
+                target: infoCredits
+                color: "#9beb99"
+            }
         },
         State{
             name: "HIDE_CREDITS"
@@ -30,16 +35,20 @@ Rectangle {
         width: parent.width; height: parent.height;
         z: parent.z + 1
         text:
-"Music:
+"
 
-\"Monkeys Spinning Monkeys\" Kevin MacLeod (incompetech.com)
+
+Music:
+
+Monkeys Spinning Monkeys - Kevin MacLeod (incompetech.com)
 Licensed under Creative Commons: By Attribution 3.0
 http://creativecommons.org/licenses/by/3.0/
 
-Oppressive Gloom
-\"Oppressive Gloom\" Kevin MacLeod (incompetech.com)
+Oppressive Gloom - Kevin MacLeod (incompetech.com)
 Licensed under Creative Commons: By Attribution 3.0
 http://creativecommons.org/licenses/by/3.0/
+
+
 
 Sound effects:
 
@@ -72,11 +81,11 @@ Licensed under Creative Commons: By Attribution 3.0"
 
         font.pointSize: 10
         font.bold: true
-        horizontalAlignment: Text.AlignLeft
+        horizontalAlignment: Text.AlignRight
         verticalAlignment: Text.AlignTop
         color: "#9DEB9B"
-        anchors.fill: creditsScreen
-        //anchors.verticalCenterOffset: 300
+        anchors.centerIn: creditsScreen
+//        anchors.horizontalCenterOffset: 50
         visible: true
     }
 

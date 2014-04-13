@@ -62,7 +62,7 @@ Rectangle {
         source: "scary.wav"
     }
 
-    SoundEffect {
+    Audio {
         id: windSound
         source: "wind.wav"
         loops: Audio.Infinite

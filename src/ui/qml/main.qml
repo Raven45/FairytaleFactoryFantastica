@@ -498,7 +498,6 @@ Rectangle {
 		anchors.centerIn: page
 		z: 900
         color: "#88000000"
-        //color: "black"
     }
     Credits{
         id: credits

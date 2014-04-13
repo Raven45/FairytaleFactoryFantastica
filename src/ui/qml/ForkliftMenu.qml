@@ -343,8 +343,7 @@ Rectangle {
                         }
                     }
                     onPressed: { if(_SOUND_CHECK_FLAG && !forkliftMenuButtonsAreLocked ) pressButtonSound.play(); }
-                    onClicked: { if( !forkliftMenuButtonsAreLocked )credits.state = "SHOW_CREDITS"; }
-                    //onClicked: { if( !forkliftMenuButtonsAreLocked )help.state = "SHOW_HELP"; }
+                    onClicked: { if( !forkliftMenuButtonsAreLocked )help.state = "SHOW_HELP"; }
                 }
             }
         }
@@ -375,10 +374,7 @@ Rectangle {
             width: 150; height: 150
             z: creditsBox.z + 1
             anchors.centerIn: creditsBox
-
             source: "smaller-cardboard-box.png"
-
-
             Text {
                 id: creditsBox_text
                 font.family: stencilFont.name
@@ -406,7 +402,7 @@ Rectangle {
                         creditsBox_text.color = "#371D07"
                     }
                     onPressed: { if(_SOUND_CHECK_FLAG && !forkliftMenuButtonsAreLocked ) pressButtonSound.play(); }
-                    onClicked: { if( !forkliftMenuButtonsAreLocked )credits.state = "SHOW_CREDITS"; }
+                    onClicked: { if( !forkliftMenuButtonsAreLocked )credits.state = "SHOW_CREDITS" }
                 }
             }
         }
