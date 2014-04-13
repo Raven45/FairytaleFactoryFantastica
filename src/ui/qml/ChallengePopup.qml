@@ -29,7 +29,7 @@ GenericPopup {
 
     Timer {
         id: challengeTimer
-        property int counter: 10
+        property int counter: 9
         interval: 1000
         onTriggered:{
            challengeTimerText.text = counter.toString();
@@ -68,8 +68,8 @@ GenericPopup {
     }
 
     function resetValues(){
-        challengeTimer.counter = 10;
-        challengeTimerText.text = '10';
+        challengeTimer.counter = 9;
+        challengeTimerText.text = '9';
     }
 
     function declineChallengeFunction(){

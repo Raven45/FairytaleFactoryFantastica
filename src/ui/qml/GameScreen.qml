@@ -189,6 +189,79 @@ Rectangle {
         x: parent.width - 125 - width
         scale: 0.7
         z: 69
+
+
+    }
+
+    property int _LIGHT_HEIGHT: 70
+    property int _LIGHT_TOP_MARGIN: 70
+
+
+
+    Image{
+        id: purpleLightOff
+        height: _LIGHT_HEIGHT
+        width: _LIGHT_HEIGHT
+        anchors.top: right_can_front.top
+        anchors.horizontalCenter: right_can_front.horizontalCenter
+        anchors.topMargin: _LIGHT_TOP_MARGIN
+        source: "purpleLightOff.png"
+        visible: true
+        z: right_can_front.z + 1
+    }
+
+    Image{
+        id: purpleLightOn
+        height: _LIGHT_HEIGHT
+        width: _LIGHT_HEIGHT
+        anchors.top: right_can_front.top
+        anchors.horizontalCenter: right_can_front.horizontalCenter
+        anchors.topMargin: _LIGHT_TOP_MARGIN
+        visible: true
+        opacity: 0
+        source: "purpleLight.png"
+        z: right_can_front.z + 2
+    }
+
+    SequentialAnimation{
+        id: tealLightBlink
+        running: false
+        loops: Animation.Infinite
+        NumberAnimation { target: tealLightOn; property: "opacity"; duration: 300; from: 0; to: 1; easing.type: Easing.OutCirc }
+        NumberAnimation { target: tealLightOn; property: "opacity"; duration: 300; from: 1; to: 0; easing.type: Easing.InCirc }
+    }
+
+    SequentialAnimation{
+        id: purpleLightBlink
+        running: false
+        loops: Animation.Infinite
+        NumberAnimation { target: purpleLightOn; property: "opacity"; duration: 300; from: 0; to: 1; easing.type: Easing.OutCirc }
+        NumberAnimation { target: purpleLightOn; property: "opacity"; duration: 300; from: 1; to: 0; easing.type: Easing.InCirc }
+    }
+
+    Image{
+        id: tealLightOff
+        height: _LIGHT_HEIGHT
+        width: _LIGHT_HEIGHT
+        anchors.top: left_can_front.top
+        anchors.horizontalCenter: left_can_front.horizontalCenter
+        anchors.topMargin: _LIGHT_TOP_MARGIN
+        source: "greenLightOff.png"
+        visible: true
+        z: left_can_front.z + 1
+    }
+
+    Image{
+        id: tealLightOn
+        height: _LIGHT_HEIGHT
+        width: _LIGHT_HEIGHT
+        anchors.top: left_can_front.top
+        anchors.horizontalCenter: left_can_front.horizontalCenter
+        anchors.topMargin: _LIGHT_TOP_MARGIN
+        visible: true
+        opacity: 0
+        source: "greenLight.png"
+        z: left_can_front.z + 1
     }
 
     Image {
@@ -237,6 +310,11 @@ C:\Users\Worker\Documents\FX3-MERGE\monday-morning-madness\src\ui\qml\GameScreen
 
     Connections{
         target: page
+
+        onClearBoard:{
+            tealLightBlink.start();
+            purpleLightBlink.start();
+        }
 
         onPlaceCharacterOnPlatform:{
 

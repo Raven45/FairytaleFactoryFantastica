@@ -28,22 +28,22 @@ Item {
         ImageParticle {
             groups: ["boardSmoke"]
             source: "qrc:///particleresources/glowdot.png"
-            color: "#88333333"
-           // blueVariation: 0.05
+            color: "#8F333333"
+            blueVariation: 0.05
             //colorVariation: 0.5
         }
 
         Emitter {
             anchors.fill: parent
             group: "boardSmoke"
-            emitRate: 30
-            lifeSpan: 7000
-            lifeSpanVariation:200
+            emitRate: 120
+            lifeSpan: 3000
+            lifeSpanVariation:1000
             size: 20
-            endSize: 140
+            endSize: 90
             sizeVariation: 5
-            acceleration: PointDirection {y: 0; yVariation: 10; x: 0; xVariation: 10;}
-            velocity: AngleDirection { angle: 180; magnitude: 20; angleVariation:180; magnitudeVariation: 10 }
+            acceleration: PointDirection { y: 0; yVariation: 20; x: 0; xVariation: 20; }
+            velocity: AngleDirection { angle: 180; magnitude: 40; angleVariation:150; magnitudeVariation: 20 }
         }
     }
 

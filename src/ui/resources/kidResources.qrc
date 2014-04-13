@@ -31,5 +31,9 @@
                 <file alias="hanselWins.png">../media/hanselWins.png</file>
                 <file alias="gretelWins.png">../media/gretelWins.png</file>
                 <file alias="tieText.png">../media/tieText.png</file>
+                <file alias="greenLight.png">../media/greenLight.png</file>
+                <file alias="greenLightOff.png">../media/greenLightOff.png</file>
+                <file alias="purpleLight.png">../media/purpleLight.png</file>
+                <file alias="purpleLightOff.png">../media/purpleLightOff.png</file>
     </qresource>
 </RCC>
