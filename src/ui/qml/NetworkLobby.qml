@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtMultimedia 5.0
 import QtQuick.Controls 1.0
 
 Rectangle {
@@ -10,6 +11,16 @@ Rectangle {
 
     state: "INVISIBLE"
     property int playerCount: 0
+
+    SoundEffect {
+        id: punchSound
+        source: "punch_card.wav"
+    }
+
+    SoundEffect {
+        id: cardSound
+        source: "flip_card.wav"
+    }
 
     function challengePopupsAreHidden(){
         return challengePopup.state == "INVISIBLE" && sentChallengePopup.state == "INVISIBLE";
@@ -27,18 +38,21 @@ Rectangle {
         id: net_clock_animation
         running: false
 
+        ScriptAction { script: if(_SOUND_CHECK_FLAG) cardSound.play() }
         ParallelAnimation{
             NumberAnimation{ target: net_card; property: "y"; from: net_card.y; to: net_card.y - 250; duration: 800; easing.type: Easing.InOutQuad }
             NumberAnimation{ target: net_card; property: "x"; from: net_card.x; to: net_card.x - 294; duration: 800; easing.type: Easing.InOutQuad }
         }
         ScriptAction { script: net_card.z = net_clock_slot_front.z - 1 }
         NumberAnimation{ target: net_card; property: "y"; from: net_card.y - 250; to: net_card.y - 175; duration: 400; easing.type: Easing.OutInQuad }
+        ScriptAction { script: if(_SOUND_CHECK_FLAG) punchSound.play() }
         NumberAnimation{ target: net_card; property: "y"; from: net_card.y - 175; to: net_card.y - 250; duration: 400; easing.type: Easing.OutInQuad }
         ScriptAction { script: net_card.z = net_punch_cards.z + 1 }
         ParallelAnimation{
             NumberAnimation{ target: net_card; property: "y"; to: net_card.y; from: net_card.y - 250; duration: 800; easing.type: Easing.InOutQuad }
             NumberAnimation{ target: net_card; property: "x"; to: net_card.x; from: net_card.x - 294; duration: 800; easing.type: Easing.InOutQuad }
         }
+        ScriptAction { script: if(_SOUND_CHECK_FLAG) cardSound.play() }
 
         onStopped:{ getOutOfHere(); }
     }
