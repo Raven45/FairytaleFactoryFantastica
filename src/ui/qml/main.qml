@@ -9,8 +9,8 @@ import QtMultimedia 5.0
 
 Rectangle {
     id: page
-    //height: 900
-    //width:1440
+    height: 900
+    width: 1440
 
     color: "#333333"
 
@@ -474,7 +474,7 @@ Rectangle {
         id: splash
     }
 
-    StartScreen{
+    StartScreen {
         id:startScreen
         anchors.centerIn: parent
     }
@@ -487,11 +487,15 @@ Rectangle {
     ForkliftMenu{
         id:startMenu
         anchors.centerIn: parent
+        width: 1440
+        height: 900
         z: 100
     }
 
     GameScreen{
         id: gameScreen
+        width: 1440
+        height: 900
         z:1
     }
 

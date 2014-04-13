@@ -6,6 +6,7 @@
 #include <time.h>
 
 #include <QDebug>
+#include <QSharedMemory>
 #include <QThread>
 #include <QQuickItem>
 #include <QQuickView>
@@ -16,8 +17,6 @@
 #include <QGlobal.h>
 #include <QTime>
 
-
-
 typedef GuiGameController GameController;
 
 
@@ -27,8 +26,18 @@ int main(int argc, char* argv[])
 {
 
     QGuiApplication app (argc, argv);
-    app.setOrganizationName("Team 2");
-    app.setApplicationName("Pentago");
+    app.setOrganizationName("Muffin Man Studios");
+    app.setApplicationName("Fairytale Factory Fantastica");
+
+
+    app.processEvents();
+
+     QSharedMemory shared("62d68989-bb34-4a24-881b-b64490a1e04");
+     if( !shared.create( 512, QSharedMemory::ReadWrite) ){
+       qWarning() << "Can't start more than one instance of the application.";
+       exit(0);
+     }
+
 
     QThread testLocal;
     QThread* coreThread = &testLocal; //new QThread;

@@ -607,7 +607,6 @@ C:\Users\Worker\Documents\FX3-MERGE\monday-morning-madness\src\ui\qml\GameScreen
         startDelay: 20001
         intensityGroup: 5
         z: 2
-        isStrayPiece: true
     }
 
     //--------------------
@@ -657,7 +656,6 @@ C:\Users\Worker\Documents\FX3-MERGE\monday-morning-madness\src\ui\qml\GameScreen
         startDelay: 29001
         intensityGroup: 5
         z: 2
-        isStrayPiece: true
     }
 
     //--------------------
@@ -786,7 +784,6 @@ C:\Users\Worker\Documents\FX3-MERGE\monday-morning-madness\src\ui\qml\GameScreen
         startDelay: 24001
         intensityGroup: 5
         z: 3
-        isStrayPiece: true
     }
 
     //--------------------
@@ -820,7 +817,6 @@ C:\Users\Worker\Documents\FX3-MERGE\monday-morning-madness\src\ui\qml\GameScreen
         startDelay: 24701
         intensityGroup: 5
         z: 3
-        isStrayPiece: true
     }
 
     RightAnimationGumdrop {
@@ -852,7 +848,6 @@ C:\Users\Worker\Documents\FX3-MERGE\monday-morning-madness\src\ui\qml\GameScreen
         startDelay: 24801
         intensityGroup: 5
         z: 2
-        isStrayPiece: true
     }
 
     GameMenu {
